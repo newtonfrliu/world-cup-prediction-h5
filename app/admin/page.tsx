@@ -34,10 +34,14 @@ function formatMatchTime(value: string) {
 export default function AdminPage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [settlingMatchId, setSettlingMatchId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
   async function loadMatches() {
     if (!canUseSupabase) {
@@ -64,9 +68,30 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
+    setIsVerified(localStorage.getItem("admin_verified") === "true");
+  }, []);
+
+  useEffect(() => {
+    if (!isVerified) {
+      return;
+    }
+
     loadMatches();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canUseSupabase]);
+  }, [canUseSupabase, isVerified]);
+
+  function verifyAdmin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (password === adminPassword) {
+      localStorage.setItem("admin_verified", "true");
+      setIsVerified(true);
+      setPasswordError("");
+      return;
+    }
+
+    setPasswordError("密码错误");
+  }
 
   async function settleMatch(match: Match, result: MatchResult) {
     if (settlingMatchId) {
@@ -135,6 +160,39 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
       <section className="mx-auto w-full max-w-xl">
+        {!isVerified ? (
+          <div className="flex min-h-[calc(100vh-3rem)] flex-col justify-center">
+            <h1 className="text-3xl font-black text-[#102a43]">管理员验证</h1>
+            <form onSubmit={verifyAdmin} className="mt-8 space-y-5">
+              <label className="block">
+                <span className="text-sm font-semibold text-[#334e68]">
+                  请输入管理员密码
+                </span>
+                <input
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  type="password"
+                  className="mt-2 h-12 w-full rounded-lg border border-[#cbd2d9] bg-white px-4 text-base outline-none transition focus:border-[#d64545] focus:ring-4 focus:ring-[#d64545]/15"
+                  placeholder="请输入管理员密码"
+                />
+              </label>
+
+              {passwordError ? (
+                <p className="rounded-md bg-[#fde8e8] px-3 py-2 text-sm text-[#9b1c1c]">
+                  {passwordError}
+                </p>
+              ) : null}
+
+              <button
+                type="submit"
+                className="h-12 w-full rounded-lg bg-[#d64545] px-5 text-base font-bold text-white transition hover:bg-[#ba2525]"
+              >
+                进入后台
+              </button>
+            </form>
+          </div>
+        ) : (
+          <>
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase text-[#d64545]">
@@ -229,6 +287,8 @@ export default function AdminPage() {
             );
           })}
         </div>
+          </>
+        )}
       </section>
     </main>
   );
