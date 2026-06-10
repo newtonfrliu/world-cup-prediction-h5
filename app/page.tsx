@@ -173,6 +173,13 @@ export default function Home() {
           >
             排行榜
           </Link>
+
+          <Link
+            href="/bracket"
+            className="flex h-12 w-full items-center justify-center rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+          >
+            世界杯晋级之路
+          </Link>
         </form>
       </section>
     </main>
