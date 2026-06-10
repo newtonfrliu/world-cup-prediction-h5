@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import:schedule": "node scripts/importSchedule.ts",
+    "check:teams": "node scripts/checkTeams.ts",
+    "sync:odds": "node scripts/syncOdds.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
