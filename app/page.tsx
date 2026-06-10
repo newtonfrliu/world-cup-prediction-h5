@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getTeamDisplayName, worldCupTeams } from "@/lib/teamNames";
 
-const countries = [
-  { label: "美国", value: "USA" },
-  { label: "加拿大", value: "Canada" },
-  { label: "墨西哥", value: "Mexico" },
-];
+const countries = worldCupTeams.map((team) => ({
+  label: getTeamDisplayName(team),
+  value: team,
+}));
 
 const regions = [
   "海外",

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getTeamDisplayName } from "@/lib/teamNames";
 import type { Database } from "@/types/database";
 
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
@@ -94,7 +95,7 @@ export default function LeaderboardPage() {
                       {row.nickname}
                     </h2>
                     <p className="mt-1 text-sm text-[#627d98]">
-                      {row.country} · {row.region}
+                      {getTeamDisplayName(row.country)} · {row.region}
                     </p>
                   </div>
                 </div>

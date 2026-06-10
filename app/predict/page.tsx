@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getTeamDisplayName } from "@/lib/teamNames";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
@@ -194,7 +195,8 @@ export default function PredictPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h2 className="text-xl font-black text-[#102a43]">
-                      {match.home_team} VS {match.away_team}
+                      {getTeamDisplayName(match.home_team)} VS{" "}
+                      {getTeamDisplayName(match.away_team)}
                     </h2>
                     <p className="mt-2 text-sm text-[#627d98]">
                       {formatMatchTime(match.start_time)}
