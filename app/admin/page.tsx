@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getTeamDisplayName } from "@/lib/teamNames";
+import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];

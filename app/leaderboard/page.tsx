@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getTeamDisplayName } from "@/lib/teamNames";
+import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];

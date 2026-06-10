@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getTeamDisplayName, worldCupTeams } from "@/lib/teamNames";
+import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
 const countries = worldCupTeams.map((team) => ({
   label: getTeamDisplayName(team),
