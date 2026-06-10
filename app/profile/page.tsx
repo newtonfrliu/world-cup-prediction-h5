@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { toPng } from "html-to-image";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName, teamMeta } from "@/lib/teamMeta";
@@ -28,7 +29,7 @@ type StoredBracketPrediction = {
   champion?: string;
 };
 
-const officialSiteUrl = "https://2026wc.fun";
+const officialSiteUrl = "https://www.2026wc.fun";
 
 function buildEmptyStats(): ProfileStats {
   return {
@@ -69,62 +70,8 @@ function getPosterCountryName(country: string) {
   return `${meta.flag} ${meta.cn}`;
 }
 
-function drawRoundedRect(
-  context: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number,
-) {
-  context.beginPath();
-  context.moveTo(x + radius, y);
-  context.lineTo(x + width - radius, y);
-  context.quadraticCurveTo(x + width, y, x + width, y + radius);
-  context.lineTo(x + width, y + height - radius);
-  context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  context.lineTo(x + radius, y + height);
-  context.quadraticCurveTo(x, y + height, x, y + height - radius);
-  context.lineTo(x, y + radius);
-  context.quadraticCurveTo(x, y, x + radius, y);
-  context.closePath();
-}
-
-function fillRoundedRect(
-  context: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number,
-  color: string,
-) {
-  context.fillStyle = color;
-  drawRoundedRect(context, x, y, width, height, radius);
-  context.fill();
-}
-
-function drawCenteredText(
-  context: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  maxWidth: number,
-) {
-  context.fillText(text, x, y, maxWidth);
-}
-
-function loadImage(src: string) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image();
-    image.crossOrigin = "anonymous";
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error("Image load failed"));
-    image.src = src;
-  });
-}
-
 export default function ProfilePage() {
+  const posterRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [player, setPlayer] = useState<Player | null>(null);
   const [stats, setStats] = useState<ProfileStats>(() => buildEmptyStats());
@@ -259,161 +206,26 @@ export default function ProfilePage() {
   }
 
   async function savePoster() {
-    if (!playerId || !player || !shareLink) {
-      setPosterMessage("请长按图片保存");
+    if (!playerId || !posterRef.current) {
+      setPosterMessage("请长按海报截图保存");
       return;
     }
 
     try {
-      const scale = 2;
-      const width = 360;
-      const height = 640;
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-
-      if (!context) {
-        throw new Error("Canvas not supported");
-      }
-
-      canvas.width = width * scale;
-      canvas.height = height * scale;
-      context.scale(scale, scale);
-      context.textBaseline = "alphabetic";
-      context.fillStyle = "#102a43";
-      context.fillRect(0, 0, width, height);
-
-      fillRoundedRect(context, 20, 20, 320, 136, 10, "#0b1f33");
-      context.strokeStyle = "rgba(247, 201, 72, 0.4)";
-      context.lineWidth = 1;
-      drawRoundedRect(context, 20, 20, 320, 136, 10);
-      context.stroke();
-      context.textAlign = "center";
-      context.fillStyle = "#d64545";
-      context.font = "900 16px sans-serif";
-      drawCenteredText(context, "2026足球世界杯", 180, 52, 280);
-      context.fillStyle = "#ffffff";
-      context.font = "900 40px sans-serif";
-      drawCenteredText(context, "美加墨大乱斗", 180, 96, 300);
-      context.fillStyle = "#f7c948";
-      context.font = "700 18px sans-serif";
-      drawCenteredText(context, "预测世界杯", 180, 126, 280);
-      drawCenteredText(context, "挑战好友排行榜", 180, 150, 280);
-
-      fillRoundedRect(context, 20, 170, 320, 116, 10, "#ffffff");
-      context.fillStyle = "#d64545";
-      context.font = "900 13px sans-serif";
-      drawCenteredText(context, "我的身份", 180, 196, 280);
-      context.fillStyle = "#102a43";
-      context.font = "900 25px sans-serif";
-      drawCenteredText(
-        context,
-        `${getPosterCountryName(player.country)}·${player.nickname}`,
-        180,
-        232,
-        290,
-      );
-      context.fillStyle = "#627d98";
-      context.font = "700 14px sans-serif";
-      drawCenteredText(context, "邀请码：", 180, 258, 240);
-      context.fillStyle = "#d64545";
-      context.font = "900 26px sans-serif";
-      drawCenteredText(context, getInviteCode(playerId), 180, 282, 240);
-
-      const cardY = 302;
-      const cardWidth = 101;
-      const gap = 8;
-      const statsCards = [
-        {
-          label: "总积分",
-          value: String(Math.round(stats.totalPoints)),
-          x: 20,
-          bg: "#f7c948",
-          labelColor: "#102a43",
-        },
-        {
-          label: "全球排名",
-          value: formatRank(stats.globalRank),
-          x: 20 + cardWidth + gap,
-          bg: "#ffffff",
-          labelColor: "#627d98",
-        },
-        {
-          label: "地区排名",
-          value: formatRank(stats.regionRank),
-          x: 20 + (cardWidth + gap) * 2,
-          bg: "#ffffff",
-          labelColor: "#627d98",
-        },
-      ];
-
-      for (const card of statsCards) {
-        fillRoundedRect(context, card.x, cardY, cardWidth, 62, 10, card.bg);
-        context.fillStyle = card.labelColor;
-        context.font = "700 12px sans-serif";
-        drawCenteredText(context, card.label, card.x + cardWidth / 2, cardY + 22, cardWidth - 8);
-        context.fillStyle = "#102a43";
-        context.font = "900 18px sans-serif";
-        drawCenteredText(context, card.value, card.x + cardWidth / 2, cardY + 48, cardWidth - 8);
-      }
-
-      fillRoundedRect(context, 20, 380, 320, 72, 10, "rgba(255,255,255,0.1)");
-      context.strokeStyle = "rgba(255,255,255,0.15)";
-      drawRoundedRect(context, 20, 380, 320, 72, 10);
-      context.stroke();
-      context.fillStyle = "#f7c948";
-      context.font = "700 15px sans-serif";
-      drawCenteredText(context, "🏆 我的冠军预测：", 180, 408, 280);
-      context.fillStyle = "#ffffff";
-      context.font = "900 25px sans-serif";
-      drawCenteredText(
-        context,
-        championPrediction ? getTeamDisplayName(championPrediction) : "待锁定",
-        180,
-        440,
-        280,
-      );
-
-      fillRoundedRect(context, 20, 462, 320, 168, 10, "#ffffff");
-      const qrImage = await loadImage(buildQrCodeUrl(shareLink));
-      context.drawImage(qrImage, 132, 472, 96, 96);
-      context.fillStyle = "#627d98";
-      context.font = "700 10px sans-serif";
-      drawCenteredText(context, shareLink, 180, 584, 290);
-      context.fillStyle = "#d64545";
-      context.font = "900 13px sans-serif";
-      drawCenteredText(context, "扫码加入世界杯预测大战", 180, 604, 280);
-      context.fillStyle = "#334e68";
-      context.font = "700 11px sans-serif";
-      drawCenteredText(
-        context,
-        "✓ 实时同步赔率  ✓ 自动积分结算  ✓ 好友排行榜",
-        180,
-        620,
-        300,
-      );
-      context.fillStyle = "#102a43";
-      context.font = "900 13px sans-serif";
-      drawCenteredText(context, "看看谁才是真球王", 180, 636, 280);
-
-      const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png"),
-      );
-
-      if (!blob) {
-        throw new Error("PNG export failed");
-      }
-
-      const url = URL.createObjectURL(blob);
+      const dataUrl = await toPng(posterRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#102a43",
+      });
       const link = document.createElement("a");
-      link.href = url;
+      link.href = dataUrl;
       link.download = `worldcup-share-${playerId}.png`;
       document.body.appendChild(link);
       link.click();
       link.remove();
-      URL.revokeObjectURL(url);
-      setPosterMessage("海报已生成下载，如未自动保存请长按图片保存");
+      setPosterMessage("海报已生成下载");
     } catch {
-      setPosterMessage("请长按图片保存");
+      setPosterMessage("请长按海报截图保存");
     }
   }
 
@@ -555,6 +367,7 @@ export default function ProfilePage() {
 
             <div
               id="profile-poster"
+              ref={posterRef}
               className="mx-auto mt-4 flex h-[640px] w-[360px] max-w-full flex-col overflow-hidden rounded-lg bg-[#102a43] p-5 text-white shadow-lg print:shadow-none"
             >
               <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4 text-center">
@@ -633,17 +446,13 @@ export default function ProfilePage() {
                   {shareLink}
                 </p>
                 <p className="mt-2 text-sm font-black leading-5 text-[#d64545]">
-                  扫码加入世界杯预测大战
+                  美加墨大乱斗
                 </p>
                 <p className="mt-1 text-xs font-bold leading-5 text-[#334e68]">
-                  ✓ 实时同步赔率
-                  <br />
-                  ✓ 自动积分结算
-                  <br />
-                  ✓ 好友排行榜
+                  www.2026wc.fun
                 </p>
                 <p className="mt-1 text-sm font-black text-[#102a43]">
-                  看看谁才是真球王
+                  扫码参与世界杯预测挑战
                 </p>
               </div>
             </div>

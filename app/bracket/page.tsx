@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { toPng } from "html-to-image";
 
 import {
   type BracketMatch,
@@ -57,6 +58,7 @@ const groupTeams: Record<GroupLetter, string[]> = {
   L: ["England", "Croatia", "Ghana", "Panama"],
 };
 const groupKeys = Object.keys(groupTeams) as GroupLetter[];
+const officialSiteUrl = "https://www.2026wc.fun";
 const emptySelections = groupKeys.reduce(
   (result, group) => ({
     ...result,
@@ -95,7 +97,16 @@ function formatLockTime(value: string) {
   return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
+function buildShareLink(playerId: string) {
+  return `${officialSiteUrl}?ref=${playerId}`;
+}
+
+function buildQrCodeUrl(value: string) {
+  return `https://api.qrserver.com/v1/create-qr-code/?size=176x176&margin=8&data=${encodeURIComponent(value)}`;
+}
+
 export default function BracketPage() {
+  const bracketImageRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [stage, setStage] = useState<Stage>("groups");
   const [activeSide, setActiveSide] = useState<Side>("upper");
@@ -108,6 +119,7 @@ export default function BracketPage() {
   const [finalStage, setFinalStage] = useState<FinalStage>({});
   const [mappingError, setMappingError] = useState("");
   const [lockedAt, setLockedAt] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
 
   const isLocked = Boolean(lockedAt);
   const storageKey = playerId ? `bracket_prediction_${playerId}` : "";
@@ -349,6 +361,30 @@ export default function BracketPage() {
 
     localStorage.setItem(storageKey, JSON.stringify(payload));
     setLockedAt(lockedTime);
+  }
+
+  async function saveBracketImage() {
+    if (!playerId || !bracketImageRef.current) {
+      setSaveMessage("请长按晋级图截图保存");
+      return;
+    }
+
+    try {
+      const dataUrl = await toPng(bracketImageRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#102a43",
+      });
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `bracket-${playerId}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setSaveMessage("晋级图已生成下载");
+    } catch {
+      setSaveMessage("请长按晋级图截图保存");
+    }
   }
 
   function renderGroupStage() {
@@ -611,6 +647,8 @@ export default function BracketPage() {
   }
 
   function renderFinalStage() {
+    const shareLink = playerId ? buildShareLink(playerId) : "";
+
     return (
       <>
         <div className="grid gap-4 md:grid-cols-2">
@@ -628,15 +666,105 @@ export default function BracketPage() {
           )}
         </div>
 
-        <section className="mt-5 rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
-          <h2 className="text-xl font-black text-[#102a43]">最终结果</h2>
-          <div className="mt-4 space-y-2 text-sm text-[#334e68]">
-            <p>🏆 冠军：{champion ? getTeamDisplayName(champion.team) : "-"}</p>
-            <p>🥈 亚军：{runnerUp ? getTeamDisplayName(runnerUp.team) : "-"}</p>
-            <p>🥉 季军：{thirdPlace ? getTeamDisplayName(thirdPlace.team) : "-"}</p>
-            <p>第四名：{fourthPlace ? getTeamDisplayName(fourthPlace.team) : "-"}</p>
+        <section
+          ref={bracketImageRef}
+          className="mt-5 rounded-lg bg-[#102a43] p-5 text-white shadow-sm"
+        >
+          <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4 text-center">
+            <p className="text-sm font-black text-[#d64545]">2026足球世界杯</p>
+            <h2 className="mt-2 text-3xl font-black">美加墨大乱斗</h2>
+            <p className="mt-2 text-sm font-bold text-[#f7c948]">
+              我的世界杯晋级之路
+            </p>
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="rounded-lg bg-white p-4 text-[#102a43]">
+              <h3 className="text-base font-black text-[#d64545]">上半区路线</h3>
+              <div className="mt-3 space-y-2 text-sm font-semibold">
+                {upperBracket.map((round) => (
+                  <p key={`upper-${round.name}`}>
+                    {round.name}：
+                    {round.matches
+                      .map((match) =>
+                        match.winner
+                          ? getTeamDisplayName(match.winner.team)
+                          : "-",
+                      )
+                      .join(" / ")}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-lg bg-white p-4 text-[#102a43]">
+              <h3 className="text-base font-black text-[#d64545]">下半区路线</h3>
+              <div className="mt-3 space-y-2 text-sm font-semibold">
+                {lowerBracket.map((round) => (
+                  <p key={`lower-${round.name}`}>
+                    {round.name}：
+                    {round.matches
+                      .map((match) =>
+                        match.winner
+                          ? getTeamDisplayName(match.winner.team)
+                          : "-",
+                      )
+                      .join(" / ")}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-lg bg-white p-4 text-[#102a43]">
+            <h2 className="text-xl font-black text-[#102a43]">最终结果</h2>
+            <div className="mt-4 space-y-2 text-sm font-bold text-[#334e68]">
+              <p>🏆 冠军：{champion ? getTeamDisplayName(champion.team) : "-"}</p>
+              <p>🥈 亚军：{runnerUp ? getTeamDisplayName(runnerUp.team) : "-"}</p>
+              <p>🥉 季军：{thirdPlace ? getTeamDisplayName(thirdPlace.team) : "-"}</p>
+              <p>
+                第四名：
+                {fourthPlace ? getTeamDisplayName(fourthPlace.team) : "-"}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-lg bg-white p-4 text-center text-[#102a43]">
+            {shareLink ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={buildQrCodeUrl(shareLink)}
+                  alt="晋级图邀请二维码"
+                  className="mx-auto h-28 w-28 rounded-md bg-white"
+                />
+                <p className="mt-2 break-all text-xs font-semibold text-[#627d98]">
+                  {shareLink}
+                </p>
+              </>
+            ) : null}
+            <p className="mt-2 text-sm font-black text-[#d64545]">
+              美加墨大乱斗
+            </p>
+            <p className="mt-1 text-xs font-bold text-[#334e68]">
+              www.2026wc.fun
+            </p>
+            <p className="mt-1 text-sm font-black text-[#102a43]">
+              扫码参与世界杯预测挑战
+            </p>
           </div>
         </section>
+
+        <button
+          type="button"
+          disabled={!playerId}
+          onClick={saveBracketImage}
+          className="mt-5 h-12 w-full rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545] disabled:cursor-not-allowed disabled:bg-[#9fb3c8] disabled:text-white"
+        >
+          保存晋级图
+        </button>
+        {saveMessage ? (
+          <p className="mt-3 text-sm font-bold text-[#334e68]">{saveMessage}</p>
+        ) : null}
 
         <button
           type="button"
