@@ -182,12 +182,20 @@ export default function PredictPage() {
               预测比赛
             </h1>
           </div>
-          <Link
-            href="/"
-            className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-sm font-semibold text-[#334e68]"
-          >
-            首页
-          </Link>
+          <div className="flex shrink-0 flex-col gap-2">
+            <Link
+              href="/"
+              className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-center text-sm font-semibold text-[#334e68]"
+            >
+              首页
+            </Link>
+            <Link
+              href="/profile"
+              className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-center text-sm font-semibold text-[#334e68]"
+            >
+              我的战绩
+            </Link>
+          </div>
         </div>
 
         {!playerId ? (

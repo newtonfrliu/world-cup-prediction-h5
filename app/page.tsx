@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -55,11 +55,21 @@ export default function Home() {
   const [nickname, setNickname] = useState("");
   const [country, setCountry] = useState(countries[0].value);
   const [region, setRegion] = useState(regions[0]);
+  const [referrerId, setReferrerId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const trimmedNickname = nickname.trim();
   const isNicknameEmpty = trimmedNickname.length === 0;
+
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get("ref");
+
+    if (ref) {
+      localStorage.setItem("referrer_id", ref);
+      setReferrerId(ref);
+    }
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -108,6 +118,12 @@ export default function Home() {
         <p className="mt-4 text-base leading-7 text-[#52606d]">
           选好主队，留下昵称，进入你的世界杯预测战场。
         </p>
+
+        {referrerId ? (
+          <p className="mt-5 rounded-lg border border-[#fad1d1] bg-[#fff5f5] px-4 py-3 text-sm font-semibold text-[#9b1c1c]">
+            你是通过好友邀请进入的，创建玩家后即可参与预测。
+          </p>
+        ) : null}
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <label className="block">
@@ -172,6 +188,13 @@ export default function Home() {
             className="flex h-12 w-full items-center justify-center rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
           >
             排行榜
+          </Link>
+
+          <Link
+            href="/profile"
+            className="flex h-12 w-full items-center justify-center rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+          >
+            我的战绩
           </Link>
 
           <Link
