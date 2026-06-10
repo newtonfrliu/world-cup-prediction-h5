@@ -25,6 +25,23 @@ type GroupSelection = {
   third: string;
 };
 
+type QualifiedTeam = {
+  team: string;
+  group: GroupKey;
+  rank: 1 | 2 | 3;
+};
+
+type KnockoutMatch = {
+  id: string;
+  teams: [QualifiedTeam, QualifiedTeam];
+  winner?: QualifiedTeam;
+};
+
+type KnockoutRound = {
+  name: string;
+  matches: KnockoutMatch[];
+};
+
 const groupTeams: Record<GroupKey, string[]> = {
   A: ["Mexico", "South Africa", "South Korea", "Czech Republic"],
   B: ["Canada", "Bosnia & Herzegovina", "Qatar", "Switzerland"],
@@ -52,12 +69,14 @@ const emptySelections = groupKeys.reduce(
   }),
   {} as Record<GroupKey, GroupSelection>,
 );
+const knockoutRoundNames = ["32强", "16强", "8强", "4强", "决赛"];
 
 export default function BracketPage() {
   const [selections, setSelections] =
     useState<Record<GroupKey, GroupSelection>>(emptySelections);
   const [bestThirdTeams, setBestThirdTeams] = useState<string[]>([]);
-  const [knockoutMessage, setKnockoutMessage] = useState("");
+  const [stage, setStage] = useState<"groups" | "knockout">("groups");
+  const [knockoutRounds, setKnockoutRounds] = useState<KnockoutRound[]>([]);
 
   const thirdTeams = useMemo(
     () =>
@@ -121,6 +140,147 @@ export default function BracketPage() {
     });
   }
 
+  function buildQualifiedTeams() {
+    const groupWinners: QualifiedTeam[] = [];
+    const groupRunnersUp: QualifiedTeam[] = [];
+    const selectedThirds: QualifiedTeam[] = [];
+
+    for (const group of groupKeys) {
+      const selection = selections[group];
+      groupWinners.push({ team: selection.first, group, rank: 1 });
+      groupRunnersUp.push({ team: selection.second, group, rank: 2 });
+
+      if (bestThirdTeams.includes(selection.third)) {
+        selectedThirds.push({ team: selection.third, group, rank: 3 });
+      }
+    }
+
+    return {
+      groupWinners,
+      groupRunnersUp,
+      selectedThirds,
+    };
+  }
+
+  function pairFirstsWithThirds(
+    firsts: QualifiedTeam[],
+    thirds: QualifiedTeam[],
+  ) {
+    const remainingFirsts = [...firsts];
+    const remainingThirds = [...thirds];
+    const matches: KnockoutMatch[] = [];
+
+    while (remainingThirds.length > 0 && remainingFirsts.length > 0) {
+      const first = remainingFirsts.shift() as QualifiedTeam;
+      const thirdIndex = remainingThirds.findIndex(
+        (third) => third.group !== first.group,
+      );
+      const pickedIndex = thirdIndex === -1 ? 0 : thirdIndex;
+      const third = remainingThirds.splice(pickedIndex, 1)[0];
+
+      matches.push({
+        id: `r32-${matches.length + 1}`,
+        teams: [first, third],
+      });
+    }
+
+    return {
+      matches,
+      remainingFirsts,
+    };
+  }
+
+  function pairSequentially(
+    teams: QualifiedTeam[],
+    idPrefix: string,
+    startIndex: number,
+  ) {
+    const matches: KnockoutMatch[] = [];
+
+    for (let index = 0; index < teams.length; index += 2) {
+      matches.push({
+        id: `${idPrefix}-${startIndex + matches.length + 1}`,
+        teams: [teams[index], teams[index + 1]],
+      });
+    }
+
+    return matches;
+  }
+
+  function enterKnockout() {
+    const { groupWinners, groupRunnersUp, selectedThirds } =
+      buildQualifiedTeams();
+    const { matches: firstVsThirdMatches, remainingFirsts } =
+      pairFirstsWithThirds(groupWinners, selectedThirds);
+    const secondVsSecondMatches = pairSequentially(
+      groupRunnersUp,
+      "r32",
+      firstVsThirdMatches.length,
+    );
+    const firstVsFirstMatches = pairSequentially(
+      remainingFirsts,
+      "r32",
+      firstVsThirdMatches.length + secondVsSecondMatches.length,
+    );
+
+    setKnockoutRounds([
+      {
+        name: "32强",
+        matches: [
+          ...firstVsThirdMatches,
+          ...secondVsSecondMatches,
+          ...firstVsFirstMatches,
+        ],
+      },
+    ]);
+    setStage("knockout");
+  }
+
+  function chooseWinner(roundIndex: number, matchIndex: number, winner: QualifiedTeam) {
+    setKnockoutRounds((current) => {
+      const next = current.slice(0, roundIndex + 1).map((round, index) =>
+        index === roundIndex
+          ? {
+              ...round,
+              matches: round.matches.map((match, innerIndex) =>
+                innerIndex === matchIndex ? { ...match, winner } : match,
+              ),
+            }
+          : round,
+      );
+      const currentRound = next[roundIndex];
+      const winners = currentRound.matches
+        .map((match) => match.winner)
+        .filter(Boolean) as QualifiedTeam[];
+
+      if (
+        winners.length === currentRound.matches.length &&
+        roundIndex < knockoutRoundNames.length - 1
+      ) {
+        next.push({
+          name: knockoutRoundNames[roundIndex + 1],
+          matches: pairSequentially(
+            winners,
+            `r${roundIndex + 1}`,
+            0,
+          ),
+        });
+      }
+
+      return next;
+    });
+  }
+
+  function resetToGroups() {
+    setStage("groups");
+    setKnockoutRounds([]);
+  }
+
+  const champion =
+    knockoutRounds.at(-1)?.name === "决赛"
+      ? knockoutRounds.at(-1)?.matches[0]?.winner
+      : undefined;
+
   return (
     <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
       <section className="mx-auto w-full max-w-5xl">
@@ -142,14 +302,28 @@ export default function BracketPage() {
         </div>
 
         <div className="mb-5 grid grid-cols-2 gap-2 text-center text-sm font-bold">
-          <div className="rounded-lg bg-[#102a43] px-3 py-3 text-white">
+          <div
+            className={`rounded-lg px-3 py-3 ${
+              stage === "groups"
+                ? "bg-[#102a43] text-white"
+                : "border border-[#cbd2d9] bg-white text-[#52606d]"
+            }`}
+          >
             阶段一：小组晋级预测
           </div>
-          <div className="rounded-lg border border-[#cbd2d9] bg-white px-3 py-3 text-[#52606d]">
+          <div
+            className={`rounded-lg px-3 py-3 ${
+              stage === "knockout"
+                ? "bg-[#102a43] text-white"
+                : "border border-[#cbd2d9] bg-white text-[#52606d]"
+            }`}
+          >
             阶段二：淘汰赛预测
           </div>
         </div>
 
+        {stage === "groups" ? (
+          <>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {groupKeys.map((group) => {
             const selectedTeams = Object.values(selections[group]).filter(Boolean);
@@ -253,17 +427,81 @@ export default function BracketPage() {
         <button
           type="button"
           disabled={!canEnterKnockout}
-          onClick={() => setKnockoutMessage("淘汰赛预测将在下一步生成")}
+          onClick={enterKnockout}
           className="mt-4 h-12 w-full rounded-lg bg-[#d64545] px-5 text-base font-bold text-white transition hover:bg-[#ba2525] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
         >
           进入淘汰赛预测
         </button>
+          </>
+        ) : (
+          <>
+            <div className="overflow-x-auto pb-4">
+              <div className="grid min-w-[980px] grid-cols-5 gap-4">
+                {knockoutRounds.map((round, roundIndex) => (
+                  <section key={round.name}>
+                    <h2 className="mb-3 text-center text-sm font-black text-[#102a43]">
+                      {round.name}
+                    </h2>
+                    <div className="flex min-h-[560px] flex-col justify-around gap-4">
+                      {round.matches.map((match, matchIndex) => (
+                        <article
+                          key={match.id}
+                          className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
+                        >
+                          {match.teams.map((team) => {
+                            const selected = match.winner?.team === team.team;
 
-        {knockoutMessage ? (
-          <div className="mt-4 rounded-lg border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm text-[#0f7b3f]">
-            {knockoutMessage}
-          </div>
-        ) : null}
+                            return (
+                              <button
+                                key={`${match.id}-${team.team}`}
+                                type="button"
+                                onClick={() =>
+                                  chooseWinner(roundIndex, matchIndex, team)
+                                }
+                                className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
+                                  selected
+                                    ? "text-[#0f7b3f]"
+                                    : "text-[#102a43]"
+                                }`}
+                              >
+                                {getTeamDisplayName(team.team)}
+                              </button>
+                            );
+                          })}
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+
+                <section>
+                  <h2 className="mb-3 text-center text-sm font-black text-[#102a43]">
+                    冠军
+                  </h2>
+                  <div className="flex min-h-[560px] items-center">
+                    <div className="w-full rounded-lg border border-[#d9e2ec] bg-white p-4 text-center shadow-sm">
+                      {champion ? (
+                        <p className="text-xl font-black text-[#102a43]">
+                          冠军：{getTeamDisplayName(champion.team)}
+                        </p>
+                      ) : (
+                        <p className="text-sm text-[#627d98]">等待决赛选择</p>
+                      )}
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={resetToGroups}
+              className="mt-4 h-12 w-full rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+            >
+              重新选择小组晋级
+            </button>
+          </>
+        )}
       </section>
     </main>
   );
