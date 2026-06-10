@@ -153,6 +153,10 @@ export default function ProfilePage() {
     setCopied(true);
   }
 
+  function savePoster() {
+    window.print();
+  }
+
   if (loading) {
     return (
       <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
@@ -230,12 +234,6 @@ export default function ProfilePage() {
                   {player?.region ?? "-"}
                 </dd>
               </div>
-              <div className="space-y-1">
-                <dt className="text-[#627d98]">player_id</dt>
-                <dd className="break-all rounded-md bg-[#f0f4f8] px-3 py-2 text-xs font-semibold text-[#334e68]">
-                  {playerId}
-                </dd>
-              </div>
             </dl>
           </article>
 
@@ -288,25 +286,125 @@ export default function ProfilePage() {
           </article>
 
           <article className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
-            <h2 className="text-lg font-black text-[#102a43]">分享邀请</h2>
+            <h2 className="text-lg font-black text-[#102a43]">
+              分享我的战绩
+            </h2>
             <p className="mt-2 text-sm font-semibold text-[#d64545]">
               邀请好友一起预测世界杯
             </p>
-            <p className="mt-3 break-all rounded-md bg-[#f0f4f8] px-3 py-3 text-xs font-semibold text-[#334e68]">
-              {shareLink}
-            </p>
-            <button
-              type="button"
-              onClick={copyShareLink}
-              className="mt-4 h-11 w-full rounded-md bg-[#d64545] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525]"
+
+            <div
+              id="profile-poster"
+              className="mt-4 mx-auto flex min-h-[640px] w-full max-w-[360px] flex-col overflow-hidden rounded-lg bg-[#102a43] p-5 text-white shadow-lg print:shadow-none"
             >
-              复制分享链接
-            </button>
+              <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4">
+                <p className="text-sm font-bold text-[#f7c948]">
+                  2026 足球世界杯预测
+                </p>
+                <h3 className="mt-2 text-3xl font-black leading-tight">
+                  美加墨大乱斗
+                </h3>
+                <p className="mt-3 text-sm text-[#bcccdc]">
+                  我的世界杯预测战绩海报
+                </p>
+              </div>
+
+              <div className="mt-5 rounded-lg bg-white p-4 text-[#102a43]">
+                <p className="text-xs font-bold text-[#d64545]">玩家</p>
+                <p className="mt-1 text-2xl font-black">
+                  {player?.nickname ?? "-"}
+                </p>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p className="text-[#627d98]">主队国家</p>
+                    <p className="mt-1 font-black">
+                      {player ? getTeamDisplayName(player.country) : "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[#627d98]">地区</p>
+                    <p className="mt-1 font-black">{player?.region ?? "-"}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-lg bg-[#f7c948] p-3 text-[#102a43]">
+                  <p className="text-xs font-bold">总积分</p>
+                  <p className="mt-1 text-3xl font-black">
+                    {Math.round(stats.totalPoints)}
+                  </p>
+                </div>
+                <div className="rounded-lg bg-white p-3 text-[#102a43]">
+                  <p className="text-xs font-bold text-[#627d98]">命中率</p>
+                  <p className="mt-1 text-3xl font-black">
+                    {(stats.hitRate * 100).toFixed(0)}%
+                  </p>
+                </div>
+                <div className="rounded-lg bg-white p-3 text-[#102a43]">
+                  <p className="text-xs font-bold text-[#627d98]">全球排名</p>
+                  <p className="mt-1 text-lg font-black">
+                    {formatRank(stats.globalRank)}
+                  </p>
+                </div>
+                <div className="rounded-lg bg-white p-3 text-[#102a43]">
+                  <p className="text-xs font-bold text-[#627d98]">地区排名</p>
+                  <p className="mt-1 text-lg font-black">
+                    {formatRank(stats.regionRank)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-lg border border-white/15 bg-white/10 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-bold text-[#f7c948]">
+                      已预测场数
+                    </p>
+                    <p className="mt-1 text-3xl font-black">
+                      {stats.predictionCount}
+                    </p>
+                  </div>
+                  <div className="rounded-full border border-[#f7c948] px-4 py-2 text-sm font-black text-[#f7c948]">
+                    冠军挑战
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto rounded-lg bg-white p-4 text-center text-[#102a43]">
+                <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-md border-2 border-dashed border-[#9fb3c8] bg-[#f0f4f8] px-3 text-sm font-black leading-5 text-[#334e68]">
+                  扫码/打开链接来挑战我
+                </div>
+                <p className="mt-3 break-all text-xs font-semibold text-[#627d98]">
+                  {shareLink}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={copyShareLink}
+                className="h-11 rounded-md bg-[#d64545] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525]"
+              >
+                复制分享链接
+              </button>
+              <button
+                type="button"
+                onClick={savePoster}
+                className="h-11 rounded-md border border-[#cbd2d9] bg-white px-4 text-sm font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+              >
+                保存海报
+              </button>
+            </div>
             {copied ? (
               <p className="mt-3 text-sm font-bold text-[#0f7b3f]">
-                已复制，发给朋友来挑战你！
+                分享链接已复制
               </p>
             ) : null}
+            <p className="mt-3 text-xs leading-5 text-[#627d98]">
+              保存海报会打开浏览器打印面板，可选择保存为 PDF，或直接截图分享。
+            </p>
           </article>
         </div>
       </section>
