@@ -236,6 +236,16 @@ export default function Home() {
             世界杯晋级之路
           </Link>
         </form>
+
+        <div className="mt-8 text-center text-sm font-semibold text-[#627d98]">
+          <p>官网：</p>
+          <a
+            href="https://2026wc.fun"
+            className="text-[#d64545] underline underline-offset-4"
+          >
+            https://2026wc.fun
+          </a>
+        </div>
       </section>
     </main>
   );
