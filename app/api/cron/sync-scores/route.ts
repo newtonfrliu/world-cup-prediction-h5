@@ -2,6 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { syncWorldCupScores } from "@/lib/syncScores";
 
+function buildErrorResponse(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+  const stack =
+    process.env.NODE_ENV === "development" && error instanceof Error
+      ? error.stack
+      : undefined;
+
+  return {
+    success: false,
+    error: message,
+    stack,
+  };
+}
+
 async function handleSyncScores(request: NextRequest) {
   const cronSecret = process.env.CRON_SECRET;
   const authorization = request.headers.get("authorization");
@@ -38,12 +52,7 @@ async function handleSyncScores(request: NextRequest) {
       skipped: result.skipped.length,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-
-    return NextResponse.json(
-      { success: false, error: message },
-      { status: 500 },
-    );
+    return NextResponse.json(buildErrorResponse(error), { status: 500 });
   }
 }
 
