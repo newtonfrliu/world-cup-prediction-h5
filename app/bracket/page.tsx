@@ -70,6 +70,7 @@ const emptySelections = groupKeys.reduce(
   {} as Record<GroupKey, GroupSelection>,
 );
 const knockoutRoundNames = ["32强", "16强", "8强", "4强", "决赛"];
+const expectedRoundMatchCounts = [16, 8, 4, 2, 1];
 
 export default function BracketPage() {
   const [selections, setSelections] =
@@ -257,14 +258,14 @@ export default function BracketPage() {
         winners.length === currentRound.matches.length &&
         roundIndex < knockoutRoundNames.length - 1
       ) {
-        next.push({
+        next[roundIndex + 1] = {
           name: knockoutRoundNames[roundIndex + 1],
           matches: pairSequentially(
             winners,
             `r${roundIndex + 1}`,
             0,
           ),
-        });
+        };
       }
 
       return next;
@@ -277,8 +278,8 @@ export default function BracketPage() {
   }
 
   const champion =
-    knockoutRounds.at(-1)?.name === "决赛"
-      ? knockoutRounds.at(-1)?.matches[0]?.winner
+    knockoutRounds[4]?.name === "决赛"
+      ? knockoutRounds[4]?.matches[0]?.winner
       : undefined;
 
   return (
@@ -436,48 +437,71 @@ export default function BracketPage() {
         ) : (
           <>
             <div className="overflow-x-auto pb-4">
-              <div className="grid min-w-[980px] grid-cols-5 gap-4">
-                {knockoutRounds.map((round, roundIndex) => (
-                  <section key={round.name}>
-                    <h2 className="mb-3 text-center text-sm font-black text-[#102a43]">
-                      {round.name}
-                    </h2>
-                    <div className="flex min-h-[560px] flex-col justify-around gap-4">
-                      {round.matches.map((match, matchIndex) => (
-                        <article
-                          key={match.id}
-                          className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
-                        >
-                          {match.teams.map((team) => {
-                            const selected = match.winner?.team === team.team;
+              <div className="grid min-w-[1180px] grid-cols-6 gap-4">
+                {knockoutRoundNames.map((roundName, roundIndex) => {
+                  const round = knockoutRounds[roundIndex];
+                  const selectedCount =
+                    round?.matches.filter((match) => match.winner).length ?? 0;
+                  const totalCount = expectedRoundMatchCounts[roundIndex];
 
-                            return (
-                              <button
-                                key={`${match.id}-${team.team}`}
-                                type="button"
-                                onClick={() =>
-                                  chooseWinner(roundIndex, matchIndex, team)
-                                }
-                                className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
-                                  selected
-                                    ? "text-[#0f7b3f]"
-                                    : "text-[#102a43]"
-                                }`}
-                              >
-                                {getTeamDisplayName(team.team)}
-                              </button>
-                            );
-                          })}
-                        </article>
-                      ))}
-                    </div>
-                  </section>
-                ))}
+                  return (
+                    <section key={roundName}>
+                      <div className="mb-3 text-center">
+                        <h2 className="text-sm font-black text-[#102a43]">
+                          {roundName}
+                        </h2>
+                        <p className="mt-1 text-xs text-[#627d98]">
+                          已选择 {selectedCount} / {totalCount}
+                        </p>
+                      </div>
+                      <div className="flex min-h-[560px] flex-col justify-around gap-4">
+                        {!round ? (
+                          <div className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-center text-sm text-[#627d98] shadow-sm">
+                            等待上一轮完成
+                          </div>
+                        ) : null}
+
+                        {round?.matches.map((match, matchIndex) => (
+                          <article
+                            key={match.id}
+                            className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
+                          >
+                            {match.teams.map((team) => {
+                              const selected = match.winner?.team === team.team;
+
+                              return (
+                                <button
+                                  key={`${match.id}-${team.team}`}
+                                  type="button"
+                                  onClick={() =>
+                                    chooseWinner(roundIndex, matchIndex, team)
+                                  }
+                                  className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
+                                    selected
+                                      ? "text-[#0f7b3f]"
+                                      : "text-[#102a43]"
+                                  }`}
+                                >
+                                  {getTeamDisplayName(team.team)}
+                                </button>
+                              );
+                            })}
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })}
 
                 <section>
-                  <h2 className="mb-3 text-center text-sm font-black text-[#102a43]">
-                    冠军
-                  </h2>
+                  <div className="mb-3 text-center">
+                    <h2 className="text-sm font-black text-[#102a43]">
+                      冠军
+                    </h2>
+                    <p className="mt-1 text-xs text-[#627d98]">
+                      已选择 {champion ? 1 : 0} / 1
+                    </p>
+                  </div>
                   <div className="flex min-h-[560px] items-center">
                     <div className="w-full rounded-lg border border-[#d9e2ec] bg-white p-4 text-center shadow-sm">
                       {champion ? (
@@ -485,7 +509,9 @@ export default function BracketPage() {
                           冠军：{getTeamDisplayName(champion.team)}
                         </p>
                       ) : (
-                        <p className="text-sm text-[#627d98]">等待决赛选择</p>
+                        <p className="text-sm text-[#627d98]">
+                          等待上一轮完成
+                        </p>
                       )}
                     </div>
                   </div>
