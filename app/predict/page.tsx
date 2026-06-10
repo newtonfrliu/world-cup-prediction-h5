@@ -68,6 +68,14 @@ export default function PredictPage() {
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
+  const predictionsByMatchId = useMemo(() => {
+    return new Map(
+      myPredictions.map((prediction) => [
+        prediction.match_id,
+        prediction.prediction,
+      ]),
+    );
+  }, [myPredictions]);
 
   async function loadMyPredictions(currentPlayerId: string) {
     const { data, error: predictionError } = await supabase
@@ -261,6 +269,7 @@ export default function PredictPage() {
           {matches.map((match) => {
             const isPredicted = predictedMatchIds.has(match.id);
             const isSubmitting = submittingMatchId === match.id;
+            const selectedPrediction = predictionsByMatchId.get(match.id);
 
             return (
               <article
@@ -278,8 +287,11 @@ export default function PredictPage() {
                     </p>
                   </div>
                   {isPredicted ? (
-                    <span className="shrink-0 rounded-md bg-[#e3f9e5] px-2 py-1 text-xs font-bold text-[#0f7b3f]">
-                      已预测
+                    <span className="shrink-0 rounded-md bg-[#d64545] px-2 py-1 text-xs font-bold text-white">
+                      已预测：
+                      {selectedPrediction
+                        ? predictionLabels[selectedPrediction]
+                        : ""}
                     </span>
                   ) : null}
                 </div>
@@ -300,17 +312,26 @@ export default function PredictPage() {
                 </div>
 
                 <div className="mt-4 grid grid-cols-3 gap-2">
-                  {predictionOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      disabled={!playerId || isPredicted || isSubmitting}
-                      onClick={() => submitPrediction(match, option.value)}
-                      className="h-11 rounded-md bg-[#d64545] px-2 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
-                    >
-                      {isSubmitting ? "提交中" : option.label}
-                    </button>
-                  ))}
+                  {predictionOptions.map((option) => {
+                    const isSelected = selectedPrediction === option.value;
+                    const buttonClass = isPredicted
+                      ? isSelected
+                        ? "bg-[#102a43] text-white ring-2 ring-[#d64545]"
+                        : "bg-[#e4e7eb] text-[#829ab1]"
+                      : "bg-[#d64545] text-white hover:bg-[#ba2525]";
+
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        disabled={!playerId || isPredicted || isSubmitting}
+                        onClick={() => submitPrediction(match, option.value)}
+                        className={`h-11 rounded-md px-2 text-sm font-bold transition disabled:cursor-not-allowed ${buttonClass}`}
+                      >
+                        {isSubmitting ? "提交中" : option.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </article>
             );
