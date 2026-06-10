@@ -18,13 +18,13 @@ type Bookmaker = {
   markets: Array<{
     key: string;
     outcomes: Outcome[];
-  }>;
+  }> | null;
 };
 
 type OddsEvent = {
   home_team: string;
   away_team: string;
-  bookmakers: Bookmaker[];
+  bookmakers?: Bookmaker[] | null;
 };
 
 type MatchedOdds = {
@@ -38,16 +38,19 @@ export type SyncOddsResult = {
   skipped: Array<{
     home_team: string;
     away_team: string;
+    reason?: string;
   }>;
   creditsUsed: string | null;
   creditsRemaining: string | null;
   creditsTotalUsed: string | null;
+  settingsWarning?: string;
 };
 
 type SyncOddsOptions = {
   oddsApiKey: string;
   supabaseUrl: string;
   supabaseAnonKey: string;
+  onStep?: (step: "call_sync_odds" | "update_supabase") => void;
 };
 
 const oddsApiUrl =
@@ -66,19 +69,40 @@ function isPlaceholderTeam(value: string) {
   );
 }
 
-function pickBookmaker(event: OddsEvent) {
-  return (
-    event.bookmakers.find((bookmaker) => bookmaker.key === "bet365") ??
-    event.bookmakers[0]
+function getH2hOutcomes(event: OddsEvent): {
+  outcomes: Outcome[] | null;
+  reason?: string;
+} {
+  const bookmakers = event.bookmakers ?? [];
+
+  if (bookmakers.length === 0) {
+    return { outcomes: null, reason: "No bookmakers found" };
+  }
+
+  const bookmakersWithH2h = bookmakers.filter((bookmaker) =>
+    (bookmaker.markets ?? []).some((market) => market.key === "h2h"),
   );
+
+  if (bookmakersWithH2h.length === 0) {
+    return { outcomes: null, reason: "No h2h market found" };
+  }
+
+  const bookmaker =
+    bookmakersWithH2h.find((item) => item.key === "bet365") ??
+    bookmakersWithH2h[0];
+  const market = (bookmaker.markets ?? []).find((item) => item.key === "h2h");
+
+  if (!market?.outcomes || market.outcomes.length === 0) {
+    return { outcomes: null, reason: "No outcomes found" };
+  }
+
+  return { outcomes: market.outcomes };
 }
 
-function getH2hOutcomes(event: OddsEvent) {
-  const bookmaker = pickBookmaker(event);
-  return bookmaker?.markets.find((market) => market.key === "h2h")?.outcomes;
-}
-
-function getMatchedOdds(match: Match, event: OddsEvent): MatchedOdds | null {
+function getMatchedOdds(
+  match: Match,
+  event: OddsEvent,
+): { odds: MatchedOdds | null; reason?: string } {
   const eventHomeTeam = normalizeTeamName(event.home_team);
   const eventAwayTeam = normalizeTeamName(event.away_team);
   const matchHomeTeam = normalizeTeamName(match.home_team);
@@ -89,13 +113,13 @@ function getMatchedOdds(match: Match, event: OddsEvent): MatchedOdds | null {
     matchHomeTeam === eventAwayTeam && matchAwayTeam === eventHomeTeam;
 
   if (!isSameOrder && !isReversedOrder) {
-    return null;
+    return { odds: null };
   }
 
-  const outcomes = getH2hOutcomes(event);
+  const { outcomes, reason } = getH2hOutcomes(event);
 
   if (!outcomes) {
-    return null;
+    return { odds: null, reason };
   }
 
   const pricesByTeam = new Map(
@@ -110,13 +134,15 @@ function getMatchedOdds(match: Match, event: OddsEvent): MatchedOdds | null {
     typeof oddsDraw !== "number" ||
     typeof oddsAway !== "number"
   ) {
-    return null;
+    return { odds: null, reason: "No outcomes found" };
   }
 
   return {
-    odds_home: oddsHome,
-    odds_draw: oddsDraw,
-    odds_away: oddsAway,
+    odds: {
+      odds_home: oddsHome,
+      odds_draw: oddsDraw,
+      odds_away: oddsAway,
+    },
   };
 }
 
@@ -133,7 +159,7 @@ async function fetchOdds(apiKey: string) {
 
   if (!response.ok) {
     throw new Error(
-      `The Odds API error: ${response.status} ${await response.text()}`,
+      `The Odds API failed: ${response.status} ${await response.text()}`,
     );
   }
 
@@ -153,16 +179,31 @@ export async function syncWorldCupOdds({
   oddsApiKey,
   supabaseUrl,
   supabaseAnonKey,
+  onStep,
 }: SyncOddsOptions): Promise<SyncOddsResult> {
+  if (!oddsApiKey) {
+    throw new Error("Missing ODDS_API_KEY");
+  }
+
+  if (!supabaseUrl) {
+    throw new Error("Missing Supabase URL");
+  }
+
+  if (!supabaseAnonKey) {
+    throw new Error("Missing Supabase anon key");
+  }
+
   const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+  onStep?.("call_sync_odds");
   const { events, credits } = await fetchOdds(oddsApiKey);
+  onStep?.("update_supabase");
   const { data: matches, error: matchesError } = await supabase
     .from("matches")
     .select("id, home_team, away_team, status")
     .or("status.is.null,status.neq.finished");
 
   if (matchesError) {
-    throw matchesError;
+    throw new Error(`Supabase update failed: ${matchesError.message}`);
   }
 
   const eligibleMatches = (matches ?? []).filter(
@@ -173,25 +214,26 @@ export async function syncWorldCupOdds({
   let updated = 0;
 
   for (const match of eligibleMatches) {
-    const matchedOdds = events
+    const matchedResult = events
       .map((event) => getMatchedOdds(match, event))
-      .find((odds) => odds !== null);
+      .find((result) => result.odds !== null || result.reason);
 
-    if (!matchedOdds) {
+    if (!matchedResult?.odds) {
       skipped.push({
         home_team: match.home_team,
         away_team: match.away_team,
+        reason: matchedResult?.reason ?? "No matched odds found",
       });
       continue;
     }
 
     const { error: updateError } = await supabase
       .from("matches")
-      .update(matchedOdds)
+      .update(matchedResult.odds)
       .eq("id", match.id);
 
     if (updateError) {
-      throw updateError;
+      throw new Error(`Supabase update failed: ${updateError.message}`);
     }
 
     updated += 1;
@@ -209,9 +251,9 @@ export async function syncWorldCupOdds({
       { onConflict: "key" },
     );
 
-  if (settingError) {
-    throw settingError;
-  }
+  const settingsWarning = settingError
+    ? `Supabase update failed: ${settingError.message}`
+    : undefined;
 
   return {
     updated,
@@ -219,5 +261,6 @@ export async function syncWorldCupOdds({
     creditsUsed: credits.last,
     creditsRemaining: credits.remaining,
     creditsTotalUsed: credits.used,
+    settingsWarning,
   };
 }

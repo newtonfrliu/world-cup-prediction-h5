@@ -29,6 +29,7 @@ type SyncScoresOptions = {
   oddsApiKey: string;
   supabaseUrl: string;
   supabaseAnonKey: string;
+  onStep?: (step: "call_sync_odds" | "update_supabase") => void;
 };
 
 export type SyncScoresResult = {
@@ -132,7 +133,7 @@ async function fetchScores(apiKey: string) {
 
   if (!response.ok) {
     throw new Error(
-      `The Odds API scores error: ${response.status} ${await response.text()}`,
+      `The Odds API failed: ${response.status} ${await response.text()}`,
     );
   }
 
@@ -143,16 +144,19 @@ export async function syncWorldCupScores({
   oddsApiKey,
   supabaseUrl,
   supabaseAnonKey,
+  onStep,
 }: SyncScoresOptions): Promise<SyncScoresResult> {
   const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+  onStep?.("call_sync_odds");
   const events = (await fetchScores(oddsApiKey)).filter(isFinishedEvent);
+  onStep?.("update_supabase");
   const { data: matches, error: matchesError } = await supabase
     .from("matches")
     .select("id, home_team, away_team, start_time, status")
     .or("status.is.null,status.neq.finished");
 
   if (matchesError) {
-    throw matchesError;
+    throw new Error(`Supabase update failed: ${matchesError.message}`);
   }
 
   const skipped: SyncScoresResult["skipped"] = [];
@@ -191,7 +195,7 @@ export async function syncWorldCupScores({
       .eq("id", match.id);
 
     if (matchUpdateError) {
-      throw matchUpdateError;
+      throw new Error(`Supabase update failed: ${matchUpdateError.message}`);
     }
 
     const { data: predictions, error: predictionsError } = await supabase
@@ -202,7 +206,7 @@ export async function syncWorldCupScores({
       .eq("match_id", match.id);
 
     if (predictionsError) {
-      throw predictionsError;
+      throw new Error(`Supabase update failed: ${predictionsError.message}`);
     }
 
     const updates = ((predictions ?? []) as Prediction[]).map((prediction) =>
@@ -220,7 +224,7 @@ export async function syncWorldCupScores({
     const failedUpdate = updateResults.find((item) => item.error);
 
     if (failedUpdate?.error) {
-      throw failedUpdate.error;
+      throw new Error(`Supabase update failed: ${failedUpdate.error.message}`);
     }
 
     finished += 1;

@@ -2,57 +2,76 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { syncWorldCupScores } from "@/lib/syncScores";
 
-function buildErrorResponse(error: unknown) {
+type CronStep =
+  | "validate_auth"
+  | "read_env"
+  | "call_sync_odds"
+  | "update_supabase"
+  | "done";
+
+function buildErrorResponse(error: unknown, step: CronStep) {
   const message = error instanceof Error ? error.message : String(error);
-  const stack =
-    process.env.NODE_ENV === "development" && error instanceof Error
-      ? error.stack
-      : undefined;
 
   return {
     success: false,
     error: message,
-    stack,
+    step,
   };
 }
 
 async function handleSyncScores(request: NextRequest) {
-  const cronSecret = process.env.CRON_SECRET;
-  const authorization = request.headers.get("authorization");
-
-  if (!cronSecret || authorization !== `Bearer ${cronSecret}`) {
-    return NextResponse.json(
-      { success: false, error: "Unauthorized" },
-      { status: 401 },
-    );
-  }
-
-  const oddsApiKey = process.env.ODDS_API_KEY;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!oddsApiKey || !supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.json(
-      { success: false, error: "Missing server environment variables." },
-      { status: 500 },
-    );
-  }
+  let step: CronStep = "validate_auth";
 
   try {
+    const cronSecret = process.env.CRON_SECRET;
+    const authorization = request.headers.get("authorization");
+
+    if (!cronSecret || authorization !== `Bearer ${cronSecret}`) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized", step },
+        { status: 401 },
+      );
+    }
+
+    step = "read_env";
+    const oddsApiKey = process.env.ODDS_API_KEY;
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!oddsApiKey) {
+      throw new Error("Missing environment variable: ODDS_API_KEY");
+    }
+
+    if (!supabaseUrl) {
+      throw new Error("Missing environment variable: NEXT_PUBLIC_SUPABASE_URL");
+    }
+
+    if (!supabaseAnonKey) {
+      throw new Error(
+        "Missing environment variable: NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      );
+    }
+
+    step = "call_sync_odds";
     const result = await syncWorldCupScores({
       oddsApiKey,
       supabaseUrl,
       supabaseAnonKey,
+      onStep: (nextStep) => {
+        step = nextStep;
+      },
     });
 
+    step = "done";
     return NextResponse.json({
       success: true,
+      step,
       finished: result.finished,
       settled: result.settled,
       skipped: result.skipped.length,
     });
   } catch (error) {
-    return NextResponse.json(buildErrorResponse(error), { status: 500 });
+    return NextResponse.json(buildErrorResponse(error, step), { status: 500 });
   }
 }
 

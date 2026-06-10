@@ -24,16 +24,19 @@ type MatchForm = {
 };
 
 type SyncOddsResponse = {
+  success?: boolean;
   updated: number;
   skipped: Array<{
     home_team: string;
     away_team: string;
+    reason?: string;
   }>;
   creditsUsed: string | null;
   creditsRemaining: string | null;
   creditsTotalUsed: string | null;
   lastSyncAt: string;
-  error?: string;
+  error?: unknown;
+  settingsWarning?: string;
 };
 
 type StoredSyncResult = {
@@ -115,6 +118,18 @@ function formatSyncTime(value: string) {
   const minute = String(date.getMinutes()).padStart(2, "0");
 
   return `${year}-${month}-${day} ${hour}:${minute}`;
+}
+
+function formatErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  return JSON.stringify(error);
 }
 
 function formFromMatch(match: Match): MatchForm {
@@ -268,13 +283,23 @@ export default function AdminPage() {
     setError("");
     setMessage("");
 
-    const response = await fetch("/api/admin/sync-odds", {
-      method: "POST",
-    });
-    const result = (await response.json()) as SyncOddsResponse;
+    let result: SyncOddsResponse;
 
-    if (!response.ok) {
-      setError(result.error ?? "同步赔率失败。");
+    try {
+      const response = await fetch("/api/admin/sync-odds", {
+        method: "POST",
+      });
+
+      result = (await response.json()) as SyncOddsResponse;
+
+      if (!response.ok) {
+        setError(formatErrorMessage(result.error ?? result));
+        setSyncMessage("");
+        setSyncingOdds(false);
+        return;
+      }
+    } catch (fetchError) {
+      setError(formatErrorMessage(fetchError));
       setSyncMessage("");
       setSyncingOdds(false);
       return;
@@ -295,6 +320,11 @@ export default function AdminPage() {
     setSyncMessage(
       `同步完成：Updated ${result.updated} matches, Skipped ${result.skipped.length} matches, Credits used: ${result.creditsUsed ?? "-"}`,
     );
+
+    if (result.settingsWarning) {
+      setError(result.settingsWarning);
+    }
+
     setSyncingOdds(false);
     await loadMatches();
   }
