@@ -8,8 +8,18 @@ import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
+type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
+type MyPrediction = Pick<
+  Prediction,
+  "id" | "match_id" | "prediction" | "odds_at_prediction" | "points"
+> & {
+  matches: Pick<
+    Match,
+    "home_team" | "away_team" | "start_time" | "status" | "result"
+  > | null;
+};
 
 const predictionOptions: Array<{
   label: string;
@@ -20,6 +30,12 @@ const predictionOptions: Array<{
   { label: "平局", value: "draw", oddsKey: "odds_draw" },
   { label: "客胜", value: "away_win", oddsKey: "odds_away" },
 ];
+
+const predictionLabels: Record<PredictionChoice, string> = {
+  home_win: "主胜",
+  draw: "平局",
+  away_win: "客胜",
+};
 
 function formatMatchTime(value: string) {
   const date = new Date(value);
@@ -42,6 +58,8 @@ export default function PredictPage() {
     () => new Set(),
   );
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [myPredictions, setMyPredictions] = useState<MyPrediction[]>([]);
+  const [showMyPredictions, setShowMyPredictions] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submittingMatchId, setSubmittingMatchId] = useState<string | null>(
     null,
@@ -50,6 +68,24 @@ export default function PredictPage() {
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
+
+  async function loadMyPredictions(currentPlayerId: string) {
+    const { data, error: predictionError } = await supabase
+      .from("predictions")
+      .select(
+        "id, match_id, prediction, odds_at_prediction, points, matches(home_team, away_team, start_time, status, result)",
+      )
+      .eq("player_id", currentPlayerId);
+
+    if (predictionError) {
+      throw predictionError;
+    }
+
+    const predictions = (data ?? []) as MyPrediction[];
+
+    setMyPredictions(predictions);
+    setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
+  }
 
   useEffect(() => {
     async function loadMatches() {
@@ -78,20 +114,7 @@ export default function PredictPage() {
       setMatches(matchData ?? []);
 
       if (storedPlayerId) {
-        const { data: predictionData, error: predictionError } = await supabase
-          .from("predictions")
-          .select("match_id")
-          .eq("player_id", storedPlayerId);
-
-        if (predictionError) {
-          setError(predictionError.message);
-          setLoading(false);
-          return;
-        }
-
-        setPredictedMatchIds(
-          new Set((predictionData ?? []).map((item) => item.match_id)),
-        );
+        await loadMyPredictions(storedPlayerId);
       }
 
       setLoading(false);
@@ -136,6 +159,7 @@ export default function PredictPage() {
 
     setPredictedMatchIds((current) => new Set(current).add(match.id));
     setSubmittingMatchId(null);
+    await loadMyPredictions(playerId);
   }
 
   return (
@@ -167,6 +191,57 @@ export default function PredictPage() {
         {error ? (
           <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
             {error}
+          </div>
+        ) : null}
+
+        <button
+          type="button"
+          onClick={() => setShowMyPredictions((current) => !current)}
+          className="mb-5 h-11 w-full rounded-md border border-[#cbd2d9] bg-white px-4 text-sm font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+        >
+          我的预测
+        </button>
+
+        {showMyPredictions ? (
+          <div className="mb-5 space-y-3">
+            {myPredictions.length === 0 ? (
+              <div className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#52606d]">
+                暂无预测记录。
+              </div>
+            ) : null}
+
+            {myPredictions.map((prediction) => {
+              const match = prediction.matches;
+
+              return (
+                <article
+                  key={prediction.id}
+                  className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm shadow-sm"
+                >
+                  <h2 className="text-base font-black text-[#102a43]">
+                    {match
+                      ? `${getTeamDisplayName(match.home_team)} VS ${getTeamDisplayName(match.away_team)}`
+                      : "未知比赛"}
+                  </h2>
+                  <p className="mt-2 text-[#627d98]">
+                    开赛时间：
+                    {match ? formatMatchTime(match.start_time) : "-"}
+                  </p>
+                  <p className="mt-1 text-[#627d98]">
+                    我的选择：{predictionLabels[prediction.prediction]}
+                  </p>
+                  <p className="mt-1 text-[#627d98]">
+                    预测时赔率：{prediction.odds_at_prediction}
+                  </p>
+                  <p className="mt-1 text-[#627d98]">
+                    比赛状态：{match?.status ?? "-"}
+                  </p>
+                  <p className="mt-1 text-[#102a43]">
+                    当前得分：{prediction.points ?? 0}
+                  </p>
+                </article>
+              );
+            })}
           </div>
         ) : null}
 

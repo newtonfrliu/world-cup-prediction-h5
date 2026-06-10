@@ -206,7 +206,7 @@ export function getTeamDisplayName(team: string): string {
     return team;
   }
 
-  return `${meta.flag} ${meta.cn}`;
+  return meta.cn;
 }
 
 export const worldCupTeams = [
