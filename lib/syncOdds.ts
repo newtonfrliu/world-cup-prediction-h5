@@ -197,6 +197,22 @@ export async function syncWorldCupOdds({
     updated += 1;
   }
 
+  const syncedAt = new Date().toISOString();
+  const { error: settingError } = await supabase
+    .from("system_settings")
+    .upsert(
+      {
+        key: "last_odds_sync",
+        value: syncedAt,
+        updated_at: syncedAt,
+      },
+      { onConflict: "key" },
+    );
+
+  if (settingError) {
+    throw settingError;
+  }
+
   return {
     updated,
     skipped,

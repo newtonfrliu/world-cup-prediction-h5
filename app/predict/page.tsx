@@ -52,6 +52,27 @@ function formatMatchTime(value: string) {
   }).format(date);
 }
 
+function formatOddsSyncTime(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  const parts = new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+  const getPart = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+
+  return `${getPart("year")}-${getPart("month")}-${getPart("day")} ${getPart("hour")}:${getPart("minute")}`;
+}
+
 export default function PredictPage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [predictedMatchIds, setPredictedMatchIds] = useState<Set<string>>(
@@ -60,6 +81,7 @@ export default function PredictPage() {
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [myPredictions, setMyPredictions] = useState<MyPrediction[]>([]);
   const [showMyPredictions, setShowMyPredictions] = useState(false);
+  const [lastOddsSync, setLastOddsSync] = useState("");
   const [loading, setLoading] = useState(true);
   const [submittingMatchId, setSubmittingMatchId] = useState<string | null>(
     null,
@@ -120,6 +142,14 @@ export default function PredictPage() {
       }
 
       setMatches(matchData ?? []);
+
+      const { data: settingData } = await supabase
+        .from("system_settings")
+        .select("value")
+        .eq("key", "last_odds_sync")
+        .maybeSingle();
+
+      setLastOddsSync(settingData?.value ?? "");
 
       if (storedPlayerId) {
         await loadMyPredictions(storedPlayerId);
@@ -209,6 +239,11 @@ export default function PredictPage() {
             {error}
           </div>
         ) : null}
+
+        <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm font-bold text-[#102a43] shadow-sm">
+          ⚡ 赔率更新时间：
+          {lastOddsSync ? formatOddsSyncTime(lastOddsSync) : "暂无同步记录"}
+        </div>
 
         <button
           type="button"
