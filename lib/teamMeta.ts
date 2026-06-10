@@ -1,4 +1,4 @@
-export const teamMeta: Record<string, { cn: string; flag: string }> = {
+export const teamMeta = {
   Algeria: {
     cn: "阿尔及利亚",
     flag: "🇩🇿",
@@ -195,10 +195,12 @@ export const teamMeta: Record<string, { cn: string; flag: string }> = {
     cn: "乌兹别克斯坦",
     flag: "🇺🇿",
   },
-};
+} satisfies Record<string, { cn: string; flag: string }>;
 
 export function getTeamDisplayName(team: string): string {
-  const meta = teamMeta[team];
+  const meta = (teamMeta as Record<string, { cn: string; flag: string }>)[
+    team
+  ];
 
   if (!meta) {
     return team;
