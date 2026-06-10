@@ -23,6 +23,11 @@ type ProfileStats = {
   hitRate: number;
 };
 
+type StoredBracketPrediction = {
+  locked?: boolean;
+  champion?: string;
+};
+
 function buildEmptyStats(): ProfileStats {
   return {
     totalPoints: 0,
@@ -43,7 +48,9 @@ export default function ProfilePage() {
   const [player, setPlayer] = useState<Player | null>(null);
   const [stats, setStats] = useState<ProfileStats>(() => buildEmptyStats());
   const [shareLink, setShareLink] = useState("");
+  const [championPrediction, setChampionPrediction] = useState("");
   const [copied, setCopied] = useState(false);
+  const [posterMessage, setPosterMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -59,6 +66,22 @@ export default function ProfilePage() {
       }
 
       setShareLink(`${window.location.origin}/?ref=${storedPlayerId}`);
+
+      const storedBracket = localStorage.getItem(
+        `bracket_prediction_${storedPlayerId}`,
+      );
+
+      if (storedBracket) {
+        try {
+          const parsed = JSON.parse(storedBracket) as StoredBracketPrediction;
+
+          if (parsed.locked && parsed.champion) {
+            setChampionPrediction(parsed.champion);
+          }
+        } catch {
+          setChampionPrediction("");
+        }
+      }
 
       if (!canUseSupabase) {
         setError("请先配置 Supabase 环境变量。");
@@ -151,10 +174,11 @@ export default function ProfilePage() {
 
     await navigator.clipboard.writeText(shareLink);
     setCopied(true);
+    setPosterMessage("");
   }
 
   function savePoster() {
-    window.print();
+    setPosterMessage("请长按海报或截图保存分享。");
   }
 
   if (loading) {
@@ -290,7 +314,7 @@ export default function ProfilePage() {
               分享我的战绩
             </h2>
             <p className="mt-2 text-sm font-semibold text-[#d64545]">
-              邀请好友一起预测世界杯
+              生成一张适合微信截图分享的战绩海报
             </p>
 
             <div
@@ -298,11 +322,11 @@ export default function ProfilePage() {
               className="mt-4 mx-auto flex min-h-[640px] w-full max-w-[360px] flex-col overflow-hidden rounded-lg bg-[#102a43] p-5 text-white shadow-lg print:shadow-none"
             >
               <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4">
-                <p className="text-sm font-bold text-[#f7c948]">
-                  2026 足球世界杯预测
+                <p className="text-sm font-black text-[#d64545]">
+                  美加墨大乱斗
                 </p>
                 <h3 className="mt-2 text-3xl font-black leading-tight">
-                  美加墨大乱斗
+                  2026 足球世界杯预测
                 </h3>
                 <p className="mt-3 text-sm text-[#bcccdc]">
                   我的世界杯预测战绩海报
@@ -355,6 +379,15 @@ export default function ProfilePage() {
                 </div>
               </div>
 
+              {championPrediction ? (
+                <div className="mt-4 rounded-lg border border-[#f7c948] bg-[#f7c948] p-4 text-[#102a43]">
+                  <p className="text-sm font-black">🏆 冠军预测</p>
+                  <p className="mt-1 text-2xl font-black">
+                    {getTeamDisplayName(championPrediction)}
+                  </p>
+                </div>
+              ) : null}
+
               <div className="mt-4 rounded-lg border border-white/15 bg-white/10 p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
@@ -372,11 +405,11 @@ export default function ProfilePage() {
               </div>
 
               <div className="mt-auto rounded-lg bg-white p-4 text-center text-[#102a43]">
-                <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-md border-2 border-dashed border-[#9fb3c8] bg-[#f0f4f8] px-3 text-sm font-black leading-5 text-[#334e68]">
-                  扫码/打开链接来挑战我
-                </div>
                 <p className="mt-3 break-all text-xs font-semibold text-[#627d98]">
                   {shareLink}
+                </p>
+                <p className="mt-3 text-sm font-black text-[#d64545]">
+                  长按识别/复制链接，来挑战我的世界杯预测
                 </p>
               </div>
             </div>
@@ -402,8 +435,13 @@ export default function ProfilePage() {
                 分享链接已复制
               </p>
             ) : null}
+            {posterMessage ? (
+              <p className="mt-3 text-sm font-bold text-[#334e68]">
+                {posterMessage}
+              </p>
+            ) : null}
             <p className="mt-3 text-xs leading-5 text-[#627d98]">
-              保存海报会打开浏览器打印面板，可选择保存为 PDF，或直接截图分享。
+              第一版海报适合手机截图分享，后续可升级为一键保存图片。
             </p>
           </article>
         </div>
