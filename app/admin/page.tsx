@@ -45,6 +45,17 @@ type StoredSyncResult = {
   lastSyncAt: string;
 };
 
+type SyncScoresResponse = {
+  finished: number;
+  settled: number;
+  skipped: Array<{
+    home_team: string;
+    away_team: string;
+    reason: string;
+  }>;
+  error?: string;
+};
+
 const emptyForm: MatchForm = {
   home_team: "",
   away_team: "",
@@ -146,7 +157,9 @@ export default function AdminPage() {
   const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
   const [saving, setSaving] = useState(false);
   const [syncingOdds, setSyncingOdds] = useState(false);
+  const [syncingScores, setSyncingScores] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
+  const [scoreSyncMessage, setScoreSyncMessage] = useState("");
   const [lastSyncResult, setLastSyncResult] =
     useState<StoredSyncResult | null>(null);
   const [error, setError] = useState("");
@@ -283,6 +296,31 @@ export default function AdminPage() {
       `同步完成：Updated ${result.updated} matches, Skipped ${result.skipped.length} matches, Credits used: ${result.creditsUsed ?? "-"}`,
     );
     setSyncingOdds(false);
+    await loadMatches();
+  }
+
+  async function syncScores() {
+    setSyncingScores(true);
+    setScoreSyncMessage("同步赛果中...");
+    setError("");
+    setMessage("");
+
+    const response = await fetch("/api/admin/sync-scores", {
+      method: "POST",
+    });
+    const result = (await response.json()) as SyncScoresResponse;
+
+    if (!response.ok) {
+      setError(result.error ?? "同步赛果失败。");
+      setScoreSyncMessage("");
+      setSyncingScores(false);
+      return;
+    }
+
+    setScoreSyncMessage(
+      `同步完成：Finished ${result.finished} matches, Settled ${result.settled} predictions, Skipped ${result.skipped.length} matches`,
+    );
+    setSyncingScores(false);
     await loadMatches();
   }
 
@@ -566,6 +604,12 @@ export default function AdminPage() {
               </div>
             ) : null}
 
+            {scoreSyncMessage ? (
+              <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68]">
+                {scoreSyncMessage}
+              </div>
+            ) : null}
+
             {lastSyncResult ? (
               <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68]">
                 <p>上次同步：{formatSyncTime(lastSyncResult.lastSyncAt)}</p>
@@ -585,6 +629,15 @@ export default function AdminPage() {
               className="mb-6 h-11 w-full rounded-md bg-[#102a43] px-4 text-sm font-bold text-white transition hover:bg-[#243b53] disabled:bg-[#9fb3c8]"
             >
               {syncingOdds ? "同步中..." : "同步赔率"}
+            </button>
+
+            <button
+              type="button"
+              disabled={syncingScores}
+              onClick={syncScores}
+              className="mb-6 h-11 w-full rounded-md bg-[#d64545] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:bg-[#9fb3c8]"
+            >
+              {syncingScores ? "同步赛果中..." : "同步赛果并结算"}
             </button>
 
             <form

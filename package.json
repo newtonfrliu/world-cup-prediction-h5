@@ -9,7 +9,8 @@
     "lint": "eslint",
     "import:schedule": "node scripts/importSchedule.ts",
     "check:teams": "node scripts/checkTeams.ts",
-    "sync:odds": "node scripts/syncOdds.ts"
+    "sync:odds": "node scripts/syncOdds.ts",
+    "sync:scores": "node scripts/syncScores.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
