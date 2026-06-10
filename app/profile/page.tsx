@@ -79,6 +79,7 @@ export default function ProfilePage() {
   const [championPrediction, setChampionPrediction] = useState("");
   const [copied, setCopied] = useState(false);
   const [posterMessage, setPosterMessage] = useState("");
+  const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -217,16 +218,24 @@ export default function ProfilePage() {
         pixelRatio: 2,
         backgroundColor: "#102a43",
       });
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `worldcup-share-${playerId}.png`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setPosterMessage("海报已生成下载");
+      setPreviewImageUrl(dataUrl);
+      setPosterMessage("");
     } catch {
-      setPosterMessage("请长按海报截图保存");
+      setPosterMessage("生成图片失败，请截图保存");
     }
+  }
+
+  function downloadPreviewImage() {
+    if (!previewImageUrl || !playerId) {
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = previewImageUrl;
+    link.download = `worldcup-share-${playerId}.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
   if (loading) {
@@ -489,6 +498,36 @@ export default function ProfilePage() {
           </article>
         </div>
       </section>
+
+      {previewImageUrl ? (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/85 px-4 py-5 text-white">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="text-sm font-bold">长按图片保存到手机相册</p>
+            <button
+              type="button"
+              onClick={() => setPreviewImageUrl("")}
+              className="rounded-md bg-white px-3 py-2 text-sm font-black text-[#102a43]"
+            >
+              关闭
+            </button>
+          </div>
+          <div className="min-h-0 flex-1 overflow-auto text-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={previewImageUrl}
+              alt="分享海报预览"
+              className="mx-auto max-h-[82vh] max-w-[92vw] rounded-lg"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={downloadPreviewImage}
+            className="mt-4 h-11 rounded-md border border-white/40 px-4 text-sm font-bold text-white"
+          >
+            下载图片
+          </button>
+        </div>
+      ) : null}
     </main>
   );
 }
