@@ -281,6 +281,77 @@ export default function BracketPage() {
     knockoutRounds[4]?.name === "决赛"
       ? knockoutRounds[4]?.matches[0]?.winner
       : undefined;
+  const renderKnockoutColumn = (
+    roundIndex: number,
+    title: string,
+    side: "left" | "right",
+  ) => {
+    const round = knockoutRounds[roundIndex];
+    const totalCount = expectedRoundMatchCounts[roundIndex] / 2;
+
+    if (!round) {
+      return (
+        <section>
+          <div className="mb-3 text-center">
+            <h3 className="text-sm font-black text-[#102a43]">{title}</h3>
+            <p className="mt-1 text-xs text-[#627d98]">
+              已选择 0 / {totalCount}
+            </p>
+          </div>
+          <div className="flex min-h-[560px] items-center">
+            <div className="w-full rounded-lg border border-[#d9e2ec] bg-white p-4 text-center text-sm text-[#627d98] shadow-sm">
+              等待上一轮完成
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    const halfLength = round.matches.length / 2;
+    const startIndex = side === "left" ? 0 : halfLength;
+    const matches = round.matches.slice(startIndex, startIndex + halfLength);
+    const selectedCount = matches.filter((match) => match.winner).length;
+
+    return (
+      <section>
+        <div className="mb-3 text-center">
+          <h3 className="text-sm font-black text-[#102a43]">{title}</h3>
+          <p className="mt-1 text-xs text-[#627d98]">
+            已选择 {selectedCount} / {totalCount}
+          </p>
+        </div>
+        <div className="flex min-h-[560px] flex-col justify-around gap-4">
+          {matches.map((match, index) => {
+            const matchIndex = startIndex + index;
+
+            return (
+              <article
+                key={match.id}
+                className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
+              >
+                {match.teams.map((team) => {
+                  const selected = match.winner?.team === team.team;
+
+                  return (
+                    <button
+                      key={`${match.id}-${team.team}`}
+                      type="button"
+                      onClick={() => chooseWinner(roundIndex, matchIndex, team)}
+                      className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
+                        selected ? "text-[#0f7b3f]" : "text-[#102a43]"
+                      }`}
+                    >
+                      {getTeamDisplayName(team.team)}
+                    </button>
+                  );
+                })}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    );
+  };
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
@@ -437,85 +508,82 @@ export default function BracketPage() {
         ) : (
           <>
             <div className="overflow-x-auto pb-4">
-              <div className="grid min-w-[1180px] grid-cols-6 gap-4">
-                {knockoutRoundNames.map((roundName, roundIndex) => {
-                  const round = knockoutRounds[roundIndex];
-                  const selectedCount =
-                    round?.matches.filter((match) => match.winner).length ?? 0;
-                  const totalCount = expectedRoundMatchCounts[roundIndex];
+              <div className="min-w-[1740px]">
+                <div className="mb-4 grid grid-cols-[repeat(4,180px)_260px_repeat(4,180px)] gap-4">
+                  <div className="col-span-4 rounded-lg bg-[#102a43] px-4 py-3 text-center text-sm font-black text-white">
+                    上半区
+                  </div>
+                  <div />
+                  <div className="col-span-4 rounded-lg bg-[#102a43] px-4 py-3 text-center text-sm font-black text-white">
+                    下半区
+                  </div>
+                </div>
 
-                  return (
-                    <section key={roundName}>
-                      <div className="mb-3 text-center">
-                        <h2 className="text-sm font-black text-[#102a43]">
-                          {roundName}
-                        </h2>
-                        <p className="mt-1 text-xs text-[#627d98]">
-                          已选择 {selectedCount} / {totalCount}
-                        </p>
-                      </div>
-                      <div className="flex min-h-[560px] flex-col justify-around gap-4">
-                        {!round ? (
-                          <div className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-center text-sm text-[#627d98] shadow-sm">
+                <div className="grid grid-cols-[repeat(4,180px)_260px_repeat(4,180px)] gap-4">
+                  {renderKnockoutColumn(0, "左32强", "left")}
+                  {renderKnockoutColumn(1, "左16强", "left")}
+                  {renderKnockoutColumn(2, "左8强", "left")}
+                  {renderKnockoutColumn(3, "左4强", "left")}
+
+                  <section>
+                    <div className="mb-3 text-center">
+                      <h3 className="text-sm font-black text-[#102a43]">
+                        冠军赛
+                      </h3>
+                      <p className="mt-1 text-xs text-[#627d98]">
+                        已选择{" "}
+                        {knockoutRounds[4]?.matches[0]?.winner ? 1 : 0} / 1
+                      </p>
+                    </div>
+                    <div className="flex min-h-[560px] flex-col justify-center gap-6">
+                      <article className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm">
+                        {!knockoutRounds[4] ? (
+                          <p className="py-4 text-center text-sm text-[#627d98]">
                             等待上一轮完成
-                          </div>
+                          </p>
                         ) : null}
 
-                        {round?.matches.map((match, matchIndex) => (
-                          <article
-                            key={match.id}
-                            className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
-                          >
-                            {match.teams.map((team) => {
-                              const selected = match.winner?.team === team.team;
+                        {knockoutRounds[4]?.matches[0]?.teams.map((team) => {
+                          const finalMatch = knockoutRounds[4].matches[0];
+                          const selected = finalMatch.winner?.team === team.team;
 
-                              return (
-                                <button
-                                  key={`${match.id}-${team.team}`}
-                                  type="button"
-                                  onClick={() =>
-                                    chooseWinner(roundIndex, matchIndex, team)
-                                  }
-                                  className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
-                                    selected
-                                      ? "text-[#0f7b3f]"
-                                      : "text-[#102a43]"
-                                  }`}
-                                >
-                                  {getTeamDisplayName(team.team)}
-                                </button>
-                              );
-                            })}
-                          </article>
-                        ))}
+                          return (
+                            <button
+                              key={`final-${team.team}`}
+                              type="button"
+                              onClick={() => chooseWinner(4, 0, team)}
+                              className={`flex h-10 w-full items-center border-b border-[#edf2f7] text-left text-sm font-semibold last:border-b-0 ${
+                                selected ? "text-[#0f7b3f]" : "text-[#102a43]"
+                              }`}
+                            >
+                              {getTeamDisplayName(team.team)}
+                            </button>
+                          );
+                        })}
+                      </article>
+
+                      <div className="rounded-xl border-2 border-[#d64545] bg-white p-5 text-center shadow-sm">
+                        <p className="text-sm font-black text-[#d64545]">
+                          🏆 冠军预测
+                        </p>
+                        {champion ? (
+                          <p className="mt-3 text-2xl font-black text-[#102a43]">
+                            {getTeamDisplayName(champion.team)}
+                          </p>
+                        ) : (
+                          <p className="mt-3 text-sm text-[#627d98]">
+                            等待上一轮完成
+                          </p>
+                        )}
                       </div>
-                    </section>
-                  );
-                })}
-
-                <section>
-                  <div className="mb-3 text-center">
-                    <h2 className="text-sm font-black text-[#102a43]">
-                      冠军
-                    </h2>
-                    <p className="mt-1 text-xs text-[#627d98]">
-                      已选择 {champion ? 1 : 0} / 1
-                    </p>
-                  </div>
-                  <div className="flex min-h-[560px] items-center">
-                    <div className="w-full rounded-lg border border-[#d9e2ec] bg-white p-4 text-center shadow-sm">
-                      {champion ? (
-                        <p className="text-xl font-black text-[#102a43]">
-                          冠军：{getTeamDisplayName(champion.team)}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-[#627d98]">
-                          等待上一轮完成
-                        </p>
-                      )}
                     </div>
-                  </div>
-                </section>
+                  </section>
+
+                  {renderKnockoutColumn(3, "右4强", "right")}
+                  {renderKnockoutColumn(2, "右8强", "right")}
+                  {renderKnockoutColumn(1, "右16强", "right")}
+                  {renderKnockoutColumn(0, "右32强", "right")}
+                </div>
               </div>
             </div>
 
