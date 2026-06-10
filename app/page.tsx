@@ -100,7 +100,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#f6f3ec] px-5 py-8 text-[#1f2933]">
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md flex-col justify-center">
         <p className="text-sm font-semibold uppercase text-[#d64545]">
-          2026 Battle
+          2026 足球世界杯
         </p>
         <h1 className="mt-3 text-4xl font-black leading-tight text-[#102a43]">
           美加墨大乱斗
