@@ -57,6 +57,7 @@ export default function Home() {
   const [region, setRegion] = useState(regions[0]);
   const [referrerId, setReferrerId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
 
   const trimmedNickname = nickname.trim();
@@ -84,9 +85,33 @@ export default function Home() {
     }
 
     setIsSubmitting(true);
+    setNotice("");
     setError("");
 
-    const { data, error: insertError } = await supabase
+    const { data: existingPlayers, error: lookupError } = await supabase
+      .from("players")
+      .select("id, created_at")
+      .eq("nickname", trimmedNickname)
+      .eq("country", country)
+      .eq("region", region)
+      .order("created_at", { ascending: true });
+
+    if (lookupError) {
+      setError(lookupError.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    const existingPlayer = existingPlayers?.[0];
+
+    if (existingPlayer) {
+      localStorage.setItem("player_id", existingPlayer.id);
+      setNotice("欢迎回来");
+      router.push("/predict");
+      return;
+    }
+
+    const { data: createdPlayer, error: insertError } = await supabase
       .from("players")
       .insert({
         nickname: trimmedNickname,
@@ -102,7 +127,8 @@ export default function Home() {
       return;
     }
 
-    localStorage.setItem("player_id", data.id);
+    localStorage.setItem("player_id", createdPlayer.id);
+    setNotice("创建成功");
     router.push("/predict");
   }
 
@@ -172,6 +198,12 @@ export default function Home() {
           {error ? (
             <p className="rounded-md bg-[#fde8e8] px-3 py-2 text-sm text-[#9b1c1c]">
               {error}
+            </p>
+          ) : null}
+
+          {notice ? (
+            <p className="rounded-md bg-[#e3f9e5] px-3 py-2 text-sm font-semibold text-[#0f7b3f]">
+              {notice}
             </p>
           ) : null}
 
