@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 
 import { syncWorldCupScores } from "@/lib/syncScores";
 
+export async function GET() {
+  return NextResponse.json(
+    { success: false, error: "Method not allowed, use POST" },
+    { status: 405 },
+  );
+}
+
 export async function POST() {
   const oddsApiKey = process.env.ODDS_API_KEY;
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
