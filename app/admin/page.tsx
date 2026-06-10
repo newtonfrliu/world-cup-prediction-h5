@@ -22,6 +22,28 @@ type MatchForm = {
   venue: string;
 };
 
+type SyncOddsResponse = {
+  updated: number;
+  skipped: Array<{
+    home_team: string;
+    away_team: string;
+  }>;
+  creditsUsed: string | null;
+  creditsRemaining: string | null;
+  creditsTotalUsed: string | null;
+  lastSyncAt: string;
+  error?: string;
+};
+
+type StoredSyncResult = {
+  updated: number;
+  skipped: number;
+  creditsUsed: string | null;
+  creditsRemaining: string | null;
+  creditsTotalUsed: string | null;
+  lastSyncAt: string;
+};
+
 const emptyForm: MatchForm = {
   home_team: "",
   away_team: "",
@@ -38,6 +60,8 @@ const resultOptions: Array<{ label: string; value: MatchResult }> = [
   { label: "平局", value: "draw" },
   { label: "客胜", value: "away_win" },
 ];
+
+const oddsSyncCooldownMs = 10 * 60 * 1000;
 
 function formatMatchTime(value: string) {
   const date = new Date(value);
@@ -63,6 +87,22 @@ function toDatetimeLocal(value: string) {
 
   const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
   return offsetDate.toISOString().slice(0, 16);
+}
+
+function formatSyncTime(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "-";
+  }
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
 function formFromMatch(match: Match): MatchForm {
@@ -104,6 +144,10 @@ export default function AdminPage() {
   const [matchForm, setMatchForm] = useState<MatchForm>(emptyForm);
   const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [syncingOdds, setSyncingOdds] = useState(false);
+  const [syncMessage, setSyncMessage] = useState("");
+  const [lastSyncResult, setLastSyncResult] =
+    useState<StoredSyncResult | null>(null);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -135,6 +179,11 @@ export default function AdminPage() {
 
   useEffect(() => {
     setIsVerified(localStorage.getItem("admin_verified") === "true");
+    const storedSyncResult = localStorage.getItem("odds_last_sync_result");
+
+    if (storedSyncResult) {
+      setLastSyncResult(JSON.parse(storedSyncResult) as StoredSyncResult);
+    }
   }, []);
 
   useEffect(() => {
@@ -186,6 +235,53 @@ export default function AdminPage() {
     setMatchForm(emptyForm);
     setMessage("比赛已新增。");
     setSaving(false);
+    await loadMatches();
+  }
+
+  async function syncOdds() {
+    const lastSyncAt = localStorage.getItem("odds_last_sync_at");
+
+    if (
+      lastSyncAt &&
+      Date.now() - new Date(lastSyncAt).getTime() < oddsSyncCooldownMs
+    ) {
+      setSyncMessage("距离上次同步不足10分钟，请稍后再试。");
+      return;
+    }
+
+    setSyncingOdds(true);
+    setSyncMessage("同步中...");
+    setError("");
+    setMessage("");
+
+    const response = await fetch("/api/admin/sync-odds", {
+      method: "POST",
+    });
+    const result = (await response.json()) as SyncOddsResponse;
+
+    if (!response.ok) {
+      setError(result.error ?? "同步赔率失败。");
+      setSyncMessage("");
+      setSyncingOdds(false);
+      return;
+    }
+
+    const storedResult: StoredSyncResult = {
+      updated: result.updated,
+      skipped: result.skipped.length,
+      creditsUsed: result.creditsUsed,
+      creditsRemaining: result.creditsRemaining,
+      creditsTotalUsed: result.creditsTotalUsed,
+      lastSyncAt: result.lastSyncAt,
+    };
+
+    localStorage.setItem("odds_last_sync_at", result.lastSyncAt);
+    localStorage.setItem("odds_last_sync_result", JSON.stringify(storedResult));
+    setLastSyncResult(storedResult);
+    setSyncMessage(
+      `同步完成：Updated ${result.updated} matches, Skipped ${result.skipped.length} matches, Credits used: ${result.creditsUsed ?? "-"}`,
+    );
+    setSyncingOdds(false);
     await loadMatches();
   }
 
@@ -458,6 +554,33 @@ export default function AdminPage() {
                 {message}
               </div>
             ) : null}
+
+            {syncMessage ? (
+              <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68]">
+                {syncMessage}
+              </div>
+            ) : null}
+
+            {lastSyncResult ? (
+              <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68]">
+                <p>上次同步：{formatSyncTime(lastSyncResult.lastSyncAt)}</p>
+                <p>更新比赛：{lastSyncResult.updated}</p>
+                <p>跳过比赛：{lastSyncResult.skipped}</p>
+                <p>本次消耗：{lastSyncResult.creditsUsed ?? "-"} credits</p>
+                <p>
+                  剩余额度：{lastSyncResult.creditsRemaining ?? "-"} credits
+                </p>
+              </div>
+            ) : null}
+
+            <button
+              type="button"
+              disabled={syncingOdds}
+              onClick={syncOdds}
+              className="mb-6 h-11 w-full rounded-md bg-[#102a43] px-4 text-sm font-bold text-white transition hover:bg-[#243b53] disabled:bg-[#9fb3c8]"
+            >
+              {syncingOdds ? "同步中..." : "同步赔率"}
+            </button>
 
             <form
               onSubmit={createMatch}
