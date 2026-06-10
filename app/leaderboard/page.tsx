@@ -101,7 +101,7 @@ export default function LeaderboardPage() {
                 <div className="shrink-0 text-right">
                   <p className="text-xs font-semibold text-[#627d98]">总积分</p>
                   <p className="mt-1 text-2xl font-black text-[#102a43]">
-                    {row.total_points}
+                    {Math.round(row.total_points)}
                   </p>
                 </div>
               </div>

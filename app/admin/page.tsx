@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
@@ -8,7 +8,30 @@ import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
+type MatchInsert = Database["public"]["Tables"]["matches"]["Insert"];
 type MatchResult = NonNullable<Match["result"]>;
+
+type MatchForm = {
+  home_team: string;
+  away_team: string;
+  start_time: string;
+  odds_home: string;
+  odds_draw: string;
+  odds_away: string;
+  stage: string;
+  venue: string;
+};
+
+const emptyForm: MatchForm = {
+  home_team: "",
+  away_team: "",
+  start_time: "",
+  odds_home: "",
+  odds_draw: "",
+  odds_away: "",
+  stage: "",
+  venue: "",
+};
 
 const resultOptions: Array<{ label: string; value: MatchResult }> = [
   { label: "主胜", value: "home_win" },
@@ -31,6 +54,45 @@ function formatMatchTime(value: string) {
   }).format(date);
 }
 
+function toDatetimeLocal(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return offsetDate.toISOString().slice(0, 16);
+}
+
+function formFromMatch(match: Match): MatchForm {
+  return {
+    home_team: match.home_team,
+    away_team: match.away_team,
+    start_time: toDatetimeLocal(match.start_time),
+    odds_home: String(match.odds_home),
+    odds_draw: String(match.odds_draw),
+    odds_away: String(match.odds_away),
+    stage: match.stage ?? "",
+    venue: match.venue ?? "",
+  };
+}
+
+function formToPayload(form: MatchForm): MatchInsert {
+  return {
+    home_team: form.home_team.trim(),
+    away_team: form.away_team.trim(),
+    start_time: new Date(form.start_time).toISOString(),
+    odds_home: Number(form.odds_home),
+    odds_draw: Number(form.odds_draw),
+    odds_away: Number(form.odds_away),
+    stage: form.stage.trim() || null,
+    venue: form.venue.trim() || null,
+    status: "scheduled",
+    result: null,
+  };
+}
+
 export default function AdminPage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +100,10 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [settlingMatchId, setSettlingMatchId] = useState<string | null>(null);
+  const [editingMatchId, setEditingMatchId] = useState<string | null>(null);
+  const [matchForm, setMatchForm] = useState<MatchForm>(emptyForm);
+  const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -53,7 +119,7 @@ export default function AdminPage() {
     const { data, error: matchError } = await supabase
       .from("matches")
       .select(
-        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, result, status, created_at",
+        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, stage, venue, result, status, created_at",
       )
       .order("start_time", { ascending: true });
 
@@ -80,7 +146,7 @@ export default function AdminPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canUseSupabase, isVerified]);
 
-  function verifyAdmin(event: React.FormEvent<HTMLFormElement>) {
+  function verifyAdmin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (password === adminPassword) {
@@ -91,6 +157,102 @@ export default function AdminPage() {
     }
 
     setPasswordError("密码错误");
+  }
+
+  function updateMatchForm(field: keyof MatchForm, value: string) {
+    setMatchForm((current) => ({ ...current, [field]: value }));
+  }
+
+  function updateEditForm(field: keyof MatchForm, value: string) {
+    setEditForm((current) => ({ ...current, [field]: value }));
+  }
+
+  async function createMatch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSaving(true);
+    setError("");
+    setMessage("");
+
+    const { error: insertError } = await supabase
+      .from("matches")
+      .insert(formToPayload(matchForm));
+
+    if (insertError) {
+      setError(insertError.message);
+      setSaving(false);
+      return;
+    }
+
+    setMatchForm(emptyForm);
+    setMessage("比赛已新增。");
+    setSaving(false);
+    await loadMatches();
+  }
+
+  function startEdit(match: Match) {
+    setEditingMatchId(match.id);
+    setEditForm(formFromMatch(match));
+    setError("");
+    setMessage("");
+  }
+
+  async function saveEdit(matchId: string) {
+    setSaving(true);
+    setError("");
+    setMessage("");
+
+    const payload = formToPayload(editForm);
+    const { error: updateError } = await supabase
+      .from("matches")
+      .update({
+        home_team: payload.home_team,
+        away_team: payload.away_team,
+        start_time: payload.start_time,
+        odds_home: payload.odds_home,
+        odds_draw: payload.odds_draw,
+        odds_away: payload.odds_away,
+        stage: payload.stage,
+        venue: payload.venue,
+      })
+      .eq("id", matchId);
+
+    if (updateError) {
+      setError(updateError.message);
+      setSaving(false);
+      return;
+    }
+
+    setEditingMatchId(null);
+    setMessage("比赛已更新。");
+    setSaving(false);
+    await loadMatches();
+  }
+
+  async function deleteMatch(match: Match) {
+    if (match.status === "finished") {
+      setError("已结束比赛不能删除。");
+      return;
+    }
+
+    if (!window.confirm(`确认删除 ${match.home_team} VS ${match.away_team}？`)) {
+      return;
+    }
+
+    setError("");
+    setMessage("");
+
+    const { error: deleteError } = await supabase
+      .from("matches")
+      .delete()
+      .eq("id", match.id);
+
+    if (deleteError) {
+      setError(deleteError.message);
+      return;
+    }
+
+    setMessage("比赛已删除。");
+    setMatches((current) => current.filter((item) => item.id !== match.id));
   }
 
   async function settleMatch(match: Match, result: MatchResult) {
@@ -118,7 +280,9 @@ export default function AdminPage() {
 
     const { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
-      .select("id, player_id, match_id, prediction, odds_at_prediction, points, created_at")
+      .select(
+        "id, player_id, match_id, prediction, odds_at_prediction, points, created_at",
+      )
       .eq("match_id", match.id);
 
     if (predictionLoadError) {
@@ -133,7 +297,7 @@ export default function AdminPage() {
         .update({
           points:
             prediction.prediction === result
-              ? prediction.odds_at_prediction
+              ? Math.round(prediction.odds_at_prediction * 100)
               : 0,
         })
         .eq("id", prediction.id),
@@ -156,6 +320,79 @@ export default function AdminPage() {
     setMessage("结算完成，排行榜积分会自动更新。");
     setSettlingMatchId(null);
   }
+
+  const renderMatchFields = (
+    form: MatchForm,
+    onChange: (field: keyof MatchForm, value: string) => void,
+  ) => (
+    <div className="grid gap-3">
+      <input
+        value={form.home_team}
+        onChange={(event) => onChange("home_team", event.target.value)}
+        className="h-11 rounded-md border border-[#cbd2d9] px-3"
+        placeholder="主队"
+        required
+      />
+      <input
+        value={form.away_team}
+        onChange={(event) => onChange("away_team", event.target.value)}
+        className="h-11 rounded-md border border-[#cbd2d9] px-3"
+        placeholder="客队"
+        required
+      />
+      <input
+        value={form.start_time}
+        onChange={(event) => onChange("start_time", event.target.value)}
+        className="h-11 rounded-md border border-[#cbd2d9] px-3"
+        type="datetime-local"
+        required
+      />
+      <div className="grid grid-cols-3 gap-2">
+        <input
+          value={form.odds_home}
+          onChange={(event) => onChange("odds_home", event.target.value)}
+          className="h-11 min-w-0 rounded-md border border-[#cbd2d9] px-3"
+          min="0"
+          step="0.01"
+          type="number"
+          placeholder="主胜"
+          required
+        />
+        <input
+          value={form.odds_draw}
+          onChange={(event) => onChange("odds_draw", event.target.value)}
+          className="h-11 min-w-0 rounded-md border border-[#cbd2d9] px-3"
+          min="0"
+          step="0.01"
+          type="number"
+          placeholder="平局"
+          required
+        />
+        <input
+          value={form.odds_away}
+          onChange={(event) => onChange("odds_away", event.target.value)}
+          className="h-11 min-w-0 rounded-md border border-[#cbd2d9] px-3"
+          min="0"
+          step="0.01"
+          type="number"
+          placeholder="客胜"
+          required
+        />
+      </div>
+      <input
+        value={form.stage}
+        onChange={(event) => onChange("stage", event.target.value)}
+        className="h-11 rounded-md border border-[#cbd2d9] px-3"
+        placeholder="stage"
+      />
+      <input
+        value={form.venue}
+        onChange={(event) => onChange("venue", event.target.value)}
+        className="h-11 rounded-md border border-[#cbd2d9] px-3"
+        placeholder="venue"
+      />
+    </div>
+  );
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
@@ -193,100 +430,174 @@ export default function AdminPage() {
           </div>
         ) : (
           <>
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-semibold uppercase text-[#d64545]">
-              Admin
-            </p>
-            <h1 className="mt-2 text-3xl font-black text-[#102a43]">
-              比赛结算
-            </h1>
-          </div>
-          <Link
-            href="/leaderboard"
-            className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-sm font-semibold text-[#334e68]"
-          >
-            排行榜
-          </Link>
-        </div>
-
-        {error ? (
-          <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
-            {error}
-          </div>
-        ) : null}
-
-        {message ? (
-          <div className="mb-5 rounded-lg border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm text-[#0f7b3f]">
-            {message}
-          </div>
-        ) : null}
-
-        {loading ? (
-          <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
-            加载比赛中...
-          </div>
-        ) : null}
-
-        {!loading && matches.length === 0 ? (
-          <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
-            暂无比赛。
-          </div>
-        ) : null}
-
-        <div className="space-y-4">
-          {matches.map((match) => {
-            const isSettling = settlingMatchId === match.id;
-            const isFinished = match.status === "finished";
-
-            return (
-              <article
-                key={match.id}
-                className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm"
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase text-[#d64545]">
+                  Admin
+                </p>
+                <h1 className="mt-2 text-3xl font-black text-[#102a43]">
+                  比赛后台
+                </h1>
+              </div>
+              <Link
+                href="/leaderboard"
+                className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-sm font-semibold text-[#334e68]"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h2 className="text-xl font-black text-[#102a43]">
-                      {match.home_team} VS {match.away_team}
-                    </h2>
-                    <p className="mt-2 text-sm text-[#627d98]">
-                      {formatMatchTime(match.start_time)}
-                    </p>
-                  </div>
-                  {isFinished ? (
-                    <span className="shrink-0 rounded-md bg-[#e3f9e5] px-2 py-1 text-xs font-bold text-[#0f7b3f]">
-                      已结束
-                    </span>
-                  ) : null}
-                </div>
+                排行榜
+              </Link>
+            </div>
 
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  {resultOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      disabled={Boolean(settlingMatchId)}
-                      onClick={() => settleMatch(match, option.value)}
-                      className="h-11 rounded-md bg-[#d64545] px-2 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
-                    >
-                      {isSettling ? "结算中" : option.label}
-                    </button>
-                  ))}
-                </div>
+            {error ? (
+              <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
+                {error}
+              </div>
+            ) : null}
 
-                {match.result ? (
-                  <p className="mt-3 text-sm text-[#627d98]">
-                    当前结果：
-                    {
-                      resultOptions.find((option) => option.value === match.result)
-                        ?.label
-                    }
-                  </p>
-                ) : null}
-              </article>
-            );
-          })}
-        </div>
+            {message ? (
+              <div className="mb-5 rounded-lg border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm text-[#0f7b3f]">
+                {message}
+              </div>
+            ) : null}
+
+            <form
+              onSubmit={createMatch}
+              className="mb-6 rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm"
+            >
+              <h2 className="mb-4 text-xl font-black text-[#102a43]">
+                新增比赛
+              </h2>
+              {renderMatchFields(matchForm, updateMatchForm)}
+              <button
+                type="submit"
+                disabled={saving}
+                className="mt-4 h-11 w-full rounded-md bg-[#d64545] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:bg-[#9fb3c8]"
+              >
+                保存比赛
+              </button>
+            </form>
+
+            <h2 className="mb-4 text-xl font-black text-[#102a43]">
+              比赛列表
+            </h2>
+
+            {loading ? (
+              <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
+                加载比赛中...
+              </div>
+            ) : null}
+
+            {!loading && matches.length === 0 ? (
+              <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
+                暂无比赛。
+              </div>
+            ) : null}
+
+            <div className="space-y-4">
+              {matches.map((match) => {
+                const isSettling = settlingMatchId === match.id;
+                const isFinished = match.status === "finished";
+                const isEditing = editingMatchId === match.id;
+
+                return (
+                  <article
+                    key={match.id}
+                    className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm"
+                  >
+                    {isEditing ? (
+                      <div>
+                        {renderMatchFields(editForm, updateEditForm)}
+                        <div className="mt-4 grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            disabled={saving}
+                            onClick={() => saveEdit(match.id)}
+                            className="h-10 rounded-md bg-[#d64545] text-sm font-bold text-white disabled:bg-[#9fb3c8]"
+                          >
+                            保存
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingMatchId(null)}
+                            className="h-10 rounded-md border border-[#cbd2d9] bg-white text-sm font-bold text-[#334e68]"
+                          >
+                            取消
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-xl font-black text-[#102a43]">
+                              {match.home_team} VS {match.away_team}
+                            </h3>
+                            <p className="mt-2 text-sm text-[#627d98]">
+                              {formatMatchTime(match.start_time)}
+                            </p>
+                            <p className="mt-2 text-sm text-[#627d98]">
+                              status: {match.status ?? "-"} · result:{" "}
+                              {match.result ?? "-"}
+                            </p>
+                            <p className="mt-1 text-sm text-[#627d98]">
+                              {match.stage ?? "-"} · {match.venue ?? "-"}
+                            </p>
+                          </div>
+                          {isFinished ? (
+                            <span className="shrink-0 rounded-md bg-[#e3f9e5] px-2 py-1 text-xs font-bold text-[#0f7b3f]">
+                              已结束
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
+                          <div className="rounded-md bg-[#f0f4f8] px-2 py-2">
+                            主胜 {match.odds_home}
+                          </div>
+                          <div className="rounded-md bg-[#f0f4f8] px-2 py-2">
+                            平局 {match.odds_draw}
+                          </div>
+                          <div className="rounded-md bg-[#f0f4f8] px-2 py-2">
+                            客胜 {match.odds_away}
+                          </div>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-3 gap-2">
+                          {resultOptions.map((option) => (
+                            <button
+                              key={option.value}
+                              type="button"
+                              disabled={Boolean(settlingMatchId)}
+                              onClick={() => settleMatch(match, option.value)}
+                              className="h-10 rounded-md bg-[#d64545] px-2 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
+                            >
+                              {isSettling ? "结算中" : option.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => startEdit(match)}
+                            className="h-10 rounded-md border border-[#cbd2d9] bg-white text-sm font-bold text-[#334e68]"
+                          >
+                            编辑
+                          </button>
+                          <button
+                            type="button"
+                            disabled={isFinished}
+                            onClick={() => deleteMatch(match)}
+                            className="h-10 rounded-md border border-[#f7c6c7] bg-white text-sm font-bold text-[#9b1c1c] disabled:cursor-not-allowed disabled:border-[#d9e2ec] disabled:text-[#9fb3c8]"
+                          >
+                            删除
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
           </>
         )}
       </section>
