@@ -5,7 +5,7 @@ import Link from "next/link";
 import { toPng } from "html-to-image";
 
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getTeamDisplayName, teamMeta } from "@/lib/teamMeta";
+import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Player = Database["public"]["Tables"]["players"]["Row"];
@@ -56,18 +56,6 @@ function buildQrCodeUrl(value: string) {
 
 function getInviteCode(playerId: string) {
   return playerId.replace(/-/g, "").slice(0, 6).toUpperCase();
-}
-
-function getPosterCountryName(country: string) {
-  const meta = (teamMeta as Record<string, { cn: string; flag: string }>)[
-    country
-  ];
-
-  if (!meta) {
-    return country;
-  }
-
-  return `${meta.flag} ${meta.cn}`;
 }
 
 export default function ProfilePage() {
@@ -397,7 +385,7 @@ export default function ProfilePage() {
                 <p className="text-xs font-black text-[#d64545]">我的身份</p>
                 <p className="mt-2 truncate text-2xl font-black">
                   {player
-                    ? `${getPosterCountryName(player.country)}·${player.nickname}`
+                    ? `${getTeamDisplayName(player.country)}·${player.nickname}`
                     : "-"}
                 </p>
                 <p className="mt-2 text-sm font-bold text-[#627d98]">
