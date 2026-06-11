@@ -5,6 +5,7 @@ import Link from "next/link";
 import { toPng } from "html-to-image";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName } from "@/lib/teamMeta";
@@ -16,6 +17,7 @@ type Prediction = Pick<
   "id" | "points" | "stake" | "payout" | "status"
 >;
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
+type PlayerCard = Database["public"]["Tables"]["player_cards"]["Row"];
 
 type ProfileStats = {
   totalPoints: number;
@@ -111,6 +113,7 @@ export default function ProfilePage() {
   const [rewardStatus, setRewardStatus] = useState("");
   const [collectionProgress, setCollectionProgress] =
     useState<CollectionProgress>({ owned: 0, total: 0 });
+  const [equippedCard, setEquippedCard] = useState<PlayerCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -188,7 +191,7 @@ export default function ProfilePage() {
       const { data: playerData, error: playerError } = await supabase
         .from("players")
         .select(
-          "id, nickname, country, region, coins, last_login_reward_date, avatar_id, created_at",
+          "id, nickname, country, region, coins, last_login_reward_date, avatar_id, equipped_card_id, created_at",
         )
         .eq("id", currentPlayerId)
         .single();
@@ -201,6 +204,21 @@ export default function ProfilePage() {
 
       const currentPlayer = await awardDailyLoginReward(playerData as Player);
       setPlayer(currentPlayer);
+
+      if (currentPlayer.equipped_card_id) {
+        const { data: equippedCardData, error: equippedCardError } =
+          await supabase
+            .from("player_cards")
+            .select(
+              "id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_image, created_at",
+            )
+            .eq("id", currentPlayer.equipped_card_id)
+            .maybeSingle();
+
+        if (!equippedCardError) {
+          setEquippedCard(equippedCardData);
+        }
+      }
 
       async function loadCollectionProgress() {
         const { data: cardData, error: cardError } = await supabase
@@ -457,13 +475,25 @@ export default function ProfilePage() {
                 National Team Album
               </p>
               <div className="mt-4 flex items-center gap-4">
-                {playerCountry ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={playerCountry.flag}
-                    alt={`${playerCountry.nameZh} flag`}
-                    className="h-24 w-36 rounded-2xl border-2 border-white/70 object-cover shadow-lg"
+                {equippedCard ? (
+                  <PlayerCardMini
+                    card={equippedCard}
+                    country={player?.country}
+                    size="medium"
+                    equipped
                   />
+                ) : playerCountry ? (
+                  <div className="rounded-2xl border-2 border-white/70 bg-white/10 p-3 text-center shadow-lg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={playerCountry.flag}
+                      alt={`${playerCountry.nameZh} flag`}
+                      className="h-20 w-32 rounded-xl object-cover"
+                    />
+                    <p className="mt-2 text-xs font-black text-[#f6c84c]">
+                      尚未装备球星卡
+                    </p>
+                  </div>
                 ) : null}
                 <div className="min-w-0">
                   <h2 className="truncate text-3xl font-black">
@@ -476,6 +506,18 @@ export default function ProfilePage() {
                     收藏进度 {collectionProgress.owned} /{" "}
                     {collectionProgress.total}
                   </p>
+                  {equippedCard ? (
+                    <p className="mt-2 text-sm font-black text-[#f6c84c]">
+                      已装备：{equippedCard.player_name}
+                    </p>
+                  ) : (
+                    <Link
+                      href="/collection"
+                      className="mt-2 inline-flex rounded-full bg-[#f6c84c] px-3 py-1 text-xs font-black text-[#071b3a]"
+                    >
+                      去卡册兑换
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center">
@@ -525,6 +567,10 @@ export default function ProfilePage() {
                 已收集 {collectionProgress.owned} / {collectionProgress.total}
               </p>
               <p className="mt-2">金币余额：{player?.coins ?? 0}</p>
+              <p className="mt-2">
+                已装备：
+                {equippedCard ? equippedCard.player_name : "尚未装备球星卡"}
+              </p>
             </div>
             <Link href="/collection" className="wc-button mt-4">
               进入卡册
@@ -635,6 +681,16 @@ export default function ProfilePage() {
                     className="mx-auto mt-3 h-20 w-32 rounded-xl border border-[#071b3a]/10 object-cover shadow-md"
                   />
                 ) : null}
+                <div className="mt-3 flex justify-center">
+                  {equippedCard ? (
+                    <PlayerCardMini
+                      card={equippedCard}
+                      country={player?.country}
+                      size="medium"
+                      equipped
+                    />
+                  ) : null}
+                </div>
                 <p className="mt-3 truncate text-3xl font-black">
                   {player?.nickname ?? "-"}
                 </p>
@@ -645,6 +701,12 @@ export default function ProfilePage() {
                 <p className="mt-3 text-sm font-black text-[#071b3a]">
                   收藏进度：已收集 {collectionProgress.owned} /{" "}
                   {collectionProgress.total} 张主队球星卡
+                </p>
+                <p className="mt-2 text-sm font-black text-[#e63535]">
+                  我的身份卡：
+                  {equippedCard
+                    ? equippedCard.player_name
+                    : "未装备球星卡，去卡册兑换你的主队球星卡"}
                 </p>
                 <p className="mt-4 text-xs font-black text-[#627d98]">
                   邀请码：

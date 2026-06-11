@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { PlayerCardMini } from "@/components/PlayerCardMini";
 import {
   getCountryByNameEn,
   getCountryTheme,
@@ -14,7 +15,7 @@ import type { Database } from "@/types/database";
 
 type Player = Pick<
   Database["public"]["Tables"]["players"]["Row"],
-  "id" | "nickname" | "country" | "coins"
+  "id" | "nickname" | "country" | "coins" | "equipped_card_id"
 >;
 type PlayerCard = Database["public"]["Tables"]["player_cards"]["Row"];
 type UserCard = Pick<
@@ -75,19 +76,23 @@ function StarCard({
   owned,
   coins,
   exchangingCardId,
+  equippedCardId,
   onExchange,
+  onEquip,
 }: {
   card: PlayerCard;
   owned: boolean;
   coins: number;
   exchangingCardId: string;
+  equippedCardId?: string | null;
   onExchange: (card: PlayerCard) => void;
+  onEquip: (card: PlayerCard) => void;
 }) {
   const country = getCountryByNameEn(card.team);
-  const theme = getCountryTheme(card.team);
   const price = card.price ?? 5000;
   const starLevel = card.star_level ?? 1;
   const canExchange = !owned && coins >= price && exchangingCardId === "";
+  const isEquipped = equippedCardId === card.id;
 
   return (
     <article
@@ -95,42 +100,14 @@ function StarCard({
         owned ? getRarityClass(card.rarity) : "border-[#d9e2ec] bg-[#e4e7eb]"
       }`}
     >
-      <div
-        className="relative h-40 overflow-hidden rounded-xl text-white"
-        style={{ background: theme.cardGradient }}
-      >
-        <p className="absolute left-3 top-3 text-[10px] font-black uppercase tracking-[0.16em]">
-          2026 Card
-        </p>
-        <p className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 text-xs font-black text-[#071b3a] shadow-sm">
-          #{card.shirt_number ?? "-"}
-        </p>
-        {country ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={country.flag}
-            alt={`${country.nameZh} flag`}
-            className="absolute -right-6 bottom-4 h-20 w-28 rotate-[-10deg] rounded-xl object-cover opacity-20"
-          />
-        ) : null}
-        <svg
-          viewBox="0 0 160 160"
-          className="absolute bottom-0 left-1/2 h-32 w-32 -translate-x-1/2"
-          aria-hidden="true"
-        >
-          <circle cx="80" cy="42" r="28" fill="rgba(255,255,255,0.9)" />
-          <path
-            d="M36 142c5-48 83-48 88 0H36Z"
-            fill="rgba(255,255,255,0.92)"
-          />
-          <path
-            d="M52 90c16 16 40 16 56 0"
-            fill="none"
-            stroke={theme.accent}
-            strokeWidth="10"
-            strokeLinecap="round"
-          />
-        </svg>
+      <div className="flex justify-center">
+        <PlayerCardMini
+          card={card}
+          country={card.team}
+          size="large"
+          equipped={isEquipped}
+          locked={!owned}
+        />
       </div>
 
       <div className="mt-3 rounded-xl bg-white/90 p-3">
@@ -178,6 +155,20 @@ function StarCard({
               ? "兑换中..."
               : "兑换"}
         </button>
+        {owned ? (
+          <button
+            type="button"
+            onClick={() => onEquip(card)}
+            disabled={isEquipped}
+            className={`mt-2 h-10 w-full rounded-xl text-sm font-black ${
+              isEquipped
+                ? "bg-[#f6c84c] text-[#071b3a]"
+                : "bg-[#071b3a] text-white"
+            }`}
+          >
+            {isEquipped ? "已装备" : "装备"}
+          </button>
+        ) : null}
       </div>
     </article>
   );
@@ -201,7 +192,7 @@ export default function CollectionPage() {
   async function loadCollection(currentPlayerId: string) {
     const { data: playerData, error: playerError } = await supabase
       .from("players")
-      .select("id, nickname, country, coins")
+      .select("id, nickname, country, coins, equipped_card_id")
       .eq("id", currentPlayerId)
       .single();
 
@@ -360,6 +351,33 @@ export default function CollectionPage() {
     setExchangingCardId("");
   }
 
+  async function equipCard(card: PlayerCard) {
+    if (!playerId || !player || !ownedCardIds.has(card.id)) {
+      return;
+    }
+
+    setError("");
+    setMessage("");
+
+    const { error: equipError } = await supabase
+      .from("players")
+      .update({ equipped_card_id: card.id })
+      .eq("id", playerId);
+
+    if (equipError) {
+      console.error("collection equip card failed", {
+        playerId,
+        card,
+        error: equipError,
+      });
+      setError(equipError.message);
+      return;
+    }
+
+    setPlayer({ ...player, equipped_card_id: card.id });
+    setMessage(`已装备 ${card.player_name} 球星卡`);
+  }
+
   if (loading) {
     return (
       <main className="wc-page px-4 py-6">
@@ -469,7 +487,9 @@ export default function CollectionPage() {
               owned={ownedCardIds.has(card.id)}
               coins={player?.coins ?? 0}
               exchangingCardId={exchangingCardId}
+              equippedCardId={player?.equipped_card_id}
               onExchange={exchangeCard}
+              onEquip={equipCard}
             />
           ))}
         </section>

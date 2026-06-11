@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
@@ -16,6 +17,18 @@ type HomePlayer = {
   region: string;
   coins: number;
   last_login_reward_date: string | null;
+  equipped_card_id: string | null;
+};
+type PlayerCard = {
+  id: string;
+  team: string;
+  player_name: string;
+  player_name_en: string | null;
+  position: string | null;
+  shirt_number: number | null;
+  rarity: string | null;
+  price: number | null;
+  star_level: number | null;
 };
 
 const popularTeams = [
@@ -83,6 +96,7 @@ export default function Home() {
   const [referrerId, setReferrerId] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [currentPlayer, setCurrentPlayer] = useState<HomePlayer | null>(null);
+  const [equippedCard, setEquippedCard] = useState<PlayerCard | null>(null);
   const [rewardStatus, setRewardStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
@@ -114,7 +128,7 @@ export default function Home() {
 
       const { data } = await supabase
         .from("players")
-        .select("id, nickname, country, region, coins, last_login_reward_date")
+        .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
         .eq("id", storedPlayerId)
         .maybeSingle();
 
@@ -125,6 +139,15 @@ export default function Home() {
       setCountry(data.country);
       setCurrentPlayer(data);
       setCoinBalance(data.coins ?? 1000);
+      if (data.equipped_card_id) {
+        const { data: cardData } = await supabase
+          .from("player_cards")
+          .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level")
+          .eq("id", data.equipped_card_id)
+          .maybeSingle();
+
+        setEquippedCard(cardData);
+      }
       const nextCoins = await awardDailyLoginReward(
         storedPlayerId,
         data.coins ?? 1000,
@@ -234,7 +257,7 @@ export default function Home() {
         avatar_id: "default-manager",
         referred_by: inviter?.id ?? null,
       })
-      .select("id, nickname, country, region, coins, last_login_reward_date")
+      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
       .single();
 
     if (insertError) {
@@ -278,7 +301,7 @@ export default function Home() {
     <main className="wc-page px-5 py-8">
       <section className="wc-shell flex min-h-[calc(100vh-4rem)] flex-col justify-center">
         <div
-          className="relative overflow-hidden rounded-2xl border border-white/20 p-5 text-white"
+          className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/20 p-5 text-white"
           style={{
             background: selectedTheme.cardGradient,
             boxShadow: selectedTheme.glow,
@@ -292,21 +315,45 @@ export default function Home() {
               className="absolute -right-8 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-20"
             />
           ) : null}
-          <p className="text-sm font-black text-[#25c7b7]">2026足球世界杯</p>
-          <h1 className="mt-3 text-5xl font-black leading-none text-white">
-            美加墨
-            <br />
-            大乱斗
-          </h1>
-          <p className="mt-3 inline-flex rounded-full border border-[#f6c84c]/50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
-            世界杯收藏竞猜游戏
-          </p>
-          <p className="mt-4 text-base font-bold leading-7 text-[#f6c84c]">
-            预测世界杯 / 挑战好友 / 争夺全球第一
-          </p>
-          <p className="mt-4 text-sm font-black text-white">
-            加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
-          </p>
+          <div className="relative z-10 pr-28">
+            <p className="text-sm font-black text-[#25c7b7]">2026足球世界杯</p>
+            <h1 className="mt-3 text-5xl font-black leading-none text-white">
+              美加墨
+              <br />
+              大乱斗
+            </h1>
+            <p className="mt-3 inline-flex rounded-full border border-[#f6c84c]/50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
+              世界杯收藏竞猜游戏
+            </p>
+            <p className="mt-4 text-base font-bold leading-7 text-[#f6c84c]">
+              预测世界杯 / 挑战好友 / 争夺全球第一
+            </p>
+            <p className="mt-4 text-sm font-black text-white">
+              加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
+            </p>
+          </div>
+          <div className="absolute bottom-4 right-4 z-10 flex w-28 flex-col items-center rounded-2xl border border-white/20 bg-[#071b3a]/35 p-2 backdrop-blur">
+            {equippedCard ? (
+              <PlayerCardMini
+                card={equippedCard}
+                country={currentPlayer?.country ?? country}
+                size="small"
+                equipped
+              />
+            ) : selectedCountry ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={selectedCountry.flag}
+                  alt={`${selectedCountry.nameZh} flag`}
+                  className="h-16 w-24 rounded-xl object-cover shadow-lg"
+                />
+                <p className="mt-2 text-center text-xs font-black text-[#f6c84c]">
+                  {selectedCountry.nameZh}
+                </p>
+              </>
+            ) : null}
+          </div>
         </div>
 
         {referrerId && !currentPlayer ? (
