@@ -33,6 +33,11 @@ type PlayerCard = {
   rarity: string | null;
   price: number | null;
   star_level: number | null;
+  card_art_url: string | null;
+  card_thumb_url: string | null;
+  card_theme: string | null;
+  card_number: string | null;
+  card_image: string | null;
 };
 
 const popularTeams = [
@@ -149,7 +154,7 @@ export default function Home() {
       if (data.equipped_card_id) {
         const { data: cardData } = await supabase
           .from("player_cards")
-          .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level")
+          .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image")
           .eq("id", data.equipped_card_id)
           .maybeSingle();
 

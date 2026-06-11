@@ -14,6 +14,10 @@ export type PlayerCardMiniData = {
   rarity?: string | null;
   price?: number | null;
   star_level?: number | null;
+  card_art_url?: string | null;
+  card_thumb_url?: string | null;
+  card_theme?: string | null;
+  card_number?: string | null;
   card_image?: string | null;
 };
 
@@ -120,6 +124,34 @@ export function getCardImagePath(card?: PlayerCardMiniData | null) {
   return `/cards/${teamSlug}/${playerSlug}.png`;
 }
 
+const cardArtAliases: Record<string, Record<string, string>> = {
+  Portugal: {
+    "Cristiano Ronaldo": "ronaldo",
+    "Bruno Fernandes": "bruno",
+    "Rafael Leao": "leao",
+    "Ruben Dias": "rubendias",
+  },
+};
+
+function getLocalCardArtPath(card?: PlayerCardMiniData | null) {
+  if (!card?.team || !card.player_name_en) {
+    return "";
+  }
+
+  const team = resolveCountry(card.team);
+  const teamName = team?.nameEn ?? getCanonicalTeamName(card.team);
+  const teamSlug = slugify(teamName);
+  const playerSlug =
+    cardArtAliases[teamName]?.[card.player_name_en] ??
+    slugify(card.player_name_en);
+
+  if (!teamSlug || !playerSlug) {
+    return "";
+  }
+
+  return `/cards/${teamSlug}/${playerSlug}.png`;
+}
+
 function formatCoins(value?: number | null) {
   return new Intl.NumberFormat("zh-CN").format(value ?? 0);
 }
@@ -211,23 +243,34 @@ export function PlayerCardMini({
   const team = card?.team ?? country ?? "";
   const countryResource = resolveCountry(team);
   const theme = getCountryTheme(team);
-  const rarity = card?.rarity ?? "common";
+  const rarity = card?.card_theme ?? card?.rarity ?? "common";
   const rarityStyle = rarityStyles[rarity] ?? rarityStyles.common;
   const starLevel = card?.star_level ?? 1;
   const number = card?.shirt_number ?? "-";
+  const cardNumber = card?.card_number ?? "";
   const name = card?.player_name ?? "未装备";
   const englishName = card?.player_name_en ?? countryResource?.nameEn ?? "World Cup";
   const position = card?.position ?? "国家队";
   const compact = size === "small";
+  const artCandidate = useMemo(
+    () =>
+      (size === "small"
+        ? card?.card_thumb_url?.trim() || card?.card_art_url?.trim()
+        : card?.card_art_url?.trim() || card?.card_thumb_url?.trim()) ||
+      getLocalCardArtPath(card),
+    [card, size],
+  );
   const imageCandidate = useMemo(
     () => card?.card_image?.trim() || getCardImagePath(card),
     [card],
   );
+  const [artSrc, setArtSrc] = useState(artCandidate);
   const [imageSrc, setImageSrc] = useState(imageCandidate);
 
   useEffect(() => {
+    setArtSrc(artCandidate);
     setImageSrc(imageCandidate);
-  }, [imageCandidate]);
+  }, [artCandidate, imageCandidate]);
 
   return (
     <div
@@ -240,7 +283,30 @@ export function PlayerCardMini({
         boxShadow: equipped ? `${theme.glow}, ${rarityStyle.glow}` : rarityStyle.glow,
       }}
     >
-      <div className="absolute inset-[3px] overflow-hidden rounded-[inherit] bg-[#071b3a]">
+      {artSrc ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={artSrc}
+            alt={name}
+            onError={() => setArtSrc("")}
+            className="absolute inset-[3px] z-10 h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-[inherit] object-cover"
+          />
+          {equipped ? (
+            <span className="absolute left-2 top-2 z-30 rounded-full bg-[#f6c84c] px-1.5 py-0.5 text-[9px] font-black text-[#071b3a]">
+              已装备
+            </span>
+          ) : null}
+          {locked ? (
+            <div className="absolute inset-0 z-30 rounded-[inherit] bg-[#071b3a]/54" />
+          ) : null}
+        </>
+      ) : null}
+      <div
+        className={`absolute inset-[3px] overflow-hidden rounded-[inherit] bg-[#071b3a] ${
+          artSrc ? "hidden" : ""
+        }`}
+      >
         <div
           className="absolute inset-0"
           style={{ background: theme.cardGradient }}
@@ -267,6 +333,11 @@ export function PlayerCardMini({
         >
           #{number}
         </p>
+        {cardNumber && !compact ? (
+          <p className="absolute right-2 top-9 z-20 rounded-full bg-[#071b3a]/72 px-1.5 py-0.5 text-[9px] font-black text-white">
+            {cardNumber}
+          </p>
+        ) : null}
         {countryResource ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -336,8 +407,9 @@ export function PlayerCardMini({
                 </span>
               </div>
               {size === "large" ? (
-                <p className="mt-1 rounded-md bg-[#f6f1e7] px-1.5 py-0.5 text-[10px] font-black text-[#071b3a]">
-                  价格 {formatCoins(card?.price)} 金币
+                <p className="mt-1 flex items-center justify-between gap-2 rounded-md bg-[#f6f1e7] px-1.5 py-0.5 text-[10px] font-black text-[#071b3a]">
+                  <span>价格 {formatCoins(card?.price)} 金币</span>
+                  {cardNumber ? <span>{cardNumber}</span> : null}
                 </p>
               ) : null}
             </>

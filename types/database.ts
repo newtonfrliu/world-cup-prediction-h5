@@ -188,6 +188,10 @@ export type Database = {
           star_level: number;
           roster_source: string | null;
           roster_version: string | null;
+          card_art_url: string | null;
+          card_thumb_url: string | null;
+          card_theme: string | null;
+          card_number: string | null;
           card_image: string | null;
           created_at: string | null;
         };
@@ -203,6 +207,10 @@ export type Database = {
           star_level?: number;
           roster_source?: string | null;
           roster_version?: string | null;
+          card_art_url?: string | null;
+          card_thumb_url?: string | null;
+          card_theme?: string | null;
+          card_number?: string | null;
           card_image?: string | null;
           created_at?: string | null;
         };
@@ -218,6 +226,10 @@ export type Database = {
           star_level?: number;
           roster_source?: string | null;
           roster_version?: string | null;
+          card_art_url?: string | null;
+          card_thumb_url?: string | null;
+          card_theme?: string | null;
+          card_number?: string | null;
           card_image?: string | null;
           created_at?: string | null;
         };
