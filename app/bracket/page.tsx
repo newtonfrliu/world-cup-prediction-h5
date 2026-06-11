@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 
+import { CountryDisplay } from "@/components/CountryDisplay";
 import {
   type BracketMatch,
   type GroupLetter,
@@ -406,13 +407,13 @@ export default function BracketPage() {
             return (
               <article
                 key={group}
-                className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm"
+                className="wc-card p-4"
               >
                 <h2 className="text-xl font-black text-[#102a43]">{group}组</h2>
                 <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-[#334e68]">
                   {groupTeams[group].map((team) => (
-                    <div key={team} className="rounded-md bg-[#f0f4f8] px-3 py-2">
-                      {getTeamDisplayName(team)}
+                    <div key={team} className="rounded-xl bg-[#f6f1e7] px-3 py-2 font-bold">
+                      <CountryDisplay team={team} />
                     </div>
                   ))}
                 </div>
@@ -461,7 +462,7 @@ export default function BracketPage() {
           })}
         </div>
 
-        <section className="mt-6 rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
+        <section className="wc-card mt-6 p-4">
           <h2 className="text-xl font-black text-[#102a43]">最佳第三名</h2>
           <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {thirdTeams.length === 0 ? (
@@ -483,8 +484,8 @@ export default function BracketPage() {
                     disabled={disabled}
                     onChange={() => toggleBestThird(group)}
                   />
-                  <span>
-                    {group}组第3：{getTeamDisplayName(team)}
+                  <span className="inline-flex items-center gap-2">
+                    {group}组第3：<CountryDisplay team={team} />
                   </span>
                 </label>
               );
@@ -492,7 +493,7 @@ export default function BracketPage() {
           </div>
         </section>
 
-        <div className="mt-6 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68] shadow-sm">
+        <div className="wc-card mt-6 p-4 text-sm font-bold text-[#334e68]">
           <p>已选择小组前二：{topTwoCount} / 24</p>
           <p className="mt-1">已选择第三名：{thirdsCount} / 12</p>
           <p className="mt-1">已选择最佳第三名：{bestThirdGroups.length} / 8</p>
@@ -531,7 +532,7 @@ export default function BracketPage() {
             <section key={`${side}-${name}`} className="mt-5">
               <h3 className="text-lg font-black text-[#102a43]">{name}</h3>
               {!round ? (
-                <div className="mt-3 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#627d98] shadow-sm">
+                <div className="wc-card mt-3 p-4 text-sm text-[#627d98]">
                   等待上一轮完成
                 </div>
               ) : null}
@@ -540,7 +541,7 @@ export default function BracketPage() {
                 {round?.matches.map((match, matchIndex) => (
                   <article
                     key={match.id}
-                    className="rounded-lg border border-[#d9e2ec] bg-white p-3 shadow-sm"
+                    className="wc-card p-3"
                   >
                     {match.teams.map((team) => {
                       const selected = match.winner?.team === team.team;
@@ -557,7 +558,7 @@ export default function BracketPage() {
                             selected ? "text-[#0f7b3f]" : "text-[#102a43]"
                           }`}
                         >
-                          {getTeamDisplayName(team.team)}
+                          <CountryDisplay team={team.team} />
                         </button>
                       );
                     })}
@@ -568,9 +569,9 @@ export default function BracketPage() {
           );
         })}
 
-        <div className="mt-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68] shadow-sm">
+        <div className="wc-card mt-5 p-4 text-sm font-bold text-[#334e68]">
           {title}冠军：
-          {champion ? getTeamDisplayName(champion.team) : "等待半区决赛选择完成"}
+          {champion ? <CountryDisplay team={champion.team} className="ml-2" /> : "等待半区决赛选择完成"}
         </div>
       </div>
     );
@@ -581,7 +582,7 @@ export default function BracketPage() {
 
     return (
       <>
-        <div className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#334e68] shadow-sm">
+        <div className="wc-card p-4 text-sm font-bold text-[#334e68]">
           <p>上半区进度 {upperProgress}%</p>
           <p className="mt-1">下半区进度 {lowerProgress}%</p>
         </div>
@@ -624,7 +625,7 @@ export default function BracketPage() {
     onSelect: (team: QualifiedTeam) => void,
   ) {
     return (
-      <section className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
+      <section className="wc-card p-4">
         <h2 className="text-xl font-black text-[#102a43]">{title}</h2>
         <div className="mt-4 space-y-2">
           {teams.every(Boolean) ? (
@@ -643,7 +644,7 @@ export default function BracketPage() {
                       : "border-[#d9e2ec] bg-white text-[#102a43]"
                   }`}
                 >
-                  {getTeamDisplayName(team.team)}
+                  <CountryDisplay team={team.team} />
                 </button>
               );
             })
@@ -727,12 +728,12 @@ export default function BracketPage() {
           <div className="mt-4 rounded-lg bg-white p-4 text-[#102a43]">
             <h2 className="text-xl font-black text-[#102a43]">最终结果</h2>
             <div className="mt-4 space-y-2 text-sm font-bold text-[#334e68]">
-              <p>🏆 冠军：{champion ? getTeamDisplayName(champion.team) : "-"}</p>
-              <p>🥈 亚军：{runnerUp ? getTeamDisplayName(runnerUp.team) : "-"}</p>
-              <p>🥉 季军：{thirdPlace ? getTeamDisplayName(thirdPlace.team) : "-"}</p>
-              <p>
+              <p className="flex items-center gap-2">🏆 冠军：{champion ? <CountryDisplay team={champion.team} /> : "-"}</p>
+              <p className="flex items-center gap-2">🥈 亚军：{runnerUp ? <CountryDisplay team={runnerUp.team} /> : "-"}</p>
+              <p className="flex items-center gap-2">🥉 季军：{thirdPlace ? <CountryDisplay team={thirdPlace.team} /> : "-"}</p>
+              <p className="flex items-center gap-2">
                 第四名：
-                {fourthPlace ? getTeamDisplayName(fourthPlace.team) : "-"}
+                {fourthPlace ? <CountryDisplay team={fourthPlace.team} /> : "-"}
               </p>
             </div>
           </div>
@@ -788,20 +789,20 @@ export default function BracketPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
+    <main className="wc-page px-4 py-6">
       <section className="mx-auto w-full max-w-5xl">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#d64545]">
+            <p className="wc-kicker">
               Road To Final
             </p>
-            <h1 className="mt-2 text-3xl font-black text-[#102a43]">
+            <h1 className="wc-title mt-2">
               世界杯晋级之路
             </h1>
           </div>
           <Link
             href="/"
-            className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-sm font-semibold text-[#334e68]"
+            className="rounded-md border border-[#071b3a]/15 bg-white px-3 py-2 text-sm font-bold text-[#071b3a]"
           >
             首页
           </Link>

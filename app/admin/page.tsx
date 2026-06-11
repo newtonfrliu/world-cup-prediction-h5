@@ -564,7 +564,7 @@ export default function AdminPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
+    <main className="wc-page px-4 py-6 text-[#1f2933]">
       <section className="mx-auto w-full max-w-xl">
         {!isVerified ? (
           <div className="flex min-h-[calc(100vh-3rem)] flex-col justify-center">
@@ -591,7 +591,7 @@ export default function AdminPage() {
 
               <button
                 type="submit"
-                className="h-12 w-full rounded-lg bg-[#d64545] px-5 text-base font-bold text-white transition hover:bg-[#ba2525]"
+                className="h-12 w-full rounded-lg bg-[#e63535] px-5 text-base font-bold text-white transition hover:bg-[#ba2525]"
               >
                 进入后台
               </button>
@@ -656,7 +656,7 @@ export default function AdminPage() {
               type="button"
               disabled={syncingOdds}
               onClick={syncOdds}
-              className="mb-6 h-11 w-full rounded-md bg-[#102a43] px-4 text-sm font-bold text-white transition hover:bg-[#243b53] disabled:bg-[#9fb3c8]"
+              className="mb-6 h-11 w-full rounded-md bg-[#071b3a] px-4 text-sm font-bold text-white transition hover:bg-[#102a43] disabled:bg-[#9fb3c8]"
             >
               {syncingOdds ? "同步中..." : "同步赔率"}
             </button>
@@ -665,7 +665,7 @@ export default function AdminPage() {
               type="button"
               disabled={syncingScores}
               onClick={syncScores}
-              className="mb-6 h-11 w-full rounded-md bg-[#d64545] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:bg-[#9fb3c8]"
+              className="mb-6 h-11 w-full rounded-md bg-[#e63535] px-4 text-sm font-bold text-white transition hover:bg-[#ba2525] disabled:bg-[#9fb3c8]"
             >
               {syncingScores ? "同步赛果中..." : "同步赛果并结算"}
             </button>

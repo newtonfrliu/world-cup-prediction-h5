@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
+import { CountryDisplay } from "@/components/CountryDisplay";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
@@ -201,27 +201,27 @@ export default function PredictPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
-      <section className="mx-auto w-full max-w-xl">
+    <main className="wc-page px-4 py-6">
+      <section className="wc-shell">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#d64545]">
-              Match List
+            <p className="wc-kicker">
+              Match Cards
             </p>
-            <h1 className="mt-2 text-3xl font-black text-[#102a43]">
+            <h1 className="wc-title mt-2">
               预测比赛
             </h1>
           </div>
           <div className="flex shrink-0 flex-col gap-2">
             <Link
               href="/"
-              className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-center text-sm font-semibold text-[#334e68]"
+              className="rounded-md border border-[#071b3a]/15 bg-white px-3 py-2 text-center text-sm font-bold text-[#071b3a]"
             >
               首页
             </Link>
             <Link
               href="/profile"
-              className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-center text-sm font-semibold text-[#334e68]"
+              className="rounded-md border border-[#071b3a]/15 bg-white px-3 py-2 text-center text-sm font-bold text-[#071b3a]"
             >
               我的战绩
             </Link>
@@ -229,26 +229,26 @@ export default function PredictPage() {
         </div>
 
         {!playerId ? (
-          <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
+          <div className="mb-5 rounded-xl border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
             请先返回首页创建玩家，再进行预测。
           </div>
         ) : null}
 
         {error ? (
-          <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
+          <div className="mb-5 rounded-xl border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
             {error}
           </div>
         ) : null}
 
-        <div className="mb-5 rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm font-bold text-[#102a43] shadow-sm">
-          ⚡ 赔率更新时间：
+        <div className="mb-5 rounded-full border border-[#25c7b7]/40 bg-[#071b3a] px-4 py-3 text-sm font-black text-white shadow-sm">
+          <span className="text-[#25c7b7]">ODDS TICKER</span> · 赔率更新时间：
           {lastOddsSync ? formatOddsSyncTime(lastOddsSync) : "暂无同步记录"}
         </div>
 
         <button
           type="button"
           onClick={() => setShowMyPredictions((current) => !current)}
-          className="mb-5 h-11 w-full rounded-md border border-[#cbd2d9] bg-white px-4 text-sm font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545]"
+          className="wc-button-secondary mb-5 w-full"
         >
           我的预测
         </button>
@@ -256,7 +256,7 @@ export default function PredictPage() {
         {showMyPredictions ? (
           <div className="mb-5 space-y-3">
             {myPredictions.length === 0 ? (
-              <div className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm text-[#52606d]">
+              <div className="wc-card p-4 text-sm text-[#52606d]">
                 暂无预测记录。
               </div>
             ) : null}
@@ -267,12 +267,18 @@ export default function PredictPage() {
               return (
                 <article
                   key={prediction.id}
-                  className="rounded-lg border border-[#d9e2ec] bg-white p-4 text-sm shadow-sm"
+                  className="wc-card p-4 text-sm"
                 >
                   <h2 className="text-base font-black text-[#102a43]">
-                    {match
-                      ? `${getTeamDisplayName(match.home_team)} VS ${getTeamDisplayName(match.away_team)}`
-                      : "未知比赛"}
+                    {match ? (
+                      <span className="flex items-center gap-2">
+                        <CountryDisplay team={match.home_team} />
+                        <span className="text-[#e63535]">VS</span>
+                        <CountryDisplay team={match.away_team} />
+                      </span>
+                    ) : (
+                      "未知比赛"
+                    )}
                   </h2>
                   <p className="mt-2 text-[#627d98]">
                     开赛时间：
@@ -297,13 +303,13 @@ export default function PredictPage() {
         ) : null}
 
         {loading ? (
-          <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
+          <div className="wc-card p-5 text-sm text-[#52606d]">
             加载比赛中...
           </div>
         ) : null}
 
         {!loading && !hasMatches ? (
-          <div className="rounded-lg border border-[#d9e2ec] bg-white p-5 text-sm text-[#52606d]">
+          <div className="wc-card p-5 text-sm text-[#52606d]">
             暂无比赛。
           </div>
         ) : null}
@@ -317,51 +323,58 @@ export default function PredictPage() {
             return (
               <article
                 key={match.id}
-                className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm"
+                className="overflow-hidden rounded-2xl border border-[#071b3a]/15 bg-white shadow-[0_14px_30px_rgba(7,27,58,0.1)]"
               >
-                <div className="flex items-start justify-between gap-3">
+                <div className="bg-[#071b3a] p-4 text-white">
+                  <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-xl font-black text-[#102a43]">
-                      {getTeamDisplayName(match.home_team)} VS{" "}
-                      {getTeamDisplayName(match.away_team)}
+                    <h2 className="text-xl font-black">
+                      <span className="flex flex-wrap items-center gap-2">
+                        <CountryDisplay team={match.home_team} />
+                        <span className="rounded-full bg-[#e63535] px-2 py-1 text-xs">
+                          VS
+                        </span>
+                        <CountryDisplay team={match.away_team} />
+                      </span>
                     </h2>
-                    <p className="mt-2 text-sm text-[#627d98]">
+                    <p className="mt-2 text-sm font-bold text-[#25c7b7]">
                       {formatMatchTime(match.start_time)}
                     </p>
                   </div>
                   {isPredicted ? (
-                    <span className="shrink-0 rounded-md bg-[#d64545] px-2 py-1 text-xs font-bold text-white">
+                    <span className="shrink-0 rounded-full bg-[#f6c84c] px-3 py-1 text-xs font-black text-[#071b3a]">
                       已预测：
                       {selectedPrediction
                         ? predictionLabels[selectedPrediction]
                         : ""}
                     </span>
                   ) : null}
+                  </div>
                 </div>
 
-                <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
-                  <div className="rounded-md bg-[#f0f4f8] px-2 py-3">
+                <div className="grid grid-cols-3 gap-2 p-4 text-center text-sm">
+                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">主胜</p>
-                    <p className="mt-1 text-[#102a43]">{match.odds_home}</p>
+                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_home}</p>
                   </div>
-                  <div className="rounded-md bg-[#f0f4f8] px-2 py-3">
+                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">平局</p>
-                    <p className="mt-1 text-[#102a43]">{match.odds_draw}</p>
+                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_draw}</p>
                   </div>
-                  <div className="rounded-md bg-[#f0f4f8] px-2 py-3">
+                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">客胜</p>
-                    <p className="mt-1 text-[#102a43]">{match.odds_away}</p>
+                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_away}</p>
                   </div>
                 </div>
 
-                <div className="mt-4 grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-2 px-4 pb-4">
                   {predictionOptions.map((option) => {
                     const isSelected = selectedPrediction === option.value;
                     const buttonClass = isPredicted
                       ? isSelected
-                        ? "bg-[#102a43] text-white ring-2 ring-[#d64545]"
+                        ? "bg-[#071b3a] text-white ring-2 ring-[#f6c84c]"
                         : "bg-[#e4e7eb] text-[#829ab1]"
-                      : "bg-[#d64545] text-white hover:bg-[#ba2525]";
+                      : "bg-[#e63535] text-white hover:bg-[#ba2525]";
 
                     return (
                       <button
@@ -369,7 +382,7 @@ export default function PredictPage() {
                         type="button"
                         disabled={!playerId || isPredicted || isSubmitting}
                         onClick={() => submitPrediction(match, option.value)}
-                        className={`h-11 rounded-md px-2 text-sm font-bold transition disabled:cursor-not-allowed ${buttonClass}`}
+                        className={`h-11 rounded-xl px-2 text-sm font-black transition disabled:cursor-not-allowed ${buttonClass}`}
                       >
                         {isSubmitting ? "提交中" : option.label}
                       </button>

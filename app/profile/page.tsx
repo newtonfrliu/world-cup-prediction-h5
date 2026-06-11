@@ -4,7 +4,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 
+import { CountryDisplay } from "@/components/CountryDisplay";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getCountryByNameEn } from "@/lib/countries";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
@@ -71,6 +73,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
+  const playerCountry = player ? getCountryByNameEn(player.country) : null;
 
   useEffect(() => {
     async function loadProfile() {
@@ -256,66 +259,69 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f6f3ec] px-4 py-6 text-[#1f2933]">
-      <section className="mx-auto w-full max-w-xl">
+    <main className="wc-page px-4 py-6">
+      <section className="wc-shell">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#d64545]">
-              Profile
+            <p className="wc-kicker">
+              Player Card
             </p>
-            <h1 className="mt-2 text-3xl font-black text-[#102a43]">
+            <h1 className="wc-title mt-2">
               我的战绩
             </h1>
           </div>
           <Link
             href="/"
-            className="rounded-md border border-[#cbd2d9] bg-white px-3 py-2 text-sm font-semibold text-[#334e68]"
+            className="rounded-md border border-[#071b3a]/15 bg-white px-3 py-2 text-sm font-bold text-[#071b3a]"
           >
             首页
           </Link>
         </div>
 
         {error ? (
-          <div className="mb-5 rounded-lg border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
+          <div className="mb-5 rounded-xl border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
             {error}
           </div>
         ) : null}
 
         <div className="space-y-4">
-          <article className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
-            <h2 className="text-lg font-black text-[#102a43]">玩家信息</h2>
+          <article className="wc-dark-card p-5">
+            <p className="text-sm font-black text-[#25c7b7]">MY PLAYER CARD</p>
+            <h2 className="mt-2 text-3xl font-black text-white">
+              {player?.nickname ?? "-"}
+            </h2>
             <dl className="mt-4 space-y-3 text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="text-[#627d98]">昵称</dt>
-                <dd className="font-bold text-[#102a43]">
+                <dt className="text-[#f6c84c]">昵称</dt>
+                <dd className="font-bold text-white">
                   {player?.nickname ?? "-"}
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-[#627d98]">主队国家</dt>
-                <dd className="font-bold text-[#102a43]">
-                  {player ? getTeamDisplayName(player.country) : "-"}
+                <dt className="text-[#f6c84c]">主队国家</dt>
+                <dd className="font-bold text-white">
+                  {player ? <CountryDisplay team={player.country} /> : "-"}
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-[#627d98]">地区</dt>
-                <dd className="font-bold text-[#102a43]">
+                <dt className="text-[#f6c84c]">地区</dt>
+                <dd className="font-bold text-white">
                   {player?.region ?? "-"}
                 </dd>
               </div>
             </dl>
           </article>
 
-          <article className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
+          <article className="wc-card p-4">
             <h2 className="text-lg font-black text-[#102a43]">战绩数据</h2>
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
                 <p className="text-xs font-semibold text-[#627d98]">总积分</p>
                 <p className="mt-1 text-2xl font-black text-[#102a43]">
                   {Math.round(stats.totalPoints)}
                 </p>
               </div>
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6f1e7] p-3">
                 <p className="text-xs font-semibold text-[#627d98]">
                   全球排名
                 </p>
@@ -323,7 +329,7 @@ export default function ProfilePage() {
                   {formatRank(stats.globalRank)}
                 </p>
               </div>
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6f1e7] p-3">
                 <p className="text-xs font-semibold text-[#627d98]">
                   地区排名
                 </p>
@@ -331,7 +337,7 @@ export default function ProfilePage() {
                   {formatRank(stats.regionRank)}
                 </p>
               </div>
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6f1e7] p-3">
                 <p className="text-xs font-semibold text-[#627d98]">
                   已预测场数
                 </p>
@@ -339,13 +345,13 @@ export default function ProfilePage() {
                   {stats.predictionCount}
                 </p>
               </div>
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6f1e7] p-3">
                 <p className="text-xs font-semibold text-[#627d98]">命中场数</p>
                 <p className="mt-1 text-2xl font-black text-[#102a43]">
                   {stats.hitCount}
                 </p>
               </div>
-              <div className="rounded-md bg-[#f0f4f8] p-3">
+              <div className="rounded-xl bg-[#f6f1e7] p-3">
                 <p className="text-xs font-semibold text-[#627d98]">命中率</p>
                 <p className="mt-1 text-2xl font-black text-[#102a43]">
                   {(stats.hitRate * 100).toFixed(0)}%
@@ -354,7 +360,7 @@ export default function ProfilePage() {
             </div>
           </article>
 
-          <article className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-sm">
+          <article className="wc-card p-4">
             <h2 className="text-lg font-black text-[#102a43]">
               分享我的战绩
             </h2>
@@ -383,6 +389,14 @@ export default function ProfilePage() {
 
               <div className="mt-4 rounded-lg bg-white p-4 text-center text-[#102a43]">
                 <p className="text-xs font-black text-[#d64545]">我的身份</p>
+                {playerCountry ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={playerCountry.flag}
+                    alt={`${playerCountry.nameZh} flag`}
+                    className="mx-auto mt-2 h-8 w-11 rounded-md object-cover shadow-sm"
+                  />
+                ) : null}
                 <p className="mt-2 truncate text-2xl font-black">
                   {player
                     ? `${getTeamDisplayName(player.country)}·${player.nickname}`
@@ -432,13 +446,15 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              <div className="mt-auto rounded-lg bg-white p-3 text-center text-[#102a43]">
+              <div className="mt-auto rounded-lg bg-white p-4 text-center text-[#102a43]">
+                <div className="mx-auto inline-block rounded-xl bg-white p-2 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={shareLink ? buildQrCodeUrl(shareLink) : ""}
                   alt="邀请链接二维码"
-                  className="mx-auto h-28 w-28 rounded-md bg-white"
+                  className="h-28 w-28 rounded-md bg-white"
                 />
+                </div>
                 <p className="mt-2 break-all text-[11px] font-semibold text-[#627d98]">
                   {shareLink}
                 </p>
