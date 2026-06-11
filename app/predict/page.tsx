@@ -5,15 +5,23 @@ import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getCountryTheme } from "@/lib/countries";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
+type Player = Database["public"]["Tables"]["players"]["Row"];
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
 type MyPrediction = Pick<
   Prediction,
-  "id" | "match_id" | "prediction" | "odds_at_prediction" | "points"
+  | "id"
+  | "match_id"
+  | "prediction"
+  | "odds_at_prediction"
+  | "stake"
+  | "payout"
+  | "points"
 > & {
   matches: Pick<
     Match,
@@ -79,8 +87,17 @@ export default function PredictPage() {
     () => new Set(),
   );
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [player, setPlayer] = useState<Pick<
+    Player,
+    "id" | "country" | "coins"
+  > | null>(null);
   const [myPredictions, setMyPredictions] = useState<MyPrediction[]>([]);
   const [showMyPredictions, setShowMyPredictions] = useState(false);
+  const [bettingMatch, setBettingMatch] = useState<Match | null>(null);
+  const [bettingOption, setBettingOption] = useState<
+    (typeof predictionOptions)[number] | null
+  >(null);
+  const [stakeInput, setStakeInput] = useState("50");
   const [lastOddsSync, setLastOddsSync] = useState("");
   const [loading, setLoading] = useState(true);
   const [submittingMatchId, setSubmittingMatchId] = useState<string | null>(
@@ -90,6 +107,7 @@ export default function PredictPage() {
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
+  const playerTheme = getCountryTheme(player?.country);
   const predictionsByMatchId = useMemo(() => {
     return new Map(
       myPredictions.map((prediction) => [
@@ -103,7 +121,7 @@ export default function PredictPage() {
     const { data, error: predictionError } = await supabase
       .from("predictions")
       .select(
-        "id, match_id, prediction, odds_at_prediction, points, matches(home_team, away_team, start_time, status, result)",
+        "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result)",
       )
       .eq("player_id", currentPlayerId);
 
@@ -152,6 +170,19 @@ export default function PredictPage() {
       setLastOddsSync(settingData?.value ?? "");
 
       if (storedPlayerId) {
+        const { data: playerData, error: playerError } = await supabase
+          .from("players")
+          .select("id, country, coins")
+          .eq("id", storedPlayerId)
+          .maybeSingle();
+
+        if (playerError) {
+          setError(playerError.message);
+          setLoading(false);
+          return;
+        }
+
+        setPlayer(playerData);
         await loadMyPredictions(storedPlayerId);
       }
 
@@ -161,9 +192,37 @@ export default function PredictPage() {
     loadMatches();
   }, [canUseSupabase]);
 
-  async function submitPrediction(match: Match, option: PredictionChoice) {
+  function isMatchStarted(match: Match) {
+    return new Date(match.start_time).getTime() <= Date.now();
+  }
+
+  function openBetPanel(match: Match, option: (typeof predictionOptions)[number]) {
+    if (isMatchStarted(match)) {
+      setError("比赛已开始，不能下注。");
+      return;
+    }
+
+    setBettingMatch(match);
+    setBettingOption(option);
+    setStakeInput("50");
+    setError("");
+  }
+
+  async function submitPrediction() {
+    const match = bettingMatch;
+    const selectedOption = bettingOption;
+
+    if (!match || !selectedOption) {
+      return;
+    }
+
     if (!playerId) {
       setError("请先在首页创建玩家。");
+      return;
+    }
+
+    if (!player) {
+      setError("请先加载玩家金币信息。");
       return;
     }
 
@@ -171,11 +230,20 @@ export default function PredictPage() {
       return;
     }
 
-    const selectedOption = predictionOptions.find(
-      (item) => item.value === option,
-    );
+    if (isMatchStarted(match)) {
+      setError("比赛已开始，不能下注。");
+      return;
+    }
 
-    if (!selectedOption) {
+    const stake = Number(stakeInput);
+
+    if (!Number.isInteger(stake) || stake <= 0) {
+      setError("下注金币必须大于 0。");
+      return;
+    }
+
+    if (stake > player.coins) {
+      setError("金币不足。");
       return;
     }
 
@@ -185,8 +253,10 @@ export default function PredictPage() {
     const { error: insertError } = await supabase.from("predictions").insert({
       player_id: playerId,
       match_id: match.id,
-      prediction: option,
+      prediction: selectedOption.value,
       odds_at_prediction: match[selectedOption.oddsKey],
+      stake,
+      payout: 0,
     });
 
     if (insertError) {
@@ -195,8 +265,23 @@ export default function PredictPage() {
       return;
     }
 
+    const nextCoins = player.coins - stake;
+    const { error: coinUpdateError } = await supabase
+      .from("players")
+      .update({ coins: nextCoins })
+      .eq("id", playerId);
+
+    if (coinUpdateError) {
+      setError(coinUpdateError.message);
+      setSubmittingMatchId(null);
+      return;
+    }
+
     setPredictedMatchIds((current) => new Set(current).add(match.id));
+    setPlayer({ ...player, coins: nextCoins });
     setSubmittingMatchId(null);
+    setBettingMatch(null);
+    setBettingOption(null);
     await loadMyPredictions(playerId);
   }
 
@@ -240,9 +325,20 @@ export default function PredictPage() {
           </div>
         ) : null}
 
-        <div className="mb-5 rounded-full border border-[#25c7b7]/40 bg-[#071b3a] px-4 py-3 text-sm font-black text-white shadow-sm">
-          <span className="text-[#25c7b7]">ODDS TICKER</span> · 赔率更新时间：
+        <div
+          className="mb-5 rounded-full border px-4 py-3 text-sm font-black text-white shadow-sm"
+          style={{
+            background: playerTheme.primary,
+            borderColor: playerTheme.accent,
+            boxShadow: playerTheme.glow,
+          }}
+        >
+          <span style={{ color: playerTheme.accent }}>ODDS TICKER</span> ·
+          赔率更新时间：
           {lastOddsSync ? formatOddsSyncTime(lastOddsSync) : "暂无同步记录"}
+        </div>
+        <div className="mb-5 rounded-2xl bg-white p-4 text-sm font-black text-[#071b3a] shadow-sm">
+          我的金币：{player?.coins ?? "-"}
         </div>
 
         <button
@@ -289,6 +385,12 @@ export default function PredictPage() {
                   </p>
                   <p className="mt-1 text-[#627d98]">
                     预测时赔率：{prediction.odds_at_prediction}
+                  </p>
+                  <p className="mt-1 text-[#627d98]">
+                    下注金币：{prediction.stake}
+                  </p>
+                  <p className="mt-1 text-[#627d98]">
+                    返还金币：{prediction.payout}
                   </p>
                   <p className="mt-1 text-[#627d98]">
                     比赛状态：{match?.status ?? "-"}
@@ -373,21 +475,33 @@ export default function PredictPage() {
                 <div className="grid grid-cols-3 gap-2 px-4 pb-4">
                   {predictionOptions.map((option) => {
                     const isSelected = selectedPrediction === option.value;
+                    const hasStarted = isMatchStarted(match);
                     const buttonClass = isPredicted
                       ? isSelected
-                        ? "bg-[#071b3a] text-white ring-2 ring-[#f6c84c]"
+                        ? "text-white ring-2 ring-[#f6c84c]"
                         : "bg-[#e4e7eb] text-[#829ab1]"
-                      : "bg-[#e63535] text-white hover:bg-[#ba2525]";
+                      : hasStarted
+                        ? "bg-[#e4e7eb] text-[#829ab1]"
+                        : "bg-[#e63535] text-white hover:bg-[#ba2525]";
 
                     return (
                       <button
                         key={option.value}
                         type="button"
-                        disabled={!playerId || isPredicted || isSubmitting}
-                        onClick={() => submitPrediction(match, option.value)}
+                        disabled={!playerId || isPredicted || isSubmitting || hasStarted}
+                        onClick={() => openBetPanel(match, option)}
                         className={`h-11 rounded-xl px-2 text-sm font-black transition disabled:cursor-not-allowed ${buttonClass}`}
+                        style={
+                          isPredicted && isSelected
+                            ? { background: playerTheme.accent }
+                            : undefined
+                        }
                       >
-                        {isSubmitting ? "提交中" : option.label}
+                        {isSubmitting
+                          ? "提交中"
+                          : isPredicted
+                            ? option.label
+                            : `押${option.label}`}
                       </button>
                     );
                   })}
@@ -397,6 +511,62 @@ export default function PredictPage() {
           })}
         </div>
       </section>
+
+      {bettingMatch && bettingOption ? (
+        <div className="fixed inset-0 z-50 flex items-end bg-black/60 px-4 py-5 sm:items-center">
+          <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl">
+            <p className="wc-kicker">Chip Bet</p>
+            <h2 className="mt-2 text-2xl font-black text-[#071b3a]">
+              下注金币
+            </h2>
+            <div className="mt-4 rounded-xl bg-[#f6f1e7] p-4 text-sm font-bold text-[#071b3a]">
+              <p>
+                选择：{predictionLabels[bettingOption.value]} · 赔率：
+                {bettingMatch[bettingOption.oddsKey]}
+              </p>
+              <p className="mt-1">我的金币：{player?.coins ?? 0}</p>
+            </div>
+            <label className="mt-4 block">
+              <span className="wc-label">下注金币</span>
+              <input
+                value={stakeInput}
+                onChange={(event) => setStakeInput(event.target.value)}
+                type="number"
+                min="1"
+                max={player?.coins ?? 0}
+                className="wc-input mt-2"
+              />
+            </label>
+            <p className="mt-3 text-sm font-bold text-[#334e68]">
+              预计收益：
+              {Math.round(
+                (Number(stakeInput) || 0) * bettingMatch[bettingOption.oddsKey],
+              )}{" "}
+              金币
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setBettingMatch(null);
+                  setBettingOption(null);
+                }}
+                className="wc-button-secondary"
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                onClick={submitPrediction}
+                disabled={Boolean(submittingMatchId)}
+                className="wc-button"
+              >
+                确认下注
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

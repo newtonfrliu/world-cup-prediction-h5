@@ -7,6 +7,9 @@ export type Database = {
           nickname: string;
           country: string;
           region: string;
+          coins: number;
+          last_login_reward_date: string | null;
+          avatar_id: string | null;
           created_at: string | null;
         };
         Insert: {
@@ -14,6 +17,9 @@ export type Database = {
           nickname: string;
           country: string;
           region: string;
+          coins?: number;
+          last_login_reward_date?: string | null;
+          avatar_id?: string | null;
           created_at?: string | null;
         };
         Update: {
@@ -21,6 +27,9 @@ export type Database = {
           nickname?: string;
           country?: string;
           region?: string;
+          coins?: number;
+          last_login_reward_date?: string | null;
+          avatar_id?: string | null;
           created_at?: string | null;
         };
         Relationships: [];
@@ -77,6 +86,8 @@ export type Database = {
           match_id: string;
           prediction: "home_win" | "draw" | "away_win";
           odds_at_prediction: number;
+          stake: number;
+          payout: number;
           points: number | null;
           created_at: string | null;
         };
@@ -86,6 +97,8 @@ export type Database = {
           match_id: string;
           prediction: "home_win" | "draw" | "away_win";
           odds_at_prediction: number;
+          stake?: number;
+          payout?: number;
           points?: number | null;
           created_at?: string | null;
         };
@@ -95,6 +108,8 @@ export type Database = {
           match_id?: string;
           prediction?: "home_win" | "draw" | "away_win";
           odds_at_prediction?: number;
+          stake?: number;
+          payout?: number;
           points?: number | null;
           created_at?: string | null;
         };

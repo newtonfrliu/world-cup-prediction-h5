@@ -429,6 +429,11 @@ export default function AdminPage() {
       return;
     }
 
+    if (match.status === "finished") {
+      setError("比赛已结束，不能重复结算。");
+      return;
+    }
+
     setSettlingMatchId(match.id);
     setError("");
     setMessage("");
@@ -450,7 +455,7 @@ export default function AdminPage() {
     const { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
       )
       .eq("match_id", match.id);
 
@@ -460,25 +465,50 @@ export default function AdminPage() {
       return;
     }
 
-    const updates = ((predictions ?? []) as Prediction[]).map((prediction) =>
-      supabase
+    for (const prediction of (predictions ?? []) as Prediction[]) {
+      const isHit = prediction.prediction === result;
+      const points = isHit
+        ? Math.round(prediction.odds_at_prediction * 100)
+        : 0;
+      const payout = isHit
+        ? Math.round(prediction.stake * prediction.odds_at_prediction)
+        : 0;
+
+      const { error: predictionUpdateError } = await supabase
         .from("predictions")
-        .update({
-          points:
-            prediction.prediction === result
-              ? Math.round(prediction.odds_at_prediction * 100)
-              : 0,
-        })
-        .eq("id", prediction.id),
-    );
+        .update({ points, payout })
+        .eq("id", prediction.id);
 
-    const updateResults = await Promise.all(updates);
-    const failedUpdate = updateResults.find((item) => item.error);
+      if (predictionUpdateError) {
+        setError(predictionUpdateError.message);
+        setSettlingMatchId(null);
+        return;
+      }
 
-    if (failedUpdate?.error) {
-      setError(failedUpdate.error.message);
-      setSettlingMatchId(null);
-      return;
+      if (payout > 0 && prediction.payout === 0) {
+        const { data: player, error: playerLoadError } = await supabase
+          .from("players")
+          .select("coins")
+          .eq("id", prediction.player_id)
+          .single();
+
+        if (playerLoadError) {
+          setError(playerLoadError.message);
+          setSettlingMatchId(null);
+          return;
+        }
+
+        const { error: playerUpdateError } = await supabase
+          .from("players")
+          .update({ coins: player.coins + payout })
+          .eq("id", prediction.player_id);
+
+        if (playerUpdateError) {
+          setError(playerUpdateError.message);
+          setSettlingMatchId(null);
+          return;
+        }
+      }
     }
 
     setMatches((current) =>
@@ -486,7 +516,7 @@ export default function AdminPage() {
         item.id === match.id ? { ...item, result, status: "finished" } : item,
       ),
     );
-    setMessage("结算完成，排行榜积分会自动更新。");
+    setMessage("结算完成，排行榜积分和中奖金币会自动更新。");
     setSettlingMatchId(null);
   }
 

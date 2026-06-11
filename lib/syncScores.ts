@@ -201,7 +201,7 @@ export async function syncWorldCupScores({
     const { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
       )
       .eq("match_id", match.id);
 
@@ -209,26 +209,55 @@ export async function syncWorldCupScores({
       throw new Error(`Supabase update failed: ${predictionsError.message}`);
     }
 
-    const updates = ((predictions ?? []) as Prediction[]).map((prediction) =>
-      supabase
+    for (const prediction of (predictions ?? []) as Prediction[]) {
+      const isHit = prediction.prediction === result;
+      const points = isHit
+        ? Math.round(prediction.odds_at_prediction * 100)
+        : 0;
+      const payout = isHit
+        ? Math.round(prediction.stake * prediction.odds_at_prediction)
+        : 0;
+
+      const { error: predictionUpdateError } = await supabase
         .from("predictions")
         .update({
-          points:
-            prediction.prediction === result
-              ? Math.round(prediction.odds_at_prediction * 100)
-              : 0,
+          points,
+          payout,
         })
-        .eq("id", prediction.id),
-    );
-    const updateResults = await Promise.all(updates);
-    const failedUpdate = updateResults.find((item) => item.error);
+        .eq("id", prediction.id);
 
-    if (failedUpdate?.error) {
-      throw new Error(`Supabase update failed: ${failedUpdate.error.message}`);
+      if (predictionUpdateError) {
+        throw new Error(
+          `Supabase update failed: ${predictionUpdateError.message}`,
+        );
+      }
+
+      if (payout > 0 && prediction.payout === 0) {
+        const { data: player, error: playerLoadError } = await supabase
+          .from("players")
+          .select("coins")
+          .eq("id", prediction.player_id)
+          .single();
+
+        if (playerLoadError) {
+          throw new Error(`Supabase update failed: ${playerLoadError.message}`);
+        }
+
+        const { error: playerUpdateError } = await supabase
+          .from("players")
+          .update({ coins: player.coins + payout })
+          .eq("id", prediction.player_id);
+
+        if (playerUpdateError) {
+          throw new Error(
+            `Supabase update failed: ${playerUpdateError.message}`,
+          );
+        }
+      }
     }
 
     finished += 1;
-    settled += updates.length;
+    settled += (predictions ?? []).length;
   }
 
   return {

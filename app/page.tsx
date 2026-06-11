@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
 const countries = worldCupTeams.map((team) => ({
@@ -60,9 +61,12 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
+  const [coinBalance, setCoinBalance] = useState<number | null>(null);
 
   const trimmedNickname = nickname.trim();
   const isNicknameEmpty = trimmedNickname.length === 0;
+  const selectedCountry = getCountryByNameEn(country);
+  const selectedTheme = getCountryTheme(country);
 
   useEffect(() => {
     const ref = new URLSearchParams(window.location.search).get("ref");
@@ -72,6 +76,65 @@ export default function Home() {
       setReferrerId(ref);
     }
   }, []);
+
+  useEffect(() => {
+    async function loadStoredPlayer() {
+      const storedPlayerId = localStorage.getItem("player_id");
+
+      if (!storedPlayerId || !isSupabaseConfigured) {
+        return;
+      }
+
+      const { data } = await supabase
+        .from("players")
+        .select("country, coins, last_login_reward_date")
+        .eq("id", storedPlayerId)
+        .maybeSingle();
+
+      if (!data) {
+        return;
+      }
+
+      setCountry(data.country);
+      setCoinBalance(data.coins);
+      await awardDailyLoginReward(storedPlayerId, data.coins, data.last_login_reward_date);
+    }
+
+    loadStoredPlayer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function getTodayKey() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  async function awardDailyLoginReward(
+    playerId: string,
+    currentCoins: number,
+    lastRewardDate: string | null,
+  ) {
+    const today = getTodayKey();
+
+    if (lastRewardDate === today) {
+      return currentCoins;
+    }
+
+    const nextCoins = currentCoins + 50;
+    const { error: rewardError } = await supabase
+      .from("players")
+      .update({
+        coins: nextCoins,
+        last_login_reward_date: today,
+      })
+      .eq("id", playerId);
+
+    if (!rewardError) {
+      setCoinBalance(nextCoins);
+      setNotice("今日登录奖励 +50 金币");
+    }
+
+    return rewardError ? currentCoins : nextCoins;
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -91,7 +154,7 @@ export default function Home() {
 
     const { data: existingPlayers, error: lookupError } = await supabase
       .from("players")
-      .select("id, created_at")
+      .select("id, created_at, coins, last_login_reward_date")
       .eq("nickname", trimmedNickname)
       .eq("country", country)
       .eq("region", region)
@@ -107,6 +170,11 @@ export default function Home() {
 
     if (existingPlayer) {
       localStorage.setItem("player_id", existingPlayer.id);
+      await awardDailyLoginReward(
+        existingPlayer.id,
+        existingPlayer.coins,
+        existingPlayer.last_login_reward_date,
+      );
       setNotice("欢迎回来");
       router.push("/predict");
       return;
@@ -118,8 +186,10 @@ export default function Home() {
         nickname: trimmedNickname,
         country,
         region,
+        coins: 1000,
+        avatar_id: "default-manager",
       })
-      .select("id")
+      .select("id, coins")
       .single();
 
     if (insertError) {
@@ -129,6 +199,7 @@ export default function Home() {
     }
 
     localStorage.setItem("player_id", createdPlayer.id);
+    setCoinBalance(createdPlayer.coins);
     setNotice("创建成功");
     router.push("/predict");
   }
@@ -136,7 +207,21 @@ export default function Home() {
   return (
     <main className="wc-page px-5 py-8">
       <section className="wc-shell flex min-h-[calc(100vh-4rem)] flex-col justify-center">
-        <div className="wc-dark-card p-5">
+        <div
+          className="relative overflow-hidden rounded-2xl border border-white/20 p-5 text-white"
+          style={{
+            background: selectedTheme.cardGradient,
+            boxShadow: selectedTheme.glow,
+          }}
+        >
+          {selectedCountry ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={selectedCountry.flag}
+              alt={`${selectedCountry.nameZh} flag`}
+              className="absolute -right-8 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-20"
+            />
+          ) : null}
           <p className="text-sm font-black text-[#25c7b7]">2026足球世界杯</p>
           <h1 className="mt-3 text-5xl font-black leading-none text-white">
             美加墨
@@ -149,6 +234,9 @@ export default function Home() {
           <p className="mt-4 text-base font-bold leading-7 text-[#f6c84c]">
             预测世界杯 / 挑战好友 / 争夺全球第一
           </p>
+          <p className="mt-4 text-sm font-black text-white">
+            加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
+          </p>
         </div>
 
         {referrerId ? (
@@ -157,12 +245,21 @@ export default function Home() {
           </p>
         ) : null}
 
-        <form onSubmit={handleSubmit} className="wc-card mt-5 space-y-5 p-5">
+        <form
+          onSubmit={handleSubmit}
+          className="wc-card mt-5 space-y-5 p-5"
+          style={{ borderColor: selectedTheme.accent }}
+        >
           <div>
             <p className="wc-kicker">Entry Card</p>
             <h2 className="mt-1 text-2xl font-black text-[#071b3a]">
               领取你的球迷入场卡
             </h2>
+            {coinBalance !== null ? (
+              <p className="mt-2 inline-flex rounded-full bg-[#f6c84c] px-3 py-1 text-sm font-black text-[#071b3a]">
+                当前金币：{coinBalance}
+              </p>
+            ) : null}
           </div>
           <label className="block">
             <span className="wc-label">昵称</span>

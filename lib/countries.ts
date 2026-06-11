@@ -1,3 +1,12 @@
+export type CountryTheme = {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  cardGradient: string;
+  glow: string;
+};
+
 export type CountryResource = {
   code: string;
   fifaCode: string;
@@ -7,6 +16,18 @@ export type CountryResource = {
   primaryColor: string;
   secondaryColor: string;
   badge: string;
+  theme?: CountryTheme;
+};
+
+export const defaultCountryTheme: CountryTheme = {
+  primary: "#071B3A",
+  secondary: "#E63535",
+  accent: "#F6C84C",
+  background:
+    "radial-gradient(circle at top left, rgba(37,199,183,0.2), transparent 30rem), radial-gradient(circle at top right, rgba(230,53,53,0.16), transparent 24rem), #F6F1E7",
+  cardGradient:
+    "linear-gradient(135deg, rgba(37,199,183,0.18), rgba(7,27,58,0.98) 45%, rgba(230,53,53,0.7))",
+  glow: "0 20px 56px rgba(7,27,58,0.28)",
 };
 
 export const countries = {
@@ -29,6 +50,16 @@ export const countries = {
     primaryColor: "#75AADB",
     secondaryColor: "#F6B40E",
     badge: "",
+    theme: {
+      primary: "#75AADB",
+      secondary: "#FFFFFF",
+      accent: "#F6C84C",
+      background:
+        "radial-gradient(circle at top left, rgba(117,170,219,0.45), transparent 28rem), radial-gradient(circle at top right, rgba(246,200,76,0.25), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #75AADB 0%, #ffffff 52%, #F6C84C 130%)",
+      glow: "0 22px 60px rgba(117,170,219,0.38)",
+    },
   },
   australia: {
     code: "AUS",
@@ -79,6 +110,16 @@ export const countries = {
     primaryColor: "#009739",
     secondaryColor: "#FFDF00",
     badge: "",
+    theme: {
+      primary: "#009739",
+      secondary: "#FFDF00",
+      accent: "#002776",
+      background:
+        "radial-gradient(circle at top left, rgba(0,151,57,0.32), transparent 28rem), radial-gradient(circle at top right, rgba(255,223,0,0.34), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #009739 0%, #FFDF00 58%, #002776 130%)",
+      glow: "0 22px 60px rgba(0,151,57,0.34)",
+    },
   },
   canada: {
     code: "CAN",
@@ -179,6 +220,16 @@ export const countries = {
     primaryColor: "#FFFFFF",
     secondaryColor: "#CE1124",
     badge: "",
+    theme: {
+      primary: "#FFFFFF",
+      secondary: "#CE1124",
+      accent: "#071B3A",
+      background:
+        "radial-gradient(circle at top left, rgba(206,17,36,0.18), transparent 28rem), radial-gradient(circle at top right, rgba(7,27,58,0.16), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #FFFFFF 0%, #F6F1E7 52%, #CE1124 125%)",
+      glow: "0 22px 60px rgba(206,17,36,0.24)",
+    },
   },
   france: {
     code: "FRA",
@@ -189,6 +240,16 @@ export const countries = {
     primaryColor: "#0055A4",
     secondaryColor: "#EF4135",
     badge: "",
+    theme: {
+      primary: "#0055A4",
+      secondary: "#FFFFFF",
+      accent: "#EF4135",
+      background:
+        "radial-gradient(circle at top left, rgba(0,85,164,0.34), transparent 28rem), radial-gradient(circle at top right, rgba(239,65,53,0.22), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #0055A4 0%, #071B3A 52%, #EF4135 130%)",
+      glow: "0 22px 60px rgba(0,85,164,0.36)",
+    },
   },
   germany: {
     code: "GER",
@@ -199,6 +260,16 @@ export const countries = {
     primaryColor: "#000000",
     secondaryColor: "#DD0000",
     badge: "",
+    theme: {
+      primary: "#111111",
+      secondary: "#DD0000",
+      accent: "#FFCE00",
+      background:
+        "radial-gradient(circle at top left, rgba(17,17,17,0.18), transparent 28rem), radial-gradient(circle at top right, rgba(255,206,0,0.28), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #111111 0%, #DD0000 62%, #FFCE00 130%)",
+      glow: "0 22px 60px rgba(221,0,0,0.28)",
+    },
   },
   ghana: {
     code: "GHA",
@@ -299,6 +370,16 @@ export const countries = {
     primaryColor: "#FF4F00",
     secondaryColor: "#21468B",
     badge: "",
+    theme: {
+      primary: "#FF4F00",
+      secondary: "#FFFFFF",
+      accent: "#21468B",
+      background:
+        "radial-gradient(circle at top left, rgba(255,79,0,0.3), transparent 28rem), radial-gradient(circle at top right, rgba(33,70,139,0.2), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #FF4F00 0%, #FFFFFF 56%, #21468B 130%)",
+      glow: "0 22px 60px rgba(255,79,0,0.34)",
+    },
   },
   newZealand: {
     code: "NZL",
@@ -349,6 +430,16 @@ export const countries = {
     primaryColor: "#C62828",
     secondaryColor: "#0B7A3B",
     badge: "",
+    theme: {
+      primary: "#C62828",
+      secondary: "#0B7A3B",
+      accent: "#F6C84C",
+      background:
+        "radial-gradient(circle at top left, rgba(198,40,40,0.28), transparent 28rem), radial-gradient(circle at top right, rgba(11,122,59,0.24), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #C62828 0%, #0B7A3B 64%, #F6C84C 130%)",
+      glow: "0 22px 60px rgba(198,40,40,0.32)",
+    },
   },
   qatar: {
     code: "QAT",
@@ -419,6 +510,16 @@ export const countries = {
     primaryColor: "#AA151B",
     secondaryColor: "#F1BF00",
     badge: "",
+    theme: {
+      primary: "#AA151B",
+      secondary: "#F1BF00",
+      accent: "#071B3A",
+      background:
+        "radial-gradient(circle at top left, rgba(170,21,27,0.28), transparent 28rem), radial-gradient(circle at top right, rgba(241,191,0,0.34), transparent 22rem), #F6F1E7",
+      cardGradient:
+        "linear-gradient(135deg, #AA151B 0%, #F1BF00 62%, #071B3A 130%)",
+      glow: "0 22px 60px rgba(170,21,27,0.32)",
+    },
   },
   sweden: {
     code: "SWE",
@@ -492,7 +593,7 @@ export const countries = {
   },
 } satisfies Record<string, CountryResource>;
 
-export const countryList = Object.values(countries);
+export const countryList: CountryResource[] = Object.values(countries);
 
 export const countriesByNameEn = countryList.reduce(
   (result, country) => ({
@@ -511,6 +612,14 @@ export function getCountryByNameEn(team: string) {
 
 export function getCountryDisplayName(team: string) {
   return getCountryByNameEn(team)?.nameZh ?? team;
+}
+
+export function getCountryTheme(team?: string | null) {
+  if (!team) {
+    return defaultCountryTheme;
+  }
+
+  return getCountryByNameEn(team)?.theme ?? defaultCountryTheme;
 }
 
 export const worldCupCountryNames = [

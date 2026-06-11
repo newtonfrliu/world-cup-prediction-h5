@@ -4,15 +4,21 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { getCountryTheme } from "@/lib/countries";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database";
 
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
+type Player = Pick<
+  Database["public"]["Tables"]["players"]["Row"],
+  "nickname" | "country" | "region"
+>;
 
 export default function LeaderboardPage() {
   const [rows, setRows] = useState<LeaderboardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
 
   useEffect(() => {
@@ -35,6 +41,19 @@ export default function LeaderboardPage() {
       }
 
       setRows(data ?? []);
+
+      const storedPlayerId = localStorage.getItem("player_id");
+
+      if (storedPlayerId) {
+        const { data: playerData } = await supabase
+          .from("players")
+          .select("nickname, country, region")
+          .eq("id", storedPlayerId)
+          .maybeSingle();
+
+        setCurrentPlayer(playerData);
+      }
+
       setLoading(false);
     }
 
@@ -97,6 +116,11 @@ export default function LeaderboardPage() {
                   : index === 2
                     ? "bg-[#c58b58] text-white"
                     : "bg-[#071b3a] text-white";
+            const isCurrentPlayer =
+              currentPlayer?.nickname === row.nickname &&
+              currentPlayer.country === row.country &&
+              currentPlayer.region === row.region;
+            const rowTheme = getCountryTheme(row.country);
 
             return (
             <article
@@ -106,6 +130,14 @@ export default function LeaderboardPage() {
                   ? "border-[#f6c84c]/60 bg-[#071b3a] text-white"
                   : "border-[#071b3a]/10 bg-white"
               }`}
+              style={
+                isCurrentPlayer
+                  ? {
+                      borderColor: rowTheme.accent,
+                      boxShadow: rowTheme.glow,
+                    }
+                  : undefined
+              }
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">

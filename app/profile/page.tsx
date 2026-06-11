@@ -4,16 +4,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 
+import { AvatarFigure } from "@/components/AvatarFigure";
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { getAvatar } from "@/lib/avatar";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getCountryByNameEn } from "@/lib/countries";
+import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Player = Database["public"]["Tables"]["players"]["Row"];
 type Prediction = Pick<
   Database["public"]["Tables"]["predictions"]["Row"],
-  "id" | "points"
+  "id" | "points" | "stake" | "payout"
 >;
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
 
@@ -24,6 +26,8 @@ type ProfileStats = {
   predictionCount: number;
   hitCount: number;
   hitRate: number;
+  totalStake: number;
+  totalPayout: number;
 };
 
 type StoredBracketPrediction = {
@@ -41,6 +45,8 @@ function buildEmptyStats(): ProfileStats {
     predictionCount: 0,
     hitCount: 0,
     hitRate: 0,
+    totalStake: 0,
+    totalPayout: 0,
   };
 }
 
@@ -74,6 +80,8 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
   const playerCountry = player ? getCountryByNameEn(player.country) : null;
+  const playerTheme = getCountryTheme(player?.country);
+  const playerAvatar = getAvatar(player?.avatar_id);
 
   useEffect(() => {
     async function loadProfile() {
@@ -111,7 +119,9 @@ export default function ProfilePage() {
 
       const { data: playerData, error: playerError } = await supabase
         .from("players")
-        .select("id, nickname, country, region, created_at")
+        .select(
+          "id, nickname, country, region, coins, last_login_reward_date, avatar_id, created_at",
+        )
         .eq("id", storedPlayerId)
         .single();
 
@@ -134,7 +144,7 @@ export default function ProfilePage() {
           .order("total_points", { ascending: false }),
         supabase
           .from("predictions")
-          .select("id, points")
+          .select("id, points, stake, payout")
           .eq("player_id", storedPlayerId),
       ]);
 
@@ -172,6 +182,14 @@ export default function ProfilePage() {
       const hitCount = predictions.filter(
         (prediction) => (prediction.points ?? 0) > 0,
       ).length;
+      const totalStake = predictions.reduce(
+        (sum, prediction) => sum + prediction.stake,
+        0,
+      );
+      const totalPayout = predictions.reduce(
+        (sum, prediction) => sum + prediction.payout,
+        0,
+      );
 
       setStats({
         totalPoints: playerLeaderboardRow?.total_points ?? 0,
@@ -180,6 +198,8 @@ export default function ProfilePage() {
         predictionCount,
         hitCount,
         hitRate: predictionCount > 0 ? hitCount / predictionCount : 0,
+        totalStake,
+        totalPayout,
       });
       setLoading(false);
     }
@@ -298,8 +318,10 @@ export default function ProfilePage() {
           <article
             className="overflow-hidden rounded-2xl border border-[#f6c84c]/50 bg-[#071b3a] text-white shadow-[0_18px_44px_rgba(7,27,58,0.28)]"
             style={{
-              borderTopColor: playerCountry?.primaryColor ?? "#f6c84c",
+              background: playerTheme.cardGradient,
+              borderTopColor: playerTheme.accent,
               borderTopWidth: 8,
+              boxShadow: playerTheme.glow,
             }}
           >
             <div className="p-5">
@@ -307,6 +329,11 @@ export default function ProfilePage() {
                 Player Card
               </p>
               <div className="mt-4 flex items-center gap-4">
+                <AvatarFigure
+                  avatarId={player?.avatar_id}
+                  theme={playerTheme}
+                  className="h-28 w-24 shrink-0"
+                />
                 {playerCountry ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -347,6 +374,14 @@ export default function ProfilePage() {
                     {formatRank(stats.globalRank)}
                   </p>
                 </div>
+                <div className="rounded-xl bg-white/10 p-3">
+                  <p className="text-[11px] font-black text-[#25c7b7]">
+                    金币
+                  </p>
+                  <p className="mt-1 text-sm font-black">
+                    {player?.coins ?? 0}
+                  </p>
+                </div>
               </div>
             </div>
           </article>
@@ -368,6 +403,10 @@ export default function ProfilePage() {
                 ["已预测场数", `${stats.predictionCount}`],
                 ["命中场数", `${stats.hitCount}`],
                 ["命中率", `${(stats.hitRate * 100).toFixed(0)}%`],
+                ["总下注", `${stats.totalStake} 金币`],
+                ["总返还", `${stats.totalPayout} 金币`],
+                ["当前 Avatar", playerAvatar.name],
+                ["当前主队主题", playerCountry?.nameZh ?? "世界杯默认"],
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -408,24 +447,41 @@ export default function ProfilePage() {
             <div
               id="profile-poster"
               ref={posterRef}
-              className="mx-auto mt-4 w-[360px] max-w-full rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-lg print:shadow-none"
+              className="relative mx-auto mt-4 w-[360px] max-w-full rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-lg print:shadow-none"
+              style={{
+                background: playerTheme.cardGradient,
+                borderColor: playerTheme.accent,
+              }}
             >
-              <div className="rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center shadow-inner">
+              {playerCountry ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={playerCountry.flag}
+                  alt={`${playerCountry.nameZh} flag`}
+                  className="pointer-events-none absolute -right-10 top-20 h-36 w-52 rotate-[-10deg] rounded-2xl object-cover opacity-15"
+                />
+              ) : null}
+              <div className="relative rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center shadow-inner">
                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
                   WORLD CUP CHALLENGE
                 </p>
                 <p className="mt-2 text-sm font-black text-[#e63535]">
-                  2026 足球世界杯
+                  {playerCountry?.nameZh ?? "世界杯"} 阵营战报
                 </p>
                 <h3 className="mt-1 text-4xl font-black leading-tight text-white">
                   美加墨大乱斗
                 </h3>
               </div>
 
-              <div className="mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-center text-[#071b3a]">
+              <div className="relative mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-center text-[#071b3a]">
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
                   Player Identity Card
                 </p>
+                <AvatarFigure
+                  avatarId={player?.avatar_id}
+                  theme={playerTheme}
+                  className="mx-auto mt-3 h-28 w-24 bg-[#071b3a]"
+                />
                 {playerCountry ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -449,7 +505,7 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+              <div className="relative mt-3 grid grid-cols-3 gap-2 text-center">
                 <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
                   <p className="text-[11px] font-bold">总积分</p>
                   <p className="mt-1 text-xl font-black">
@@ -472,9 +528,17 @@ export default function ProfilePage() {
                     {formatRank(stats.regionRank)}
                   </p>
                 </div>
+                <div className="rounded-xl bg-white p-3 text-[#071b3a]">
+                  <p className="text-[11px] font-bold text-[#627d98]">
+                    金币余额
+                  </p>
+                  <p className="mt-1 text-base font-black">
+                    {player?.coins ?? 0}
+                  </p>
+                </div>
               </div>
 
-              <div className="mt-3 rounded-2xl border border-[#f6c84c]/60 bg-white/10 p-4 text-center">
+              <div className="relative mt-3 rounded-2xl border border-[#f6c84c]/60 bg-white/10 p-4 text-center">
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
                   Champion Pick
                 </p>
@@ -487,7 +551,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="mt-6 mb-12 rounded-2xl bg-white p-8 text-center text-[#071b3a]">
+              <div className="relative mt-6 mb-16 rounded-2xl bg-white p-8 text-center text-[#071b3a]">
                 <div className="mx-auto inline-block rounded-2xl border border-[#071b3a]/10 bg-white p-3 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

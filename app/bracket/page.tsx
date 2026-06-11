@@ -11,6 +11,8 @@ import {
   type QualifiedTeam,
   generateOfficialRoundOf32,
 } from "@/lib/bracketRules";
+import { getCountryTheme } from "@/lib/countries";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 
 type Stage = "groups" | "knockout" | "final";
@@ -109,6 +111,7 @@ function buildQrCodeUrl(value: string) {
 export default function BracketPage() {
   const bracketImageRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [playerCountry, setPlayerCountry] = useState<string | null>(null);
   const [stage, setStage] = useState<Stage>("groups");
   const [activeSide, setActiveSide] = useState<Side>("upper");
   const [groupSelections, setGroupSelections] =
@@ -150,6 +153,7 @@ export default function BracketPage() {
   const finalComplete = Boolean(champion && thirdPlace);
   const upperProgress = getSideProgress(upperBracket);
   const lowerProgress = getSideProgress(lowerBracket);
+  const playerTheme = getCountryTheme(playerCountry);
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem("player_id");
@@ -158,6 +162,22 @@ export default function BracketPage() {
     if (!storedPlayerId) {
       return;
     }
+
+    async function loadPlayerCountry() {
+      if (!isSupabaseConfigured || !storedPlayerId) {
+        return;
+      }
+
+      const { data } = await supabase
+        .from("players")
+        .select("country")
+        .eq("id", storedPlayerId)
+        .maybeSingle();
+
+      setPlayerCountry(data?.country ?? null);
+    }
+
+    loadPlayerCountry();
 
     const stored = localStorage.getItem(`bracket_prediction_${storedPlayerId}`);
 
@@ -696,6 +716,11 @@ export default function BracketPage() {
         <section
           ref={bracketImageRef}
           className="mt-5 rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-sm"
+          style={{
+            background: playerTheme.cardGradient,
+            borderColor: playerTheme.accent,
+            boxShadow: playerTheme.glow,
+          }}
         >
           <div className="rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
@@ -745,7 +770,10 @@ export default function BracketPage() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-[#071b3a]">
+          <div
+            className="mt-4 rounded-2xl border-2 bg-white p-4 text-[#071b3a]"
+            style={{ borderColor: playerTheme.accent }}
+          >
             <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
               Champion Card
             </p>
