@@ -5,6 +5,10 @@ export type CountryTheme = {
   background: string;
   cardGradient: string;
   glow: string;
+  textOnTheme: "light" | "dark";
+  foreground: string;
+  mutedForeground: string;
+  overlay: string;
 };
 
 export type CountryResource = {
@@ -28,6 +32,10 @@ export const defaultCountryTheme: CountryTheme = {
   cardGradient:
     "linear-gradient(135deg, rgba(37,199,183,0.18), rgba(7,27,58,0.98) 45%, rgba(230,53,53,0.7))",
   glow: "0 20px 56px rgba(7,27,58,0.28)",
+  textOnTheme: "light",
+  foreground: "#FFFFFF",
+  mutedForeground: "#D9E2EC",
+  overlay: "rgba(7,27,58,0.34)",
 };
 
 export const countries = {
@@ -59,6 +67,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #75AADB 0%, #ffffff 52%, #F6C84C 130%)",
       glow: "0 22px 60px rgba(117,170,219,0.38)",
+      textOnTheme: "dark",
+      foreground: "#071B3A",
+      mutedForeground: "#334E68",
+      overlay: "rgba(255,255,255,0.56)",
     },
   },
   australia: {
@@ -119,6 +131,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #009739 0%, #FFDF00 58%, #002776 130%)",
       glow: "0 22px 60px rgba(0,151,57,0.34)",
+      textOnTheme: "light",
+      foreground: "#FFFFFF",
+      mutedForeground: "#E6FFFB",
+      overlay: "rgba(7,27,58,0.38)",
     },
   },
   canada: {
@@ -229,6 +245,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #FFFFFF 0%, #F6F1E7 52%, #CE1124 125%)",
       glow: "0 22px 60px rgba(206,17,36,0.24)",
+      textOnTheme: "dark",
+      foreground: "#071B3A",
+      mutedForeground: "#334E68",
+      overlay: "rgba(255,255,255,0.62)",
     },
   },
   france: {
@@ -249,6 +269,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #0055A4 0%, #071B3A 52%, #EF4135 130%)",
       glow: "0 22px 60px rgba(0,85,164,0.36)",
+      textOnTheme: "light",
+      foreground: "#FFFFFF",
+      mutedForeground: "#D9E2EC",
+      overlay: "rgba(7,27,58,0.34)",
     },
   },
   germany: {
@@ -269,6 +293,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #111111 0%, #DD0000 62%, #FFCE00 130%)",
       glow: "0 22px 60px rgba(221,0,0,0.28)",
+      textOnTheme: "light",
+      foreground: "#FFFFFF",
+      mutedForeground: "#F6F1E7",
+      overlay: "rgba(7,27,58,0.38)",
     },
   },
   ghana: {
@@ -379,6 +407,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #FF4F00 0%, #FFFFFF 56%, #21468B 130%)",
       glow: "0 22px 60px rgba(255,79,0,0.34)",
+      textOnTheme: "light",
+      foreground: "#FFFFFF",
+      mutedForeground: "#F6F1E7",
+      overlay: "rgba(7,27,58,0.36)",
     },
   },
   newZealand: {
@@ -439,6 +471,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #C62828 0%, #0B7A3B 64%, #F6C84C 130%)",
       glow: "0 22px 60px rgba(198,40,40,0.32)",
+      textOnTheme: "light",
+      foreground: "#FFFFFF",
+      mutedForeground: "#F6F1E7",
+      overlay: "rgba(7,27,58,0.34)",
     },
   },
   qatar: {
@@ -519,6 +555,10 @@ export const countries = {
       cardGradient:
         "linear-gradient(135deg, #AA151B 0%, #F1BF00 62%, #071B3A 130%)",
       glow: "0 22px 60px rgba(170,21,27,0.32)",
+      textOnTheme: "dark",
+      foreground: "#071B3A",
+      mutedForeground: "#334E68",
+      overlay: "rgba(255,255,255,0.52)",
     },
   },
   sweden: {

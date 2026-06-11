@@ -187,6 +187,8 @@ export default function CollectionPage() {
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
   const theme = getCountryTheme(player?.country);
   const country = player ? getCountryByNameEn(getCanonicalTeamName(player.country)) : null;
+  const themeAccentText =
+    theme.textOnTheme === "dark" ? "#AA151B" : theme.accent;
   const ownedCount = ownedCardIds.size;
   const totalCount = cards.length;
 
@@ -430,14 +432,17 @@ export default function CollectionPage() {
     <main className="wc-page px-4 py-6">
       <section className="wc-shell">
         <div
-          className="relative overflow-hidden rounded-2xl bg-[#071b3a] p-5 text-white"
-          style={{ boxShadow: theme.glow }}
+          className="relative overflow-hidden rounded-2xl bg-[#071b3a] p-5"
+          style={{ boxShadow: theme.glow, color: theme.foreground }}
         >
           <div
             className="absolute inset-0 opacity-80"
             style={{ background: theme.cardGradient }}
           />
-          <div className="absolute inset-0 bg-[#071b3a]/72" />
+          <div
+            className="absolute inset-0"
+            style={{ background: theme.overlay }}
+          />
           {country ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -446,19 +451,34 @@ export default function CollectionPage() {
               className="absolute -right-10 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-[0.1]"
             />
           ) : null}
-          <p className="relative text-xs font-black uppercase tracking-[0.18em] text-[#f6c84c] drop-shadow">
+          <p
+            className="relative text-xs font-black uppercase tracking-[0.18em]"
+            style={{ color: themeAccentText }}
+          >
             Collection Album
           </p>
-          <h1 className="relative mt-2 text-3xl font-black text-[#f6c84c] drop-shadow">
+          <h1
+            className="relative mt-2 text-3xl font-black"
+            style={{ color: theme.foreground }}
+          >
             我的国家队卡册
           </h1>
-          <p className="relative mt-3 text-sm font-black text-white drop-shadow">
+          <p
+            className="relative mt-3 text-sm font-black"
+            style={{ color: theme.foreground }}
+          >
             {player ? <CountryDisplay team={player.country} /> : "-"} 国家队卡册
           </p>
-          <p className="relative mt-4 text-2xl font-black text-white drop-shadow">
+          <p
+            className="relative mt-4 text-2xl font-black"
+            style={{ color: theme.foreground }}
+          >
             {totalCount > 0 ? `已收集 ${ownedCount} / ${totalCount}` : "卡册整理中"}
           </p>
-          <p className="relative mt-2 text-sm font-black text-white drop-shadow">
+          <p
+            className="relative mt-2 text-sm font-black"
+            style={{ color: theme.mutedForeground }}
+          >
             金币余额：{formatCoins(player?.coins ?? 0)}
           </p>
         </div>

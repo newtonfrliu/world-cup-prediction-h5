@@ -125,6 +125,11 @@ export default function ProfilePage() {
     ? getCountryByNameEn(getCanonicalTeamName(player.country))
     : null;
   const playerTheme = getCountryTheme(player?.country);
+  const isThemeDarkText = playerTheme.textOnTheme === "dark";
+  const themeAccentText = isThemeDarkText ? "#AA151B" : playerTheme.accent;
+  const themePanelBackground = isThemeDarkText
+    ? "rgba(255,255,255,0.68)"
+    : "rgba(255,255,255,0.12)";
 
   useEffect(() => {
     async function awardDailyLoginReward(
@@ -477,19 +482,27 @@ export default function ProfilePage() {
 
         <div className="space-y-4">
           <article
-            className="overflow-hidden rounded-2xl border border-[#f6c84c]/50 bg-[#071b3a] text-white shadow-[0_18px_44px_rgba(7,27,58,0.28)]"
+            className="overflow-hidden rounded-2xl border border-[#f6c84c]/50 bg-[#071b3a] shadow-[0_18px_44px_rgba(7,27,58,0.28)]"
             style={{
               background: playerTheme.cardGradient,
               borderTopColor: playerTheme.accent,
               borderTopWidth: 8,
               boxShadow: playerTheme.glow,
+              color: playerTheme.foreground,
             }}
           >
-            <div className="p-5">
-              <p className="text-sm font-black uppercase tracking-[0.16em] text-[#25c7b7]">
+            <div className="relative p-5">
+              <div
+                className="absolute inset-0"
+                style={{ background: playerTheme.overlay }}
+              />
+              <p
+                className="relative text-sm font-black uppercase tracking-[0.16em]"
+                style={{ color: themeAccentText }}
+              >
                 National Team Album
               </p>
-              <div className="mt-4 flex items-center gap-4">
+              <div className="relative mt-4 flex items-center gap-4">
                 {equippedCard ? (
                   <PlayerCardMini
                     card={equippedCard}
@@ -498,31 +511,54 @@ export default function ProfilePage() {
                     equipped
                   />
                 ) : playerCountry ? (
-                  <div className="rounded-2xl border-2 border-white/70 bg-white/10 p-3 text-center shadow-lg">
+                  <div
+                    className="rounded-2xl border-2 p-3 text-center shadow-lg"
+                    style={{
+                      borderColor: isThemeDarkText
+                        ? "rgba(7,27,58,0.22)"
+                        : "rgba(255,255,255,0.7)",
+                      background: themePanelBackground,
+                    }}
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={playerCountry.flag}
                       alt={`${playerCountry.nameZh} flag`}
                       className="h-20 w-32 rounded-xl object-cover"
                     />
-                    <p className="mt-2 text-xs font-black text-[#f6c84c]">
+                    <p
+                      className="mt-2 text-xs font-black"
+                      style={{ color: themeAccentText }}
+                    >
                       尚未装备球星卡
                     </p>
                   </div>
                 ) : null}
                 <div className="min-w-0">
-                  <h2 className="truncate text-3xl font-black">
+                  <h2
+                    className="truncate text-3xl font-black"
+                    style={{ color: playerTheme.foreground }}
+                  >
                     {player?.nickname ?? "-"}
                   </h2>
-                  <p className="mt-1 text-sm font-bold text-[#f6c84c]">
+                  <p
+                    className="mt-1 text-sm font-bold"
+                    style={{ color: themeAccentText }}
+                  >
                     {player ? <CountryDisplay team={player.country} /> : "-"}
                   </p>
-                  <p className="mt-2 text-sm font-black text-white">
+                  <p
+                    className="mt-2 text-sm font-black"
+                    style={{ color: playerTheme.foreground }}
+                  >
                     收藏进度 {collectionProgress.owned} /{" "}
                     {collectionProgress.total}
                   </p>
                   {equippedCard ? (
-                    <p className="mt-2 text-sm font-black text-[#f6c84c]">
+                    <p
+                      className="mt-2 text-sm font-black"
+                      style={{ color: themeAccentText }}
+                    >
                       已装备：{equippedCard.player_name}
                     </p>
                   ) : (
@@ -535,12 +571,21 @@ export default function ProfilePage() {
                   )}
                 </div>
               </div>
-              <div className="mt-5 grid grid-cols-3 gap-2 text-center">
-                <div className="rounded-xl bg-white/10 p-3">
-                  <p className="text-[11px] font-black text-[#25c7b7]">
+              <div className="relative mt-5 grid grid-cols-3 gap-2 text-center">
+                <div
+                  className="rounded-xl p-3"
+                  style={{ background: themePanelBackground }}
+                >
+                  <p
+                    className="text-[11px] font-black"
+                    style={{ color: themeAccentText }}
+                  >
                     地区
                   </p>
-                  <p className="mt-1 truncate text-sm font-black">
+                  <p
+                    className="mt-1 truncate text-sm font-black"
+                    style={{ color: playerTheme.foreground }}
+                  >
                     {player?.region ?? "-"}
                   </p>
                 </div>
@@ -550,19 +595,37 @@ export default function ProfilePage() {
                     {Math.round(stats.totalPoints)}
                   </p>
                 </div>
-                <div className="rounded-xl bg-white/10 p-3">
-                  <p className="text-[11px] font-black text-[#25c7b7]">
+                <div
+                  className="rounded-xl p-3"
+                  style={{ background: themePanelBackground }}
+                >
+                  <p
+                    className="text-[11px] font-black"
+                    style={{ color: themeAccentText }}
+                  >
                     全球
                   </p>
-                  <p className="mt-1 text-sm font-black">
+                  <p
+                    className="mt-1 text-sm font-black"
+                    style={{ color: playerTheme.foreground }}
+                  >
                     {formatRank(stats.globalRank)}
                   </p>
                 </div>
-                <div className="rounded-xl bg-white/10 p-3">
-                  <p className="text-[11px] font-black text-[#25c7b7]">
+                <div
+                  className="rounded-xl p-3"
+                  style={{ background: themePanelBackground }}
+                >
+                  <p
+                    className="text-[11px] font-black"
+                    style={{ color: themeAccentText }}
+                  >
                     金币
                   </p>
-                  <p className="mt-1 text-sm font-black">
+                  <p
+                    className="mt-1 text-sm font-black"
+                    style={{ color: playerTheme.foreground }}
+                  >
                     {player?.coins ?? 0}
                   </p>
                 </div>
@@ -661,12 +724,17 @@ export default function ProfilePage() {
             <div
               id="profile-poster"
               ref={posterRef}
-              className="relative mx-auto mt-4 w-[360px] max-w-full rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-lg print:shadow-none"
+              className="relative mx-auto mt-4 w-[360px] max-w-full rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 shadow-lg print:shadow-none"
               style={{
                 background: playerTheme.cardGradient,
                 borderColor: playerTheme.accent,
+                color: playerTheme.foreground,
               }}
             >
+              <div
+                className="absolute inset-0 rounded-[18px]"
+                style={{ background: playerTheme.overlay }}
+              />
               {playerCountry ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -675,14 +743,35 @@ export default function ProfilePage() {
                   className="pointer-events-none absolute -right-10 top-20 h-36 w-52 rotate-[-10deg] rounded-2xl object-cover opacity-15"
                 />
               ) : null}
-              <div className="relative rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center shadow-inner">
-                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
+              <div
+                className="relative rounded-2xl border p-4 text-center shadow-inner"
+                style={{
+                  borderColor: playerTheme.accent,
+                  background: isThemeDarkText
+                    ? "rgba(255,255,255,0.68)"
+                    : "rgba(7,27,58,0.76)",
+                }}
+              >
+                <p
+                  className="text-[11px] font-black uppercase tracking-[0.2em]"
+                  style={{
+                    color: isThemeDarkText
+                      ? "#334E68"
+                      : playerTheme.mutedForeground,
+                  }}
+                >
                   WORLD CUP CHALLENGE
                 </p>
-                <p className="mt-2 text-sm font-black text-[#e63535]">
+                <p
+                  className="mt-2 text-sm font-black"
+                  style={{ color: isThemeDarkText ? "#AA151B" : "#F6C84C" }}
+                >
                   {playerCountry?.nameZh ?? "世界杯"} 阵营战报
                 </p>
-                <h3 className="mt-1 text-4xl font-black leading-tight text-white">
+                <h3
+                  className="mt-1 text-4xl font-black leading-tight"
+                  style={{ color: isThemeDarkText ? "#071B3A" : "#FFFFFF" }}
+                >
                   美加墨大乱斗
                 </h3>
               </div>
@@ -767,11 +856,25 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="relative mt-3 rounded-2xl border border-[#f6c84c]/60 bg-white/10 p-4 text-center">
-                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
+              <div
+                className="relative mt-3 rounded-2xl border p-4 text-center"
+                style={{
+                  borderColor: playerTheme.accent,
+                  background: isThemeDarkText
+                    ? "rgba(255,255,255,0.7)"
+                    : "rgba(7,27,58,0.42)",
+                }}
+              >
+                <p
+                  className="text-xs font-black uppercase tracking-[0.16em]"
+                  style={{ color: themeAccentText }}
+                >
                   Champion Pick
                 </p>
-                <div className="mt-2 flex items-center justify-center text-2xl font-black">
+                <div
+                  className="mt-2 flex items-center justify-center text-2xl font-black"
+                  style={{ color: playerTheme.foreground }}
+                >
                   {championPrediction ? (
                     <CountryDisplay team={championPrediction} />
                   ) : (

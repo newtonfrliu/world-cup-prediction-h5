@@ -111,6 +111,8 @@ export default function Home() {
   const isNicknameEmpty = trimmedNickname.length === 0;
   const selectedCountry = getCountryByNameEn(country);
   const selectedTheme = getCountryTheme(country);
+  const selectedAccentText =
+    selectedTheme.textOnTheme === "dark" ? "#AA151B" : selectedTheme.accent;
 
   useEffect(() => {
     const ref = new URLSearchParams(window.location.search).get("ref");
@@ -310,12 +312,17 @@ export default function Home() {
     <main className="wc-page px-5 py-8">
       <section className="wc-shell flex min-h-[calc(100vh-4rem)] flex-col justify-center">
         <div
-          className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/20 p-5 text-white"
+          className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/20 p-5"
           style={{
             background: selectedTheme.cardGradient,
             boxShadow: selectedTheme.glow,
+            color: selectedTheme.foreground,
           }}
         >
+          <div
+            className="absolute inset-0"
+            style={{ background: selectedTheme.overlay }}
+          />
           {selectedCountry ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -325,19 +332,43 @@ export default function Home() {
             />
           ) : null}
           <div className="relative z-10 pr-28">
-            <p className="text-sm font-black text-[#25c7b7]">2026足球世界杯</p>
-            <h1 className="mt-3 text-5xl font-black leading-none text-white">
+            <p
+              className="text-sm font-black"
+              style={{ color: selectedTheme.mutedForeground }}
+            >
+              2026足球世界杯
+            </p>
+            <h1
+              className="mt-3 text-5xl font-black leading-none"
+              style={{ color: selectedTheme.foreground }}
+            >
               美加墨
               <br />
               大乱斗
             </h1>
-            <p className="mt-3 inline-flex rounded-full border border-[#f6c84c]/50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
+            <p
+              className="mt-3 inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em]"
+              style={{
+                borderColor: selectedAccentText,
+                color: selectedAccentText,
+                background:
+                  selectedTheme.textOnTheme === "dark"
+                    ? "rgba(255,255,255,0.62)"
+                    : "rgba(7,27,58,0.22)",
+              }}
+            >
               世界杯收藏竞猜游戏
             </p>
-            <p className="mt-4 text-base font-bold leading-7 text-[#f6c84c]">
+            <p
+              className="mt-4 text-base font-bold leading-7"
+              style={{ color: selectedAccentText }}
+            >
               预测世界杯 / 挑战好友 / 争夺全球第一
             </p>
-            <p className="mt-4 text-sm font-black text-white">
+            <p
+              className="mt-4 text-sm font-black"
+              style={{ color: selectedTheme.foreground }}
+            >
               加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
             </p>
           </div>
@@ -357,7 +388,10 @@ export default function Home() {
                   alt={`${selectedCountry.nameZh} flag`}
                   className="h-16 w-24 rounded-xl object-cover shadow-lg"
                 />
-                <p className="mt-2 text-center text-xs font-black text-[#f6c84c]">
+                <p
+                  className="mt-2 text-center text-xs font-black"
+                  style={{ color: selectedAccentText }}
+                >
                   {selectedCountry.nameZh}
                 </p>
               </>
