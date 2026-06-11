@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
 import {
+  getCanonicalTeamName,
   getCountryByNameEn,
   getCountryTheme,
   getCountryDisplayName,
@@ -185,7 +186,7 @@ export default function CollectionPage() {
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
   const theme = getCountryTheme(player?.country);
-  const country = player ? getCountryByNameEn(player.country) : null;
+  const country = player ? getCountryByNameEn(getCanonicalTeamName(player.country)) : null;
   const ownedCount = ownedCardIds.size;
   const totalCount = cards.length;
 
@@ -206,17 +207,18 @@ export default function CollectionPage() {
 
     setPlayer(playerData);
 
+    const canonicalTeamName = getCanonicalTeamName(playerData.country);
+
     const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
-      .select(
-        "id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_image, created_at",
-      )
-      .eq("team", playerData.country)
+      .select("*")
+      .eq("team", canonicalTeamName)
       .order("shirt_number", { ascending: true });
 
     if (cardError) {
       console.error("collection player_cards query failed", {
-        team: playerData.country,
+        rawTeam: playerData.country,
+        canonicalTeamName,
         error: cardError,
       });
       throw cardError;
@@ -434,7 +436,7 @@ export default function CollectionPage() {
             {player ? <CountryDisplay team={player.country} /> : "-"} 国家队卡册
           </p>
           <p className="relative mt-4 text-2xl font-black text-white drop-shadow">
-            已收集 {ownedCount} / {totalCount}
+            {totalCount > 0 ? `已收集 ${ownedCount} / ${totalCount}` : "卡册整理中"}
           </p>
           <p className="relative mt-2 text-sm font-black text-white drop-shadow">
             金币余额：{formatCoins(player?.coins ?? 0)}
@@ -465,11 +467,11 @@ export default function CollectionPage() {
         <section className="wc-card mt-5 p-4">
           <h2 className="text-xl font-black text-[#071b3a]">可兑换卡册</h2>
           <p className="mt-2 text-sm font-bold text-[#627d98]">
-            点击具体球星卡兑换。价格由星级决定，最低 5000 金币。
+            收集你的国家队球星卡，打造专属世界杯卡册。
           </p>
           {totalCount === 0 ? (
             <p className="mt-4 rounded-xl bg-[#f6f1e7] p-4 text-sm font-bold text-[#627d98]">
-              当前主队暂无球星卡数据，请先执行 Phase 3 SQL migration 或等待后续球员名单更新。
+              卡册整理中，请稍后再来。
             </p>
           ) : null}
           {totalCount > 0 && ownedCount === totalCount ? (

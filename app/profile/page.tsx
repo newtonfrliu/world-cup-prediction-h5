@@ -7,7 +7,11 @@ import { toPng } from "html-to-image";
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
+import {
+  getCanonicalTeamName,
+  getCountryByNameEn,
+  getCountryTheme,
+} from "@/lib/countries";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
@@ -117,7 +121,9 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
-  const playerCountry = player ? getCountryByNameEn(player.country) : null;
+  const playerCountry = player
+    ? getCountryByNameEn(getCanonicalTeamName(player.country))
+    : null;
   const playerTheme = getCountryTheme(player?.country);
 
   useEffect(() => {
@@ -128,7 +134,7 @@ export default function ProfilePage() {
       const currentCoins = currentPlayer.coins ?? 1000;
 
       if (currentPlayer.last_login_reward_date === today) {
-        setRewardStatus("今日已领取");
+        setRewardStatus("✅ 今日200金币已领取");
         return { ...currentPlayer, coins: currentCoins };
       }
 
@@ -142,11 +148,11 @@ export default function ProfilePage() {
         .eq("id", currentPlayer.id);
 
       if (rewardError) {
-        setRewardStatus("今日奖励领取失败");
+        setRewardStatus("🪙 今日登录奖励：可领取 200 金币");
         return { ...currentPlayer, coins: currentCoins };
       }
 
-      setRewardStatus("今日登录奖励 +200 金币");
+      setRewardStatus("✅ 今日200金币已领取");
       return {
         ...currentPlayer,
         coins: nextCoins,
@@ -209,9 +215,7 @@ export default function ProfilePage() {
         const { data: equippedCardData, error: equippedCardError } =
           await supabase
             .from("player_cards")
-            .select(
-              "id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_image, created_at",
-            )
+            .select("*")
             .eq("id", currentPlayer.equipped_card_id)
             .maybeSingle();
 
@@ -221,12 +225,18 @@ export default function ProfilePage() {
       }
 
       async function loadCollectionProgress() {
+        const canonicalTeamName = getCanonicalTeamName(currentPlayer.country);
         const { data: cardData, error: cardError } = await supabase
           .from("player_cards")
           .select("id")
-          .eq("team", currentPlayer.country);
+          .eq("team", canonicalTeamName);
 
         if (cardError) {
+          console.error("profile collection card query failed", {
+            rawTeam: currentPlayer.country,
+            canonicalTeamName,
+            error: cardError,
+          });
           return;
         }
 
@@ -244,6 +254,11 @@ export default function ProfilePage() {
           .in("card_id", cardIds);
 
         if (userCardError) {
+          console.error("profile collection user_cards query failed", {
+            playerId: currentPlayerId,
+            cardIds,
+            error: userCardError,
+          });
           return;
         }
 
@@ -597,7 +612,10 @@ export default function ProfilePage() {
                 ["总下注", `${stats.totalStake} 金币`],
                 ["当前有效下注", `${stats.activeStake} 金币`],
                 ["总返还", `${stats.totalPayout} 金币`],
-                ["今日登录奖励", rewardStatus || "今日已检查"],
+                [
+                  "今日登录奖励",
+                  rewardStatus || "🪙 今日登录奖励：可领取 200 金币",
+                ],
                 [
                   "收藏进度",
                   `${collectionProgress.owned} / ${collectionProgress.total}`,

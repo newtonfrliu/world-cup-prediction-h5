@@ -1,4 +1,4 @@
-import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
+import { getCountryTheme, resolveCountry } from "@/lib/countries";
 
 export type PlayerCardMiniData = {
   id?: string;
@@ -42,7 +42,7 @@ export function PlayerCardMini({
   className = "",
 }: PlayerCardMiniProps) {
   const team = card?.team ?? country ?? "";
-  const countryResource = getCountryByNameEn(team);
+  const countryResource = resolveCountry(team);
   const theme = getCountryTheme(team);
   const starLevel = card?.star_level ?? 1;
   const number = card?.shirt_number ?? "-";

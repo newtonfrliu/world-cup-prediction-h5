@@ -610,8 +610,30 @@ export function getCountryByNameEn(team: string) {
   return countriesByNameEn[team];
 }
 
+export function resolveCountry(team?: string | null) {
+  if (!team) {
+    return undefined;
+  }
+
+  const normalized = team.trim();
+
+  return (
+    countriesByNameEn[normalized] ??
+    countryList.find(
+      (country) =>
+        country.nameZh === normalized ||
+        country.code === normalized ||
+        country.fifaCode === normalized,
+    )
+  );
+}
+
+export function getCanonicalTeamName(team: string) {
+  return resolveCountry(team)?.nameEn ?? team;
+}
+
 export function getCountryDisplayName(team: string) {
-  return getCountryByNameEn(team)?.nameZh ?? team;
+  return resolveCountry(team)?.nameZh ?? team;
 }
 
 export function getCountryTheme(team?: string | null) {
@@ -619,7 +641,7 @@ export function getCountryTheme(team?: string | null) {
     return defaultCountryTheme;
   }
 
-  return getCountryByNameEn(team)?.theme ?? defaultCountryTheme;
+  return resolveCountry(team)?.theme ?? defaultCountryTheme;
 }
 
 export const worldCupCountryNames = [

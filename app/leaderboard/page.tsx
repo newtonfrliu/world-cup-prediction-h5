@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
-import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
+import { getCountryTheme, resolveCountry } from "@/lib/countries";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database";
 
@@ -69,9 +69,7 @@ export default function LeaderboardPage() {
       if (equippedIds.size > 0) {
         const { data: cardRows } = await supabase
           .from("player_cards")
-          .select(
-            "id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_image, created_at",
-          )
+          .select("*")
           .in("id", [...equippedIds]);
 
         setCardsById(
@@ -164,7 +162,7 @@ export default function LeaderboardPage() {
             const equippedCard = rowPlayer?.equipped_card_id
               ? cardsById.get(rowPlayer.equipped_card_id)
               : null;
-            const rowCountry = getCountryByNameEn(row.country);
+            const rowCountry = resolveCountry(row.country);
 
             return (
             <article

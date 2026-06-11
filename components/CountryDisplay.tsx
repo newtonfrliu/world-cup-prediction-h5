@@ -1,4 +1,4 @@
-import { getCountryByNameEn, getCountryDisplayName } from "@/lib/countries";
+import { getCountryDisplayName, resolveCountry } from "@/lib/countries";
 
 type CountryDisplayProps = {
   team: string;
@@ -11,7 +11,7 @@ export function CountryDisplay({
   className = "",
   flagClassName = "",
 }: CountryDisplayProps) {
-  const country = getCountryByNameEn(team);
+  const country = resolveCountry(team);
 
   return (
     <span className={`inline-flex min-w-0 items-center gap-2 ${className}`}>

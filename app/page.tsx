@@ -7,7 +7,11 @@ import { useRouter } from "next/navigation";
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
+import {
+  getCanonicalTeamName,
+  getCountryByNameEn,
+  getCountryTheme,
+} from "@/lib/countries";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
 type HomePlayer = {
@@ -136,7 +140,8 @@ export default function Home() {
         return;
       }
 
-      setCountry(data.country);
+      const canonicalTeamName = getCanonicalTeamName(data.country);
+      setCountry(canonicalTeamName);
       setCurrentPlayer(data);
       setCoinBalance(data.coins ?? 1000);
       if (data.equipped_card_id) {
@@ -172,6 +177,7 @@ export default function Home() {
     const today = getTodayKey();
 
     if (lastRewardDate === today) {
+      setRewardStatus("✅ 今日200金币已领取");
       return currentCoins;
     }
 
@@ -187,7 +193,9 @@ export default function Home() {
     if (!rewardError) {
       setCoinBalance(nextCoins);
       setNotice("今日登录奖励 +200 金币");
-      setRewardStatus("今日登录奖励已领取");
+      setRewardStatus("✅ 今日200金币已领取");
+    } else {
+      setRewardStatus("🪙 今日登录奖励：可领取 200 金币");
     }
 
     return rewardError ? currentCoins : nextCoins;
@@ -293,6 +301,7 @@ export default function Home() {
     localStorage.removeItem("player_id");
     setCurrentPlayer(null);
     setCoinBalance(null);
+    setRewardStatus("");
     setNotice("");
     setError("");
   }
@@ -375,7 +384,7 @@ export default function Home() {
               <p className="mt-2">地区：{currentPlayer.region}</p>
               <p className="mt-2">金币余额：{currentPlayer.coins}</p>
               <p className="mt-2">
-                今日奖励状态：{rewardStatus || "今日已检查"}
+                {rewardStatus || "🪙 今日登录奖励：可领取 200 金币"}
               </p>
             </div>
             <Link href="/predict" className="wc-button w-full">

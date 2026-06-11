@@ -186,6 +186,8 @@ export type Database = {
           rarity: string;
           price: number;
           star_level: number;
+          roster_source: string | null;
+          roster_version: string | null;
           card_image: string | null;
           created_at: string | null;
         };
@@ -199,6 +201,8 @@ export type Database = {
           rarity?: string;
           price?: number;
           star_level?: number;
+          roster_source?: string | null;
+          roster_version?: string | null;
           card_image?: string | null;
           created_at?: string | null;
         };
@@ -212,6 +216,8 @@ export type Database = {
           rarity?: string;
           price?: number;
           star_level?: number;
+          roster_source?: string | null;
+          roster_version?: string | null;
           card_image?: string | null;
           created_at?: string | null;
         };
