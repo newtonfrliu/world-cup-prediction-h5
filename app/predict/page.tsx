@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getCountryTheme } from "@/lib/countries";
 import type { Database } from "@/types/database";
@@ -118,6 +120,7 @@ function isMissingPredictionStatusError(error: unknown) {
 }
 
 export default function PredictPage() {
+  const router = useRouter();
   const [matches, setMatches] = useState<Match[]>([]);
   const [predictedMatchIds, setPredictedMatchIds] = useState<Set<string>>(
     () => new Set(),
@@ -268,8 +271,14 @@ export default function PredictPage() {
 
   useEffect(() => {
     async function loadMatches() {
-      const storedPlayerId = localStorage.getItem("player_id");
+      const storedPlayerId = getStoredPlayerId();
       setPlayerId(storedPlayerId);
+
+      if (!storedPlayerId) {
+        router.replace("/");
+        setLoading(false);
+        return;
+      }
 
       if (!canUseSupabase) {
         setError("请先配置 Supabase 环境变量。");
@@ -321,7 +330,7 @@ export default function PredictPage() {
     }
 
     loadMatches();
-  }, [canUseSupabase]);
+  }, [canUseSupabase, router]);
 
   function isMatchStarted(match: Match) {
     return new Date(match.start_time).getTime() <= Date.now();

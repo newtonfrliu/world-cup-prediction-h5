@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toPng } from "html-to-image";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
@@ -12,6 +13,7 @@ import {
   generateOfficialRoundOf32,
 } from "@/lib/bracketRules";
 import { getCountryTheme } from "@/lib/countries";
+import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 
@@ -109,6 +111,7 @@ function buildQrCodeUrl(value: string) {
 }
 
 export default function BracketPage() {
+  const router = useRouter();
   const bracketImageRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [playerCountry, setPlayerCountry] = useState<string | null>(null);
@@ -123,10 +126,11 @@ export default function BracketPage() {
   const [finalStage, setFinalStage] = useState<FinalStage>({});
   const [mappingError, setMappingError] = useState("");
   const [lockedAt, setLockedAt] = useState("");
+  const [playerBracketLocked, setPlayerBracketLocked] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [previewImageUrl, setPreviewImageUrl] = useState("");
 
-  const isLocked = Boolean(lockedAt);
+  const isLocked = Boolean(lockedAt || playerBracketLocked);
   const storageKey = playerId ? `bracket_prediction_${playerId}` : "";
   const thirdTeams = useMemo(
     () =>
@@ -158,10 +162,11 @@ export default function BracketPage() {
     playerTheme.textOnTheme === "dark" ? "#AA151B" : "#E63535";
 
   useEffect(() => {
-    const storedPlayerId = localStorage.getItem("player_id");
+    const storedPlayerId = getStoredPlayerId();
     setPlayerId(storedPlayerId);
 
     if (!storedPlayerId) {
+      router.replace("/");
       return;
     }
 
@@ -170,13 +175,25 @@ export default function BracketPage() {
         return;
       }
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("players")
-        .select("country")
+        .select("country, bracket_locked")
         .eq("id", storedPlayerId)
         .maybeSingle();
 
+      if (error) {
+        const { data: fallbackData } = await supabase
+          .from("players")
+          .select("country")
+          .eq("id", storedPlayerId)
+          .maybeSingle();
+
+        setPlayerCountry(fallbackData?.country ?? null);
+        return;
+      }
+
       setPlayerCountry(data?.country ?? null);
+      setPlayerBracketLocked(Boolean(data?.bracket_locked));
     }
 
     loadPlayerCountry();
@@ -199,7 +216,7 @@ export default function BracketPage() {
       setLockedAt(parsed.lockedAt);
       setStage("final");
     }
-  }, []);
+  }, [router]);
 
   function getMatchLoser(match?: BracketMatch) {
     if (!match?.winner) {
@@ -353,9 +370,23 @@ export default function BracketPage() {
     setStage("final");
   }
 
-  function lockPrediction() {
+  async function lockPrediction() {
     if (!playerId || !storageKey || !finalComplete) {
       return;
+    }
+
+    if (isSupabaseConfigured) {
+      const { data: playerData, error: playerError } = await supabase
+        .from("players")
+        .select("bracket_locked")
+        .eq("id", playerId)
+        .maybeSingle();
+
+      if (!playerError && playerData?.bracket_locked) {
+        setPlayerBracketLocked(true);
+        setSaveMessage("你的世界杯晋级预测已锁定，不能再次修改。");
+        return;
+      }
     }
 
     if (
@@ -384,6 +415,19 @@ export default function BracketPage() {
     };
 
     localStorage.setItem(storageKey, JSON.stringify(payload));
+    if (isSupabaseConfigured) {
+      const { error: lockError } = await supabase
+        .from("players")
+        .update({ bracket_locked: true })
+        .eq("id", playerId);
+
+      if (lockError) {
+        setSaveMessage(lockError.message);
+        return;
+      }
+    }
+
+    setPlayerBracketLocked(true);
     setLockedAt(lockedTime);
   }
 
@@ -882,10 +926,29 @@ export default function BracketPage() {
 
         {isLocked ? (
           <div className="mb-5 rounded-lg border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm text-[#0f7b3f]">
-            已锁定：{formatLockTime(lockedAt)}
+            已锁定：{lockedAt ? formatLockTime(lockedAt) : "数据库已锁定"}
           </div>
         ) : null}
 
+        {isLocked ? (
+          <section className="wc-card p-5">
+            <p className="wc-kicker">Locked Bracket</p>
+            <h2 className="mt-2 text-2xl font-black text-[#071b3a]">
+              你的世界杯晋级预测已锁定
+            </h2>
+            <div className="mt-4 rounded-2xl bg-[#f6f1e7] p-4 text-sm font-black text-[#071b3a]">
+              <p className="flex items-center gap-2">
+                冠军：
+                {champion ? <CountryDisplay team={champion.team} /> : "-"}
+              </p>
+              <p className="mt-2">
+                提交时间：{lockedAt ? formatLockTime(lockedAt) : "已提交"}
+              </p>
+              <p className="mt-2 text-[#e63535]">该预测不可修改</p>
+            </div>
+          </section>
+        ) : (
+        <>
         <div className="mb-5 grid gap-2 text-center text-sm font-bold sm:grid-cols-3">
           {[
             ["groups", "阶段一：小组晋级预测", true],
@@ -911,6 +974,8 @@ export default function BracketPage() {
         {stage === "groups" ? renderGroupStage() : null}
         {stage === "knockout" ? renderKnockoutStage() : null}
         {stage === "final" ? renderFinalStage() : null}
+        </>
+        )}
       </section>
 
       {previewImageUrl ? (

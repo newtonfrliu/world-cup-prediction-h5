@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { getCountryTheme, resolveCountry } from "@/lib/countries";
+import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database";
 
@@ -77,7 +78,7 @@ export default function LeaderboardPage() {
         );
       }
 
-      const storedPlayerId = localStorage.getItem("player_id");
+      const storedPlayerId = getStoredPlayerId();
 
       if (storedPlayerId) {
         const { data: playerData } = await supabase

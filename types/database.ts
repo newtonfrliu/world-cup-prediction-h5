@@ -12,6 +12,7 @@ export type Database = {
           avatar_id: string | null;
           referred_by: string | null;
           equipped_card_id: string | null;
+          bracket_locked: boolean | null;
           created_at: string | null;
         };
         Insert: {
@@ -24,6 +25,7 @@ export type Database = {
           avatar_id?: string | null;
           referred_by?: string | null;
           equipped_card_id?: string | null;
+          bracket_locked?: boolean | null;
           created_at?: string | null;
         };
         Update: {
@@ -36,6 +38,7 @@ export type Database = {
           avatar_id?: string | null;
           referred_by?: string | null;
           equipped_card_id?: string | null;
+          bracket_locked?: boolean | null;
           created_at?: string | null;
         };
         Relationships: [];

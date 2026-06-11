@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
@@ -12,6 +11,11 @@ import {
   getCountryByNameEn,
   getCountryTheme,
 } from "@/lib/countries";
+import {
+  clearPlayerSession,
+  getStoredPlayerId,
+  savePlayerSession,
+} from "@/lib/playerSession";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
 type HomePlayer = {
@@ -98,7 +102,6 @@ const regions = [
 ];
 
 export default function Home() {
-  const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [country, setCountry] = useState(countries[0].value);
   const [region, setRegion] = useState(regions[0]);
@@ -111,6 +114,7 @@ export default function Home() {
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [coinBalance, setCoinBalance] = useState<number | null>(null);
+  const [recoveryPlayer, setRecoveryPlayer] = useState<HomePlayer | null>(null);
 
   const trimmedNickname = nickname.trim();
   const isNicknameEmpty = trimmedNickname.length === 0;
@@ -124,6 +128,8 @@ export default function Home() {
 
     if (ref) {
       localStorage.setItem("referrer_id", ref);
+      localStorage.setItem("wc_referrer_id", ref);
+      localStorage.setItem("wc_invite_code", ref);
       setReferrerId(ref);
       setInviteCode(ref);
     }
@@ -131,16 +137,37 @@ export default function Home() {
 
   useEffect(() => {
     async function loadStoredPlayer() {
-      const storedPlayerId = localStorage.getItem("player_id");
+      const storedPlayerId = getStoredPlayerId();
 
       if (!storedPlayerId || !isSupabaseConfigured) {
         return;
       }
 
+      await loadPlayer(storedPlayerId);
+    }
+
+    loadStoredPlayer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function loadEquippedCard(cardId: string) {
+    const { data: cardData } = await supabase
+      .from("player_cards")
+      .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image")
+      .eq("id", cardId)
+      .maybeSingle();
+
+    setEquippedCard(cardData);
+  }
+
+  async function loadPlayer(
+    playerId: string,
+    options: { awardDaily?: boolean } = {},
+  ) {
       const { data } = await supabase
         .from("players")
         .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
-        .eq("id", storedPlayerId)
+        .eq("id", playerId)
         .maybeSingle();
 
       if (!data) {
@@ -148,29 +175,26 @@ export default function Home() {
       }
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
+      savePlayerSession(data);
       setCountry(canonicalTeamName);
       setCurrentPlayer(data);
       setCoinBalance(data.coins ?? 1000);
+      setRecoveryPlayer(null);
       if (data.equipped_card_id) {
-        const { data: cardData } = await supabase
-          .from("player_cards")
-          .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image")
-          .eq("id", data.equipped_card_id)
-          .maybeSingle();
-
-        setEquippedCard(cardData);
+        await loadEquippedCard(data.equipped_card_id);
+      } else {
+        setEquippedCard(null);
       }
-      const nextCoins = await awardDailyLoginReward(
-        storedPlayerId,
-        data.coins ?? 1000,
-        data.last_login_reward_date,
-      );
+      const shouldAwardDaily = options.awardDaily ?? true;
+      const nextCoins = shouldAwardDaily
+        ? await awardDailyLoginReward(
+            playerId,
+            data.coins ?? 1000,
+            data.last_login_reward_date,
+          )
+        : data.coins ?? 1000;
       setCurrentPlayer({ ...data, coins: nextCoins });
-    }
-
-    loadStoredPlayer();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }
 
   function getTodayKey() {
     return new Date().toISOString().slice(0, 10);
@@ -239,10 +263,11 @@ export default function Home() {
     setIsSubmitting(true);
     setNotice("");
     setError("");
+    setRecoveryPlayer(null);
 
     const { data: existingPlayers, error: lookupError } = await supabase
       .from("players")
-      .select("id")
+      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
       .eq("nickname", trimmedNickname)
       .order("created_at", { ascending: true });
 
@@ -255,7 +280,8 @@ export default function Home() {
     const existingPlayer = existingPlayers?.[0];
 
     if (existingPlayer) {
-      setError("该账号已注册，请直接进入你的战绩");
+      setRecoveryPlayer(existingPlayer as HomePlayer);
+      setError("发现已有账号，请点击“恢复我的账号”继续。");
       setIsSubmitting(false);
       return;
     }
@@ -281,7 +307,10 @@ export default function Home() {
       return;
     }
 
-    localStorage.setItem("player_id", createdPlayer.id);
+    savePlayerSession(createdPlayer);
+    if (inviteCode.trim()) {
+      localStorage.setItem("wc_invite_code", inviteCode.trim());
+    }
     setCoinBalance(createdPlayer.coins);
 
     if (inviter && inviter.id !== createdPlayer.id) {
@@ -293,21 +322,35 @@ export default function Home() {
         type: "referral_bonus",
         related_player_id: createdPlayer.id,
       });
-      setNotice("注册成功！你获得 1000 金币，邀请人获得 1000 金币");
+      setNotice(`欢迎加入 ${getTeamDisplayName(country)} 阵营，获得奖励：🪙 1000金币。邀请人获得 1000 金币。`);
     } else if (inviteCode.trim()) {
-      setNotice("创建成功，邀请码无效，已跳过邀请奖励");
+      setNotice(`欢迎加入 ${getTeamDisplayName(country)} 阵营，获得奖励：🪙 1000金币。邀请码无效，已跳过邀请奖励。`);
     } else {
-      setNotice("注册成功！你获得 1000 金币");
+      setNotice(`欢迎加入 ${getTeamDisplayName(country)} 阵营，获得奖励：🪙 1000金币。`);
     }
 
-    setCurrentPlayer(createdPlayer);
-    router.push("/predict");
+    await loadPlayer(createdPlayer.id, { awardDaily: false });
+    setIsSubmitting(false);
+  }
+
+  async function recoverAccount() {
+    if (!recoveryPlayer) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError("");
+    await loadPlayer(recoveryPlayer.id);
+    setNotice(`欢迎回来，${recoveryPlayer.nickname}`);
+    setIsSubmitting(false);
   }
 
   function switchAccount() {
-    localStorage.removeItem("player_id");
+    clearPlayerSession();
     setCurrentPlayer(null);
     setCoinBalance(null);
+    setEquippedCard(null);
+    setRecoveryPlayer(null);
     setRewardStatus("");
     setNotice("");
     setError("");
@@ -421,11 +464,17 @@ export default function Home() {
                 主队：<CountryDisplay team={currentPlayer.country} />
               </p>
               <p className="mt-2">地区：{currentPlayer.region}</p>
-              <p className="mt-2">金币余额：{currentPlayer.coins}</p>
-              <p className="mt-2">
-                {rewardStatus || "🪙 今日登录奖励：可领取 200 金币"}
-              </p>
-            </div>
+            <p className="mt-2">金币余额：{currentPlayer.coins}</p>
+            <p className="mt-2">
+              {rewardStatus || "🪙 今日登录奖励：可领取 200 金币"}
+            </p>
+          </div>
+            {notice ? (
+              <div className="rounded-xl border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm font-black text-[#0f7b3f]">
+                <p>{notice}</p>
+                <p className="mt-2 text-[#071b3a]">请选择下一步：</p>
+              </div>
+            ) : null}
             <Link href="/predict" className="wc-button w-full">
               预测比赛
             </Link>
@@ -530,6 +579,17 @@ export default function Home() {
             <p className="rounded-md bg-[#fde8e8] px-3 py-2 text-sm text-[#9b1c1c]">
               {error}
             </p>
+          ) : null}
+
+          {recoveryPlayer ? (
+            <button
+              type="button"
+              onClick={recoverAccount}
+              disabled={isSubmitting}
+              className="h-12 w-full rounded-xl bg-[#071b3a] px-4 text-sm font-black text-white disabled:bg-[#9fb3c8]"
+            >
+              {isSubmitting ? "恢复中..." : "恢复我的账号"}
+            </button>
           ) : null}
 
           {notice ? (

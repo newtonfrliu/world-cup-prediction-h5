@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toPng } from "html-to-image";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
@@ -12,6 +13,7 @@ import {
   getCountryByNameEn,
   getCountryTheme,
 } from "@/lib/countries";
+import { getStoredPlayerId } from "@/lib/playerSession";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
@@ -105,6 +107,7 @@ function isMissingPredictionStatusError(error: unknown) {
 }
 
 export default function ProfilePage() {
+  const router = useRouter();
   const posterRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [player, setPlayer] = useState<Player | null>(null);
@@ -166,10 +169,11 @@ export default function ProfilePage() {
     }
 
     async function loadProfile() {
-      const storedPlayerId = localStorage.getItem("player_id");
+      const storedPlayerId = getStoredPlayerId();
       setPlayerId(storedPlayerId);
 
       if (!storedPlayerId) {
+        router.replace("/");
         setLoading(false);
         return;
       }
@@ -373,7 +377,7 @@ export default function ProfilePage() {
     }
 
     loadProfile();
-  }, [canUseSupabase]);
+  }, [canUseSupabase, router]);
 
   async function copyShareLink() {
     if (!shareLink) {

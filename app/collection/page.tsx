@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { PlayerCardMini } from "@/components/PlayerCardMini";
@@ -11,6 +12,7 @@ import {
   getCountryTheme,
   getCountryDisplayName,
 } from "@/lib/countries";
+import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database";
 
@@ -176,6 +178,7 @@ function StarCard({
 }
 
 export default function CollectionPage() {
+  const router = useRouter();
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [player, setPlayer] = useState<Player | null>(null);
   const [cards, setCards] = useState<PlayerCard[]>([]);
@@ -273,10 +276,11 @@ export default function CollectionPage() {
   useEffect(() => {
     async function load() {
       console.log("SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL);
-      const storedPlayerId = localStorage.getItem("player_id");
+      const storedPlayerId = getStoredPlayerId();
       setPlayerId(storedPlayerId);
 
       if (!storedPlayerId) {
+        router.replace("/");
         setLoading(false);
         return;
       }
@@ -301,7 +305,7 @@ export default function CollectionPage() {
     }
 
     load();
-  }, [canUseSupabase]);
+  }, [canUseSupabase, router]);
 
   async function exchangeCard(card: PlayerCard) {
     if (!playerId || !player || exchangingCardId) {
