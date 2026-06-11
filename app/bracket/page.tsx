@@ -130,6 +130,7 @@ export default function BracketPage() {
   const [lockedAt, setLockedAt] = useState("");
   const [playerBracketLocked, setPlayerBracketLocked] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [copyMessage, setCopyMessage] = useState("");
   const [previewImageUrl, setPreviewImageUrl] = useState("");
 
   const isLocked = Boolean(lockedAt || playerBracketLocked);
@@ -156,7 +157,7 @@ export default function BracketPage() {
   const runnerUp = getFinalLoser(upperChampion, lowerChampion, finalStage.finalWinner);
   const thirdPlace = finalStage.thirdWinner;
   const fourthPlace = getFinalLoser(upperSemiLoser, lowerSemiLoser, finalStage.thirdWinner);
-  const finalComplete = Boolean(champion && thirdPlace);
+  const finalComplete = Boolean(champion && runnerUp && thirdPlace && fourthPlace);
   const upperProgress = getSideProgress(upperBracket);
   const lowerProgress = getSideProgress(lowerBracket);
   const playerTheme = getCountryTheme(playerCountry);
@@ -378,6 +379,7 @@ export default function BracketPage() {
 
   async function lockPrediction() {
     if (!playerId || !storageKey || !finalComplete) {
+      setSaveMessage("请完成最终排名预测。");
       return;
     }
 
@@ -435,6 +437,18 @@ export default function BracketPage() {
 
     setPlayerBracketLocked(true);
     setLockedAt(lockedTime);
+  }
+
+  async function copyShareLink() {
+    const shareLink = inviteCode ? buildShareLink(inviteCode) : "";
+
+    if (!shareLink) {
+      setCopyMessage("分享链接生成中，请稍后再试");
+      return;
+    }
+
+    await navigator.clipboard.writeText(shareLink);
+    setCopyMessage("分享链接已复制");
   }
 
   async function saveBracketImage() {
@@ -745,26 +759,11 @@ export default function BracketPage() {
     );
   }
 
-  function renderFinalStage() {
+  function renderBracketPoster() {
     const shareLink = inviteCode ? buildShareLink(inviteCode) : "";
 
     return (
       <>
-        <div className="grid gap-4 md:grid-cols-2">
-          {renderFinalMatch(
-            "冠军赛",
-            [upperChampion, lowerChampion],
-            finalStage.finalWinner,
-            (team) => setFinalStage((current) => ({ ...current, finalWinner: team })),
-          )}
-          {renderFinalMatch(
-            "季军赛",
-            [upperSemiLoser, lowerSemiLoser],
-            finalStage.thirdWinner,
-            (team) => setFinalStage((current) => ({ ...current, thirdWinner: team })),
-          )}
-        </div>
-
         <section
           ref={bracketImageRef}
           className="mt-5 rounded-[22px] border-4 border-[#f6c84c] bg-white p-5 text-readable shadow-sm"
@@ -880,17 +879,66 @@ export default function BracketPage() {
           </div>
         </section>
 
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <button
           type="button"
           disabled={!playerId}
           onClick={saveBracketImage}
           className="mt-5 h-12 w-full rounded-lg border border-[#cbd2d9] bg-white px-5 text-base font-bold text-[#334e68] transition hover:border-[#d64545] hover:text-[#d64545] disabled:cursor-not-allowed disabled:bg-[#9fb3c8] disabled:text-white"
         >
-          保存晋级图
+          保存晋级海报
         </button>
+          <button
+            type="button"
+            disabled={!shareLink}
+            onClick={copyShareLink}
+            className="mt-5 h-12 w-full rounded-lg bg-[#071b3a] px-5 text-base font-bold text-white transition hover:bg-[#102a43] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
+          >
+            复制分享链接
+          </button>
+        </div>
         {saveMessage ? (
           <p className="mt-3 text-sm font-bold text-[#334e68]">{saveMessage}</p>
         ) : null}
+        {copyMessage ? (
+          <p className="mt-3 text-sm font-bold text-[#0f7b3f]">{copyMessage}</p>
+        ) : null}
+      </>
+    );
+  }
+
+  function renderFinalStage() {
+    return (
+      <>
+        <div className="grid gap-4 md:grid-cols-2">
+          {renderFinalMatch(
+            "冠军赛",
+            [upperChampion, lowerChampion],
+            finalStage.finalWinner,
+            (team) => setFinalStage((current) => ({ ...current, finalWinner: team })),
+          )}
+          {renderFinalMatch(
+            "季军赛",
+            [upperSemiLoser, lowerSemiLoser],
+            finalStage.thirdWinner,
+            (team) => setFinalStage((current) => ({ ...current, thirdWinner: team })),
+          )}
+        </div>
+
+        <section className="wc-card mt-5 p-4">
+          <h2 className="text-xl font-black text-[#071b3a]">最终排名预测</h2>
+          <div className="mt-4 space-y-2 text-sm font-bold text-[#334e68]">
+            <p className="flex items-center gap-2">冠军：{champion ? <CountryDisplay team={champion.team} /> : "待选择"}</p>
+            <p className="flex items-center gap-2">亚军：{runnerUp ? <CountryDisplay team={runnerUp.team} /> : "待选择冠军赛"}</p>
+            <p className="flex items-center gap-2">季军：{thirdPlace ? <CountryDisplay team={thirdPlace.team} /> : "待选择"}</p>
+            <p className="flex items-center gap-2">第四名：{fourthPlace ? <CountryDisplay team={fourthPlace.team} /> : "待选择季军赛"}</p>
+          </div>
+          {!finalComplete ? (
+            <p className="mt-4 rounded-xl bg-[#fff8db] p-3 text-sm font-black text-[#9f580a]">
+              请完成最终排名预测。
+            </p>
+          ) : null}
+        </section>
 
         <button
           type="button"
@@ -898,8 +946,11 @@ export default function BracketPage() {
           onClick={lockPrediction}
           className="mt-5 h-12 w-full rounded-lg bg-[#d64545] px-5 text-base font-bold text-white transition hover:bg-[#ba2525] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
         >
-          {isLocked ? "已锁定，无法修改" : "确认锁定晋级之路"}
+          {isLocked ? "已锁定，无法修改" : "提交并锁定预测"}
         </button>
+        {saveMessage ? (
+          <p className="mt-3 text-sm font-bold text-[#334e68]">{saveMessage}</p>
+        ) : null}
       </>
     );
   }
@@ -937,22 +988,25 @@ export default function BracketPage() {
         ) : null}
 
         {isLocked ? (
-          <section className="wc-card p-5">
-            <p className="wc-kicker">Locked Bracket</p>
-            <h2 className="mt-2 text-2xl font-black text-[#071b3a]">
-              你的世界杯晋级预测已锁定
-            </h2>
-            <div className="mt-4 rounded-2xl bg-[#f6f1e7] p-4 text-sm font-black text-[#071b3a]">
-              <p className="flex items-center gap-2">
-                冠军：
-                {champion ? <CountryDisplay team={champion.team} /> : "-"}
+          finalComplete ? (
+            <>
+              <div className="wc-card mb-5 p-4 text-sm font-black text-[#071b3a]">
+                <p>你的世界杯晋级预测已锁定</p>
+                <p className="mt-1 text-[#e63535]">该预测不可修改</p>
+              </div>
+              {renderBracketPoster()}
+            </>
+          ) : (
+            <section className="wc-card p-5">
+              <p className="wc-kicker">Locked Bracket</p>
+              <h2 className="mt-2 text-2xl font-black text-[#071b3a]">
+                你的世界杯晋级预测已锁定
+              </h2>
+              <p className="mt-4 text-sm font-bold text-[#627d98]">
+                当前设备未找到完整晋级海报数据，请使用提交预测时的浏览器打开。
               </p>
-              <p className="mt-2">
-                提交时间：{lockedAt ? formatLockTime(lockedAt) : "已提交"}
-              </p>
-              <p className="mt-2 text-[#e63535]">该预测不可修改</p>
-            </div>
-          </section>
+            </section>
+          )
         ) : (
         <>
         <div className="mb-5 grid gap-2 text-center text-sm font-bold sm:grid-cols-3">
