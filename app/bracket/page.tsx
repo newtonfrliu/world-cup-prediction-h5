@@ -13,7 +13,10 @@ import {
   generateOfficialRoundOf32,
 } from "@/lib/bracketRules";
 import { getCountryTheme } from "@/lib/countries";
-import { ensurePlayerInviteCode } from "@/lib/inviteCode";
+import {
+  ensurePlayerInviteCode,
+  isMissingInviteCodeColumnError,
+} from "@/lib/inviteCode";
 import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
@@ -185,6 +188,13 @@ export default function BracketPage() {
         .maybeSingle();
 
       if (error) {
+        if (isMissingInviteCodeColumnError(error)) {
+          console.error("players.invite_code column is missing on bracket", {
+            playerId: storedPlayerId,
+            error,
+          });
+        }
+
         const { data: fallbackData } = await supabase
           .from("players")
           .select("country")
@@ -198,8 +208,15 @@ export default function BracketPage() {
       setPlayerCountry(data?.country ?? null);
       setPlayerBracketLocked(Boolean(data?.bracket_locked));
       if (data) {
-        const ensuredInviteCode = await ensurePlayerInviteCode(supabase, data);
-        setInviteCode(ensuredInviteCode);
+        try {
+          const ensuredInviteCode = await ensurePlayerInviteCode(supabase, data);
+          setInviteCode(ensuredInviteCode);
+        } catch (error) {
+          console.error("failed to ensure bracket invite code", {
+            playerId: storedPlayerId,
+            error,
+          });
+        }
       }
     }
 

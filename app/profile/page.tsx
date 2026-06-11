@@ -14,7 +14,11 @@ import {
   getCountryTheme,
 } from "@/lib/countries";
 import { getStoredPlayerId } from "@/lib/playerSession";
-import { ensurePlayerInviteCode } from "@/lib/inviteCode";
+import {
+  ensurePlayerInviteCode,
+  getInviteCodeColumnErrorMessage,
+  isMissingInviteCodeColumnError,
+} from "@/lib/inviteCode";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
@@ -199,7 +203,7 @@ export default function ProfilePage() {
         return;
       }
 
-      const { data: playerData, error: playerError } = await supabase
+      let { data: playerData, error: playerError } = await supabase
         .from("players")
         .select(
           "id, nickname, country, region, coins, last_login_reward_date, avatar_id, equipped_card_id, invite_code, created_at",
@@ -207,18 +211,55 @@ export default function ProfilePage() {
         .eq("id", currentPlayerId)
         .single();
 
+      if (isMissingInviteCodeColumnError(playerError)) {
+        console.error("players.invite_code column is missing on profile", {
+          playerId: currentPlayerId,
+          error: playerError,
+        });
+        const fallback = await supabase
+          .from("players")
+          .select(
+            "id, nickname, country, region, coins, last_login_reward_date, avatar_id, equipped_card_id, created_at",
+          )
+          .eq("id", currentPlayerId)
+          .single();
+        playerData = fallback.data
+          ? { ...fallback.data, invite_code: null }
+          : null;
+        playerError = fallback.error;
+      }
+
       if (playerError) {
         setError(playerError.message);
         setLoading(false);
         return;
       }
 
-      const ensuredInviteCode = await ensurePlayerInviteCode(
-        supabase,
-        playerData,
-      );
+      if (!playerData) {
+        setError("玩家不存在，请返回首页重新登录。");
+        setLoading(false);
+        return;
+      }
+
+      let ensuredInviteCode = playerData.invite_code ?? "";
+
+      try {
+        ensuredInviteCode = await ensurePlayerInviteCode(
+          supabase,
+          playerData,
+        );
+      } catch (error) {
+        if (isMissingInviteCodeColumnError(error)) {
+          setError(getInviteCodeColumnErrorMessage());
+        } else {
+          console.error("failed to ensure profile invite code", {
+            playerId: currentPlayerId,
+            error,
+          });
+        }
+      }
       setInviteCode(ensuredInviteCode);
-      setShareLink(buildShareLink(ensuredInviteCode));
+      setShareLink(ensuredInviteCode ? buildShareLink(ensuredInviteCode) : "");
 
       const currentPlayer = await awardDailyLoginReward({
         ...(playerData as Player),

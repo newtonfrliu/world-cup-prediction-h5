@@ -1,3 +1,5 @@
+import { sanitizeInviteParam } from "@/lib/inviteCode";
+
 export type PlayerSessionData = {
   id: string;
   nickname?: string | null;
@@ -37,8 +39,10 @@ export function savePlayerSession(player: PlayerSessionData) {
     localStorage.setItem("wc_region", player.region);
   }
 
-  if (player.invite_code) {
-    localStorage.setItem("wc_invite_code", player.invite_code);
+  const inviteCode = sanitizeInviteParam(player.invite_code ?? "");
+
+  if (inviteCode) {
+    localStorage.setItem("wc_invite_code", inviteCode);
   }
 }
 

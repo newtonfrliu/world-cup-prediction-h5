@@ -19,8 +19,11 @@ import {
 import {
   ensurePlayerInviteCode,
   generateUniqueInviteCode,
+  getInviteCodeColumnErrorMessage,
   isUuidInviteRef,
+  isMissingInviteCodeColumnError,
   normalizeInviteCode,
+  sanitizeInviteParam,
 } from "@/lib/inviteCode";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
@@ -132,24 +135,45 @@ export default function Home() {
 
   useEffect(() => {
     async function hydrateRef() {
-      const ref = new URLSearchParams(window.location.search).get("ref");
+      const params = new URLSearchParams(window.location.search);
+      const ref =
+        params.get("invite") ?? params.get("ref") ?? params.get("code");
 
       if (!ref) {
         return;
       }
 
-      let nextInviteCode = normalizeInviteCode(ref);
+      let nextInviteCode = sanitizeInviteParam(ref);
 
       if (isUuidInviteRef(ref) && isSupabaseConfigured) {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from("players")
           .select("id, invite_code")
           .eq("id", ref)
           .maybeSingle();
 
-        if (data) {
-          nextInviteCode = await ensurePlayerInviteCode(supabase, data);
+        if (isMissingInviteCodeColumnError(error)) {
+          console.error("invite_code column is missing while hydrating ref", {
+            error,
+          });
+          return;
         }
+
+        if (data) {
+          try {
+            nextInviteCode = await ensurePlayerInviteCode(supabase, data);
+          } catch (error) {
+            console.error("failed to ensure invite code from uuid ref", {
+              ref,
+              error,
+            });
+            return;
+          }
+        }
+      }
+
+      if (!nextInviteCode) {
+        return;
       }
 
       localStorage.setItem("referrer_id", nextInviteCode);
@@ -191,18 +215,53 @@ export default function Home() {
     playerId: string,
     options: { awardDaily?: boolean } = {},
   ) {
-      const { data } = await supabase
+      let { data, error: playerError } = await supabase
         .from("players")
         .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id, invite_code")
         .eq("id", playerId)
         .maybeSingle();
+
+      if (isMissingInviteCodeColumnError(playerError)) {
+        console.error("players.invite_code column is missing while loading player", {
+          playerId,
+          error: playerError,
+        });
+        const fallback = await supabase
+          .from("players")
+          .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
+          .eq("id", playerId)
+          .maybeSingle();
+        data = fallback.data
+          ? { ...fallback.data, invite_code: null }
+          : null;
+        playerError = fallback.error;
+      }
+
+      if (playerError) {
+        setError(playerError.message);
+        return;
+      }
 
       if (!data) {
         return;
       }
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
-      const inviteCode = await ensurePlayerInviteCode(supabase, data);
+      let inviteCode = data.invite_code ?? "";
+
+      try {
+        inviteCode = await ensurePlayerInviteCode(supabase, data);
+      } catch (error) {
+        if (isMissingInviteCodeColumnError(error)) {
+          setError(getInviteCodeColumnErrorMessage());
+        } else {
+          console.error("failed to ensure player invite code", {
+            playerId,
+            error,
+          });
+        }
+      }
+
       savePlayerSession({ ...data, invite_code: inviteCode });
       setCountry(canonicalTeamName);
       setCurrentPlayer(data);
@@ -263,15 +322,27 @@ export default function Home() {
   async function resolveInviter(code: string) {
     const normalized = normalizeInviteCode(code);
 
-    if (!normalized) {
+    if (normalized.length !== 6) {
       return null;
     }
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("players")
       .select("id, coins")
       .eq("invite_code", normalized)
       .maybeSingle();
+
+    if (error) {
+      if (isMissingInviteCodeColumnError(error)) {
+        throw new Error(getInviteCodeColumnErrorMessage());
+      }
+
+      console.error("failed to resolve inviter by invite_code", {
+        inviteCode: normalized,
+        error,
+      });
+      return null;
+    }
 
     return data;
   }
@@ -293,11 +364,27 @@ export default function Home() {
     setError("");
     setRecoveryPlayer(null);
 
-    const { data: existingPlayers, error: lookupError } = await supabase
+    let { data: existingPlayers, error: lookupError } = await supabase
       .from("players")
       .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id, invite_code")
       .eq("nickname", trimmedNickname)
       .order("created_at", { ascending: true });
+
+    if (isMissingInviteCodeColumnError(lookupError)) {
+      console.error("players.invite_code column is missing during account lookup", {
+        nickname: trimmedNickname,
+        error: lookupError,
+      });
+      const fallback = await supabase
+        .from("players")
+        .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
+        .eq("nickname", trimmedNickname)
+        .order("created_at", { ascending: true });
+      existingPlayers = fallback.data
+        ? fallback.data.map((player) => ({ ...player, invite_code: null }))
+        : null;
+      lookupError = fallback.error;
+    }
 
     if (lookupError) {
       setError(lookupError.message);
@@ -314,8 +401,17 @@ export default function Home() {
       return;
     }
 
-    const inviter = await resolveInviter(inviteCode);
-    const newInviteCode = await generateUniqueInviteCode(supabase);
+    let inviter = null;
+    let newInviteCode = "";
+
+    try {
+      inviter = await resolveInviter(inviteCode);
+      newInviteCode = await generateUniqueInviteCode(supabase);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : String(error));
+      setIsSubmitting(false);
+      return;
+    }
 
     const { data: createdPlayer, error: insertError } = await supabase
       .from("players")
@@ -332,14 +428,19 @@ export default function Home() {
       .single();
 
     if (insertError) {
-      setError(insertError.message);
+      setError(
+        isMissingInviteCodeColumnError(insertError)
+          ? getInviteCodeColumnErrorMessage()
+          : insertError.message,
+      );
       setIsSubmitting(false);
       return;
     }
 
     savePlayerSession(createdPlayer);
-    if (inviteCode.trim()) {
-      localStorage.setItem("wc_invite_code", normalizeInviteCode(inviteCode));
+    const storedInviteCode = sanitizeInviteParam(inviteCode);
+    if (storedInviteCode) {
+      localStorage.setItem("wc_invite_code", storedInviteCode);
     }
     setCoinBalance(createdPlayer.coins);
 
@@ -599,9 +700,15 @@ export default function Home() {
             <span className="wc-label">邀请码（选填）</span>
             <input
               value={inviteCode}
-              onChange={(event) =>
-                setInviteCode(normalizeInviteCode(event.target.value))
-              }
+              onChange={(event) => {
+                const value = event.target.value;
+                const safeInviteCode = sanitizeInviteParam(value);
+                setInviteCode(
+                  safeInviteCode || (value.length <= 6
+                    ? normalizeInviteCode(value)
+                    : ""),
+                );
+              }}
               className="wc-input mt-2"
               placeholder="例如 CF9FDB"
             />
