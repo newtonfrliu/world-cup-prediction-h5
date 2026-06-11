@@ -3,6 +3,7 @@ export type PlayerSessionData = {
   nickname?: string | null;
   country?: string | null;
   region?: string | null;
+  invite_code?: string | null;
 };
 
 const PLAYER_ID_KEYS = ["wc_player_id", "player_id", "playerId"];
@@ -34,6 +35,10 @@ export function savePlayerSession(player: PlayerSessionData) {
 
   if (player.region) {
     localStorage.setItem("wc_region", player.region);
+  }
+
+  if (player.invite_code) {
+    localStorage.setItem("wc_invite_code", player.invite_code);
   }
 }
 

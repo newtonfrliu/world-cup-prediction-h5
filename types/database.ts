@@ -11,6 +11,7 @@ export type Database = {
           last_login_reward_date: string | null;
           avatar_id: string | null;
           referred_by: string | null;
+          invite_code: string | null;
           equipped_card_id: string | null;
           bracket_locked: boolean | null;
           created_at: string | null;
@@ -24,6 +25,7 @@ export type Database = {
           last_login_reward_date?: string | null;
           avatar_id?: string | null;
           referred_by?: string | null;
+          invite_code?: string | null;
           equipped_card_id?: string | null;
           bracket_locked?: boolean | null;
           created_at?: string | null;
@@ -37,6 +39,7 @@ export type Database = {
           last_login_reward_date?: string | null;
           avatar_id?: string | null;
           referred_by?: string | null;
+          invite_code?: string | null;
           equipped_card_id?: string | null;
           bracket_locked?: boolean | null;
           created_at?: string | null;

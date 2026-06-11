@@ -14,6 +14,7 @@ import {
   getCountryTheme,
 } from "@/lib/countries";
 import { getStoredPlayerId } from "@/lib/playerSession";
+import { ensurePlayerInviteCode } from "@/lib/inviteCode";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
@@ -42,7 +43,7 @@ type StoredBracketPrediction = {
   champion?: string;
 };
 
-const officialSiteUrl = "https://www.2026wc.fun";
+const officialSiteUrl = "https://2026wc.fun/";
 
 type CollectionProgress = {
   owned: number;
@@ -67,16 +68,12 @@ function formatRank(value: number | null) {
   return value ? `第 ${value} 名` : "-";
 }
 
-function buildShareLink(playerId: string) {
-  return `${officialSiteUrl}?ref=${playerId}`;
+function buildShareLink(inviteCode: string) {
+  return `${officialSiteUrl}?ref=${inviteCode}`;
 }
 
 function buildQrCodeUrl(value: string) {
   return `https://api.qrserver.com/v1/create-qr-code/?size=176x176&margin=8&data=${encodeURIComponent(value)}`;
-}
-
-function getInviteCode(playerId: string) {
-  return playerId.replace(/-/g, "").slice(0, 6).toUpperCase();
 }
 
 function getErrorMessage(error: unknown) {
@@ -113,6 +110,7 @@ export default function ProfilePage() {
   const [player, setPlayer] = useState<Player | null>(null);
   const [stats, setStats] = useState<ProfileStats>(() => buildEmptyStats());
   const [shareLink, setShareLink] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
   const [championPrediction, setChampionPrediction] = useState("");
   const [copied, setCopied] = useState(false);
   const [posterMessage, setPosterMessage] = useState("");
@@ -179,8 +177,6 @@ export default function ProfilePage() {
       }
       const currentPlayerId = storedPlayerId;
 
-      setShareLink(buildShareLink(currentPlayerId));
-
       const storedBracket = localStorage.getItem(
         `bracket_prediction_${currentPlayerId}`,
       );
@@ -206,7 +202,7 @@ export default function ProfilePage() {
       const { data: playerData, error: playerError } = await supabase
         .from("players")
         .select(
-          "id, nickname, country, region, coins, last_login_reward_date, avatar_id, equipped_card_id, created_at",
+          "id, nickname, country, region, coins, last_login_reward_date, avatar_id, equipped_card_id, invite_code, created_at",
         )
         .eq("id", currentPlayerId)
         .single();
@@ -217,7 +213,17 @@ export default function ProfilePage() {
         return;
       }
 
-      const currentPlayer = await awardDailyLoginReward(playerData as Player);
+      const ensuredInviteCode = await ensurePlayerInviteCode(
+        supabase,
+        playerData,
+      );
+      setInviteCode(ensuredInviteCode);
+      setShareLink(buildShareLink(ensuredInviteCode));
+
+      const currentPlayer = await awardDailyLoginReward({
+        ...(playerData as Player),
+        invite_code: ensuredInviteCode,
+      });
       setPlayer(currentPlayer);
 
       if (currentPlayer.equipped_card_id) {
@@ -823,7 +829,7 @@ export default function ProfilePage() {
                   邀请码：
                 </p>
                 <p className="text-2xl font-black tracking-[0.14em] text-[#e63535]">
-                  {playerId ? getInviteCode(playerId) : "------"}
+                  {inviteCode || "------"}
                 </p>
               </div>
 

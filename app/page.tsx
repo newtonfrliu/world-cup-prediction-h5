@@ -16,6 +16,12 @@ import {
   getStoredPlayerId,
   savePlayerSession,
 } from "@/lib/playerSession";
+import {
+  ensurePlayerInviteCode,
+  generateUniqueInviteCode,
+  isUuidInviteRef,
+  normalizeInviteCode,
+} from "@/lib/inviteCode";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
 type HomePlayer = {
@@ -26,6 +32,7 @@ type HomePlayer = {
   coins: number;
   last_login_reward_date: string | null;
   equipped_card_id: string | null;
+  invite_code: string | null;
 };
 type PlayerCard = {
   id: string;
@@ -124,15 +131,35 @@ export default function Home() {
     selectedTheme.textOnTheme === "dark" ? "#AA151B" : selectedTheme.accent;
 
   useEffect(() => {
-    const ref = new URLSearchParams(window.location.search).get("ref");
+    async function hydrateRef() {
+      const ref = new URLSearchParams(window.location.search).get("ref");
 
-    if (ref) {
-      localStorage.setItem("referrer_id", ref);
-      localStorage.setItem("wc_referrer_id", ref);
-      localStorage.setItem("wc_invite_code", ref);
-      setReferrerId(ref);
-      setInviteCode(ref);
+      if (!ref) {
+        return;
+      }
+
+      let nextInviteCode = normalizeInviteCode(ref);
+
+      if (isUuidInviteRef(ref) && isSupabaseConfigured) {
+        const { data } = await supabase
+          .from("players")
+          .select("id, invite_code")
+          .eq("id", ref)
+          .maybeSingle();
+
+        if (data) {
+          nextInviteCode = await ensurePlayerInviteCode(supabase, data);
+        }
+      }
+
+      localStorage.setItem("referrer_id", nextInviteCode);
+      localStorage.setItem("wc_referrer_id", nextInviteCode);
+      localStorage.setItem("wc_invite_code", nextInviteCode);
+      setReferrerId(nextInviteCode);
+      setInviteCode(nextInviteCode);
     }
+
+    hydrateRef();
   }, []);
 
   useEffect(() => {
@@ -166,7 +193,7 @@ export default function Home() {
   ) {
       const { data } = await supabase
         .from("players")
-        .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
+        .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id, invite_code")
         .eq("id", playerId)
         .maybeSingle();
 
@@ -175,7 +202,8 @@ export default function Home() {
       }
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
-      savePlayerSession(data);
+      const inviteCode = await ensurePlayerInviteCode(supabase, data);
+      savePlayerSession({ ...data, invite_code: inviteCode });
       setCountry(canonicalTeamName);
       setCurrentPlayer(data);
       setCoinBalance(data.coins ?? 1000);
@@ -233,7 +261,7 @@ export default function Home() {
   }
 
   async function resolveInviter(code: string) {
-    const normalized = code.trim();
+    const normalized = normalizeInviteCode(code);
 
     if (!normalized) {
       return null;
@@ -242,7 +270,7 @@ export default function Home() {
     const { data } = await supabase
       .from("players")
       .select("id, coins")
-      .eq("id", normalized)
+      .eq("invite_code", normalized)
       .maybeSingle();
 
     return data;
@@ -267,7 +295,7 @@ export default function Home() {
 
     const { data: existingPlayers, error: lookupError } = await supabase
       .from("players")
-      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
+      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id, invite_code")
       .eq("nickname", trimmedNickname)
       .order("created_at", { ascending: true });
 
@@ -287,6 +315,7 @@ export default function Home() {
     }
 
     const inviter = await resolveInviter(inviteCode);
+    const newInviteCode = await generateUniqueInviteCode(supabase);
 
     const { data: createdPlayer, error: insertError } = await supabase
       .from("players")
@@ -297,8 +326,9 @@ export default function Home() {
         coins: 1000,
         avatar_id: "default-manager",
         referred_by: inviter?.id ?? null,
+        invite_code: newInviteCode,
       })
-      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id")
+      .select("id, nickname, country, region, coins, last_login_reward_date, equipped_card_id, invite_code")
       .single();
 
     if (insertError) {
@@ -309,7 +339,7 @@ export default function Home() {
 
     savePlayerSession(createdPlayer);
     if (inviteCode.trim()) {
-      localStorage.setItem("wc_invite_code", inviteCode.trim());
+      localStorage.setItem("wc_invite_code", normalizeInviteCode(inviteCode));
     }
     setCoinBalance(createdPlayer.coins);
 
@@ -569,9 +599,11 @@ export default function Home() {
             <span className="wc-label">邀请码（选填）</span>
             <input
               value={inviteCode}
-              onChange={(event) => setInviteCode(event.target.value)}
+              onChange={(event) =>
+                setInviteCode(normalizeInviteCode(event.target.value))
+              }
               className="wc-input mt-2"
-              placeholder="可粘贴好友分享链接中的 ref"
+              placeholder="例如 CF9FDB"
             />
           </label>
 

@@ -13,6 +13,7 @@ import {
   generateOfficialRoundOf32,
 } from "@/lib/bracketRules";
 import { getCountryTheme } from "@/lib/countries";
+import { ensurePlayerInviteCode } from "@/lib/inviteCode";
 import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
@@ -63,7 +64,7 @@ const groupTeams: Record<GroupLetter, string[]> = {
   L: ["England", "Croatia", "Ghana", "Panama"],
 };
 const groupKeys = Object.keys(groupTeams) as GroupLetter[];
-const officialSiteUrl = "https://www.2026wc.fun";
+const officialSiteUrl = "https://2026wc.fun/";
 const emptySelections = groupKeys.reduce(
   (result, group) => ({
     ...result,
@@ -102,8 +103,8 @@ function formatLockTime(value: string) {
   return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
-function buildShareLink(playerId: string) {
-  return `${officialSiteUrl}?ref=${playerId}`;
+function buildShareLink(inviteCode: string) {
+  return `${officialSiteUrl}?ref=${inviteCode}`;
 }
 
 function buildQrCodeUrl(value: string) {
@@ -114,6 +115,7 @@ export default function BracketPage() {
   const router = useRouter();
   const bracketImageRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [inviteCode, setInviteCode] = useState("");
   const [playerCountry, setPlayerCountry] = useState<string | null>(null);
   const [stage, setStage] = useState<Stage>("groups");
   const [activeSide, setActiveSide] = useState<Side>("upper");
@@ -177,7 +179,7 @@ export default function BracketPage() {
 
       const { data, error } = await supabase
         .from("players")
-        .select("country, bracket_locked")
+        .select("id, country, bracket_locked, invite_code")
         .eq("id", storedPlayerId)
         .maybeSingle();
 
@@ -194,6 +196,10 @@ export default function BracketPage() {
 
       setPlayerCountry(data?.country ?? null);
       setPlayerBracketLocked(Boolean(data?.bracket_locked));
+      if (data) {
+        const ensuredInviteCode = await ensurePlayerInviteCode(supabase, data);
+        setInviteCode(ensuredInviteCode);
+      }
     }
 
     loadPlayerCountry();
@@ -740,7 +746,7 @@ export default function BracketPage() {
   }
 
   function renderFinalStage() {
-    const shareLink = playerId ? buildShareLink(playerId) : "";
+    const shareLink = inviteCode ? buildShareLink(inviteCode) : "";
 
     return (
       <>
