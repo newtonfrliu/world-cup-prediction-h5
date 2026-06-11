@@ -146,6 +146,8 @@ export default function PredictPage() {
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
   const playerTheme = getCountryTheme(player?.country);
+  const selectedBetTextColor =
+    playerTheme.accent.toLowerCase() === "#071b3a" ? "#ffffff" : "#071b3a";
   const predictionsByMatchId = useMemo(() => {
     return new Map(
       myPredictions.map((prediction) => [prediction.match_id, prediction]),
@@ -637,14 +639,13 @@ export default function PredictPage() {
         ) : null}
 
         <div
-          className="mb-5 rounded-full border px-4 py-3 text-sm font-black text-white shadow-sm"
+          className="mb-5 rounded-full border bg-white px-4 py-3 text-sm font-black text-readable shadow-sm"
           style={{
-            background: playerTheme.primary,
             borderColor: playerTheme.accent,
             boxShadow: playerTheme.glow,
           }}
         >
-          <span style={{ color: playerTheme.accent }}>ODDS TICKER</span> ·
+          <span className="text-[#e63535]">ODDS TICKER</span> ·
           赔率更新时间：
           {lastOddsSync ? formatOddsSyncTime(lastOddsSync) : "暂无同步记录"}
         </div>
@@ -752,7 +753,7 @@ export default function PredictPage() {
                 <div className="bg-[#071b3a] p-4 text-white">
                   <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#25c7b7]">
+                    <p className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#d9e2ec]">
                       Match Card / {match.stage ?? "小组赛"}
                     </p>
                     <h2 className="text-xl font-black">
@@ -764,7 +765,7 @@ export default function PredictPage() {
                         <CountryDisplay team={match.away_team} />
                       </span>
                     </h2>
-                    <p className="mt-2 text-sm font-bold text-[#25c7b7]">
+                    <p className="mt-2 text-sm font-bold text-[#d9e2ec]">
                       {formatMatchTime(match.start_time)}
                     </p>
                     <p className="mt-1 text-xs font-black text-white/80">
@@ -860,7 +861,7 @@ export default function PredictPage() {
                     const hasNoCoins = (player?.coins ?? 0) <= 0 && !selectedPrediction;
                     const buttonClass = isPredicted
                       ? isSelected
-                        ? "text-white ring-2 ring-[#f6c84c]"
+                        ? "ring-2 ring-[#071b3a]"
                         : "bg-[#e4e7eb] text-[#829ab1]"
                         : isFrozen || hasNoCoins
                         ? "bg-[#e4e7eb] text-[#829ab1]"
@@ -875,7 +876,10 @@ export default function PredictPage() {
                         className={`h-11 rounded-xl px-2 text-sm font-black transition disabled:cursor-not-allowed ${buttonClass}`}
                         style={
                           isPredicted && isSelected
-                            ? { background: playerTheme.accent }
+                            ? {
+                                background: playerTheme.accent,
+                                color: selectedBetTextColor,
+                              }
                             : undefined
                         }
                       >

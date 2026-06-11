@@ -258,7 +258,7 @@ export function PlayerCardMini({
           26
         </p>
         <p
-          className={`absolute left-2 top-2 z-20 font-black uppercase tracking-[0.14em] text-[#f6c84c] ${headerTextClass[size]}`}
+          className={`absolute left-2 top-2 z-20 font-black uppercase tracking-[0.14em] text-white ${headerTextClass[size]}`}
         >
           FIFA 26
         </p>

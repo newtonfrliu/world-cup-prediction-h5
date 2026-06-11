@@ -208,13 +208,13 @@ export default function LeaderboardPage() {
                     <h2 className={`truncate text-lg font-black ${index < 3 ? "text-white" : "text-[#071b3a]"}`}>
                       {row.nickname}
                     </h2>
-                    <p className={`mt-1 flex min-w-0 items-center gap-2 text-sm font-bold ${index < 3 ? "text-[#f6c84c]" : "text-[#627d98]"}`}>
+                    <p className={`mt-1 flex min-w-0 items-center gap-2 text-sm font-bold ${index < 3 ? "text-[#d9e2ec]" : "text-[#627d98]"}`}>
                       <CountryDisplay team={row.country} />
                       <span className="shrink-0">· {row.region}</span>
                     </p>
                   </div>
                 <div className="shrink-0 text-right">
-                  <p className={`text-xs font-bold ${index < 3 ? "text-[#25c7b7]" : "text-[#627d98]"}`}>总积分</p>
+                  <p className={`text-xs font-bold ${index < 3 ? "text-[#d9e2ec]" : "text-[#627d98]"}`}>总积分</p>
                   <p className={`mt-1 text-2xl font-black ${index < 3 ? "text-white" : "text-[#071b3a]"}`}>
                     {Math.round(row.total_points)}
                   </p>

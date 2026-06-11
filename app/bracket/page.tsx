@@ -154,6 +154,8 @@ export default function BracketPage() {
   const upperProgress = getSideProgress(upperBracket);
   const lowerProgress = getSideProgress(lowerBracket);
   const playerTheme = getCountryTheme(playerCountry);
+  const bracketAccentText =
+    playerTheme.textOnTheme === "dark" ? "#AA151B" : "#E63535";
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem("player_id");
@@ -440,7 +442,7 @@ export default function BracketPage() {
                 className="overflow-hidden rounded-2xl border border-[#071b3a]/12 bg-white shadow-[0_12px_30px_rgba(7,27,58,0.08)]"
               >
                 <div className="bg-[#071b3a] px-4 py-3">
-                  <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#25c7b7]">
+                  <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#d9e2ec]">
                     Album Group
                   </p>
                   <h2 className="mt-1 text-xl font-black text-white">
@@ -715,20 +717,33 @@ export default function BracketPage() {
 
         <section
           ref={bracketImageRef}
-          className="mt-5 rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-sm"
+          className="mt-5 rounded-[22px] border-4 border-[#f6c84c] bg-white p-5 text-readable shadow-sm"
           style={{
-            background: playerTheme.cardGradient,
             borderColor: playerTheme.accent,
             boxShadow: playerTheme.glow,
           }}
         >
-          <div className="rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center">
-            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
+          <div
+            className="rounded-2xl border p-4 text-center"
+            style={{
+              borderColor: playerTheme.accent,
+              background:
+                "linear-gradient(135deg, rgba(246,241,231,0.98), rgba(255,255,255,0.94))",
+            }}
+          >
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-readable">
               Bracket Album
             </p>
-            <p className="mt-2 text-sm font-black text-[#e63535]">2026足球世界杯</p>
-            <h2 className="mt-1 text-3xl font-black">美加墨大乱斗</h2>
-            <p className="mt-2 text-sm font-bold text-[#f6c84c]">
+            <p
+              className="mt-2 text-sm font-black"
+              style={{ color: bracketAccentText }}
+            >
+              2026足球世界杯
+            </p>
+            <h2 className="mt-1 text-3xl font-black text-readable">
+              美加墨大乱斗
+            </h2>
+            <p className="mt-2 text-sm font-bold text-muted-readable">
               我的世界杯晋级之路
             </p>
           </div>

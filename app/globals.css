@@ -25,6 +25,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.text-readable {
+  color: var(--wc-blue);
+}
+
+.text-muted-readable {
+  color: #4a6280;
+}
+
 @layer components {
   .wc-page {
     min-height: 100vh;
