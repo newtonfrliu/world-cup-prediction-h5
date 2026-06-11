@@ -15,7 +15,7 @@ import type { Database } from "@/types/database";
 type Player = Database["public"]["Tables"]["players"]["Row"];
 type Prediction = Pick<
   Database["public"]["Tables"]["predictions"]["Row"],
-  "id" | "points" | "stake" | "payout"
+  "id" | "points" | "stake" | "payout" | "status"
 >;
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
 
@@ -27,6 +27,7 @@ type ProfileStats = {
   hitCount: number;
   hitRate: number;
   totalStake: number;
+  activeStake: number;
   totalPayout: number;
 };
 
@@ -46,6 +47,7 @@ function buildEmptyStats(): ProfileStats {
     hitCount: 0,
     hitRate: 0,
     totalStake: 0,
+    activeStake: 0,
     totalPayout: 0,
   };
 }
@@ -76,6 +78,7 @@ export default function ProfilePage() {
   const [copied, setCopied] = useState(false);
   const [posterMessage, setPosterMessage] = useState("");
   const [previewImageUrl, setPreviewImageUrl] = useState("");
+  const [rewardStatus, setRewardStatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -84,6 +87,39 @@ export default function ProfilePage() {
   const playerAvatar = getAvatar(player?.avatar_id);
 
   useEffect(() => {
+    async function awardDailyLoginReward(
+      currentPlayer: Player,
+    ): Promise<Player> {
+      const today = new Date().toISOString().slice(0, 10);
+      const currentCoins = currentPlayer.coins ?? 1000;
+
+      if (currentPlayer.last_login_reward_date === today) {
+        setRewardStatus("今日已领取");
+        return { ...currentPlayer, coins: currentCoins };
+      }
+
+      const nextCoins = currentCoins + 200;
+      const { error: rewardError } = await supabase
+        .from("players")
+        .update({
+          coins: nextCoins,
+          last_login_reward_date: today,
+        })
+        .eq("id", currentPlayer.id);
+
+      if (rewardError) {
+        setRewardStatus("今日奖励领取失败");
+        return { ...currentPlayer, coins: currentCoins };
+      }
+
+      setRewardStatus("今日登录奖励 +200 金币");
+      return {
+        ...currentPlayer,
+        coins: nextCoins,
+        last_login_reward_date: today,
+      };
+    }
+
     async function loadProfile() {
       const storedPlayerId = localStorage.getItem("player_id");
       setPlayerId(storedPlayerId);
@@ -131,7 +167,7 @@ export default function ProfilePage() {
         return;
       }
 
-      const currentPlayer = playerData as Player;
+      const currentPlayer = await awardDailyLoginReward(playerData as Player);
       setPlayer(currentPlayer);
 
       const [
@@ -144,7 +180,7 @@ export default function ProfilePage() {
           .order("total_points", { ascending: false }),
         supabase
           .from("predictions")
-          .select("id, points, stake, payout")
+          .select("id, points, stake, payout, status")
           .eq("player_id", storedPlayerId),
       ]);
 
@@ -161,7 +197,9 @@ export default function ProfilePage() {
       }
 
       const leaderboard = (leaderboardData ?? []) as LeaderboardRow[];
-      const predictions = (predictionData ?? []) as Prediction[];
+      const predictions = ((predictionData ?? []) as Prediction[]).filter(
+        (prediction) => (prediction.status ?? "active") !== "cancelled",
+      );
       const playerRowIndex = leaderboard.findIndex(
         (row) =>
           row.nickname === currentPlayer.nickname &&
@@ -186,6 +224,9 @@ export default function ProfilePage() {
         (sum, prediction) => sum + prediction.stake,
         0,
       );
+      const activeStake = predictions
+        .filter((prediction) => (prediction.status ?? "active") === "active")
+        .reduce((sum, prediction) => sum + prediction.stake, 0);
       const totalPayout = predictions.reduce(
         (sum, prediction) => sum + prediction.payout,
         0,
@@ -199,6 +240,7 @@ export default function ProfilePage() {
         hitCount,
         hitRate: predictionCount > 0 ? hitCount / predictionCount : 0,
         totalStake,
+        activeStake,
         totalPayout,
       });
       setLoading(false);
@@ -404,7 +446,9 @@ export default function ProfilePage() {
                 ["命中场数", `${stats.hitCount}`],
                 ["命中率", `${(stats.hitRate * 100).toFixed(0)}%`],
                 ["总下注", `${stats.totalStake} 金币`],
+                ["当前有效下注", `${stats.activeStake} 金币`],
                 ["总返还", `${stats.totalPayout} 金币`],
+                ["今日登录奖励", rewardStatus || "今日已检查"],
                 ["当前 Avatar", playerAvatar.name],
                 ["当前主队主题", playerCountry?.nameZh ?? "世界杯默认"],
               ].map(([label, value]) => (

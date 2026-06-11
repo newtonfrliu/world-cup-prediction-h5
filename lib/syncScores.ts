@@ -201,15 +201,20 @@ export async function syncWorldCupScores({
     const { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
       )
-      .eq("match_id", match.id);
+      .eq("match_id", match.id)
+      .or("status.is.null,status.eq.active");
 
     if (predictionsError) {
       throw new Error(`Supabase update failed: ${predictionsError.message}`);
     }
 
     for (const prediction of (predictions ?? []) as Prediction[]) {
+      if (prediction.settled_at) {
+        continue;
+      }
+
       const isHit = prediction.prediction === result;
       const points = isHit
         ? Math.round(prediction.odds_at_prediction * 100)
@@ -223,6 +228,7 @@ export async function syncWorldCupScores({
         .update({
           points,
           payout,
+          settled_at: new Date().toISOString(),
         })
         .eq("id", prediction.id);
 

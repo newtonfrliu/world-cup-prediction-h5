@@ -455,9 +455,10 @@ export default function AdminPage() {
     const { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
       )
-      .eq("match_id", match.id);
+      .eq("match_id", match.id)
+      .or("status.is.null,status.eq.active");
 
     if (predictionLoadError) {
       setError(predictionLoadError.message);
@@ -466,6 +467,10 @@ export default function AdminPage() {
     }
 
     for (const prediction of (predictions ?? []) as Prediction[]) {
+      if (prediction.settled_at) {
+        continue;
+      }
+
       const isHit = prediction.prediction === result;
       const points = isHit
         ? Math.round(prediction.odds_at_prediction * 100)
@@ -476,7 +481,7 @@ export default function AdminPage() {
 
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
-        .update({ points, payout })
+        .update({ points, payout, settled_at: new Date().toISOString() })
         .eq("id", prediction.id);
 
       if (predictionUpdateError) {

@@ -9,7 +9,30 @@ import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
 
-const countries = worldCupTeams.map((team) => ({
+type HomePlayer = {
+  id: string;
+  nickname: string;
+  country: string;
+  region: string;
+  coins: number;
+  last_login_reward_date: string | null;
+};
+
+const popularTeams = [
+  "Argentina",
+  "France",
+  "Brazil",
+  "Portugal",
+  "England",
+  "Germany",
+  "Spain",
+  "Netherlands",
+];
+const orderedTeams = [
+  ...popularTeams,
+  ...worldCupTeams.filter((team) => !popularTeams.includes(team)),
+];
+const countries = orderedTeams.map((team) => ({
   label: getTeamDisplayName(team),
   value: team,
 }));
@@ -58,6 +81,9 @@ export default function Home() {
   const [country, setCountry] = useState(countries[0].value);
   const [region, setRegion] = useState(regions[0]);
   const [referrerId, setReferrerId] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
+  const [currentPlayer, setCurrentPlayer] = useState<HomePlayer | null>(null);
+  const [rewardStatus, setRewardStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
@@ -74,6 +100,7 @@ export default function Home() {
     if (ref) {
       localStorage.setItem("referrer_id", ref);
       setReferrerId(ref);
+      setInviteCode(ref);
     }
   }, []);
 
@@ -87,7 +114,7 @@ export default function Home() {
 
       const { data } = await supabase
         .from("players")
-        .select("country, coins, last_login_reward_date")
+        .select("id, nickname, country, region, coins, last_login_reward_date")
         .eq("id", storedPlayerId)
         .maybeSingle();
 
@@ -96,8 +123,14 @@ export default function Home() {
       }
 
       setCountry(data.country);
-      setCoinBalance(data.coins);
-      await awardDailyLoginReward(storedPlayerId, data.coins, data.last_login_reward_date);
+      setCurrentPlayer(data);
+      setCoinBalance(data.coins ?? 1000);
+      const nextCoins = await awardDailyLoginReward(
+        storedPlayerId,
+        data.coins ?? 1000,
+        data.last_login_reward_date,
+      );
+      setCurrentPlayer({ ...data, coins: nextCoins });
     }
 
     loadStoredPlayer();
@@ -119,7 +152,7 @@ export default function Home() {
       return currentCoins;
     }
 
-    const nextCoins = currentCoins + 50;
+    const nextCoins = currentCoins + 200;
     const { error: rewardError } = await supabase
       .from("players")
       .update({
@@ -130,10 +163,27 @@ export default function Home() {
 
     if (!rewardError) {
       setCoinBalance(nextCoins);
-      setNotice("今日登录奖励 +50 金币");
+      setNotice("今日登录奖励 +200 金币");
+      setRewardStatus("今日登录奖励已领取");
     }
 
     return rewardError ? currentCoins : nextCoins;
+  }
+
+  async function resolveInviter(code: string) {
+    const normalized = code.trim();
+
+    if (!normalized) {
+      return null;
+    }
+
+    const { data } = await supabase
+      .from("players")
+      .select("id, coins")
+      .eq("id", normalized)
+      .maybeSingle();
+
+    return data;
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -154,10 +204,8 @@ export default function Home() {
 
     const { data: existingPlayers, error: lookupError } = await supabase
       .from("players")
-      .select("id, created_at, coins, last_login_reward_date")
+      .select("id")
       .eq("nickname", trimmedNickname)
-      .eq("country", country)
-      .eq("region", region)
       .order("created_at", { ascending: true });
 
     if (lookupError) {
@@ -169,16 +217,12 @@ export default function Home() {
     const existingPlayer = existingPlayers?.[0];
 
     if (existingPlayer) {
-      localStorage.setItem("player_id", existingPlayer.id);
-      await awardDailyLoginReward(
-        existingPlayer.id,
-        existingPlayer.coins,
-        existingPlayer.last_login_reward_date,
-      );
-      setNotice("欢迎回来");
-      router.push("/predict");
+      setError("该账号已注册，请直接进入你的战绩");
+      setIsSubmitting(false);
       return;
     }
+
+    const inviter = await resolveInviter(inviteCode);
 
     const { data: createdPlayer, error: insertError } = await supabase
       .from("players")
@@ -188,8 +232,9 @@ export default function Home() {
         region,
         coins: 1000,
         avatar_id: "default-manager",
+        referred_by: inviter?.id ?? null,
       })
-      .select("id, coins")
+      .select("id, nickname, country, region, coins, last_login_reward_date")
       .single();
 
     if (insertError) {
@@ -200,8 +245,33 @@ export default function Home() {
 
     localStorage.setItem("player_id", createdPlayer.id);
     setCoinBalance(createdPlayer.coins);
-    setNotice("创建成功");
+
+    if (inviter && inviter.id !== createdPlayer.id) {
+      const inviterCoins = (inviter.coins ?? 1000) + 1000;
+      await supabase.from("players").update({ coins: inviterCoins }).eq("id", inviter.id);
+      await supabase.from("coin_transactions").insert({
+        player_id: inviter.id,
+        amount: 1000,
+        type: "referral_bonus",
+        related_player_id: createdPlayer.id,
+      });
+      setNotice("注册成功！你获得 1000 金币，邀请人获得 1000 金币");
+    } else if (inviteCode.trim()) {
+      setNotice("创建成功，邀请码无效，已跳过邀请奖励");
+    } else {
+      setNotice("注册成功！你获得 1000 金币");
+    }
+
+    setCurrentPlayer(createdPlayer);
     router.push("/predict");
+  }
+
+  function switchAccount() {
+    localStorage.removeItem("player_id");
+    setCurrentPlayer(null);
+    setCoinBalance(null);
+    setNotice("");
+    setError("");
   }
 
   return (
@@ -239,12 +309,49 @@ export default function Home() {
           </p>
         </div>
 
-        {referrerId ? (
+        {referrerId && !currentPlayer ? (
           <p className="mt-5 rounded-xl border border-[#f6c84c]/50 bg-white px-4 py-3 text-sm font-bold text-[#071b3a] shadow-sm">
             你是通过好友邀请进入的，创建玩家后即可参与预测。
           </p>
         ) : null}
 
+        {currentPlayer ? (
+          <section className="wc-card mt-5 space-y-4 p-5">
+            <p className="wc-kicker">Your Fan Card</p>
+            <h2 className="text-2xl font-black text-[#071b3a]">
+              {currentPlayer.nickname}
+            </h2>
+            <div className="rounded-2xl bg-[#f6f1e7] p-4 text-sm font-black text-[#071b3a]">
+              <p className="flex items-center gap-2">
+                主队：<CountryDisplay team={currentPlayer.country} />
+              </p>
+              <p className="mt-2">地区：{currentPlayer.region}</p>
+              <p className="mt-2">金币余额：{currentPlayer.coins}</p>
+              <p className="mt-2">
+                今日奖励状态：{rewardStatus || "今日已检查"}
+              </p>
+            </div>
+            <Link href="/predict" className="wc-button w-full">
+              预测比赛
+            </Link>
+            <Link href="/profile" className="wc-button-secondary w-full">
+              我的战绩
+            </Link>
+            <Link href="/leaderboard" className="wc-button-secondary w-full">
+              球王榜
+            </Link>
+            <Link href="/bracket" className="wc-button-secondary w-full">
+              世界杯晋级之路
+            </Link>
+            <button
+              type="button"
+              onClick={switchAccount}
+              className="h-11 w-full rounded-xl border border-[#071b3a]/15 bg-white px-4 text-sm font-black text-[#071b3a]"
+            >
+              切换账号 / 重新登录
+            </button>
+          </section>
+        ) : (
         <form
           onSubmit={handleSubmit}
           className="wc-card mt-5 space-y-5 p-5"
@@ -255,6 +362,9 @@ export default function Home() {
             <h2 className="mt-1 text-2xl font-black text-[#071b3a]">
               领取你的球迷入场卡
             </h2>
+            <p className="mt-2 rounded-xl bg-[#f6c84c] px-3 py-2 text-sm font-black text-[#071b3a]">
+              注册即送 1000 金币
+            </p>
             {coinBalance !== null ? (
               <p className="mt-2 inline-flex rounded-full bg-[#f6c84c] px-3 py-1 text-sm font-black text-[#071b3a]">
                 当前金币：{coinBalance}
@@ -305,6 +415,16 @@ export default function Home() {
             </select>
           </label>
 
+          <label className="block">
+            <span className="wc-label">邀请码（选填）</span>
+            <input
+              value={inviteCode}
+              onChange={(event) => setInviteCode(event.target.value)}
+              className="wc-input mt-2"
+              placeholder="可粘贴好友分享链接中的 ref"
+            />
+          </label>
+
           {error ? (
             <p className="rounded-md bg-[#fde8e8] px-3 py-2 text-sm text-[#9b1c1c]">
               {error}
@@ -346,6 +466,7 @@ export default function Home() {
             世界杯晋级之路
           </Link>
         </form>
+        )}
 
         <div className="mt-8 text-center text-sm font-bold text-[#627d98]">
           <p>官网：</p>

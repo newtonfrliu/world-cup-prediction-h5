@@ -10,6 +10,7 @@ export type Database = {
           coins: number;
           last_login_reward_date: string | null;
           avatar_id: string | null;
+          referred_by: string | null;
           created_at: string | null;
         };
         Insert: {
@@ -20,6 +21,7 @@ export type Database = {
           coins?: number;
           last_login_reward_date?: string | null;
           avatar_id?: string | null;
+          referred_by?: string | null;
           created_at?: string | null;
         };
         Update: {
@@ -30,6 +32,7 @@ export type Database = {
           coins?: number;
           last_login_reward_date?: string | null;
           avatar_id?: string | null;
+          referred_by?: string | null;
           created_at?: string | null;
         };
         Relationships: [];
@@ -88,6 +91,8 @@ export type Database = {
           odds_at_prediction: number;
           stake: number;
           payout: number;
+          status: string | null;
+          settled_at: string | null;
           points: number | null;
           created_at: string | null;
         };
@@ -99,6 +104,8 @@ export type Database = {
           odds_at_prediction: number;
           stake?: number;
           payout?: number;
+          status?: string | null;
+          settled_at?: string | null;
           points?: number | null;
           created_at?: string | null;
         };
@@ -110,6 +117,8 @@ export type Database = {
           odds_at_prediction?: number;
           stake?: number;
           payout?: number;
+          status?: string | null;
+          settled_at?: string | null;
           points?: number | null;
           created_at?: string | null;
         };
@@ -130,6 +139,33 @@ export type Database = {
           key?: string;
           value?: string;
           updated_at?: string | null;
+        };
+        Relationships: [];
+      };
+      coin_transactions: {
+        Row: {
+          id: string;
+          player_id: string;
+          amount: number;
+          type: string;
+          related_player_id: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          player_id: string;
+          amount: number;
+          type: string;
+          related_player_id?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          player_id?: string;
+          amount?: number;
+          type?: string;
+          related_player_id?: string | null;
+          created_at?: string | null;
         };
         Relationships: [];
       };
