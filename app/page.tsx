@@ -143,6 +143,9 @@ export default function Home() {
             <br />
             大乱斗
           </h1>
+          <p className="mt-3 inline-flex rounded-full border border-[#f6c84c]/50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
+            世界杯收藏竞猜游戏
+          </p>
           <p className="mt-4 text-base font-bold leading-7 text-[#f6c84c]">
             预测世界杯 / 挑战好友 / 争夺全球第一
           </p>
@@ -222,7 +225,7 @@ export default function Home() {
             disabled={isNicknameEmpty || isSubmitting}
             className="wc-button w-full"
           >
-            {isSubmitting ? "提交中..." : "开始预测"}
+            {isSubmitting ? "提交中..." : "领取我的球迷卡"}
           </button>
 
           <Link

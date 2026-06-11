@@ -198,16 +198,26 @@ export default function ProfilePage() {
   }
 
   async function savePoster() {
-    if (!playerId || !posterRef.current) {
+    const posterNode = posterRef.current;
+
+    if (!playerId || !posterNode) {
       setPosterMessage("请长按海报截图保存");
       return;
     }
 
     try {
-      const dataUrl = await toPng(posterRef.current, {
+      const exportWidth = posterNode.scrollWidth;
+      const exportHeight = posterNode.scrollHeight;
+      const dataUrl = await toPng(posterNode, {
         cacheBust: true,
         pixelRatio: 2,
         backgroundColor: "#102a43",
+        width: exportWidth,
+        height: exportHeight,
+        style: {
+          width: `${exportWidth}px`,
+          height: `${exportHeight}px`,
+        },
       });
       setPreviewImageUrl(dataUrl);
       setPosterMessage("");
@@ -285,79 +295,106 @@ export default function ProfilePage() {
         ) : null}
 
         <div className="space-y-4">
-          <article className="wc-dark-card p-5">
-            <p className="text-sm font-black text-[#25c7b7]">MY PLAYER CARD</p>
-            <h2 className="mt-2 text-3xl font-black text-white">
-              {player?.nickname ?? "-"}
-            </h2>
-            <dl className="mt-4 space-y-3 text-sm">
-              <div className="flex justify-between gap-4">
-                <dt className="text-[#f6c84c]">昵称</dt>
-                <dd className="font-bold text-white">
-                  {player?.nickname ?? "-"}
-                </dd>
+          <article
+            className="overflow-hidden rounded-2xl border border-[#f6c84c]/50 bg-[#071b3a] text-white shadow-[0_18px_44px_rgba(7,27,58,0.28)]"
+            style={{
+              borderTopColor: playerCountry?.primaryColor ?? "#f6c84c",
+              borderTopWidth: 8,
+            }}
+          >
+            <div className="p-5">
+              <p className="text-sm font-black uppercase tracking-[0.16em] text-[#25c7b7]">
+                Player Card
+              </p>
+              <div className="mt-4 flex items-center gap-4">
+                {playerCountry ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={playerCountry.flag}
+                    alt={`${playerCountry.nameZh} flag`}
+                    className="h-16 w-24 rounded-xl border-2 border-white/70 object-cover shadow-lg"
+                  />
+                ) : null}
+                <div className="min-w-0">
+                  <h2 className="truncate text-3xl font-black">
+                    {player?.nickname ?? "-"}
+                  </h2>
+                  <p className="mt-1 text-sm font-bold text-[#f6c84c]">
+                    {player ? <CountryDisplay team={player.country} /> : "-"}
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between gap-4">
-                <dt className="text-[#f6c84c]">主队国家</dt>
-                <dd className="font-bold text-white">
-                  {player ? <CountryDisplay team={player.country} /> : "-"}
-                </dd>
+              <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+                <div className="rounded-xl bg-white/10 p-3">
+                  <p className="text-[11px] font-black text-[#25c7b7]">
+                    地区
+                  </p>
+                  <p className="mt-1 truncate text-sm font-black">
+                    {player?.region ?? "-"}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
+                  <p className="text-[11px] font-black">积分</p>
+                  <p className="mt-1 text-xl font-black">
+                    {Math.round(stats.totalPoints)}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/10 p-3">
+                  <p className="text-[11px] font-black text-[#25c7b7]">
+                    全球
+                  </p>
+                  <p className="mt-1 text-sm font-black">
+                    {formatRank(stats.globalRank)}
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between gap-4">
-                <dt className="text-[#f6c84c]">地区</dt>
-                <dd className="font-bold text-white">
-                  {player?.region ?? "-"}
-                </dd>
-              </div>
-            </dl>
+            </div>
           </article>
 
           <article className="wc-card p-4">
             <h2 className="text-lg font-black text-[#102a43]">战绩数据</h2>
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
-                <p className="text-xs font-semibold text-[#627d98]">总积分</p>
-                <p className="mt-1 text-2xl font-black text-[#102a43]">
-                  {Math.round(stats.totalPoints)}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-black uppercase">Total Points</p>
+                  <p className="text-2xl font-black">
+                    {Math.round(stats.totalPoints)}
+                  </p>
+                </div>
               </div>
-              <div className="rounded-xl bg-[#f6f1e7] p-3">
-                <p className="text-xs font-semibold text-[#627d98]">
-                  全球排名
-                </p>
-                <p className="mt-1 text-lg font-black text-[#102a43]">
-                  {formatRank(stats.globalRank)}
-                </p>
+              {[
+                ["全球排名", formatRank(stats.globalRank)],
+                ["地区排名", formatRank(stats.regionRank)],
+                ["已预测场数", `${stats.predictionCount}`],
+                ["命中场数", `${stats.hitCount}`],
+                ["命中率", `${(stats.hitRate * 100).toFixed(0)}%`],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="rounded-xl border border-[#071b3a]/10 bg-[#f6f1e7] p-3"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-xs font-black text-[#627d98]">
+                      {label}
+                    </p>
+                    <p className="text-lg font-black text-[#071b3a]">
+                      {value}
+                    </p>
+                  </div>
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
+                    <div
+                      className="h-full rounded-full bg-[#e63535]"
+                      style={{
+                        width:
+                          label === "命中率"
+                            ? `${Math.min(stats.hitRate * 100, 100)}%`
+                            : "68%",
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
               </div>
-              <div className="rounded-xl bg-[#f6f1e7] p-3">
-                <p className="text-xs font-semibold text-[#627d98]">
-                  地区排名
-                </p>
-                <p className="mt-1 text-lg font-black text-[#102a43]">
-                  {formatRank(stats.regionRank)}
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#f6f1e7] p-3">
-                <p className="text-xs font-semibold text-[#627d98]">
-                  已预测场数
-                </p>
-                <p className="mt-1 text-2xl font-black text-[#102a43]">
-                  {stats.predictionCount}
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#f6f1e7] p-3">
-                <p className="text-xs font-semibold text-[#627d98]">命中场数</p>
-                <p className="mt-1 text-2xl font-black text-[#102a43]">
-                  {stats.hitCount}
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#f6f1e7] p-3">
-                <p className="text-xs font-semibold text-[#627d98]">命中率</p>
-                <p className="mt-1 text-2xl font-black text-[#102a43]">
-                  {(stats.hitRate * 100).toFixed(0)}%
-                </p>
-              </div>
-            </div>
           </article>
 
           <article className="wc-card p-4">
@@ -371,53 +408,55 @@ export default function ProfilePage() {
             <div
               id="profile-poster"
               ref={posterRef}
-              className="mx-auto mt-4 flex h-[640px] w-[360px] max-w-full flex-col overflow-hidden rounded-lg bg-[#102a43] p-5 text-white shadow-lg print:shadow-none"
+              className="mx-auto mt-4 w-[360px] max-w-full rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-lg print:shadow-none"
             >
-              <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4 text-center">
-                <p className="text-sm font-black text-[#d64545]">
-                  2026足球世界杯
+              <div className="rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center shadow-inner">
+                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
+                  WORLD CUP CHALLENGE
                 </p>
-                <h3 className="mt-2 text-4xl font-black leading-tight text-white">
+                <p className="mt-2 text-sm font-black text-[#e63535]">
+                  2026 足球世界杯
+                </p>
+                <h3 className="mt-1 text-4xl font-black leading-tight text-white">
                   美加墨大乱斗
                 </h3>
-                <p className="mt-3 text-base font-bold leading-6 text-[#f7c948]">
-                  预测世界杯
-                  <br />
-                  挑战好友排行榜
-                </p>
               </div>
 
-              <div className="mt-4 rounded-lg bg-white p-4 text-center text-[#102a43]">
-                <p className="text-xs font-black text-[#d64545]">我的身份</p>
+              <div className="mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-center text-[#071b3a]">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
+                  Player Identity Card
+                </p>
                 {playerCountry ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={playerCountry.flag}
                     alt={`${playerCountry.nameZh} flag`}
-                    className="mx-auto mt-2 h-8 w-11 rounded-md object-cover shadow-sm"
+                    className="mx-auto mt-3 h-14 w-20 rounded-xl border border-[#071b3a]/10 object-cover shadow-md"
                   />
                 ) : null}
-                <p className="mt-2 truncate text-2xl font-black">
-                  {player
-                    ? `${getTeamDisplayName(player.country)}·${player.nickname}`
-                    : "-"}
+                <p className="mt-3 truncate text-3xl font-black">
+                  {player?.nickname ?? "-"}
                 </p>
-                <p className="mt-2 text-sm font-bold text-[#627d98]">
+                <p className="mt-1 text-sm font-black text-[#627d98]">
+                  {player ? getTeamDisplayName(player.country) : "-"} ·{" "}
+                  {player?.region ?? "-"}
+                </p>
+                <p className="mt-4 text-xs font-black text-[#627d98]">
                   邀请码：
                 </p>
-                <p className="text-2xl font-black tracking-[0.12em] text-[#d64545]">
+                <p className="text-2xl font-black tracking-[0.14em] text-[#e63535]">
                   {playerId ? getInviteCode(playerId) : "------"}
                 </p>
               </div>
 
               <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-                <div className="rounded-lg bg-[#f7c948] p-2 text-[#102a43]">
+                <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
                   <p className="text-[11px] font-bold">总积分</p>
                   <p className="mt-1 text-xl font-black">
                     {Math.round(stats.totalPoints)}
                   </p>
                 </div>
-                <div className="rounded-lg bg-white p-2 text-[#102a43]">
+                <div className="rounded-xl bg-white p-3 text-[#071b3a]">
                   <p className="text-[11px] font-bold text-[#627d98]">
                     全球排名
                   </p>
@@ -425,7 +464,7 @@ export default function ProfilePage() {
                     {formatRank(stats.globalRank)}
                   </p>
                 </div>
-                <div className="rounded-lg bg-white p-2 text-[#102a43]">
+                <div className="rounded-xl bg-white p-3 text-[#071b3a]">
                   <p className="text-[11px] font-bold text-[#627d98]">
                     地区排名
                   </p>
@@ -435,24 +474,26 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="mt-3 rounded-lg border border-white/15 bg-white/10 p-3 text-center">
-                <p className="text-sm font-bold text-[#f7c948]">
-                  {championPrediction ? "🏆 我的冠军预测：" : "🏆 我的冠军预测："}
+              <div className="mt-3 rounded-2xl border border-[#f6c84c]/60 bg-white/10 p-4 text-center">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#f6c84c]">
+                  Champion Pick
                 </p>
-                <p className="mt-1 text-2xl font-black">
-                  {championPrediction
-                    ? getTeamDisplayName(championPrediction)
-                    : "待锁定"}
-                </p>
+                <div className="mt-2 flex items-center justify-center text-2xl font-black">
+                  {championPrediction ? (
+                    <CountryDisplay team={championPrediction} />
+                  ) : (
+                    "待锁定"
+                  )}
+                </div>
               </div>
 
-              <div className="mt-auto rounded-lg bg-white p-4 text-center text-[#102a43]">
-                <div className="mx-auto inline-block rounded-xl bg-white p-2 shadow-sm">
+              <div className="mt-6 mb-12 rounded-2xl bg-white p-8 text-center text-[#071b3a]">
+                <div className="mx-auto inline-block rounded-2xl border border-[#071b3a]/10 bg-white p-3 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={shareLink ? buildQrCodeUrl(shareLink) : ""}
                   alt="邀请链接二维码"
-                  className="h-28 w-28 rounded-md bg-white"
+                  className="h-44 w-44 rounded-md bg-white"
                 />
                 </div>
                 <p className="mt-2 break-all text-[11px] font-semibold text-[#627d98]">
@@ -465,7 +506,7 @@ export default function ProfilePage() {
                   www.2026wc.fun
                 </p>
                 <p className="mt-1 text-sm font-black text-[#102a43]">
-                  扫码参与世界杯预测挑战
+                  扫码挑战我的世界杯预测
                 </p>
               </div>
             </div>
@@ -497,7 +538,7 @@ export default function ProfilePage() {
               </p>
             ) : null}
             <p className="mt-3 text-xs leading-5 text-[#627d98]">
-              第一版海报适合手机截图分享，后续可升级为一键保存图片。
+              点击保存海报后会生成图片预览，在微信里长按即可保存到相册。
             </p>
           </article>
         </div>

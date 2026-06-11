@@ -328,6 +328,9 @@ export default function PredictPage() {
                 <div className="bg-[#071b3a] p-4 text-white">
                   <div className="flex items-start justify-between gap-3">
                   <div>
+                    <p className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#25c7b7]">
+                      Match Card / {match.stage ?? "小组赛"}
+                    </p>
                     <h2 className="text-xl font-black">
                       <span className="flex flex-wrap items-center gap-2">
                         <CountryDisplay team={match.home_team} />

@@ -366,16 +366,26 @@ export default function BracketPage() {
   }
 
   async function saveBracketImage() {
-    if (!playerId || !bracketImageRef.current) {
+    const imageNode = bracketImageRef.current;
+
+    if (!playerId || !imageNode) {
       setSaveMessage("请长按晋级图截图保存");
       return;
     }
 
     try {
-      const dataUrl = await toPng(bracketImageRef.current, {
+      const exportWidth = imageNode.scrollWidth;
+      const exportHeight = imageNode.scrollHeight;
+      const dataUrl = await toPng(imageNode, {
         cacheBust: true,
         pixelRatio: 2,
         backgroundColor: "#102a43",
+        width: exportWidth,
+        height: exportHeight,
+        style: {
+          width: `${exportWidth}px`,
+          height: `${exportHeight}px`,
+        },
       });
       setPreviewImageUrl(dataUrl);
       setSaveMessage("");
@@ -407,18 +417,25 @@ export default function BracketPage() {
             return (
               <article
                 key={group}
-                className="wc-card p-4"
+                className="overflow-hidden rounded-2xl border border-[#071b3a]/12 bg-white shadow-[0_12px_30px_rgba(7,27,58,0.08)]"
               >
-                <h2 className="text-xl font-black text-[#102a43]">{group}组</h2>
-                <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-[#334e68]">
+                <div className="bg-[#071b3a] px-4 py-3">
+                  <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#25c7b7]">
+                    Album Group
+                  </p>
+                  <h2 className="mt-1 text-xl font-black text-white">
+                    {group}组收藏页
+                  </h2>
+                </div>
+                <div className="grid grid-cols-2 gap-2 p-4 text-sm text-[#334e68]">
                   {groupTeams[group].map((team) => (
-                    <div key={team} className="rounded-xl bg-[#f6f1e7] px-3 py-2 font-bold">
+                    <div key={team} className="rounded-xl border border-[#071b3a]/10 bg-[#f6f1e7] px-3 py-2 font-black">
                       <CountryDisplay team={team} />
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-4 space-y-3">
+                <div className="space-y-3 px-4 pb-4">
                   {[
                     ["first", "第1名"],
                     ["second", "第2名"],
@@ -678,19 +695,22 @@ export default function BracketPage() {
 
         <section
           ref={bracketImageRef}
-          className="mt-5 rounded-lg bg-[#102a43] p-5 text-white shadow-sm"
+          className="mt-5 rounded-[22px] border-4 border-[#f6c84c] bg-[#071b3a] p-5 text-white shadow-sm"
         >
-          <div className="rounded-lg border border-[#f7c948]/40 bg-[#0b1f33] p-4 text-center">
-            <p className="text-sm font-black text-[#d64545]">2026足球世界杯</p>
-            <h2 className="mt-2 text-3xl font-black">美加墨大乱斗</h2>
-            <p className="mt-2 text-sm font-bold text-[#f7c948]">
+          <div className="rounded-2xl border border-[#f6c84c]/50 bg-[#0b254a] p-4 text-center">
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#25c7b7]">
+              Bracket Album
+            </p>
+            <p className="mt-2 text-sm font-black text-[#e63535]">2026足球世界杯</p>
+            <h2 className="mt-1 text-3xl font-black">美加墨大乱斗</h2>
+            <p className="mt-2 text-sm font-bold text-[#f6c84c]">
               我的世界杯晋级之路
             </p>
           </div>
 
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <div className="rounded-lg bg-white p-4 text-[#102a43]">
-              <h3 className="text-base font-black text-[#d64545]">上半区路线</h3>
+            <div className="rounded-2xl bg-white p-4 text-[#071b3a]">
+              <h3 className="text-base font-black text-[#e63535]">上半区路线</h3>
               <div className="mt-3 space-y-2 text-sm font-semibold">
                 {upperBracket.map((round) => (
                   <p key={`upper-${round.name}`}>
@@ -706,8 +726,8 @@ export default function BracketPage() {
                 ))}
               </div>
             </div>
-            <div className="rounded-lg bg-white p-4 text-[#102a43]">
-              <h3 className="text-base font-black text-[#d64545]">下半区路线</h3>
+            <div className="rounded-2xl bg-white p-4 text-[#071b3a]">
+              <h3 className="text-base font-black text-[#e63535]">下半区路线</h3>
               <div className="mt-3 space-y-2 text-sm font-semibold">
                 {lowerBracket.map((round) => (
                   <p key={`lower-${round.name}`}>
@@ -725,8 +745,11 @@ export default function BracketPage() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-lg bg-white p-4 text-[#102a43]">
-            <h2 className="text-xl font-black text-[#102a43]">最终结果</h2>
+          <div className="mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-[#071b3a]">
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
+              Champion Card
+            </p>
+            <h2 className="mt-1 text-xl font-black text-[#071b3a]">最终结果</h2>
             <div className="mt-4 space-y-2 text-sm font-bold text-[#334e68]">
               <p className="flex items-center gap-2">🏆 冠军：{champion ? <CountryDisplay team={champion.team} /> : "-"}</p>
               <p className="flex items-center gap-2">🥈 亚军：{runnerUp ? <CountryDisplay team={runnerUp.team} /> : "-"}</p>
@@ -738,7 +761,7 @@ export default function BracketPage() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-lg bg-white p-4 text-center text-[#102a43]">
+          <div className="mt-4 rounded-2xl bg-white p-8 text-center text-[#071b3a]">
             {shareLink ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
