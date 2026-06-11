@@ -750,13 +750,14 @@ export default function PredictPage() {
             const selectedPredictionValue = selectedPrediction?.prediction;
             const hasStarted = isMatchStarted(match);
             const isFinished = isMatchFinished(match);
-            const isFrozen = hasStarted || isFinished;
+            const isStatusClosed = (match.status ?? "open") !== "open";
+            const isBettingClosed = isStatusClosed || hasStarted;
 
             return (
               <article
                 key={match.id}
                 className={`overflow-hidden rounded-2xl border border-[#071b3a]/15 bg-white shadow-[0_14px_30px_rgba(7,27,58,0.1)] ${
-                  isFrozen ? "opacity-70 grayscale" : ""
+                  isBettingClosed ? "opacity-85" : ""
                 }`}
               >
                 <div className="bg-[#071b3a] p-4 text-white">
@@ -793,23 +794,23 @@ export default function PredictPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 p-4 text-center text-sm">
-                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
+                <div className="grid grid-cols-3 gap-3 p-4 text-center text-sm">
+                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">主胜</p>
-                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_home}</p>
+                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_home}</p>
                   </div>
-                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
+                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">平局</p>
-                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_draw}</p>
+                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_draw}</p>
                   </div>
-                  <div className="rounded-xl bg-[#f6f1e7] px-2 py-3">
+                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
                     <p className="font-semibold text-[#334e68]">客胜</p>
-                    <p className="mt-1 text-2xl font-black text-[#071b3a]">{match.odds_away}</p>
+                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_away}</p>
                   </div>
                 </div>
 
-                {isFrozen ? (
-                  <div className="mx-4 mt-4 rounded-xl bg-[#e4e7eb] p-3 text-sm font-black text-[#334e68]">
+                {isBettingClosed ? (
+                  <div className="mx-4 mt-4 rounded-[14px] bg-[#edf1f5] px-4 py-[14px] text-sm font-black text-[#334e68]">
                     {isFinished ? (
                       <>
                         <p>赛果状态：已结算</p>
@@ -821,7 +822,12 @@ export default function PredictPage() {
                         </p>
                       </>
                     ) : (
-                      "比赛已开始，投注已冻结"
+                      <>
+                        <p className="text-base text-[#071b3a]">比赛已开始</p>
+                        <p className="mt-1 text-[#52606d]">
+                          投注已冻结，无法再下注
+                        </p>
+                      </>
                     )}
                   </div>
                 ) : null}
@@ -841,7 +847,7 @@ export default function PredictPage() {
                       )}{" "}
                       金币
                     </p>
-                    {!isFrozen ? (
+                    {!isBettingClosed ? (
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         <button
                           type="button"
@@ -864,45 +870,49 @@ export default function PredictPage() {
                   </div>
                 ) : null}
 
-                <div className="grid grid-cols-3 gap-2 px-4 pb-4">
-                  {predictionOptions.map((option) => {
-                    const isSelected = selectedPredictionValue === option.value;
-                    const hasNoCoins = (player?.coins ?? 0) <= 0 && !selectedPrediction;
-                    const buttonClass = isPredicted
-                      ? isSelected
-                        ? "ring-2 ring-[#071b3a]"
-                        : "bg-[#e4e7eb] text-[#829ab1]"
-                        : isFrozen || hasNoCoins
-                        ? "bg-[#e4e7eb] text-[#829ab1]"
-                        : "bg-[#e63535] text-white hover:bg-[#ba2525]";
+                {!isBettingClosed ? (
+                  <div className="grid grid-cols-3 gap-3 px-4 pb-4 pt-4">
+                    {predictionOptions.map((option) => {
+                      const isSelected = selectedPredictionValue === option.value;
+                      const hasNoCoins = (player?.coins ?? 0) <= 0 && !selectedPrediction;
+                      const buttonClass = isPredicted
+                        ? isSelected
+                          ? "ring-2 ring-[#071b3a]"
+                          : "bg-[#e4e7eb] text-[#829ab1]"
+                        : hasNoCoins
+                          ? "bg-[#e4e7eb] text-[#829ab1]"
+                          : "bg-[#e63535] text-white hover:bg-[#ba2525]";
 
-                    return (
-                      <button
-                        key={option.value}
-                        type="button"
-                        disabled={!playerId || isSubmitting || isFrozen || hasNoCoins}
-                        onClick={() => openBetPanel(match, option)}
-                        className={`h-11 rounded-xl px-2 text-sm font-black transition disabled:cursor-not-allowed ${buttonClass}`}
-                        style={
-                          isPredicted && isSelected
-                            ? {
-                                background: playerTheme.accent,
-                                color: selectedBetTextColor,
-                              }
-                            : undefined
-                        }
-                      >
-                        {isSubmitting
-                          ? "提交中"
-                          : isPredicted
-                            ? isSelected
-                              ? option.label
-                              : `改押${option.label}`
-                            : `押${option.label}`}
-                      </button>
-                    );
-                  })}
-                </div>
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          disabled={!playerId || isSubmitting || hasNoCoins}
+                          onClick={() => openBetPanel(match, option)}
+                          className={`min-h-11 rounded-xl px-2 py-2 text-sm font-black leading-tight transition disabled:cursor-not-allowed ${buttonClass}`}
+                          style={
+                            isPredicted && isSelected
+                              ? {
+                                  background: playerTheme.accent,
+                                  color: selectedBetTextColor,
+                                }
+                              : undefined
+                          }
+                        >
+                          {isSubmitting
+                            ? "提交中"
+                            : isPredicted
+                              ? isSelected
+                                ? option.label
+                                : `改押${option.label}`
+                              : `押${option.label}`}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="h-4" />
+                )}
               </article>
             );
           })}

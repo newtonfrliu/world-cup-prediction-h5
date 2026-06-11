@@ -72,7 +72,7 @@ const fallbackRules: Rule[] = [
   { matchNumber: 84, home: direct(1, "H"), away: direct(2, "J") },
   { matchNumber: 85, home: direct(1, "B"), away: third(["E", "F", "G", "I", "J"]) },
   { matchNumber: 86, home: direct(1, "J"), away: direct(2, "H") },
-  { matchNumber: 87, home: direct(1, "K"), away: third(["D", "E", "F", "I", "J"]) },
+  { matchNumber: 87, home: direct(1, "K"), away: third(["D", "E", "I", "J", "L"]) },
   { matchNumber: 88, home: direct(2, "D"), away: direct(2, "G") },
 ];
 
@@ -132,6 +132,82 @@ function parseOfficialRules(
   return parsed as Rule[];
 }
 
+function getThirdSlotId(ruleIndex: number, side: "home" | "away") {
+  return `${ruleIndex}-${side}`;
+}
+
+function assignThirdGroups(
+  rules: Rule[],
+  selectedBestThirdGroups: GroupLetter[],
+):
+  | { ok: true; assignments: Map<string, GroupLetter> }
+  | { ok: false; combination: string } {
+  const selectedGroups = Array.from(new Set(selectedBestThirdGroups)).sort();
+  const selectedSet = new Set<GroupLetter>(selectedGroups);
+  const slots = rules.flatMap((rule, ruleIndex) =>
+    (["home", "away"] as const).flatMap((side) => {
+      const slot = rule[side];
+
+      if (slot.type !== "third") {
+        return [];
+      }
+
+      return [
+        {
+          id: getThirdSlotId(ruleIndex, side),
+          candidates: slot.candidates.filter((group) => selectedSet.has(group)),
+        },
+      ];
+    }),
+  );
+
+  if (selectedGroups.length !== slots.length || slots.some((slot) => slot.candidates.length === 0)) {
+    return { ok: false, combination: selectedGroups.join("/") };
+  }
+
+  const orderedSlots = slots
+    .slice()
+    .sort(
+      (left, right) =>
+        left.candidates.length - right.candidates.length ||
+        left.id.localeCompare(right.id),
+    );
+  const usedGroups = new Set<GroupLetter>();
+  const assignments = new Map<string, GroupLetter>();
+
+  function search(slotIndex: number): boolean {
+    if (slotIndex === orderedSlots.length) {
+      return true;
+    }
+
+    const slot = orderedSlots[slotIndex];
+
+    for (const group of slot.candidates) {
+      if (usedGroups.has(group)) {
+        continue;
+      }
+
+      usedGroups.add(group);
+      assignments.set(slot.id, group);
+
+      if (search(slotIndex + 1)) {
+        return true;
+      }
+
+      usedGroups.delete(group);
+      assignments.delete(slot.id);
+    }
+
+    return false;
+  }
+
+  if (!search(0)) {
+    return { ok: false, combination: selectedGroups.join("/") };
+  }
+
+  return { ok: true, assignments };
+}
+
 export function generateOfficialRoundOf32({
   groupWinners,
   groupRunnersUp,
@@ -142,19 +218,28 @@ export function generateOfficialRoundOf32({
   | { ok: true; matches: BracketMatch[] }
   | { ok: false; error: string } {
   const rules = parseOfficialRules(officialPlaceholders) ?? fallbackRules;
-  const usedThirdGroups = new Set<GroupLetter>();
+  const thirdAssignment = assignThirdGroups(rules, selectedBestThirdGroups);
 
-  function resolveSlot(slot: Slot): QualifiedTeam | null {
+  if (!thirdAssignment.ok) {
+    return {
+      ok: false,
+      error: `当前最佳第三名组合（${thirdAssignment.combination || "未完整选择"}）无法生成对阵。请确认已选满 8 个最佳第三名；如果仍出现该提示，请截图反馈。`,
+    };
+  }
+  const thirdAssignments = thirdAssignment.assignments;
+
+  function resolveSlot(
+    slot: Slot,
+    ruleIndex: number,
+    side: "home" | "away",
+  ): QualifiedTeam | null {
     if (slot.type === "direct") {
       return slot.rank === 1
         ? groupWinners[slot.group] ?? null
         : groupRunnersUp[slot.group] ?? null;
     }
 
-    const pickedGroup = slot.candidates.find(
-      (group) =>
-        selectedBestThirdGroups.includes(group) && !usedThirdGroups.has(group),
-    );
+    const pickedGroup = thirdAssignments.get(getThirdSlotId(ruleIndex, side));
 
     if (!pickedGroup) {
       return null;
@@ -166,20 +251,22 @@ export function generateOfficialRoundOf32({
       return null;
     }
 
-    usedThirdGroups.add(pickedGroup);
     return team;
   }
 
   const matches: BracketMatch[] = [];
 
-  for (const rule of rules) {
-    const home = resolveSlot(rule.home);
-    const away = resolveSlot(rule.away);
+  for (const [ruleIndex, rule] of rules.entries()) {
+    const home = resolveSlot(rule.home, ruleIndex, "home");
+    const away = resolveSlot(rule.away, ruleIndex, "away");
 
     if (!home || !away) {
+      const combination = Array.from(new Set(selectedBestThirdGroups))
+        .sort()
+        .join("/");
       return {
         ok: false,
-        error: "当前最佳第三名组合暂无法生成官方对阵，请重新选择最佳第三名。",
+        error: `当前最佳第三名组合（${combination || "未完整选择"}）缺少已选择的小组第三名球队。请先完成 A-L 组第3名和 8 个最佳第三名选择。`,
       };
     }
 

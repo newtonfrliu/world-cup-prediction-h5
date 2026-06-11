@@ -524,10 +524,10 @@ export default function BracketPage() {
               >
                 <div className="bg-[#071b3a] px-4 py-3">
                   <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#d9e2ec]">
-                    Album Group
+                    GROUP {group}
                   </p>
                   <h2 className="mt-1 text-xl font-black text-white">
-                    {group}组收藏页
+                    {group}组排名预测
                   </h2>
                 </div>
                 <div className="grid grid-cols-2 gap-2 p-4 text-sm text-[#334e68]">
@@ -798,7 +798,7 @@ export default function BracketPage() {
             }}
           >
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-readable">
-              Bracket Album
+              World Cup Road
             </p>
             <p
               className="mt-2 text-sm font-black"
