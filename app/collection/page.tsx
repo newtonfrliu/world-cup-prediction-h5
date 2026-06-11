@@ -206,14 +206,33 @@ export default function CollectionPage() {
     }
 
     setPlayer(playerData);
+    console.log("PLAYER_COUNTRY", playerData.country);
 
     const canonicalTeamName = getCanonicalTeamName(playerData.country);
+    console.log("PLAYER_COUNTRY", player?.country);
+    console.log("CANONICAL_TEAM", canonicalTeamName);
+    console.log("PLAYER_CARD_QUERY_TEAM", canonicalTeamName);
+
+    const { count } = await supabase
+      .from("player_cards")
+      .select("*", { count: "exact", head: true });
+
+    console.log("PLAYER_CARD_TOTAL_COUNT", count);
+
+    const { data: sampleCards } = await supabase
+      .from("player_cards")
+      .select("team, player_name")
+      .limit(5);
+
+    console.log("PLAYER_CARD_SAMPLE", sampleCards);
 
     const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
       .select("*")
       .eq("team", canonicalTeamName)
       .order("shirt_number", { ascending: true });
+    console.log("CARDS_RETURNED", cardData?.length);
+    console.log("FIRST_CARD", cardData?.[0]);
 
     if (cardError) {
       console.error("collection player_cards query failed", {
@@ -251,6 +270,7 @@ export default function CollectionPage() {
 
   useEffect(() => {
     async function load() {
+      console.log("SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL);
       const storedPlayerId = localStorage.getItem("player_id");
       setPlayerId(storedPlayerId);
 
