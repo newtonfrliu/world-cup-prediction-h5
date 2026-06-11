@@ -4,9 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 
-import { AvatarFigure } from "@/components/AvatarFigure";
 import { CountryDisplay } from "@/components/CountryDisplay";
-import { getAvatar } from "@/lib/avatar";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getCountryByNameEn, getCountryTheme } from "@/lib/countries";
 import { getTeamDisplayName } from "@/lib/teamMeta";
@@ -38,6 +36,11 @@ type StoredBracketPrediction = {
 
 const officialSiteUrl = "https://www.2026wc.fun";
 
+type CollectionProgress = {
+  owned: number;
+  total: number;
+};
+
 function buildEmptyStats(): ProfileStats {
   return {
     totalPoints: 0,
@@ -68,6 +71,33 @@ function getInviteCode(playerId: string) {
   return playerId.replace(/-/g, "").slice(0, 6).toUpperCase();
 }
 
+function getErrorMessage(error: unknown) {
+  if (
+    error &&
+    typeof error === "object" &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return typeof error === "string" ? error : JSON.stringify(error);
+}
+
+function isMissingPredictionStatusError(error: unknown) {
+  const message = getErrorMessage(error).toLowerCase();
+
+  return (
+    message.includes("'status' column of 'predictions'") ||
+    message.includes("predictions.status") ||
+    message.includes("schema cache")
+  );
+}
+
 export default function ProfilePage() {
   const posterRef = useRef<HTMLDivElement>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
@@ -79,12 +109,13 @@ export default function ProfilePage() {
   const [posterMessage, setPosterMessage] = useState("");
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [rewardStatus, setRewardStatus] = useState("");
+  const [collectionProgress, setCollectionProgress] =
+    useState<CollectionProgress>({ owned: 0, total: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
   const playerCountry = player ? getCountryByNameEn(player.country) : null;
   const playerTheme = getCountryTheme(player?.country);
-  const playerAvatar = getAvatar(player?.avatar_id);
 
   useEffect(() => {
     async function awardDailyLoginReward(
@@ -128,11 +159,12 @@ export default function ProfilePage() {
         setLoading(false);
         return;
       }
+      const currentPlayerId = storedPlayerId;
 
-      setShareLink(buildShareLink(storedPlayerId));
+      setShareLink(buildShareLink(currentPlayerId));
 
       const storedBracket = localStorage.getItem(
-        `bracket_prediction_${storedPlayerId}`,
+        `bracket_prediction_${currentPlayerId}`,
       );
 
       if (storedBracket) {
@@ -158,7 +190,7 @@ export default function ProfilePage() {
         .select(
           "id, nickname, country, region, coins, last_login_reward_date, avatar_id, created_at",
         )
-        .eq("id", storedPlayerId)
+        .eq("id", currentPlayerId)
         .single();
 
       if (playerError) {
@@ -170,19 +202,75 @@ export default function ProfilePage() {
       const currentPlayer = await awardDailyLoginReward(playerData as Player);
       setPlayer(currentPlayer);
 
-      const [
-        { data: leaderboardData, error: leaderboardError },
-        { data: predictionData, error: predictionError },
-      ] = await Promise.all([
-        supabase
-          .from("leaderboard")
-          .select("nickname, country, region, total_points")
-          .order("total_points", { ascending: false }),
-        supabase
+      async function loadCollectionProgress() {
+        const { data: cardData, error: cardError } = await supabase
+          .from("player_cards")
+          .select("id")
+          .eq("team", currentPlayer.country);
+
+        if (cardError) {
+          return;
+        }
+
+        const cardIds = (cardData ?? []).map((card) => card.id);
+
+        if (cardIds.length === 0) {
+          setCollectionProgress({ owned: 0, total: 0 });
+          return;
+        }
+
+        const { data: userCardData, error: userCardError } = await supabase
+          .from("user_cards")
+          .select("card_id")
+          .eq("player_id", currentPlayerId)
+          .in("card_id", cardIds);
+
+        if (userCardError) {
+          return;
+        }
+
+        setCollectionProgress({
+          owned: userCardData?.length ?? 0,
+          total: cardIds.length,
+        });
+      }
+
+      loadCollectionProgress();
+
+      const { data: leaderboardData, error: leaderboardError } = await supabase
+        .from("leaderboard")
+        .select("nickname, country, region, total_points")
+        .order("total_points", { ascending: false });
+      let predictionData: Prediction[] | null = null;
+      const { data: predictionDataWithStatus, error: predictionError } =
+        await supabase
           .from("predictions")
           .select("id, points, stake, payout, status")
-          .eq("player_id", storedPlayerId),
-      ]);
+          .eq("player_id", currentPlayerId);
+
+      if (predictionError && isMissingPredictionStatusError(predictionError)) {
+        console.error("profile predictions fallback without status", {
+          playerId: currentPlayerId,
+          error: predictionError,
+        });
+        const { data: fallbackPredictionData, error: fallbackPredictionError } =
+          await supabase
+            .from("predictions")
+            .select("id, points, stake, payout")
+            .eq("player_id", currentPlayerId);
+
+        if (fallbackPredictionError) {
+          setError(fallbackPredictionError.message);
+          setLoading(false);
+          return;
+        }
+
+        predictionData = ((fallbackPredictionData ?? []) as Prediction[]).map(
+          (prediction) => ({ ...prediction, status: "active" }),
+        );
+      } else {
+        predictionData = predictionDataWithStatus as Prediction[] | null;
+      }
 
       if (leaderboardError) {
         setError(leaderboardError.message);
@@ -190,7 +278,7 @@ export default function ProfilePage() {
         return;
       }
 
-      if (predictionError) {
+      if (predictionError && !isMissingPredictionStatusError(predictionError)) {
         setError(predictionError.message);
         setLoading(false);
         return;
@@ -335,9 +423,7 @@ export default function ProfilePage() {
       <section className="wc-shell">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="wc-kicker">
-              Player Card
-            </p>
+            <p className="wc-kicker">Team Album</p>
             <h1 className="wc-title mt-2">
               我的战绩
             </h1>
@@ -368,20 +454,15 @@ export default function ProfilePage() {
           >
             <div className="p-5">
               <p className="text-sm font-black uppercase tracking-[0.16em] text-[#25c7b7]">
-                Player Card
+                National Team Album
               </p>
               <div className="mt-4 flex items-center gap-4">
-                <AvatarFigure
-                  avatarId={player?.avatar_id}
-                  theme={playerTheme}
-                  className="h-28 w-24 shrink-0"
-                />
                 {playerCountry ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={playerCountry.flag}
                     alt={`${playerCountry.nameZh} flag`}
-                    className="h-16 w-24 rounded-xl border-2 border-white/70 object-cover shadow-lg"
+                    className="h-24 w-36 rounded-2xl border-2 border-white/70 object-cover shadow-lg"
                   />
                 ) : null}
                 <div className="min-w-0">
@@ -390,6 +471,10 @@ export default function ProfilePage() {
                   </h2>
                   <p className="mt-1 text-sm font-bold text-[#f6c84c]">
                     {player ? <CountryDisplay team={player.country} /> : "-"}
+                  </p>
+                  <p className="mt-2 text-sm font-black text-white">
+                    收藏进度 {collectionProgress.owned} /{" "}
+                    {collectionProgress.total}
                   </p>
                 </div>
               </div>
@@ -429,6 +514,24 @@ export default function ProfilePage() {
           </article>
 
           <article className="wc-card p-4">
+            <h2 className="text-lg font-black text-[#071b3a]">
+              我的国家队卡册
+            </h2>
+            <div className="mt-3 rounded-2xl bg-[#f6f1e7] p-4 text-sm font-black text-[#071b3a]">
+              <p className="flex items-center gap-2">
+                主队：{player ? <CountryDisplay team={player.country} /> : "-"}
+              </p>
+              <p className="mt-2">
+                已收集 {collectionProgress.owned} / {collectionProgress.total}
+              </p>
+              <p className="mt-2">金币余额：{player?.coins ?? 0}</p>
+            </div>
+            <Link href="/collection" className="wc-button mt-4">
+              进入卡册
+            </Link>
+          </article>
+
+          <article className="wc-card p-4">
             <h2 className="text-lg font-black text-[#102a43]">战绩数据</h2>
             <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
@@ -449,7 +552,10 @@ export default function ProfilePage() {
                 ["当前有效下注", `${stats.activeStake} 金币`],
                 ["总返还", `${stats.totalPayout} 金币`],
                 ["今日登录奖励", rewardStatus || "今日已检查"],
-                ["当前 Avatar", playerAvatar.name],
+                [
+                  "收藏进度",
+                  `${collectionProgress.owned} / ${collectionProgress.total}`,
+                ],
                 ["当前主队主题", playerCountry?.nameZh ?? "世界杯默认"],
               ].map(([label, value]) => (
                 <div
@@ -519,19 +625,14 @@ export default function ProfilePage() {
 
               <div className="relative mt-4 rounded-2xl border-2 border-[#f6c84c] bg-white p-4 text-center text-[#071b3a]">
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
-                  Player Identity Card
+                  Team Album Card
                 </p>
-                <AvatarFigure
-                  avatarId={player?.avatar_id}
-                  theme={playerTheme}
-                  className="mx-auto mt-3 h-28 w-24 bg-[#071b3a]"
-                />
                 {playerCountry ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={playerCountry.flag}
                     alt={`${playerCountry.nameZh} flag`}
-                    className="mx-auto mt-3 h-14 w-20 rounded-xl border border-[#071b3a]/10 object-cover shadow-md"
+                    className="mx-auto mt-3 h-20 w-32 rounded-xl border border-[#071b3a]/10 object-cover shadow-md"
                   />
                 ) : null}
                 <p className="mt-3 truncate text-3xl font-black">
@@ -540,6 +641,10 @@ export default function ProfilePage() {
                 <p className="mt-1 text-sm font-black text-[#627d98]">
                   {player ? getTeamDisplayName(player.country) : "-"} ·{" "}
                   {player?.region ?? "-"}
+                </p>
+                <p className="mt-3 text-sm font-black text-[#071b3a]">
+                  收藏进度：已收集 {collectionProgress.owned} /{" "}
+                  {collectionProgress.total} 张主队球星卡
                 </p>
                 <p className="mt-4 text-xs font-black text-[#627d98]">
                   邀请码：

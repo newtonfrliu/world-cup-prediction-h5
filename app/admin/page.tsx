@@ -132,6 +132,17 @@ function formatErrorMessage(error: unknown) {
   return JSON.stringify(error);
 }
 
+function isMissingPredictionStatusError(error: unknown) {
+  const message = formatErrorMessage(error).toLowerCase();
+
+  return (
+    message.includes("'status' column of 'predictions'") ||
+    message.includes("predictions.status") ||
+    message.includes("settled_at") ||
+    message.includes("schema cache")
+  );
+}
+
 function formFromMatch(match: Match): MatchForm {
   return {
     home_team: match.home_team,
@@ -452,7 +463,8 @@ export default function AdminPage() {
       return;
     }
 
-    const { data: predictions, error: predictionLoadError } = await supabase
+    let hasSettlementColumns = true;
+    let { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
       .select(
         "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
@@ -461,13 +473,36 @@ export default function AdminPage() {
       .or("status.is.null,status.eq.active");
 
     if (predictionLoadError) {
-      setError(predictionLoadError.message);
-      setSettlingMatchId(null);
-      return;
+      if (!isMissingPredictionStatusError(predictionLoadError)) {
+        setError(predictionLoadError.message);
+        setSettlingMatchId(null);
+        return;
+      }
+
+      hasSettlementColumns = false;
+      console.error("admin settle fallback without prediction status", {
+        matchId: match.id,
+        error: predictionLoadError,
+      });
+      const fallbackResult = await supabase
+        .from("predictions")
+        .select(
+          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+        )
+        .eq("match_id", match.id);
+
+      predictions = fallbackResult.data as typeof predictions;
+      predictionLoadError = fallbackResult.error;
+
+      if (predictionLoadError) {
+        setError(predictionLoadError.message);
+        setSettlingMatchId(null);
+        return;
+      }
     }
 
     for (const prediction of (predictions ?? []) as Prediction[]) {
-      if (prediction.settled_at) {
+      if (hasSettlementColumns && prediction.settled_at) {
         continue;
       }
 
@@ -481,7 +516,11 @@ export default function AdminPage() {
 
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
-        .update({ points, payout, settled_at: new Date().toISOString() })
+        .update(
+          hasSettlementColumns
+            ? { points, payout, settled_at: new Date().toISOString() }
+            : { points, payout },
+        )
         .eq("id", prediction.id);
 
       if (predictionUpdateError) {

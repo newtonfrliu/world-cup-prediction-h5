@@ -85,6 +85,38 @@ function formatOddsSyncTime(value: string) {
   return `${getPart("year")}-${getPart("month")}-${getPart("day")} ${getPart("hour")}:${getPart("minute")}`;
 }
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (
+    error &&
+    typeof error === "object" &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  return JSON.stringify(error);
+}
+
+function isMissingPredictionStatusError(error: unknown) {
+  const message = getErrorMessage(error).toLowerCase();
+
+  return (
+    message.includes("'status' column of 'predictions'") ||
+    message.includes("predictions.status") ||
+    message.includes("status column") ||
+    message.includes("schema cache")
+  );
+}
+
 export default function PredictPage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [predictedMatchIds, setPredictedMatchIds] = useState<Set<string>>(
@@ -108,6 +140,8 @@ export default function PredictPage() {
     null,
   );
   const [error, setError] = useState("");
+  const [betError, setBetError] = useState("");
+  const [toast, setToast] = useState("");
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -124,22 +158,110 @@ export default function PredictPage() {
     (player?.coins ?? 0) + (bettingExistingPrediction?.stake ?? 0);
 
   async function loadMyPredictions(currentPlayerId: string) {
-    const { data, error: predictionError } = await supabase
+    const queryWithStatus = supabase
       .from("predictions")
       .select(
         "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result)",
       )
       .eq("player_id", currentPlayerId)
       .or("status.is.null,status.eq.active");
+    const { data, error: predictionError } = await queryWithStatus;
 
     if (predictionError) {
-      throw predictionError;
+      if (!isMissingPredictionStatusError(predictionError)) {
+        console.error("loadMyPredictions failed", {
+          playerId: currentPlayerId,
+          error: predictionError,
+        });
+        throw predictionError;
+      }
+
+      console.error("loadMyPredictions fallback without status", {
+        playerId: currentPlayerId,
+        error: predictionError,
+      });
+
+      const { data: fallbackData, error: fallbackError } = await supabase
+        .from("predictions")
+        .select(
+          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result)",
+        )
+        .eq("player_id", currentPlayerId);
+
+      if (fallbackError) {
+        console.error("loadMyPredictions fallback failed", {
+          playerId: currentPlayerId,
+          error: fallbackError,
+        });
+        throw fallbackError;
+      }
+
+      const fallbackPredictions = ((fallbackData ?? []) as Omit<
+        MyPrediction,
+        "status" | "settled_at"
+      >[]).map((prediction) => ({
+        ...prediction,
+        status: "active",
+        settled_at: null,
+      })) as MyPrediction[];
+
+      setMyPredictions(fallbackPredictions);
+      setPredictedMatchIds(
+        new Set(fallbackPredictions.map((item) => item.match_id)),
+      );
+      return;
     }
 
-    const predictions = (data ?? []) as MyPrediction[];
+    const predictions = ((data ?? []) as MyPrediction[]).map((prediction) => ({
+      ...prediction,
+      status: prediction.status ?? "active",
+    }));
 
     setMyPredictions(predictions);
     setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
+  }
+
+  async function refreshPlayer(currentPlayerId: string) {
+    const { data, error: playerError } = await supabase
+      .from("players")
+      .select("id, country, coins")
+      .eq("id", currentPlayerId)
+      .maybeSingle();
+
+    if (playerError) {
+      console.error("refreshPlayer failed", {
+        playerId: currentPlayerId,
+        error: playerError,
+      });
+      throw playerError;
+    }
+
+    setPlayer(data);
+    return data;
+  }
+
+  async function refreshMatches() {
+    const { data, error: matchError } = await supabase
+      .from("matches")
+      .select(
+        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, stage, venue, result, status, created_at",
+      )
+      .order("start_time", { ascending: true });
+
+    if (matchError) {
+      console.error("refreshMatches failed", { error: matchError });
+      throw matchError;
+    }
+
+    setMatches(data ?? []);
+  }
+
+  async function refreshPredictionState(currentPlayerId: string) {
+    await Promise.all([
+      refreshPlayer(currentPlayerId),
+      loadMyPredictions(currentPlayerId),
+      refreshMatches(),
+    ]);
   }
 
   useEffect(() => {
@@ -222,6 +344,102 @@ export default function PredictPage() {
     setBettingOption(option);
     setStakeInput("50");
     setError("");
+    setBetError("");
+    setToast("");
+  }
+
+  async function insertPredictionWithFallback({
+    match,
+    selectedOption,
+    stake,
+  }: {
+    match: Match;
+    selectedOption: (typeof predictionOptions)[number];
+    stake: number;
+  }) {
+    const payload = {
+      player_id: playerId as string,
+      match_id: match.id,
+      prediction: selectedOption.value,
+      odds_at_prediction: match[selectedOption.oddsKey],
+      stake,
+      payout: 0,
+      status: "active",
+    };
+    const { error: insertError } = await supabase
+      .from("predictions")
+      .insert(payload);
+
+    if (!insertError) {
+      return;
+    }
+
+    if (!isMissingPredictionStatusError(insertError)) {
+      console.error("prediction insert failed", { payload, error: insertError });
+      throw new Error(`预测保存失败：${insertError.message}`);
+    }
+
+    console.error("prediction insert fallback without status", {
+      payload,
+      error: insertError,
+    });
+
+    const fallbackPayload: Omit<typeof payload, "status"> = {
+      player_id: payload.player_id,
+      match_id: payload.match_id,
+      prediction: payload.prediction,
+      odds_at_prediction: payload.odds_at_prediction,
+      stake: payload.stake,
+      payout: payload.payout,
+    };
+    const { error: fallbackError } = await supabase
+      .from("predictions")
+      .insert(fallbackPayload);
+
+    if (fallbackError) {
+      console.error("prediction insert fallback failed", {
+        payload: fallbackPayload,
+        error: fallbackError,
+      });
+      throw new Error(`预测保存失败：${fallbackError.message}`);
+    }
+  }
+
+  async function cancelPredictionRecord(prediction: MyPrediction) {
+    const { error: cancelError } = await supabase
+      .from("predictions")
+      .update({ status: "cancelled" })
+      .eq("id", prediction.id);
+
+    if (!cancelError) {
+      return;
+    }
+
+    if (!isMissingPredictionStatusError(cancelError)) {
+      console.error("prediction cancel failed", {
+        prediction,
+        error: cancelError,
+      });
+      throw new Error(`撤单失败：${cancelError.message}`);
+    }
+
+    console.error("prediction cancel fallback delete", {
+      prediction,
+      error: cancelError,
+    });
+
+    const { error: deleteError } = await supabase
+      .from("predictions")
+      .delete()
+      .eq("id", prediction.id);
+
+    if (deleteError) {
+      console.error("prediction cancel fallback delete failed", {
+        prediction,
+        error: deleteError,
+      });
+      throw new Error(`撤单失败：${deleteError.message}`);
+    }
   }
 
   async function submitPrediction() {
@@ -233,12 +451,12 @@ export default function PredictPage() {
     }
 
     if (!playerId) {
-      setError("请先在首页创建玩家。");
+      setBetError("请先在首页创建玩家。");
       return;
     }
 
     if (!player) {
-      setError("请先加载玩家金币信息。");
+      setBetError("请先加载玩家金币信息。");
       return;
     }
 
@@ -247,19 +465,19 @@ export default function PredictPage() {
     }
 
     if (isMatchFinished(match)) {
-      setError("比赛已结束，不能下注。");
+      setBetError("比赛已结束，不能下注。");
       return;
     }
 
     if (isMatchStarted(match)) {
-      setError("比赛已开始，不能下注。");
+      setBetError("比赛已开始。");
       return;
     }
 
     const stake = Number(stakeInput);
 
     if (!Number.isInteger(stake) || stake <= 0) {
-      setError("下注金币必须大于 0。");
+      setBetError("下注金币必须为大于 0 的整数。");
       return;
     }
 
@@ -267,60 +485,59 @@ export default function PredictPage() {
     const availableCoins = player.coins + (existingPrediction?.stake ?? 0);
 
     if (stake > availableCoins) {
-      setError("金币不足。");
+      setBetError("金币不足。");
       return;
     }
 
     setSubmittingMatchId(match.id);
     setError("");
+    setBetError("");
+    setToast("");
 
-    const { error: insertError } = await supabase.from("predictions").insert({
-      player_id: playerId,
-      match_id: match.id,
-      prediction: selectedOption.value,
-      odds_at_prediction: match[selectedOption.oddsKey],
-      stake,
-      payout: 0,
-      status: "active",
-    });
+    try {
+      await insertPredictionWithFallback({ match, selectedOption, stake });
 
-    if (insertError) {
-      setError(insertError.message);
-      setSubmittingMatchId(null);
-      return;
-    }
-
-    if (existingPrediction) {
-      const { error: cancelOldError } = await supabase
-        .from("predictions")
-        .update({ status: "cancelled" })
-        .eq("id", existingPrediction.id);
-
-      if (cancelOldError) {
-        setError(cancelOldError.message);
-        setSubmittingMatchId(null);
-        return;
+      if (existingPrediction) {
+        await cancelPredictionRecord(existingPrediction);
       }
-    }
 
-    const nextCoins = availableCoins - stake;
-    const { error: coinUpdateError } = await supabase
-      .from("players")
-      .update({ coins: nextCoins })
-      .eq("id", playerId);
+      const nextCoins = availableCoins - stake;
+      const { error: coinUpdateError } = await supabase
+        .from("players")
+        .update({ coins: nextCoins })
+        .eq("id", playerId);
 
-    if (coinUpdateError) {
-      setError(coinUpdateError.message);
+      if (coinUpdateError) {
+        console.error("player coin update failed after bet", {
+          playerId,
+          matchId: match.id,
+          nextCoins,
+          error: coinUpdateError,
+        });
+        throw new Error(`数据库错误：${coinUpdateError.message}`);
+      }
+
+      await refreshPredictionState(playerId);
+      setBettingMatch(null);
+      setBettingOption(null);
+      setToast(
+        `下注成功：已投注 ${stake} 金币，预计返还 ${Math.round(
+          stake * match[selectedOption.oddsKey],
+        )} 金币`,
+      );
+    } catch (submitError) {
+      const message = getErrorMessage(submitError);
+      console.error("submitPrediction failed", {
+        playerId,
+        match,
+        selectedOption,
+        stake,
+        error: submitError,
+      });
+      setBetError(message || "下注失败，请稍后重试。");
+    } finally {
       setSubmittingMatchId(null);
-      return;
     }
-
-    setPredictedMatchIds((current) => new Set(current).add(match.id));
-    setPlayer({ ...player, coins: nextCoins });
-    setSubmittingMatchId(null);
-    setBettingMatch(null);
-    setBettingOption(null);
-    await loadMyPredictions(playerId);
   }
 
   async function cancelPrediction(match: Match, prediction: MyPrediction) {
@@ -335,34 +552,42 @@ export default function PredictPage() {
 
     setSubmittingMatchId(match.id);
     setError("");
+    setBetError("");
+    setToast("");
 
-    const { error: cancelError } = await supabase
-      .from("predictions")
-      .update({ status: "cancelled" })
-      .eq("id", prediction.id);
+    try {
+      await cancelPredictionRecord(prediction);
 
-    if (cancelError) {
-      setError(cancelError.message);
+      const nextCoins = player.coins + prediction.stake;
+      const { error: coinError } = await supabase
+        .from("players")
+        .update({ coins: nextCoins })
+        .eq("id", playerId);
+
+      if (coinError) {
+        console.error("player coin update failed after cancel", {
+          playerId,
+          prediction,
+          nextCoins,
+          error: coinError,
+        });
+        throw new Error(`数据库错误：${coinError.message}`);
+      }
+
+      await refreshPredictionState(playerId);
+      setToast("投注已撤回，金币已返还");
+    } catch (cancelError) {
+      const message = getErrorMessage(cancelError);
+      console.error("cancelPrediction failed", {
+        playerId,
+        match,
+        prediction,
+        error: cancelError,
+      });
+      setError(message || "撤单失败，请稍后重试。");
+    } finally {
       setSubmittingMatchId(null);
-      return;
     }
-
-    const nextCoins = player.coins + prediction.stake;
-    const { error: coinError } = await supabase
-      .from("players")
-      .update({ coins: nextCoins })
-      .eq("id", playerId);
-
-    if (coinError) {
-      setError(coinError.message);
-      setSubmittingMatchId(null);
-      return;
-    }
-
-    setPlayer({ ...player, coins: nextCoins });
-    setSubmittingMatchId(null);
-    setError("已撤回投注，金币已返还");
-    await loadMyPredictions(playerId);
   }
 
   return (
@@ -402,6 +627,12 @@ export default function PredictPage() {
         {error ? (
           <div className="mb-5 rounded-xl border border-[#f7c6c7] bg-[#fde8e8] p-4 text-sm text-[#9b1c1c]">
             {error}
+          </div>
+        ) : null}
+
+        {toast ? (
+          <div className="mb-5 rounded-xl border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm font-black text-[#0f7b3f]">
+            {toast}
           </div>
         ) : null}
 
@@ -698,13 +929,20 @@ export default function PredictPage() {
               )}{" "}
               金币
             </p>
+            {betError ? (
+              <p className="mt-3 rounded-xl bg-[#fde8e8] px-3 py-2 text-sm font-bold text-[#9b1c1c]">
+                {betError}
+              </p>
+            ) : null}
             <div className="mt-5 grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => {
                   setBettingMatch(null);
                   setBettingOption(null);
+                  setBetError("");
                 }}
+                disabled={Boolean(submittingMatchId)}
                 className="wc-button-secondary"
               >
                 取消
@@ -715,7 +953,7 @@ export default function PredictPage() {
                 disabled={Boolean(submittingMatchId)}
                 className="wc-button"
               >
-                确认下注
+                {submittingMatchId ? "下注中..." : "确认下注"}
               </button>
             </div>
           </div>

@@ -148,6 +148,7 @@ export type Database = {
           player_id: string;
           amount: number;
           type: string;
+          related_id: string | null;
           related_player_id: string | null;
           created_at: string | null;
         };
@@ -156,6 +157,7 @@ export type Database = {
           player_id: string;
           amount: number;
           type: string;
+          related_id?: string | null;
           related_player_id?: string | null;
           created_at?: string | null;
         };
@@ -164,8 +166,66 @@ export type Database = {
           player_id?: string;
           amount?: number;
           type?: string;
+          related_id?: string | null;
           related_player_id?: string | null;
           created_at?: string | null;
+        };
+        Relationships: [];
+      };
+      player_cards: {
+        Row: {
+          id: string;
+          team: string;
+          player_name: string;
+          player_name_en: string | null;
+          position: string | null;
+          shirt_number: number | null;
+          rarity: string;
+          card_image: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          team: string;
+          player_name: string;
+          player_name_en?: string | null;
+          position?: string | null;
+          shirt_number?: number | null;
+          rarity?: string;
+          card_image?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          team?: string;
+          player_name?: string;
+          player_name_en?: string | null;
+          position?: string | null;
+          shirt_number?: number | null;
+          rarity?: string;
+          card_image?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
+      user_cards: {
+        Row: {
+          id: string;
+          player_id: string;
+          card_id: string;
+          acquired_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          player_id: string;
+          card_id: string;
+          acquired_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          player_id?: string;
+          card_id?: string;
+          acquired_at?: string | null;
         };
         Relationships: [];
       };

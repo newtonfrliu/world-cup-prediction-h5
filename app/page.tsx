@@ -337,6 +337,12 @@ export default function Home() {
             <Link href="/profile" className="wc-button-secondary w-full">
               我的战绩
             </Link>
+            <Link href="/collection" className="wc-button-secondary w-full">
+              球星收藏馆
+              <span className="ml-2 text-xs font-bold text-[#e63535]">
+                用金币兑换你的主队球星卡
+              </span>
+            </Link>
             <Link href="/leaderboard" className="wc-button-secondary w-full">
               球王榜
             </Link>
@@ -457,6 +463,13 @@ export default function Home() {
             className="wc-button-secondary w-full"
           >
             我的战绩
+          </Link>
+
+          <Link
+            href="/collection"
+            className="wc-button-secondary w-full"
+          >
+            球星收藏馆
           </Link>
 
           <Link

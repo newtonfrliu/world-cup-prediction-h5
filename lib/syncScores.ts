@@ -122,6 +122,23 @@ function getResultFromScore(match: Match, event: ScoreEvent): MatchResult | null
   return "draw";
 }
 
+function isMissingPredictionStatusError(error: unknown) {
+  const message =
+    error &&
+    typeof error === "object" &&
+    "message" in error &&
+    typeof error.message === "string"
+      ? error.message.toLowerCase()
+      : String(error).toLowerCase();
+
+  return (
+    message.includes("'status' column of 'predictions'") ||
+    message.includes("predictions.status") ||
+    message.includes("settled_at") ||
+    message.includes("schema cache")
+  );
+}
+
 async function fetchScores(apiKey: string) {
   const url = new URL(scoresApiUrl);
 
@@ -198,7 +215,8 @@ export async function syncWorldCupScores({
       throw new Error(`Supabase update failed: ${matchUpdateError.message}`);
     }
 
-    const { data: predictions, error: predictionsError } = await supabase
+    let hasSettlementColumns = true;
+    let { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
       .select(
         "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
@@ -207,11 +225,28 @@ export async function syncWorldCupScores({
       .or("status.is.null,status.eq.active");
 
     if (predictionsError) {
-      throw new Error(`Supabase update failed: ${predictionsError.message}`);
+      if (!isMissingPredictionStatusError(predictionsError)) {
+        throw new Error(`Supabase update failed: ${predictionsError.message}`);
+      }
+
+      hasSettlementColumns = false;
+      const fallbackResult = await supabase
+        .from("predictions")
+        .select(
+          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+        )
+        .eq("match_id", match.id);
+
+      predictions = fallbackResult.data as typeof predictions;
+      predictionsError = fallbackResult.error;
+
+      if (predictionsError) {
+        throw new Error(`Supabase update failed: ${predictionsError.message}`);
+      }
     }
 
     for (const prediction of (predictions ?? []) as Prediction[]) {
-      if (prediction.settled_at) {
+      if (hasSettlementColumns && prediction.settled_at) {
         continue;
       }
 
@@ -223,13 +258,19 @@ export async function syncWorldCupScores({
         ? Math.round(prediction.stake * prediction.odds_at_prediction)
         : 0;
 
+      const updatePayload = hasSettlementColumns
+        ? {
+            points,
+            payout,
+            settled_at: new Date().toISOString(),
+          }
+        : {
+            points,
+            payout,
+          };
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
-        .update({
-          points,
-          payout,
-          settled_at: new Date().toISOString(),
-        })
+        .update(updatePayload)
         .eq("id", prediction.id);
 
       if (predictionUpdateError) {
