@@ -181,6 +181,8 @@ export type Database = {
           position: string | null;
           shirt_number: number | null;
           rarity: string;
+          price: number;
+          star_level: number;
           card_image: string | null;
           created_at: string | null;
         };
@@ -192,6 +194,8 @@ export type Database = {
           position?: string | null;
           shirt_number?: number | null;
           rarity?: string;
+          price?: number;
+          star_level?: number;
           card_image?: string | null;
           created_at?: string | null;
         };
@@ -203,6 +207,8 @@ export type Database = {
           position?: string | null;
           shirt_number?: number | null;
           rarity?: string;
+          price?: number;
+          star_level?: number;
           card_image?: string | null;
           created_at?: string | null;
         };

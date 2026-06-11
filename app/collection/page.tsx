@@ -22,8 +22,6 @@ type UserCard = Pick<
   "card_id"
 >;
 
-const exchangeCost = 100;
-
 function getRarityLabel(rarity: string) {
   const labels: Record<string, string> = {
     common: "普通",
@@ -51,15 +49,45 @@ function getRarityClass(rarity: string) {
   return "border-[#d9e2ec] bg-white text-[#071b3a]";
 }
 
+function formatCoins(value: number) {
+  return new Intl.NumberFormat("zh-CN").format(value);
+}
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (
+    error &&
+    typeof error === "object" &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+
+  return typeof error === "string" ? error : JSON.stringify(error);
+}
+
 function StarCard({
   card,
   owned,
+  coins,
+  exchangingCardId,
+  onExchange,
 }: {
   card: PlayerCard;
   owned: boolean;
+  coins: number;
+  exchangingCardId: string;
+  onExchange: (card: PlayerCard) => void;
 }) {
   const country = getCountryByNameEn(card.team);
   const theme = getCountryTheme(card.team);
+  const price = card.price ?? 5000;
+  const starLevel = card.star_level ?? 1;
+  const canExchange = !owned && coins >= price && exchangingCardId === "";
 
   return (
     <article
@@ -74,7 +102,7 @@ function StarCard({
         <p className="absolute left-3 top-3 text-[10px] font-black uppercase tracking-[0.16em]">
           2026 Card
         </p>
-        <p className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 text-xs font-black text-[#071b3a]">
+        <p className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 text-xs font-black text-[#071b3a] shadow-sm">
           #{card.shirt_number ?? "-"}
         </p>
         {country ? (
@@ -107,10 +135,14 @@ function StarCard({
 
       <div className="mt-3 rounded-xl bg-white/90 p-3">
         <h2 className="truncate text-lg font-black">
-          {owned ? card.player_name : "未收集"}
+          {card.player_name}
         </h2>
         <p className="mt-1 text-xs font-bold text-[#627d98]">
           {card.position ?? "-"} · {getCountryDisplayName(card.team)}
+        </p>
+        <p className="mt-2 text-xs font-black text-[#e63535]">
+          {"★".repeat(starLevel)}
+          <span className="text-[#9fb3c8]">{"★".repeat(5 - starLevel)}</span>
         </p>
         <div className="mt-2 flex items-center justify-between gap-2">
           <span className="rounded-full bg-[#f6c84c] px-2 py-1 text-[11px] font-black text-[#071b3a]">
@@ -125,6 +157,27 @@ function StarCard({
             />
           ) : null}
         </div>
+        <p className="mt-3 text-sm font-black text-[#071b3a]">
+          价格：{formatCoins(price)} 金币
+        </p>
+        <button
+          type="button"
+          onClick={() => onExchange(card)}
+          disabled={!canExchange}
+          className={`mt-3 h-10 w-full rounded-xl text-sm font-black ${
+            owned
+              ? "bg-[#e3f9e5] text-[#0f7b3f]"
+              : canExchange
+                ? "bg-[#e63535] text-white"
+                : "bg-[#e4e7eb] text-[#829ab1]"
+          }`}
+        >
+          {owned
+            ? "已拥有"
+            : exchangingCardId === card.id
+              ? "兑换中..."
+              : "兑换"}
+        </button>
       </div>
     </article>
   );
@@ -136,7 +189,7 @@ export default function CollectionPage() {
   const [cards, setCards] = useState<PlayerCard[]>([]);
   const [ownedCardIds, setOwnedCardIds] = useState<Set<string>>(() => new Set());
   const [loading, setLoading] = useState(true);
-  const [exchanging, setExchanging] = useState(false);
+  const [exchangingCardId, setExchangingCardId] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -144,7 +197,6 @@ export default function CollectionPage() {
   const country = player ? getCountryByNameEn(player.country) : null;
   const ownedCount = ownedCardIds.size;
   const totalCount = cards.length;
-  const unownedCards = cards.filter((card) => !ownedCardIds.has(card.id));
 
   async function loadCollection(currentPlayerId: string) {
     const { data: playerData, error: playerError } = await supabase
@@ -154,6 +206,10 @@ export default function CollectionPage() {
       .single();
 
     if (playerError) {
+      console.error("collection player query failed", {
+        playerId: currentPlayerId,
+        error: playerError,
+      });
       throw playerError;
     }
 
@@ -162,13 +218,23 @@ export default function CollectionPage() {
     const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
       .select(
-        "id, team, player_name, player_name_en, position, shirt_number, rarity, card_image, created_at",
+        "id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_image, created_at",
       )
       .eq("team", playerData.country)
       .order("shirt_number", { ascending: true });
 
     if (cardError) {
+      console.error("collection player_cards query failed", {
+        team: playerData.country,
+        error: cardError,
+      });
       throw cardError;
+    }
+
+    if ((cardData ?? []).length === 0) {
+      setCards([]);
+      setOwnedCardIds(new Set());
+      return;
     }
 
     const { data: userCardData, error: userCardError } = await supabase
@@ -177,6 +243,10 @@ export default function CollectionPage() {
       .eq("player_id", currentPlayerId);
 
     if (userCardError) {
+      console.error("collection user_cards query failed", {
+        playerId: currentPlayerId,
+        error: userCardError,
+      });
       throw userCardError;
     }
 
@@ -205,11 +275,11 @@ export default function CollectionPage() {
       try {
         await loadCollection(storedPlayerId);
       } catch (loadError) {
-        setError(
-          loadError instanceof Error
-            ? loadError.message
-            : "卡册加载失败，请确认已执行 Phase 3 SQL migration。",
-        );
+        console.error("collection load failed", {
+          playerId: storedPlayerId,
+          error: loadError,
+        });
+        setError(getErrorMessage(loadError));
       }
 
       setLoading(false);
@@ -218,65 +288,76 @@ export default function CollectionPage() {
     load();
   }, [canUseSupabase]);
 
-  async function exchangeCard() {
-    if (!playerId || !player || exchanging) {
+  async function exchangeCard(card: PlayerCard) {
+    if (!playerId || !player || exchangingCardId) {
       return;
     }
 
-    if (player.coins < exchangeCost) {
-      setError("金币不足，无法兑换。");
+    if (ownedCardIds.has(card.id)) {
+      setMessage("你已拥有这张球星卡");
       return;
     }
 
-    if (unownedCards.length === 0) {
-      setMessage("你已集齐该国家队卡册");
+    const price = card.price ?? 5000;
+
+    if (player.coins < price) {
+      setError(`金币不足，还差 ${formatCoins(price - player.coins)} 金币`);
       return;
     }
 
-    setExchanging(true);
+    setExchangingCardId(card.id);
     setError("");
     setMessage("");
 
-    const selectedCard =
-      unownedCards[Math.floor(Math.random() * unownedCards.length)];
     const { error: insertError } = await supabase.from("user_cards").insert({
       player_id: playerId,
-      card_id: selectedCard.id,
+      card_id: card.id,
     });
 
     if (insertError) {
+      console.error("collection user_cards insert failed", {
+        playerId,
+        card,
+        error: insertError,
+      });
       setError(insertError.message);
-      setExchanging(false);
+      setExchangingCardId("");
       return;
     }
 
-    const nextCoins = player.coins - exchangeCost;
+    const nextCoins = player.coins - price;
     const { error: coinError } = await supabase
       .from("players")
       .update({ coins: nextCoins })
       .eq("id", playerId);
 
     if (coinError) {
+      console.error("collection coins update failed", {
+        playerId,
+        card,
+        nextCoins,
+        error: coinError,
+      });
       await supabase.from("user_cards").delete().match({
         player_id: playerId,
-        card_id: selectedCard.id,
+        card_id: card.id,
       });
       setError(coinError.message);
-      setExchanging(false);
+      setExchangingCardId("");
       return;
     }
 
     await supabase.from("coin_transactions").insert({
       player_id: playerId,
-      amount: -exchangeCost,
+      amount: -price,
       type: "card_exchange",
-      related_id: selectedCard.id,
+      related_id: card.id,
     });
 
     setPlayer({ ...player, coins: nextCoins });
-    setOwnedCardIds((current) => new Set(current).add(selectedCard.id));
-    setMessage(`兑换成功：${selectedCard.player_name}`);
-    setExchanging(false);
+    setOwnedCardIds((current) => new Set(current).add(card.id));
+    setMessage(`成功兑换 ${card.player_name} 球星卡`);
+    setExchangingCardId("");
   }
 
   if (loading) {
@@ -309,29 +390,36 @@ export default function CollectionPage() {
     <main className="wc-page px-4 py-6">
       <section className="wc-shell">
         <div
-          className="relative overflow-hidden rounded-2xl p-5 text-white"
-          style={{ background: theme.cardGradient, boxShadow: theme.glow }}
+          className="relative overflow-hidden rounded-2xl bg-[#071b3a] p-5 text-white"
+          style={{ boxShadow: theme.glow }}
         >
+          <div
+            className="absolute inset-0 opacity-80"
+            style={{ background: theme.cardGradient }}
+          />
+          <div className="absolute inset-0 bg-[#071b3a]/72" />
           {country ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={country.flag}
               alt={`${country.nameZh} flag`}
-              className="absolute -right-10 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-20"
+              className="absolute -right-10 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-[0.1]"
             />
           ) : null}
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f6c84c]">
+          <p className="relative text-xs font-black uppercase tracking-[0.18em] text-[#f6c84c] drop-shadow">
             Collection Album
           </p>
-          <h1 className="mt-2 text-3xl font-black">我的国家队卡册</h1>
-          <p className="mt-3 text-sm font-bold">
+          <h1 className="relative mt-2 text-3xl font-black text-[#f6c84c] drop-shadow">
+            我的国家队卡册
+          </h1>
+          <p className="relative mt-3 text-sm font-black text-white drop-shadow">
             {player ? <CountryDisplay team={player.country} /> : "-"} 国家队卡册
           </p>
-          <p className="mt-4 text-2xl font-black">
+          <p className="relative mt-4 text-2xl font-black text-white drop-shadow">
             已收集 {ownedCount} / {totalCount}
           </p>
-          <p className="mt-2 text-sm font-bold text-white/80">
-            金币余额：{player?.coins ?? 0}
+          <p className="relative mt-2 text-sm font-black text-white drop-shadow">
+            金币余额：{formatCoins(player?.coins ?? 0)}
           </p>
         </div>
 
@@ -357,30 +445,18 @@ export default function CollectionPage() {
         ) : null}
 
         <section className="wc-card mt-5 p-4">
-          <h2 className="text-xl font-black text-[#071b3a]">金币兑换</h2>
+          <h2 className="text-xl font-black text-[#071b3a]">可兑换卡册</h2>
           <p className="mt-2 text-sm font-bold text-[#627d98]">
-            每次消耗 100 金币，随机获得一张未拥有的主队球星卡。
+            点击具体球星卡兑换。价格由星级决定，最低 5000 金币。
           </p>
-          <button
-            type="button"
-            onClick={exchangeCard}
-            disabled={
-              exchanging ||
-              !player ||
-              player.coins < exchangeCost ||
-              unownedCards.length === 0
-            }
-            className="wc-button mt-4 w-full"
-          >
-            {unownedCards.length === 0
-              ? "你已集齐该国家队卡册"
-              : exchanging
-                ? "兑换中..."
-                : "兑换一张球星卡"}
-          </button>
-          {player && player.coins < exchangeCost ? (
-            <p className="mt-3 text-sm font-bold text-[#e63535]">
-              金币不足 100，无法兑换。
+          {totalCount === 0 ? (
+            <p className="mt-4 rounded-xl bg-[#f6f1e7] p-4 text-sm font-bold text-[#627d98]">
+              当前主队暂无球星卡数据，请先执行 Phase 3 SQL migration 或等待后续球员名单更新。
+            </p>
+          ) : null}
+          {totalCount > 0 && ownedCount === totalCount ? (
+            <p className="mt-4 rounded-xl bg-[#e3f9e5] p-4 text-sm font-bold text-[#0f7b3f]">
+              你已集齐该国家队卡册
             </p>
           ) : null}
         </section>
@@ -391,6 +467,9 @@ export default function CollectionPage() {
               key={card.id}
               card={card}
               owned={ownedCardIds.has(card.id)}
+              coins={player?.coins ?? 0}
+              exchangingCardId={exchangingCardId}
+              onExchange={exchangeCard}
             />
           ))}
         </section>
