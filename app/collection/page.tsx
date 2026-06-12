@@ -257,35 +257,54 @@ export default function CollectionPage() {
     }
 
     const cards = cardData ?? [];
-    const ownedIds = new Set(
-      ((userCardData ?? []) as UserCard[]).map((item) => item.card_id),
+    const cardIdSet = new Set(cards.map((card) => card.id));
+    const userCardIds = ((userCardData ?? []) as UserCard[]).map(
+      (item) => item.card_id,
     );
-
-    if (
-      playerData.equipped_card_id &&
-      cards.some((card) => card.id === playerData.equipped_card_id)
-    ) {
-      ownedIds.add(playerData.equipped_card_id);
-    }
-
-    if (
-      options.extraOwnedCardId &&
-      cards.some((card) => card.id === options.extraOwnedCardId)
-    ) {
-      ownedIds.add(options.extraOwnedCardId);
-    }
-
-    console.log("COLLECTION_OWNED_CARD_IDS", {
-      player_id: currentPlayerId,
-      equipped_card_id: playerData.equipped_card_id,
-      extraOwnedCardId: options.extraOwnedCardId ?? null,
-      ownedCardIds: Array.from(ownedIds),
-      userCardsReturned: userCardData?.length ?? 0,
-    });
 
     setPlayer(playerData);
     setCards(cards);
-    setOwnedCardIds(ownedIds);
+    setOwnedCardIds((previousOwnedCardIds) => {
+      const nextOwned = new Set<string>();
+
+      userCardIds.forEach((cardId) => {
+        if (cardIdSet.has(cardId)) {
+          nextOwned.add(cardId);
+        }
+      });
+
+      previousOwnedCardIds.forEach((cardId) => {
+        if (cardIdSet.has(cardId)) {
+          nextOwned.add(cardId);
+        }
+      });
+
+      if (
+        options.extraOwnedCardId &&
+        cardIdSet.has(options.extraOwnedCardId)
+      ) {
+        nextOwned.add(options.extraOwnedCardId);
+      }
+
+      if (
+        playerData.equipped_card_id &&
+        cardIdSet.has(playerData.equipped_card_id)
+      ) {
+        nextOwned.add(playerData.equipped_card_id);
+      }
+
+      console.log("COLLECTION_OWNED_CARD_IDS", {
+        player_id: currentPlayerId,
+        userCardsReturned: userCardData?.length ?? 0,
+        userCardIds,
+        previousOwnedCardIds: Array.from(previousOwnedCardIds),
+        extraOwnedCardId: options.extraOwnedCardId ?? null,
+        equippedCardId: playerData.equipped_card_id,
+        finalOwnedCardIds: Array.from(nextOwned),
+      });
+
+      return nextOwned;
+    });
   }
 
   useEffect(() => {
@@ -378,8 +397,8 @@ export default function CollectionPage() {
       result,
     });
 
-    await loadCollection(playerId, { extraOwnedCardId: result.card_id });
     setOwnedCardIds((current) => new Set(current).add(result.card_id));
+    await loadCollection(playerId, { extraOwnedCardId: result.card_id });
     setMessage(
       result.already_owned
         ? "你已拥有这张球星卡"
