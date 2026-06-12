@@ -101,7 +101,7 @@ function StarCard({
     <article
       className={`relative overflow-hidden rounded-2xl border-2 p-3 shadow-sm ${
         owned ? getRarityClass(card.rarity) : "border-[#d9e2ec] bg-[#e4e7eb]"
-      }`}
+      } ${isEquipped ? "ring-4 ring-[#f6c84c] ring-offset-2" : ""}`}
     >
       <div className="flex justify-center">
         <PlayerCardMini
@@ -169,7 +169,7 @@ function StarCard({
                 : "bg-[#071b3a] text-white"
             }`}
           >
-            {isEquipped ? "已装备" : "装备"}
+            {isEquipped ? "✓ 已装备" : "装备"}
           </button>
         ) : null}
       </div>
@@ -210,34 +210,12 @@ export default function CollectionPage() {
       throw playerError;
     }
 
-    setPlayer(playerData);
-    console.log("PLAYER_COUNTRY", playerData.country);
-
     const canonicalTeamName = getCanonicalTeamName(playerData.country);
-    console.log("PLAYER_COUNTRY", player?.country);
-    console.log("CANONICAL_TEAM", canonicalTeamName);
-    console.log("PLAYER_CARD_QUERY_TEAM", canonicalTeamName);
-
-    const { count } = await supabase
-      .from("player_cards")
-      .select("*", { count: "exact", head: true });
-
-    console.log("PLAYER_CARD_TOTAL_COUNT", count);
-
-    const { data: sampleCards } = await supabase
-      .from("player_cards")
-      .select("team, player_name")
-      .limit(5);
-
-    console.log("PLAYER_CARD_SAMPLE", sampleCards);
-
     const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
       .select("*")
       .eq("team", canonicalTeamName)
       .order("shirt_number", { ascending: true });
-    console.log("CARDS_RETURNED", cardData?.length);
-    console.log("FIRST_CARD", cardData?.[0]);
 
     if (cardError) {
       console.error("collection player_cards query failed", {
@@ -249,6 +227,7 @@ export default function CollectionPage() {
     }
 
     if ((cardData ?? []).length === 0) {
+      setPlayer(playerData);
       setCards([]);
       setOwnedCardIds(new Set());
       return;
@@ -267,10 +246,21 @@ export default function CollectionPage() {
       throw userCardError;
     }
 
-    setCards(cardData ?? []);
-    setOwnedCardIds(
-      new Set(((userCardData ?? []) as UserCard[]).map((item) => item.card_id)),
+    const cards = cardData ?? [];
+    const ownedIds = new Set(
+      ((userCardData ?? []) as UserCard[]).map((item) => item.card_id),
     );
+
+    if (
+      playerData.equipped_card_id &&
+      cards.some((card) => card.id === playerData.equipped_card_id)
+    ) {
+      ownedIds.add(playerData.equipped_card_id);
+    }
+
+    setPlayer(playerData);
+    setCards(cards);
+    setOwnedCardIds(ownedIds);
   }
 
   useEffect(() => {
@@ -373,8 +363,7 @@ export default function CollectionPage() {
       related_id: card.id,
     });
 
-    setPlayer({ ...player, coins: nextCoins });
-    setOwnedCardIds((current) => new Set(current).add(card.id));
+    await loadCollection(playerId);
     setMessage(`成功兑换 ${card.player_name} 球星卡`);
     setExchangingCardId("");
   }
@@ -403,6 +392,7 @@ export default function CollectionPage() {
     }
 
     setPlayer({ ...player, equipped_card_id: card.id });
+    setOwnedCardIds((current) => new Set(current).add(card.id));
     setMessage(`已装备 ${card.player_name} 球星卡`);
   }
 
@@ -527,16 +517,23 @@ export default function CollectionPage() {
 
         <section className="mt-5 grid grid-cols-2 gap-3">
           {cards.map((card) => (
-            <StarCard
-              key={card.id}
-              card={card}
-              owned={ownedCardIds.has(card.id)}
-              coins={player?.coins ?? 0}
-              exchangingCardId={exchangingCardId}
-              equippedCardId={player?.equipped_card_id}
-              onExchange={exchangeCard}
-              onEquip={equipCard}
-            />
+            (() => {
+              const isEquipped = player?.equipped_card_id === card.id;
+              const owned = ownedCardIds.has(card.id) || isEquipped;
+
+              return (
+                <StarCard
+                  key={card.id}
+                  card={card}
+                  owned={owned}
+                  coins={player?.coins ?? 0}
+                  exchangingCardId={exchangingCardId}
+                  equippedCardId={player?.equipped_card_id}
+                  onExchange={exchangeCard}
+                  onEquip={equipCard}
+                />
+              );
+            })()
           ))}
         </section>
       </section>

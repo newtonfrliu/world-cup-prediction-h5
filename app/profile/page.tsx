@@ -318,8 +318,19 @@ export default function ProfilePage() {
           return;
         }
 
+        const ownedIds = new Set(
+          (userCardData ?? []).map((item) => item.card_id),
+        );
+
+        if (
+          currentPlayer.equipped_card_id &&
+          cardIds.includes(currentPlayer.equipped_card_id)
+        ) {
+          ownedIds.add(currentPlayer.equipped_card_id);
+        }
+
         setCollectionProgress({
-          owned: userCardData?.length ?? 0,
+          owned: ownedIds.size,
           total: cardIds.length,
         });
       }
