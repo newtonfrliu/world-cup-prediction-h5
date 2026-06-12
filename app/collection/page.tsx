@@ -258,6 +258,13 @@ export default function CollectionPage() {
       ownedIds.add(playerData.equipped_card_id);
     }
 
+    console.log("COLLECTION_OWNED_CARD_IDS", {
+      player_id: currentPlayerId,
+      equipped_card_id: playerData.equipped_card_id,
+      ownedCardIds: Array.from(ownedIds),
+      userCardsReturned: userCardData?.length ?? 0,
+    });
+
     setPlayer(playerData);
     setCards(cards);
     setOwnedCardIds(ownedIds);
@@ -318,9 +325,21 @@ export default function CollectionPage() {
     setError("");
     setMessage("");
 
-    const { error: insertError } = await supabase.from("user_cards").insert({
+    const insertPayload = {
       player_id: playerId,
       card_id: card.id,
+    };
+    const insertResult = await supabase.from("user_cards").insert(insertPayload);
+    const { error: insertError } = insertResult;
+
+    console.log("EXCHANGE_USER_CARDS_INSERT_RESULT", {
+      player_id: playerId,
+      card_id: card.id,
+      insertPayload,
+      data: insertResult.data,
+      error: insertError,
+      status: insertResult.status,
+      statusText: insertResult.statusText,
     });
 
     if (insertError) {
@@ -333,6 +352,19 @@ export default function CollectionPage() {
       setExchangingCardId("");
       return;
     }
+
+    const { data: ownedAfterInsert, error: ownedAfterInsertError } =
+      await supabase
+        .from("user_cards")
+        .select("card_id")
+        .eq("player_id", playerId);
+
+    console.log("EXCHANGE_USER_CARDS_AFTER_INSERT", {
+      player_id: playerId,
+      card_id: card.id,
+      ownedCardIds: (ownedAfterInsert ?? []).map((item) => item.card_id),
+      error: ownedAfterInsertError,
+    });
 
     const nextCoins = player.coins - price;
     const { error: coinError } = await supabase

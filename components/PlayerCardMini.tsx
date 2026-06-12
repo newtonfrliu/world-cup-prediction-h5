@@ -285,23 +285,6 @@ export function PlayerCardMini({
             onError={() => setArtSrc("")}
             className="absolute inset-[3px] z-10 h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-[inherit] object-cover"
           />
-          {equipped ? (
-            <span className="absolute left-2 top-2 z-30 rounded-full bg-[#f6c84c] px-1.5 py-0.5 text-[9px] font-black text-[#071b3a]">
-              已装备
-            </span>
-          ) : null}
-          {!compact ? (
-            <span
-              className="absolute right-2 top-2 z-30 rounded-full border px-2 py-1 text-[9px] font-black shadow-lg"
-              style={{
-                background: rarityStyle.badge,
-                borderColor: rarityStyle.label,
-                color: rarityStyle.badgeText,
-              }}
-            >
-              {isLegend ? "♛ LEGEND" : getRarityLabel(rarity)}
-            </span>
-          ) : null}
           {locked ? (
             <div className="absolute inset-0 z-30 rounded-[inherit] bg-[#071b3a]/54" />
           ) : null}
@@ -352,16 +335,6 @@ export function PlayerCardMini({
         >
           #{number}
         </p>
-        {isLegend && !compact ? (
-          <div className="absolute left-1/2 top-2 z-30 -translate-x-1/2 rounded-full border border-[#f6c84c] bg-black/80 px-2 py-0.5 text-[10px] font-black text-[#f6c84c] shadow-[0_0_18px_rgba(246,200,76,0.7)]">
-            ♛ 传奇
-          </div>
-        ) : null}
-        {isEpic && !compact ? (
-          <div className="absolute left-1/2 top-2 z-30 -translate-x-1/2 rounded-full border border-[#f6c84c] bg-[#581c87]/88 px-2 py-0.5 text-[10px] font-black text-[#f6c84c] shadow-[0_0_18px_rgba(168,85,247,0.75)]">
-            EPIC
-          </div>
-        ) : null}
         {cardNumber && !compact ? (
           <p className="absolute right-2 top-9 z-20 rounded-full bg-[#071b3a]/72 px-1.5 py-0.5 text-[9px] font-black text-white">
             {cardNumber}
@@ -393,12 +366,6 @@ export function PlayerCardMini({
         ) : (
           <PlayerSilhouette accent={theme.accent} compact={compact} />
         )}
-
-        {equipped ? (
-          <span className="absolute left-2 top-[34px] z-30 rounded-full bg-[#f6c84c] px-1.5 py-0.5 text-[9px] font-black text-[#071b3a]">
-            已装备
-          </span>
-        ) : null}
 
         <div
           className={`absolute inset-x-1.5 bottom-1.5 z-20 rounded-xl bg-white/94 text-[#071b3a] shadow-sm ${
