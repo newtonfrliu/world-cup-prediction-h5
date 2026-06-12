@@ -13,6 +13,7 @@ import type { Database } from "@/types/database";
 type Match = Database["public"]["Tables"]["matches"]["Row"];
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type Player = Database["public"]["Tables"]["players"]["Row"];
+type MatchState = "not_started" | "in_progress" | "finished";
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
 type MyPrediction = Pick<
@@ -51,10 +52,20 @@ const predictionLabels: Record<PredictionChoice, string> = {
 
 const matchResultLabels: Record<PredictionChoice, string> = predictionLabels;
 
-function formatMatchTime(value: string) {
+function parseMatchTime(value: string) {
   const date = new Date(value);
 
   if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return date;
+}
+
+function formatMatchTime(value: string) {
+  const date = parseMatchTime(value);
+
+  if (!date) {
     return value;
   }
 
@@ -332,12 +343,36 @@ export default function PredictPage() {
     loadMatches();
   }, [canUseSupabase, router]);
 
+  function getMatchState(match: Match): MatchState {
+    const normalizedStatus = (match.status ?? "open").toLowerCase();
+
+    if (normalizedStatus === "finished") {
+      return "finished";
+    }
+
+    if (
+      ["live", "in_progress", "in-progress", "started", "playing"].includes(
+        normalizedStatus,
+      )
+    ) {
+      return "in_progress";
+    }
+
+    const startTime = parseMatchTime(match.start_time);
+
+    if (startTime && startTime.getTime() <= Date.now()) {
+      return "in_progress";
+    }
+
+    return "not_started";
+  }
+
   function isMatchStarted(match: Match) {
-    return new Date(match.start_time).getTime() <= Date.now();
+    return getMatchState(match) !== "not_started";
   }
 
   function isMatchFinished(match: Match) {
-    return match.status === "finished";
+    return getMatchState(match) === "finished";
   }
 
   function openBetPanel(match: Match, option: (typeof predictionOptions)[number]) {
@@ -748,10 +783,16 @@ export default function PredictPage() {
             const isSubmitting = submittingMatchId === match.id;
             const selectedPrediction = predictionsByMatchId.get(match.id);
             const selectedPredictionValue = selectedPrediction?.prediction;
-            const hasStarted = isMatchStarted(match);
-            const isFinished = isMatchFinished(match);
-            const isStatusClosed = (match.status ?? "open") !== "open";
-            const isBettingClosed = isStatusClosed || hasStarted;
+            const matchState = getMatchState(match);
+            const isFinished = matchState === "finished";
+            const isInProgress = matchState === "in_progress";
+            const isBettingClosed = matchState !== "not_started";
+            const matchStatusLabel =
+              matchState === "finished"
+                ? "已结束"
+                : matchState === "in_progress"
+                  ? "进行中"
+                  : "未开始";
 
             return (
               <article
@@ -780,7 +821,7 @@ export default function PredictPage() {
                     </p>
                     <p className="mt-1 text-xs font-black text-white/80">
                       比赛状态：
-                      {isFinished ? "已结束" : hasStarted ? "已开始" : "未开始"}
+                      {matchStatusLabel}
                     </p>
                   </div>
                   {isPredicted ? (
@@ -823,7 +864,9 @@ export default function PredictPage() {
                       </>
                     ) : (
                       <>
-                        <p className="text-base text-[#071b3a]">比赛已开始</p>
+                        <p className="text-base text-[#071b3a]">
+                          {isInProgress ? "比赛进行中" : "投注已关闭"}
+                        </p>
                         <p className="mt-1 text-[#52606d]">
                           投注已冻结，无法再下注
                         </p>
