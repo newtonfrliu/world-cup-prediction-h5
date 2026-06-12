@@ -124,34 +124,6 @@ export function getCardImagePath(card?: PlayerCardMiniData | null) {
   return `/cards/${teamSlug}/${playerSlug}.png`;
 }
 
-const cardArtAliases: Record<string, Record<string, string>> = {
-  Portugal: {
-    "Cristiano Ronaldo": "ronaldo",
-    "Bruno Fernandes": "bruno",
-    "Rafael Leao": "leao",
-    "Ruben Dias": "rubendias",
-  },
-};
-
-function getLocalCardArtPath(card?: PlayerCardMiniData | null) {
-  if (!card?.team || !card.player_name_en) {
-    return "";
-  }
-
-  const team = resolveCountry(card.team);
-  const teamName = team?.nameEn ?? getCanonicalTeamName(card.team);
-  const teamSlug = slugify(teamName);
-  const playerSlug =
-    cardArtAliases[teamName]?.[card.player_name_en] ??
-    slugify(card.player_name_en);
-
-  if (!teamSlug || !playerSlug) {
-    return "";
-  }
-
-  return `/cards/${teamSlug}/${playerSlug}.png`;
-}
-
 function formatCoins(value?: number | null) {
   return new Intl.NumberFormat("zh-CN").format(value ?? 0);
 }
@@ -256,8 +228,7 @@ export function PlayerCardMini({
     () =>
       (size === "small"
         ? card?.card_thumb_url?.trim() || card?.card_art_url?.trim()
-        : card?.card_art_url?.trim() || card?.card_thumb_url?.trim()) ||
-      getLocalCardArtPath(card),
+        : card?.card_art_url?.trim() || card?.card_thumb_url?.trim()) || "",
     [card, size],
   );
   const imageCandidate = useMemo(
