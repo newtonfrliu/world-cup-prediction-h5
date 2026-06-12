@@ -202,7 +202,10 @@ export default function CollectionPage() {
   const ownedCount = ownedCardIds.size;
   const totalCount = cards.length;
 
-  async function loadCollection(currentPlayerId: string) {
+  async function loadCollection(
+    currentPlayerId: string,
+    options: { extraOwnedCardId?: string } = {},
+  ) {
     const { data: playerData, error: playerError } = await supabase
       .from("players")
       .select("id, nickname, country, coins, equipped_card_id")
@@ -265,9 +268,17 @@ export default function CollectionPage() {
       ownedIds.add(playerData.equipped_card_id);
     }
 
+    if (
+      options.extraOwnedCardId &&
+      cards.some((card) => card.id === options.extraOwnedCardId)
+    ) {
+      ownedIds.add(options.extraOwnedCardId);
+    }
+
     console.log("COLLECTION_OWNED_CARD_IDS", {
       player_id: currentPlayerId,
       equipped_card_id: playerData.equipped_card_id,
+      extraOwnedCardId: options.extraOwnedCardId ?? null,
       ownedCardIds: Array.from(ownedIds),
       userCardsReturned: userCardData?.length ?? 0,
     });
@@ -361,7 +372,14 @@ export default function CollectionPage() {
       return;
     }
 
-    await loadCollection(playerId);
+    console.log("EXCHANGE_RPC_RESULT", {
+      player_id: playerId,
+      card_id: card.id,
+      result,
+    });
+
+    await loadCollection(playerId, { extraOwnedCardId: result.card_id });
+    setOwnedCardIds((current) => new Set(current).add(result.card_id));
     setMessage(
       result.already_owned
         ? "你已拥有这张球星卡"
@@ -522,6 +540,18 @@ export default function CollectionPage() {
             (() => {
               const isEquipped = player?.equipped_card_id === card.id;
               const owned = ownedCardIds.has(card.id) || isEquipped;
+              const locked = !owned;
+
+              if (card.player_name_en === "Cristiano Ronaldo") {
+                console.log("COLLECTION_CARD_STATE_CRISTIANO_RONALDO", {
+                  card_id: card.id,
+                  owned,
+                  equipped: isEquipped,
+                  locked,
+                  ownedCardIds: Array.from(ownedCardIds),
+                  equippedCardId: player?.equipped_card_id ?? null,
+                });
+              }
 
               return (
                 <StarCard
