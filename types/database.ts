@@ -276,7 +276,21 @@ export type Database = {
         Relationships: [];
       };
     };
-    Functions: Record<string, never>;
+    Functions: {
+      exchange_player_card: {
+        Args: {
+          player_id: string;
+          card_id: string;
+        };
+        Returns: {
+          success: boolean;
+          message: string;
+          coins: number;
+          card_id: string;
+          already_owned: boolean;
+        }[];
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

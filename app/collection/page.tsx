@@ -25,6 +25,13 @@ type UserCard = Pick<
   Database["public"]["Tables"]["user_cards"]["Row"],
   "card_id"
 >;
+type ExchangeCardResult = {
+  success: boolean;
+  message: string;
+  coins: number;
+  card_id: string;
+  already_owned: boolean;
+};
 
 function getRarityLabel(rarity: string) {
   const labels: Record<string, string> = {
@@ -325,78 +332,41 @@ export default function CollectionPage() {
     setError("");
     setMessage("");
 
-    const insertPayload = {
-      player_id: playerId,
-      card_id: card.id,
-    };
-    const insertResult = await supabase.from("user_cards").insert(insertPayload);
-    const { error: insertError } = insertResult;
-
-    console.log("EXCHANGE_USER_CARDS_INSERT_RESULT", {
-      player_id: playerId,
-      card_id: card.id,
-      insertPayload,
-      data: insertResult.data,
-      error: insertError,
-      status: insertResult.status,
-      statusText: insertResult.statusText,
-    });
-
-    if (insertError) {
-      console.error("collection user_cards insert failed", {
-        playerId,
-        card,
-        error: insertError,
-      });
-      setError(insertError.message);
-      setExchangingCardId("");
-      return;
-    }
-
-    const { data: ownedAfterInsert, error: ownedAfterInsertError } =
-      await supabase
-        .from("user_cards")
-        .select("card_id")
-        .eq("player_id", playerId);
-
-    console.log("EXCHANGE_USER_CARDS_AFTER_INSERT", {
-      player_id: playerId,
-      card_id: card.id,
-      ownedCardIds: (ownedAfterInsert ?? []).map((item) => item.card_id),
-      error: ownedAfterInsertError,
-    });
-
-    const nextCoins = player.coins - price;
-    const { error: coinError } = await supabase
-      .from("players")
-      .update({ coins: nextCoins })
-      .eq("id", playerId);
-
-    if (coinError) {
-      console.error("collection coins update failed", {
-        playerId,
-        card,
-        nextCoins,
-        error: coinError,
-      });
-      await supabase.from("user_cards").delete().match({
+    const { data, error: rpcError } = await supabase.rpc(
+      "exchange_player_card",
+      {
         player_id: playerId,
         card_id: card.id,
+      },
+    );
+
+    if (rpcError) {
+      console.error("collection exchange_player_card rpc failed", {
+        playerId,
+        card,
+        error: rpcError,
       });
-      setError(coinError.message);
+      setError(rpcError.message);
       setExchangingCardId("");
       return;
     }
 
-    await supabase.from("coin_transactions").insert({
-      player_id: playerId,
-      amount: -price,
-      type: "card_exchange",
-      related_id: card.id,
-    });
+    const result = Array.isArray(data)
+      ? (data[0] as ExchangeCardResult | undefined)
+      : (data as ExchangeCardResult | null);
+
+    if (!result?.success) {
+      setError(result?.message ?? "兑换失败，请稍后重试");
+      setExchangingCardId("");
+      return;
+    }
 
     await loadCollection(playerId);
-    setMessage(`成功兑换 ${card.player_name} 球星卡`);
+    setMessage(
+      result.already_owned
+        ? "你已拥有这张球星卡"
+        : result.message || `成功兑换 ${card.player_name} 球星卡`,
+    );
     setExchangingCardId("");
   }
 

@@ -212,7 +212,7 @@ export default function PredictPage() {
         throw fallbackError;
       }
 
-      const fallbackPredictions = ((fallbackData ?? []) as Omit<
+      const fallbackPredictions = ((fallbackData ?? []) as unknown as Omit<
         MyPrediction,
         "status" | "settled_at"
       >[]).map((prediction) => ({
@@ -228,7 +228,7 @@ export default function PredictPage() {
       return;
     }
 
-    const predictions = ((data ?? []) as MyPrediction[]).map((prediction) => ({
+    const predictions = ((data ?? []) as unknown as MyPrediction[]).map((prediction) => ({
       ...prediction,
       status: prediction.status ?? "active",
     }));
