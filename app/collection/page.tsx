@@ -39,18 +39,18 @@ function getRarityLabel(rarity: string) {
 
 function getRarityClass(rarity: string) {
   if (rarity === "legend") {
-    return "border-[#f6c84c] bg-[#fff8db] text-[#071b3a]";
+    return "border-[#f6c84c] bg-[radial-gradient(circle_at_50%_0%,rgba(246,200,76,0.35),transparent_38%),linear-gradient(145deg,#050505,#2b1a02_52%,#111111)] text-[#f6c84c] shadow-[0_0_28px_rgba(246,200,76,0.42)]";
   }
 
   if (rarity === "epic") {
-    return "border-[#25c7b7] bg-[#e6fffb] text-[#071b3a]";
+    return "border-[#a855f7] bg-[radial-gradient(circle_at_50%_0%,rgba(246,200,76,0.24),transparent_36%),linear-gradient(145deg,#2e1065,#581c87_60%,#1f1147)] text-white shadow-[0_0_24px_rgba(168,85,247,0.38)]";
   }
 
   if (rarity === "rare") {
-    return "border-[#e63535] bg-[#fde8e8] text-[#071b3a]";
+    return "border-[#2563eb] bg-[linear-gradient(145deg,#eff6ff,#bfdbfe_58%,#dbeafe)] text-[#071b3a] shadow-[0_0_18px_rgba(37,99,235,0.24)]";
   }
 
-  return "border-[#d9e2ec] bg-white text-[#071b3a]";
+  return "border-[#cbd5e1] bg-[linear-gradient(145deg,#ffffff,#f1f5f9_60%,#e2e8f0)] text-[#071b3a]";
 }
 
 function formatCoins(value: number) {

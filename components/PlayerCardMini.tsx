@@ -32,10 +32,14 @@ type PlayerCardMiniProps = {
 
 type RarityStyle = {
   frame: string;
+  inner: string;
   shine: string;
   label: string;
   labelText: string;
   glow: string;
+  badge: string;
+  badgeText: string;
+  particles: string;
 };
 
 const sizeClass = {
@@ -58,32 +62,48 @@ const nameTextClass = {
 
 const rarityStyles: Record<string, RarityStyle> = {
   common: {
-    frame: "linear-gradient(135deg, #F8FAFC, #CBD5E1, #FFFFFF)",
-    shine: "rgba(255,255,255,0.26)",
-    label: "#E2E8F0",
+    frame: "linear-gradient(135deg, #FFFFFF 0%, #94A3B8 32%, #F8FAFC 62%, #CBD5E1 100%)",
+    inner: "linear-gradient(160deg, rgba(248,250,252,0.96), rgba(203,213,225,0.72))",
+    shine: "rgba(255,255,255,0.34)",
+    label: "#E5E7EB",
     labelText: "#071B3A",
-    glow: "0 10px 26px rgba(15,23,42,0.18)",
+    glow: "0 10px 22px rgba(15,23,42,0.16)",
+    badge: "#F8FAFC",
+    badgeText: "#334155",
+    particles: "radial-gradient(circle at 18% 22%, rgba(255,255,255,0.7) 0 2px, transparent 3px)",
   },
   rare: {
-    frame: "linear-gradient(135deg, #25C7B7, #0F766E, #CFFAFE)",
-    shine: "rgba(37,199,183,0.34)",
-    label: "#25C7B7",
-    labelText: "#062C2A",
-    glow: "0 16px 34px rgba(37,199,183,0.28)",
+    frame: "linear-gradient(135deg, #DBEAFE 0%, #2563EB 30%, #0F3B8F 62%, #93C5FD 100%)",
+    inner: "linear-gradient(160deg, rgba(15,59,143,0.92), rgba(37,99,235,0.72), rgba(219,234,254,0.72))",
+    shine: "rgba(96,165,250,0.46)",
+    label: "#2563EB",
+    labelText: "#EFF6FF",
+    glow: "0 16px 36px rgba(37,99,235,0.36)",
+    badge: "#2563EB",
+    badgeText: "#EFF6FF",
+    particles: "radial-gradient(circle at 20% 20%, rgba(147,197,253,0.75) 0 2px, transparent 3px), radial-gradient(circle at 78% 34%, rgba(191,219,254,0.6) 0 1.5px, transparent 3px)",
   },
   epic: {
-    frame: "linear-gradient(135deg, #7C3AED, #F6C84C, #3B0764)",
-    shine: "rgba(246,200,76,0.36)",
+    frame: "linear-gradient(135deg, #2E1065 0%, #A855F7 28%, #F6C84C 55%, #581C87 100%)",
+    inner: "linear-gradient(160deg, rgba(46,16,101,0.96), rgba(126,34,206,0.78), rgba(246,200,76,0.32))",
+    shine: "rgba(168,85,247,0.54)",
     label: "#F6C84C",
     labelText: "#271033",
-    glow: "0 18px 42px rgba(124,58,237,0.32)",
+    glow: "0 18px 46px rgba(168,85,247,0.46), 0 0 18px rgba(246,200,76,0.2)",
+    badge: "#7E22CE",
+    badgeText: "#FDF4FF",
+    particles: "radial-gradient(circle at 16% 26%, rgba(216,180,254,0.9) 0 2px, transparent 3px), radial-gradient(circle at 82% 18%, rgba(246,200,76,0.7) 0 2px, transparent 3px), radial-gradient(circle at 68% 62%, rgba(233,213,255,0.65) 0 1.5px, transparent 3px)",
   },
   legend: {
-    frame: "linear-gradient(135deg, #050505, #F6C84C 48%, #7A4D00)",
-    shine: "rgba(246,200,76,0.5)",
+    frame: "linear-gradient(135deg, #020202 0%, #2B1A02 18%, #F6C84C 38%, #FFF2A6 50%, #9A6500 64%, #050505 100%)",
+    inner: "radial-gradient(circle at 50% 18%, rgba(255,242,166,0.26), transparent 34%), linear-gradient(160deg, rgba(0,0,0,0.98), rgba(45,27,2,0.92), rgba(122,77,0,0.72))",
+    shine: "rgba(246,200,76,0.72)",
     label: "#111111",
     labelText: "#F6C84C",
-    glow: "0 22px 54px rgba(246,200,76,0.46)",
+    glow: "0 24px 62px rgba(246,200,76,0.62), 0 0 24px rgba(255,242,166,0.42)",
+    badge: "#050505",
+    badgeText: "#F6C84C",
+    particles: "radial-gradient(circle at 14% 20%, rgba(255,242,166,0.95) 0 2px, transparent 3px), radial-gradient(circle at 82% 16%, rgba(246,200,76,0.9) 0 2.5px, transparent 4px), radial-gradient(circle at 72% 48%, rgba(255,255,255,0.86) 0 1.5px, transparent 3px), radial-gradient(circle at 24% 72%, rgba(246,200,76,0.78) 0 2px, transparent 4px)",
   },
 };
 
@@ -217,6 +237,8 @@ export function PlayerCardMini({
   const theme = getCountryTheme(team);
   const rarity = card?.card_theme ?? card?.rarity ?? "common";
   const rarityStyle = rarityStyles[rarity] ?? rarityStyles.common;
+  const isLegend = rarity === "legend";
+  const isEpic = rarity === "epic";
   const starLevel = card?.star_level ?? 1;
   const number = card?.shirt_number ?? "-";
   const cardNumber = card?.card_number ?? "";
@@ -268,6 +290,18 @@ export function PlayerCardMini({
               已装备
             </span>
           ) : null}
+          {!compact ? (
+            <span
+              className="absolute right-2 top-2 z-30 rounded-full border px-2 py-1 text-[9px] font-black shadow-lg"
+              style={{
+                background: rarityStyle.badge,
+                borderColor: rarityStyle.label,
+                color: rarityStyle.badgeText,
+              }}
+            >
+              {isLegend ? "♛ LEGEND" : getRarityLabel(rarity)}
+            </span>
+          ) : null}
           {locked ? (
             <div className="absolute inset-0 z-30 rounded-[inherit] bg-[#071b3a]/54" />
           ) : null}
@@ -280,13 +314,27 @@ export function PlayerCardMini({
       >
         <div
           className="absolute inset-0"
-          style={{ background: theme.cardGradient }}
+          style={{ background: `${rarityStyle.inner}, ${theme.cardGradient}` }}
         />
         <div className="absolute inset-0 bg-[#071b3a]/28" />
+        <div
+          className="absolute inset-0 opacity-90"
+          style={{ backgroundImage: rarityStyle.particles }}
+        />
         <div
           className="absolute -left-8 top-8 h-28 w-28 rounded-full blur-2xl"
           style={{ background: rarityStyle.shine }}
         />
+        {(isLegend || isEpic) && !compact ? (
+          <div
+            className="absolute -right-10 -top-10 h-28 w-28 rounded-full blur-2xl"
+            style={{
+              background: isLegend
+                ? "rgba(246,200,76,0.55)"
+                : "rgba(168,85,247,0.52)",
+            }}
+          />
+        ) : null}
         <p
           className={`absolute -left-2 top-4 font-black leading-none text-white/18 ${
             compact ? "text-5xl" : size === "medium" ? "text-7xl" : "text-8xl"
@@ -304,6 +352,16 @@ export function PlayerCardMini({
         >
           #{number}
         </p>
+        {isLegend && !compact ? (
+          <div className="absolute left-1/2 top-2 z-30 -translate-x-1/2 rounded-full border border-[#f6c84c] bg-black/80 px-2 py-0.5 text-[10px] font-black text-[#f6c84c] shadow-[0_0_18px_rgba(246,200,76,0.7)]">
+            ♛ 传奇
+          </div>
+        ) : null}
+        {isEpic && !compact ? (
+          <div className="absolute left-1/2 top-2 z-30 -translate-x-1/2 rounded-full border border-[#f6c84c] bg-[#581c87]/88 px-2 py-0.5 text-[10px] font-black text-[#f6c84c] shadow-[0_0_18px_rgba(168,85,247,0.75)]">
+            EPIC
+          </div>
+        ) : null}
         {cardNumber && !compact ? (
           <p className="absolute right-2 top-9 z-20 rounded-full bg-[#071b3a]/72 px-1.5 py-0.5 text-[9px] font-black text-white">
             {cardNumber}
