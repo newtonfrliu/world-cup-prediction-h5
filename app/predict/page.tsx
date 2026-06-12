@@ -11,6 +11,15 @@ import { getCountryTheme } from "@/lib/countries";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
+type MatchWithOptionalScore = Match & {
+  home_score?: number | null;
+  away_score?: number | null;
+  home_goals?: number | null;
+  away_goals?: number | null;
+  score_home?: number | null;
+  score_away?: number | null;
+  final_result?: "home_win" | "draw" | "away_win" | null;
+};
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type Player = Database["public"]["Tables"]["players"]["Row"];
 type MatchState = "not_started" | "in_progress" | "finished";
@@ -51,6 +60,23 @@ const predictionLabels: Record<PredictionChoice, string> = {
 };
 
 const matchResultLabels: Record<PredictionChoice, string> = predictionLabels;
+
+function getScoreValue(match: MatchWithOptionalScore, side: "home" | "away") {
+  const candidates =
+    side === "home"
+      ? [match.home_score, match.home_goals, match.score_home]
+      : [match.away_score, match.away_goals, match.score_away];
+  const score = candidates.find(
+    (value): value is number =>
+      typeof value === "number" && Number.isFinite(value),
+  );
+
+  return score ?? null;
+}
+
+function getMatchResult(match: MatchWithOptionalScore) {
+  return match.result ?? match.final_result ?? null;
+}
 
 function parseMatchTime(value: string) {
   const date = new Date(value);
@@ -793,6 +819,14 @@ export default function PredictPage() {
                 : matchState === "in_progress"
                   ? "进行中"
                   : "未开始";
+            const matchWithScore = match as MatchWithOptionalScore;
+            const homeScore = getScoreValue(matchWithScore, "home");
+            const awayScore = getScoreValue(matchWithScore, "away");
+            const hasScore = homeScore !== null && awayScore !== null;
+            const finalResult = getMatchResult(matchWithScore);
+            const homeIsWinner = finalResult === "home_win";
+            const awayIsWinner = finalResult === "away_win";
+            const isDraw = finalResult === "draw";
 
             return (
               <article
@@ -835,43 +869,83 @@ export default function PredictPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 p-4 text-center text-sm">
-                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                    <p className="font-semibold text-[#334e68]">主胜</p>
-                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_home}</p>
+                {isFinished ? (
+                  <div className="mx-4 mt-4 rounded-2xl bg-[#071b3a] p-4 text-white shadow-[0_14px_34px_rgba(7,27,58,0.18)]">
+                    <p className="text-center text-xs font-black uppercase tracking-[0.18em] text-[#f6c84c]">
+                      Final Score
+                    </p>
+                    <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                      <div
+                        className={`rounded-xl p-3 text-center ${
+                          homeIsWinner || isDraw
+                            ? "bg-[#f6c84c] text-[#071b3a]"
+                            : "bg-white/12 text-white"
+                        }`}
+                      >
+                        <p className="truncate text-xs font-black">
+                          <CountryDisplay team={match.home_team} />
+                        </p>
+                        <p className="mt-2 text-4xl font-black">
+                          {hasScore ? homeScore : "-"}
+                        </p>
+                      </div>
+                      <div className="text-2xl font-black text-[#f6c84c]">-</div>
+                      <div
+                        className={`rounded-xl p-3 text-center ${
+                          awayIsWinner || isDraw
+                            ? "bg-[#f6c84c] text-[#071b3a]"
+                            : "bg-white/12 text-white"
+                        }`}
+                      >
+                        <p className="truncate text-xs font-black">
+                          <CountryDisplay team={match.away_team} />
+                        </p>
+                        <p className="mt-2 text-4xl font-black">
+                          {hasScore ? awayScore : "-"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 rounded-xl bg-white px-4 py-3 text-sm font-black text-[#071b3a]">
+                      <p>
+                        最终比分：
+                        {hasScore
+                          ? `${homeScore} - ${awayScore}`
+                          : "待同步"}
+                      </p>
+                      <p className="mt-1">
+                        最终结果：
+                        {finalResult ? matchResultLabels[finalResult] : "待公布"}
+                      </p>
+                      <p className="mt-1">
+                        赛果状态：{finalResult ? "已结算" : "待结算"}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                    <p className="font-semibold text-[#334e68]">平局</p>
-                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_draw}</p>
+                ) : (
+                  <div className="grid grid-cols-3 gap-3 p-4 text-center text-sm">
+                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
+                      <p className="font-semibold text-[#334e68]">主胜</p>
+                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_home}</p>
+                    </div>
+                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
+                      <p className="font-semibold text-[#334e68]">平局</p>
+                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_draw}</p>
+                    </div>
+                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
+                      <p className="font-semibold text-[#334e68]">客胜</p>
+                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_away}</p>
+                    </div>
                   </div>
-                  <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                    <p className="font-semibold text-[#334e68]">客胜</p>
-                    <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_away}</p>
-                  </div>
-                </div>
+                )}
 
-                {isBettingClosed ? (
+                {isBettingClosed && !isFinished ? (
                   <div className="mx-4 mt-4 rounded-[14px] bg-[#edf1f5] px-4 py-[14px] text-sm font-black text-[#334e68]">
-                    {isFinished ? (
-                      <>
-                        <p>赛果状态：已结算</p>
-                        <p className="mt-1">
-                          最终结果：
-                          {match.result
-                            ? matchResultLabels[match.result]
-                            : "待公布"}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-base text-[#071b3a]">
-                          {isInProgress ? "比赛进行中" : "投注已关闭"}
-                        </p>
-                        <p className="mt-1 text-[#52606d]">
-                          投注已冻结，无法再下注
-                        </p>
-                      </>
-                    )}
+                    <p className="text-base text-[#071b3a]">
+                      {isInProgress ? "比赛进行中" : "投注已关闭"}
+                    </p>
+                    <p className="mt-1 text-[#52606d]">
+                      投注已冻结，无法再下注
+                    </p>
                   </div>
                 ) : null}
 
