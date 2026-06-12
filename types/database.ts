@@ -279,8 +279,8 @@ export type Database = {
     Functions: {
       exchange_player_card: {
         Args: {
-          player_id: string;
-          card_id: string;
+          p_player_id: string;
+          p_card_id: string;
         };
         Returns: {
           success: boolean;

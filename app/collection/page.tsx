@@ -335,8 +335,8 @@ export default function CollectionPage() {
     const { data, error: rpcError } = await supabase.rpc(
       "exchange_player_card",
       {
-        player_id: playerId,
-        card_id: card.id,
+        p_player_id: playerId,
+        p_card_id: card.id,
       },
     );
 
