@@ -39,7 +39,13 @@ type MyPrediction = Pick<
 > & {
   matches: Pick<
     Match,
-    "home_team" | "away_team" | "start_time" | "status" | "result"
+    | "home_team"
+    | "away_team"
+    | "start_time"
+    | "status"
+    | "result"
+    | "home_score"
+    | "away_score"
   > | null;
 };
 
@@ -203,7 +209,7 @@ export default function PredictPage() {
     const queryWithStatus = supabase
       .from("predictions")
       .select(
-        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result)",
+        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result, home_score, away_score)",
       )
       .eq("player_id", currentPlayerId)
       .or("status.is.null,status.eq.active");
@@ -226,7 +232,7 @@ export default function PredictPage() {
       const { data: fallbackData, error: fallbackError } = await supabase
         .from("predictions")
         .select(
-          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result)",
+          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result, home_score, away_score)",
         )
         .eq("player_id", currentPlayerId);
 
@@ -286,7 +292,7 @@ export default function PredictPage() {
     const { data, error: matchError } = await supabase
       .from("matches")
       .select(
-        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, stage, venue, result, status, created_at",
+        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
       )
       .order("start_time", { ascending: true });
 
@@ -326,7 +332,7 @@ export default function PredictPage() {
       const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select(
-          "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, stage, venue, result, status, created_at",
+          "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
         )
         .order("start_time", { ascending: true });
 
@@ -906,12 +912,14 @@ export default function PredictPage() {
                       </div>
                     </div>
                     <div className="mt-4 rounded-xl bg-white px-4 py-3 text-sm font-black text-[#071b3a]">
-                      <p>
-                        最终比分：
-                        {hasScore
-                          ? `${homeScore} - ${awayScore}`
-                          : "待同步"}
-                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span>最终比分：</span>
+                        <CountryDisplay team={match.home_team} />
+                        <span className="text-lg text-[#e63535]">
+                          {hasScore ? `${homeScore}：${awayScore}` : "-：-"}
+                        </span>
+                        <CountryDisplay team={match.away_team} />
+                      </div>
                       <p className="mt-1">
                         最终结果：
                         {finalResult ? matchResultLabels[finalResult] : "待公布"}

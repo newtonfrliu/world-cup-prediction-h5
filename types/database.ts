@@ -55,6 +55,8 @@ export type Database = {
           odds_home: number;
           odds_draw: number;
           odds_away: number;
+          home_score: number | null;
+          away_score: number | null;
           stage: string | null;
           venue: string | null;
           result: "home_win" | "draw" | "away_win" | null;
@@ -69,6 +71,8 @@ export type Database = {
           odds_home: number;
           odds_draw: number;
           odds_away: number;
+          home_score?: number | null;
+          away_score?: number | null;
           stage?: string | null;
           venue?: string | null;
           result?: "home_win" | "draw" | "away_win" | null;
@@ -83,6 +87,8 @@ export type Database = {
           odds_home?: number;
           odds_draw?: number;
           odds_away?: number;
+          home_score?: number | null;
+          away_score?: number | null;
           stage?: string | null;
           venue?: string | null;
           result?: "home_win" | "draw" | "away_win" | null;

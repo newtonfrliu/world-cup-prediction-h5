@@ -4,7 +4,13 @@ import type { Database } from "@/types/database";
 
 type Match = Pick<
   Database["public"]["Tables"]["matches"]["Row"],
-  "id" | "home_team" | "away_team" | "start_time" | "status"
+  | "id"
+  | "home_team"
+  | "away_team"
+  | "start_time"
+  | "status"
+  | "home_score"
+  | "away_score"
 >;
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type MatchResult = NonNullable<
@@ -74,6 +80,20 @@ function getScoreByTeam(event: ScoreEvent, team: string) {
   return parseScore(scoreItem.score);
 }
 
+function getScoresForMatch(match: Match, event: ScoreEvent) {
+  const homeScore = getScoreByTeam(event, match.home_team);
+  const awayScore = getScoreByTeam(event, match.away_team);
+
+  if (homeScore === null || awayScore === null) {
+    return null;
+  }
+
+  return {
+    homeScore,
+    awayScore,
+  };
+}
+
 function getMatchedEvent(match: Match, events: ScoreEvent[]) {
   const matchHomeTeam = normalizeTeamName(match.home_team);
   const matchAwayTeam = normalizeTeamName(match.away_team);
@@ -103,14 +123,7 @@ function getMatchedEvent(match: Match, events: ScoreEvent[]) {
   });
 }
 
-function getResultFromScore(match: Match, event: ScoreEvent): MatchResult | null {
-  const homeScore = getScoreByTeam(event, match.home_team);
-  const awayScore = getScoreByTeam(event, match.away_team);
-
-  if (homeScore === null || awayScore === null) {
-    return null;
-  }
-
+function getResultFromScores(homeScore: number, awayScore: number): MatchResult {
   if (homeScore > awayScore) {
     return "home_win";
   }
@@ -169,8 +182,8 @@ export async function syncWorldCupScores({
   onStep?.("update_supabase");
   const { data: matches, error: matchesError } = await supabase
     .from("matches")
-    .select("id, home_team, away_team, start_time, status")
-    .or("status.is.null,status.neq.finished");
+    .select("id, home_team, away_team, start_time, status, home_score, away_score")
+    .or("status.is.null,status.neq.finished,home_score.is.null,away_score.is.null");
 
   if (matchesError) {
     throw new Error(`Supabase update failed: ${matchesError.message}`);
@@ -192,9 +205,9 @@ export async function syncWorldCupScores({
       continue;
     }
 
-    const result = getResultFromScore(match, event);
+    const scores = getScoresForMatch(match, event);
 
-    if (!result) {
+    if (!scores) {
       skipped.push({
         home_team: match.home_team,
         away_team: match.away_team,
@@ -203,9 +216,13 @@ export async function syncWorldCupScores({
       continue;
     }
 
+    const result = getResultFromScores(scores.homeScore, scores.awayScore);
+
     const { error: matchUpdateError } = await supabase
       .from("matches")
       .update({
+        home_score: scores.homeScore,
+        away_score: scores.awayScore,
         result,
         status: "finished",
       })

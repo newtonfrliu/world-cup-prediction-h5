@@ -203,7 +203,7 @@ export default function AdminPage() {
     const { data, error: matchError } = await supabase
       .from("matches")
       .select(
-        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, stage, venue, result, status, created_at",
+        "id, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
       )
       .order("start_time", { ascending: true });
 
