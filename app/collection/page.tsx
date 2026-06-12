@@ -202,6 +202,15 @@ export default function CollectionPage() {
   const ownedCount = ownedCardIds.size;
   const totalCount = cards.length;
 
+  useEffect(() => {
+    console.log("COLLECTION_OWNED_RENDER_STATE", {
+      player_id: playerId,
+      ownedCount,
+      ownedCardIds: Array.from(ownedCardIds),
+      equippedCardId: player?.equipped_card_id ?? null,
+    });
+  }, [ownedCardIds, ownedCount, player?.equipped_card_id, playerId]);
+
   async function loadCollection(
     currentPlayerId: string,
     options: { extraOwnedCardId?: string } = {},
@@ -262,10 +271,26 @@ export default function CollectionPage() {
       (item) => item.card_id,
     );
 
+    console.log("COLLECTION_USER_CARDS_RAW", {
+      player_id: currentPlayerId,
+      userCardsRawCount: userCardData?.length ?? 0,
+      userCardIds,
+      equippedCardId: playerData.equipped_card_id,
+      cardPoolCount: cards.length,
+      extraOwnedCardId: options.extraOwnedCardId ?? null,
+    });
+
     setPlayer(playerData);
     setCards(cards);
     setOwnedCardIds((previousOwnedCardIds) => {
       const nextOwned = new Set<string>();
+      const previousOwnedList = Array.from(previousOwnedCardIds);
+
+      console.log("COLLECTION_OWNED_BEFORE_BUILD", {
+        player_id: currentPlayerId,
+        previousOwnedCardIds: previousOwnedList,
+        previousOwnedCount: previousOwnedList.length,
+      });
 
       userCardIds.forEach((cardId) => {
         if (cardIdSet.has(cardId)) {
@@ -297,10 +322,11 @@ export default function CollectionPage() {
         player_id: currentPlayerId,
         userCardsReturned: userCardData?.length ?? 0,
         userCardIds,
-        previousOwnedCardIds: Array.from(previousOwnedCardIds),
+        previousOwnedCardIds: previousOwnedList,
         extraOwnedCardId: options.extraOwnedCardId ?? null,
         equippedCardId: playerData.equipped_card_id,
         finalOwnedCardIds: Array.from(nextOwned),
+        finalOwnedCount: nextOwned.size,
       });
 
       return nextOwned;
