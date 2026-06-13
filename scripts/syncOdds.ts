@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-import { syncWorldCupOdds } from "../lib/syncOdds";
+import { syncWorldCupOdds } from "../lib/syncOdds.ts";
 
 const envFilePath = path.join(process.cwd(), ".env.local");
 

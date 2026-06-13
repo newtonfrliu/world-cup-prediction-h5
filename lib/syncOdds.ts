@@ -57,7 +57,46 @@ const oddsApiUrl =
   "https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/odds";
 
 function normalizeTeamName(value: string) {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function getUnmatchedOddsDiagnostics(match: Match, events: OddsEvent[]) {
+  const normalizedHome = normalizeTeamName(match.home_team);
+  const normalizedAway = normalizeTeamName(match.away_team);
+  const apiCandidates = events
+    .map((event) => ({
+      apiHome: event.home_team,
+      apiAway: event.away_team,
+      normalizedApiHome: normalizeTeamName(event.home_team),
+      normalizedApiAway: normalizeTeamName(event.away_team),
+    }))
+    .filter((event) => {
+      const apiTeams = [event.normalizedApiHome, event.normalizedApiAway];
+
+      return (
+        apiTeams.includes(normalizedHome) ||
+        apiTeams.includes(normalizedAway) ||
+        event.normalizedApiHome.includes(normalizedHome) ||
+        event.normalizedApiAway.includes(normalizedAway) ||
+        normalizedHome.includes(event.normalizedApiHome) ||
+        normalizedAway.includes(event.normalizedApiAway)
+      );
+    })
+    .slice(0, 5);
+
+  return {
+    dbHome: match.home_team,
+    dbAway: match.away_team,
+    normalizedHome,
+    normalizedAway,
+    apiCandidates,
+  };
 }
 
 function isPlaceholderTeam(value: string) {
@@ -219,6 +258,10 @@ export async function syncWorldCupOdds({
       .find((result) => result.odds !== null || result.reason);
 
     if (!matchedResult?.odds) {
+      console.warn("unmatched odds match:", {
+        ...getUnmatchedOddsDiagnostics(match, events),
+        reason: matchedResult?.reason ?? "No matched odds found",
+      });
       skipped.push({
         home_team: match.home_team,
         away_team: match.away_team,
