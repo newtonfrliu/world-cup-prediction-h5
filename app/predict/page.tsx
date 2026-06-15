@@ -964,14 +964,28 @@ export default function PredictPage() {
                       {predictionLabels[selectedPrediction.prediction]}{" "}
                       {selectedPrediction.stake} 金币
                     </p>
-                    <p className="mt-1">
-                      预计返还：
-                      {Math.round(
-                        selectedPrediction.stake *
-                          selectedPrediction.odds_at_prediction,
-                      )}{" "}
-                      金币
-                    </p>
+                    {isFinished ? (
+                      <>
+                        <p className="mt-1 text-[#0f7b3f]">
+                          赛果状态：已结算
+                        </p>
+                        <p className="mt-1">
+                          实际获得：{selectedPrediction.payout ?? 0} 金币
+                        </p>
+                        <p className="mt-1">
+                          本场积分：{selectedPrediction.points ?? 0}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="mt-1">
+                        预计返还：
+                        {Math.round(
+                          selectedPrediction.stake *
+                            selectedPrediction.odds_at_prediction,
+                        )}{" "}
+                        金币
+                      </p>
+                    )}
                     {!isBettingClosed ? (
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         <button

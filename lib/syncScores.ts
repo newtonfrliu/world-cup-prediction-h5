@@ -52,8 +52,22 @@ const scoresApiUrl =
   "https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/scores";
 const maxStartTimeDiffMs = 6 * 60 * 60 * 1000;
 
+const teamAliases: Record<string, string> = {
+  curacao: "curacao",
+  "curaçao": "curacao",
+  库拉索: "curacao",
+};
+
 function normalizeTeamName(value: string) {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/\s+/g, " ");
+
+  return teamAliases[normalized] ?? normalized;
 }
 
 function isFinishedEvent(event: ScoreEvent) {
@@ -121,6 +135,41 @@ function getMatchedEvent(match: Match, events: ScoreEvent[]) {
       Math.abs(matchStartTime - eventStartTime) <= maxStartTimeDiffMs
     );
   });
+}
+
+function getUnmatchedScoreDiagnostics(match: Match, events: ScoreEvent[]) {
+  const normalizedHome = normalizeTeamName(match.home_team);
+  const normalizedAway = normalizeTeamName(match.away_team);
+  const apiCandidates = events
+    .map((event) => ({
+      apiHome: event.home_team,
+      apiAway: event.away_team,
+      normalizedApiHome: normalizeTeamName(event.home_team),
+      normalizedApiAway: normalizeTeamName(event.away_team),
+      commenceTime: event.commence_time,
+    }))
+    .filter((event) => {
+      const apiTeams = [event.normalizedApiHome, event.normalizedApiAway];
+
+      return (
+        apiTeams.includes(normalizedHome) ||
+        apiTeams.includes(normalizedAway) ||
+        event.normalizedApiHome.includes(normalizedHome) ||
+        event.normalizedApiAway.includes(normalizedAway) ||
+        normalizedHome.includes(event.normalizedApiHome) ||
+        normalizedAway.includes(event.normalizedApiAway)
+      );
+    })
+    .slice(0, 5);
+
+  return {
+    dbHome: match.home_team,
+    dbAway: match.away_team,
+    normalizedHome,
+    normalizedAway,
+    startTime: match.start_time,
+    apiCandidates,
+  };
 }
 
 function getResultFromScores(homeScore: number, awayScore: number): MatchResult {
@@ -197,6 +246,10 @@ export async function syncWorldCupScores({
     const event = getMatchedEvent(match, events);
 
     if (!event) {
+      console.warn("unmatched score match:", {
+        ...getUnmatchedScoreDiagnostics(match, events),
+        reason: "No matched finished score event",
+      });
       skipped.push({
         home_team: match.home_team,
         away_team: match.away_team,
