@@ -18,7 +18,7 @@ type MatchWithOptionalScore = Match & {
   away_goals?: number | null;
   score_home?: number | null;
   score_away?: number | null;
-  final_result?: "home_win" | "draw" | "away_win" | null;
+  final_result?: string | null;
 };
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type Player = Database["public"]["Tables"]["players"]["Row"];
@@ -65,7 +65,13 @@ const predictionLabels: Record<PredictionChoice, string> = {
   away_win: "客胜",
 };
 
-const matchResultLabels: Record<PredictionChoice, string> = predictionLabels;
+const matchResultLabels: Record<string, string> = {
+  home: "主胜",
+  home_win: "主胜",
+  draw: "平局",
+  away: "客胜",
+  away_win: "客胜",
+};
 
 function getScoreValue(match: MatchWithOptionalScore, side: "home" | "away") {
   const candidates =
@@ -82,6 +88,22 @@ function getScoreValue(match: MatchWithOptionalScore, side: "home" | "away") {
 
 function getMatchResult(match: MatchWithOptionalScore) {
   return match.result ?? match.final_result ?? null;
+}
+
+function normalizeMatchResult(result: string | null) {
+  if (result === "home" || result === "home_win") {
+    return "home_win";
+  }
+
+  if (result === "away" || result === "away_win") {
+    return "away_win";
+  }
+
+  if (result === "draw") {
+    return "draw";
+  }
+
+  return null;
 }
 
 function parseMatchTime(value: string) {
@@ -211,8 +233,7 @@ export default function PredictPage() {
       .select(
         "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result, home_score, away_score)",
       )
-      .eq("player_id", currentPlayerId)
-      .or("status.is.null,status.eq.active");
+      .eq("player_id", currentPlayerId);
     const { data, error: predictionError } = await queryWithStatus;
 
     if (predictionError) {
@@ -251,7 +272,9 @@ export default function PredictPage() {
         ...prediction,
         status: "active",
         settled_at: null,
-      })) as MyPrediction[];
+      })).filter(
+        (prediction) => (prediction.status ?? "active") !== "cancelled",
+      ) as MyPrediction[];
 
       setMyPredictions(fallbackPredictions);
       setPredictedMatchIds(
@@ -260,10 +283,14 @@ export default function PredictPage() {
       return;
     }
 
-    const predictions = ((data ?? []) as unknown as MyPrediction[]).map((prediction) => ({
-      ...prediction,
-      status: prediction.status ?? "active",
-    }));
+    const predictions = ((data ?? []) as unknown as MyPrediction[])
+      .map((prediction) => ({
+        ...prediction,
+        status: prediction.status ?? "active",
+      }))
+      .filter(
+        (prediction) => (prediction.status ?? "active") !== "cancelled",
+      );
 
     setMyPredictions(predictions);
     setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
@@ -830,9 +857,10 @@ export default function PredictPage() {
             const awayScore = getScoreValue(matchWithScore, "away");
             const hasScore = homeScore !== null && awayScore !== null;
             const finalResult = getMatchResult(matchWithScore);
-            const homeIsWinner = finalResult === "home_win";
-            const awayIsWinner = finalResult === "away_win";
-            const isDraw = finalResult === "draw";
+            const normalizedResult = normalizeMatchResult(finalResult);
+            const homeIsWinner = normalizedResult === "home_win";
+            const awayIsWinner = normalizedResult === "away_win";
+            const isDraw = normalizedResult === "draw";
 
             return (
               <article
@@ -922,7 +950,9 @@ export default function PredictPage() {
                       </div>
                       <p className="mt-1">
                         最终结果：
-                        {finalResult ? matchResultLabels[finalResult] : "待公布"}
+                        {finalResult
+                          ? (matchResultLabels[finalResult] ?? "待公布")
+                          : "待公布"}
                       </p>
                       <p className="mt-1">
                         赛果状态：{finalResult ? "已结算" : "待结算"}
@@ -967,7 +997,10 @@ export default function PredictPage() {
                     {isFinished ? (
                       <>
                         <p className="mt-1 text-[#0f7b3f]">
-                          赛果状态：已结算
+                          赛果状态：
+                          {selectedPrediction.status === "refunded"
+                            ? "已退还"
+                            : "已结算"}
                         </p>
                         <p className="mt-1">
                           实际获得：{selectedPrediction.payout ?? 0} 金币
