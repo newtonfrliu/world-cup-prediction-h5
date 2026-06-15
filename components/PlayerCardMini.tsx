@@ -110,7 +110,7 @@ const rarityStyles: Record<string, RarityStyle> = {
 export const priorityCardImagePlayers = {
   Portugal: ["Cristiano Ronaldo", "Bruno Fernandes", "Rafael Leao", "Ruben Dias"],
   France: ["Kylian Mbappe", "Antoine Griezmann", "Ousmane Dembele", "Aurelien Tchouameni"],
-  Brazil: ["Vinicius Junior", "Rodrygo", "Casemiro", "Marquinhos"],
+  Brazil: ["Vinicius Junior", "Rodrygo", "Casemiro", "Marquinhos", "Neymar"],
   Argentina: ["Lionel Messi", "Lautaro Martinez", "Julian Alvarez", "Emiliano Martinez"],
   England: ["Jude Bellingham", "Harry Kane", "Phil Foden", "Bukayo Saka"],
   Germany: ["Jamal Musiala", "Florian Wirtz", "Joshua Kimmich"],

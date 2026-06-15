@@ -33,6 +33,10 @@ type ExchangeCardResult = {
   already_owned: boolean;
 };
 
+function isCollectionProgressCard(card: PlayerCard) {
+  return (card.roster_source ?? "current_pool") === "current_pool";
+}
+
 function getRarityLabel(rarity: string) {
   const labels: Record<string, string> = {
     common: "普通",
@@ -199,8 +203,18 @@ export default function CollectionPage() {
   const country = player ? getCountryByNameEn(getCanonicalTeamName(player.country)) : null;
   const themeAccentText =
     theme.textOnTheme === "dark" ? "#AA151B" : theme.accent;
-  const ownedCount = ownedCardIds.size;
-  const totalCount = cards.length;
+  const progressCards = useMemo(
+    () => cards.filter(isCollectionProgressCard),
+    [cards],
+  );
+  const progressCardIds = useMemo(
+    () => new Set(progressCards.map((card) => card.id)),
+    [progressCards],
+  );
+  const ownedCount = Array.from(ownedCardIds).filter((cardId) =>
+    progressCardIds.has(cardId),
+  ).length;
+  const totalCount = progressCards.length;
 
   useEffect(() => {
     console.log("COLLECTION_OWNED_RENDER_STATE", {
@@ -267,6 +281,9 @@ export default function CollectionPage() {
 
     const cards = cardData ?? [];
     const cardIdSet = new Set(cards.map((card) => card.id));
+    const progressCardIdSet = new Set(
+      cards.filter(isCollectionProgressCard).map((card) => card.id),
+    );
     const userCardIds = ((userCardData ?? []) as UserCard[]).map(
       (item) => item.card_id,
     );
@@ -277,6 +294,7 @@ export default function CollectionPage() {
       userCardIds,
       equippedCardId: playerData.equipped_card_id,
       cardPoolCount: cards.length,
+      progressCardPoolCount: progressCardIdSet.size,
       extraOwnedCardId: options.extraOwnedCardId ?? null,
     });
 

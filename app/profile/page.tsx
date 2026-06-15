@@ -285,7 +285,8 @@ export default function ProfilePage() {
         const { data: cardData, error: cardError } = await supabase
           .from("player_cards")
           .select("id")
-          .eq("team", canonicalTeamName);
+          .eq("team", canonicalTeamName)
+          .eq("roster_source", "current_pool");
 
         if (cardError) {
           console.error("profile collection card query failed", {
