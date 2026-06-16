@@ -23,6 +23,7 @@ type MatchWithOptionalScore = Match & {
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type Player = Database["public"]["Tables"]["players"]["Row"];
 type MatchState = "not_started" | "in_progress" | "finished";
+type MatchTabKey = "upcoming" | "in_progress" | "finished";
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
 type MyPrediction = Pick<
@@ -197,7 +198,8 @@ export default function PredictPage() {
   > | null>(null);
   const [myPredictions, setMyPredictions] = useState<MyPrediction[]>([]);
   const [showMyPredictions, setShowMyPredictions] = useState(false);
-  const [showFinishedMatches, setShowFinishedMatches] = useState(false);
+  const [activeMatchTab, setActiveMatchTab] =
+    useState<MatchTabKey>("upcoming");
   const [bettingMatch, setBettingMatch] = useState<Match | null>(null);
   const [bettingOption, setBettingOption] = useState<
     (typeof predictionOptions)[number] | null
@@ -707,29 +709,29 @@ export default function PredictPage() {
   const finishedMatches = matches
     .filter((match) => getMatchState(match) === "finished")
     .sort(sortByStartTimeAsc);
-  const matchGroups = [
+  const matchTabs: Array<{
+    key: MatchTabKey;
+    label: string;
+    matches: Match[];
+  }> = [
     {
       key: "upcoming",
-      title: "即将开赛",
+      label: "即将开赛",
       matches: upcomingMatches,
-      expanded: true,
-      collapsible: false,
     },
     {
       key: "in_progress",
-      title: "进行中",
+      label: "进行中",
       matches: inProgressMatches,
-      expanded: true,
-      collapsible: false,
     },
     {
       key: "finished",
-      title: `已结束比赛（${finishedMatches.length}）`,
+      label: "已结束",
       matches: finishedMatches,
-      expanded: showFinishedMatches,
-      collapsible: true,
     },
   ];
+  const activeMatches =
+    matchTabs.find((tab) => tab.key === activeMatchTab)?.matches ?? [];
 
   return (
     <main className="wc-page px-4 py-6">
@@ -872,34 +874,31 @@ export default function PredictPage() {
           </div>
         ) : null}
 
-        <div className="space-y-6">
-          {matchGroups.map((group) => (
-            <section key={group.key}>
-              <button
-                type="button"
-                onClick={() => {
-                  if (group.collapsible) {
-                    setShowFinishedMatches((current) => !current);
-                  }
-                }}
-                className={`flex w-full items-center justify-between rounded-2xl border border-[#071b3a]/10 bg-white px-4 py-3 text-left shadow-sm ${
-                  group.collapsible ? "cursor-pointer" : "cursor-default"
-                }`}
-              >
-                <span className="text-lg font-black text-[#071b3a]">
-                  {group.title}
-                </span>
-                <span className="text-sm font-black text-[#e63535]">
-                  {group.collapsible
-                    ? group.expanded
-                      ? "收起"
-                      : "展开"
-                    : `${group.matches.length} 场`}
-                </span>
-              </button>
-              {group.expanded ? (
-                <div className="mt-3 space-y-4">
-          {group.matches.map((match) => {
+        <div className="sticky top-0 z-20 -mx-4 mb-4 border-y border-[#071b3a]/10 bg-[#f6f1e7]/95 px-4 py-3 backdrop-blur">
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {matchTabs.map((tab) => {
+              const isActive = activeMatchTab === tab.key;
+
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveMatchTab(tab.key)}
+                  className={`shrink-0 rounded-full border px-4 py-2 text-sm font-black transition ${
+                    isActive
+                      ? "border-[#e63535] bg-[#e63535] text-white shadow-sm"
+                      : "border-[#071b3a]/10 bg-white text-[#071b3a]"
+                  }`}
+                >
+                  {tab.label}({tab.matches.length})
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {activeMatches.map((match) => {
             const isPredicted = predictedMatchIds.has(match.id);
             const isSubmitting = submittingMatchId === match.id;
             const selectedPrediction = predictionsByMatchId.get(match.id);
@@ -1150,10 +1149,6 @@ export default function PredictPage() {
               </article>
             );
           })}
-                </div>
-              ) : null}
-            </section>
-          ))}
         </div>
       </section>
 
