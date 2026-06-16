@@ -197,6 +197,7 @@ export default function PredictPage() {
   > | null>(null);
   const [myPredictions, setMyPredictions] = useState<MyPrediction[]>([]);
   const [showMyPredictions, setShowMyPredictions] = useState(false);
+  const [showFinishedMatches, setShowFinishedMatches] = useState(false);
   const [bettingMatch, setBettingMatch] = useState<Match | null>(null);
   const [bettingOption, setBettingOption] = useState<
     (typeof predictionOptions)[number] | null
@@ -695,6 +696,41 @@ export default function PredictPage() {
     }
   }
 
+  const sortByStartTimeAsc = (left: Match, right: Match) =>
+    new Date(left.start_time).getTime() - new Date(right.start_time).getTime();
+  const upcomingMatches = matches
+    .filter((match) => getMatchState(match) === "not_started")
+    .sort(sortByStartTimeAsc);
+  const inProgressMatches = matches
+    .filter((match) => getMatchState(match) === "in_progress")
+    .sort(sortByStartTimeAsc);
+  const finishedMatches = matches
+    .filter((match) => getMatchState(match) === "finished")
+    .sort(sortByStartTimeAsc);
+  const matchGroups = [
+    {
+      key: "upcoming",
+      title: "即将开赛",
+      matches: upcomingMatches,
+      expanded: true,
+      collapsible: false,
+    },
+    {
+      key: "in_progress",
+      title: "进行中",
+      matches: inProgressMatches,
+      expanded: true,
+      collapsible: false,
+    },
+    {
+      key: "finished",
+      title: `已结束比赛（${finishedMatches.length}）`,
+      matches: finishedMatches,
+      expanded: showFinishedMatches,
+      collapsible: true,
+    },
+  ];
+
   return (
     <main className="wc-page px-4 py-6">
       <section className="wc-shell">
@@ -836,8 +872,34 @@ export default function PredictPage() {
           </div>
         ) : null}
 
-        <div className="space-y-4">
-          {matches.map((match) => {
+        <div className="space-y-6">
+          {matchGroups.map((group) => (
+            <section key={group.key}>
+              <button
+                type="button"
+                onClick={() => {
+                  if (group.collapsible) {
+                    setShowFinishedMatches((current) => !current);
+                  }
+                }}
+                className={`flex w-full items-center justify-between rounded-2xl border border-[#071b3a]/10 bg-white px-4 py-3 text-left shadow-sm ${
+                  group.collapsible ? "cursor-pointer" : "cursor-default"
+                }`}
+              >
+                <span className="text-lg font-black text-[#071b3a]">
+                  {group.title}
+                </span>
+                <span className="text-sm font-black text-[#e63535]">
+                  {group.collapsible
+                    ? group.expanded
+                      ? "收起"
+                      : "展开"
+                    : `${group.matches.length} 场`}
+                </span>
+              </button>
+              {group.expanded ? (
+                <div className="mt-3 space-y-4">
+          {group.matches.map((match) => {
             const isPredicted = predictedMatchIds.has(match.id);
             const isSubmitting = submittingMatchId === match.id;
             const selectedPrediction = predictionsByMatchId.get(match.id);
@@ -1088,6 +1150,10 @@ export default function PredictPage() {
               </article>
             );
           })}
+                </div>
+              ) : null}
+            </section>
+          ))}
         </div>
       </section>
 
