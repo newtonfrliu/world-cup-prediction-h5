@@ -353,6 +353,56 @@ where id = ${escapeSql(card.id)};`,
     )
     .join("\n\n");
 
+  const insertSql = insertValues.length
+    ? `-- Insert official cards that did not exist before.
+insert into public.player_cards (
+  team,
+  player_name,
+  player_name_en,
+  country_code,
+  position,
+  shirt_number,
+  first_name,
+  last_name,
+  name_on_shirt,
+  dob,
+  club,
+  height_cm,
+  caps,
+  goals,
+  rarity,
+  price,
+  star_level,
+  card_art_url,
+  card_thumb_url,
+  roster_source,
+  roster_version
+)
+values
+${insertValues.join(",\n")}
+on conflict (team, shirt_number)
+do update set
+  player_name = excluded.player_name,
+  player_name_en = excluded.player_name_en,
+  country_code = excluded.country_code,
+  position = excluded.position,
+  first_name = excluded.first_name,
+  last_name = excluded.last_name,
+  name_on_shirt = excluded.name_on_shirt,
+  dob = excluded.dob,
+  club = excluded.club,
+  height_cm = excluded.height_cm,
+  caps = excluded.caps,
+  goals = excluded.goals,
+  rarity = excluded.rarity,
+  price = excluded.price,
+  star_level = excluded.star_level,
+  card_art_url = coalesce(excluded.card_art_url, public.player_cards.card_art_url),
+  card_thumb_url = coalesce(excluded.card_thumb_url, public.player_cards.card_thumb_url),
+  roster_source = '${rosterSource}',
+  roster_version = '${rosterVersion}';`
+    : "-- No new official cards to insert.";
+
   return `begin;
 
 alter table public.player_cards
@@ -379,32 +429,7 @@ ${inactiveStatements || "-- No inactive old cards detected."}
 -- Update existing official cards while preserving card IDs and user ownership.
 ${updateStatements || "-- No existing official cards detected."}
 
--- Insert official cards that did not exist before.
-insert into public.player_cards (
-  team,
-  player_name,
-  player_name_en,
-  country_code,
-  position,
-  shirt_number,
-  first_name,
-  last_name,
-  name_on_shirt,
-  dob,
-  club,
-  height_cm,
-  caps,
-  goals,
-  rarity,
-  price,
-  star_level,
-  card_art_url,
-  card_thumb_url,
-  roster_source,
-  roster_version
-)
-values
-${insertValues.join(",\n") || "  -- no new official cards to insert\n  (null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)"};
+${insertSql}
 
 commit;
 `;
@@ -556,7 +581,9 @@ async function syncPlayerCards(players: SquadPlayer[]) {
         throw new Error(`Failed to update ${player.country} ${player.player_name}: ${error.message}`);
       }
     } else {
-      const { error } = await supabase.from("player_cards").insert(payload);
+      const { error } = await supabase
+        .from("player_cards")
+        .upsert(payload, { onConflict: "team,shirt_number" });
 
       if (error) {
         throw new Error(`Failed to insert ${player.country} ${player.player_name}: ${error.message}`);

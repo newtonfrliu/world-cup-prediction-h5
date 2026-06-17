@@ -4434,6 +4434,27 @@ values
 ('Uzbekistan', 'UZB', 23, 'MF', 'ESANOV', 'ESANOV Sherzod', 'Sherzod', 'ESANOV', 'ESANOV', '01/02/2003', 'FK Buxoro (UZB)', 190, 1, 0, 'common', 5000, 1, null, null),
 ('Uzbekistan', 'UZB', 24, 'DF', 'KARIMOV', 'KARIMOV Behruzjon', 'Behruzjon', 'KARIMOV', 'KARIMOV', '07/08/2007', 'Surkhon FK (UZB)', 172, 2, 0, 'common', 5000, 1, null, null),
 ('Uzbekistan', 'UZB', 25, 'DF', 'ULMASALIYEV', 'ULMASALIYEV Avazbek', 'Avazbek', 'ULMASALIYEV', 'ULMASALIYEV', '27/03/2000', 'OKMK FK (UZB)', 187, 0, 0, 'common', 5000, 1, null, null),
-('Uzbekistan', 'UZB', 26, 'DF', 'UROZOV', 'UROZOV Jakhongir', 'Jakhongir', 'UROZOV', 'UROZOV', '18/01/2004', 'FK Dinamo Samarkand (UZB)', 190, 4, 1, 'common', 5000, 1, null, null);
+('Uzbekistan', 'UZB', 26, 'DF', 'UROZOV', 'UROZOV Jakhongir', 'Jakhongir', 'UROZOV', 'UROZOV', '18/01/2004', 'FK Dinamo Samarkand (UZB)', 190, 4, 1, 'common', 5000, 1, null, null)
+on conflict (team, shirt_number)
+do update set
+  player_name = excluded.player_name,
+  player_name_en = excluded.player_name_en,
+  country_code = excluded.country_code,
+  position = excluded.position,
+  first_name = excluded.first_name,
+  last_name = excluded.last_name,
+  name_on_shirt = excluded.name_on_shirt,
+  dob = excluded.dob,
+  club = excluded.club,
+  height_cm = excluded.height_cm,
+  caps = excluded.caps,
+  goals = excluded.goals,
+  rarity = excluded.rarity,
+  price = excluded.price,
+  star_level = excluded.star_level,
+  card_art_url = coalesce(excluded.card_art_url, public.player_cards.card_art_url),
+  card_thumb_url = coalesce(excluded.card_thumb_url, public.player_cards.card_thumb_url),
+  roster_source = 'fifa_official_squad',
+  roster_version = '2026_world_cup_final_squad_fifa_pdf_v1';
 
 commit;
