@@ -34,7 +34,7 @@ type ExchangeCardResult = {
 };
 
 function isCollectionProgressCard(card: PlayerCard) {
-  return (card.roster_source ?? "current_pool") === "current_pool";
+  return card.roster_source === "fifa_official_squad";
 }
 
 function getRarityLabel(rarity: string) {
@@ -206,6 +206,14 @@ export default function CollectionPage() {
   const progressCards = useMemo(
     () => cards.filter(isCollectionProgressCard),
     [cards],
+  );
+  const historicalOwnedCards = useMemo(
+    () =>
+      cards.filter(
+        (card) =>
+          !isCollectionProgressCard(card) && ownedCardIds.has(card.id),
+      ),
+    [cards, ownedCardIds],
   );
   const progressCardIds = useMemo(
     () => new Set(progressCards.map((card) => card.id)),
@@ -599,7 +607,7 @@ export default function CollectionPage() {
         </section>
 
         <section className="mt-5 grid grid-cols-2 gap-3">
-          {cards.map((card) => (
+          {progressCards.map((card) => (
             (() => {
               const isEquipped = player?.equipped_card_id === card.id;
               const owned = ownedCardIds.has(card.id) || isEquipped;
@@ -631,6 +639,31 @@ export default function CollectionPage() {
             })()
           ))}
         </section>
+
+        {historicalOwnedCards.length > 0 ? (
+          <section className="wc-card mt-6 p-4">
+            <h2 className="text-xl font-black text-[#071b3a]">
+              历史收藏 / 已下架
+            </h2>
+            <p className="mt-2 text-sm font-bold text-[#627d98]">
+              以下卡牌已不在 FIFA 官方最终名单卡池中，但仍保留在你的收藏里。
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {historicalOwnedCards.map((card) => (
+                <StarCard
+                  key={card.id}
+                  card={card}
+                  owned
+                  coins={player?.coins ?? 0}
+                  exchangingCardId={exchangingCardId}
+                  equippedCardId={player?.equipped_card_id}
+                  onExchange={exchangeCard}
+                  onEquip={equipCard}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </section>
     </main>
   );

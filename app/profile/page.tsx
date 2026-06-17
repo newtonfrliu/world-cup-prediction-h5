@@ -286,7 +286,7 @@ export default function ProfilePage() {
           .from("player_cards")
           .select("id")
           .eq("team", canonicalTeamName)
-          .eq("roster_source", "current_pool");
+          .eq("roster_source", "fifa_official_squad");
 
         if (cardError) {
           console.error("profile collection card query failed", {

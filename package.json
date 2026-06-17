@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "import:schedule": "node scripts/importSchedule.ts",
+    "import:fifa-squads": "node scripts/import-fifa-squads.ts",
     "check:teams": "node scripts/checkTeams.ts",
     "sync:odds": "node scripts/syncOdds.ts",
     "sync:scores": "node scripts/syncScores.ts"
@@ -17,6 +18,7 @@
     "flag-icons": "^7.5.0",
     "html-to-image": "^1.11.13",
     "next": "15.5.19",
+    "pdf-parse": "^2.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
