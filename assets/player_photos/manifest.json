@@ -1,0 +1,2135 @@
+[
+  {
+    "country": "Spain",
+    "player_name": "大卫·拉亚",
+    "player_name_en": "RAYA David",
+    "output_path": "assets/player_photos/spain/raya-david.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "马克·普比尔",
+    "player_name_en": "PUBILL Marc",
+    "output_path": "assets/player_photos/spain/pubill-marc.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "亚历克斯·格里马尔多",
+    "player_name_en": "GRIMALDO Alex",
+    "output_path": "assets/player_photos/spain/grimaldo-alex.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "埃里克·加西亚",
+    "player_name_en": "GARCIA Eric",
+    "output_path": "assets/player_photos/spain/garcia-eric.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "马科斯·略伦特",
+    "player_name_en": "LLORENTE Marcos",
+    "output_path": "assets/player_photos/spain/llorente-marcos.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "米克尔·梅里诺",
+    "player_name_en": "MERINO Mikel",
+    "output_path": "assets/player_photos/spain/merino-mikel.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "费兰·托雷斯",
+    "player_name_en": "TORRES Ferran",
+    "output_path": "assets/player_photos/spain/torres-ferran.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "法比安·鲁伊斯",
+    "player_name_en": "RUIZ Fabian",
+    "output_path": "assets/player_photos/spain/ruiz-fabian.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "加维",
+    "player_name_en": "GAVI",
+    "output_path": "assets/player_photos/spain/gavi.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "达尼·奥尔莫",
+    "player_name_en": "OLMO Dani",
+    "output_path": "assets/player_photos/spain/olmo-dani.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Spain",
+    "player_name": "耶雷米·皮诺",
+    "player_name_en": "PINO Yeremy",
+    "output_path": "assets/player_photos/spain/pino-yeremy.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "佩德罗·波罗",
+    "player_name_en": "PORRO Pedro",
+    "output_path": "assets/player_photos/spain/porro-pedro.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "霍安·加西亚",
+    "player_name_en": "GARCIA Joan",
+    "output_path": "assets/player_photos/spain/garcia-joan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "艾梅里克·拉波尔特",
+    "player_name_en": "LAPORTE Aymeric",
+    "output_path": "assets/player_photos/spain/laporte-aymeric.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "亚历克斯·巴埃纳",
+    "player_name_en": "BAENA Alex",
+    "output_path": "assets/player_photos/spain/baena-alex.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Spain",
+    "player_name": "罗德里",
+    "player_name_en": "RODRI",
+    "output_path": "assets/player_photos/spain/rodri.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Rodri.jpg/960px-UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Rodri.jpg",
+    "commons_title": "File:UEFA EURO qualifiers Sweden vs Spain 20191015 Rodri.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "尼科·威廉姆斯",
+    "player_name_en": "WILLIAMS Nico",
+    "output_path": "assets/player_photos/spain/williams-nico.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Nico_Williams_Performing.jpg/960px-Nico_Williams_Performing.jpg",
+    "commons_title": "File:Nico Williams Performing.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "马丁·祖比门迪",
+    "player_name_en": "ZUBIMENDI Martin",
+    "output_path": "assets/player_photos/spain/zubimendi-martin.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Image download failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5026 cp5026, Varnish XID 132910063<br>Upstream caches: cp5026 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:37:23 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Spain",
+    "player_name": "拉明·亚马尔",
+    "player_name_en": "YAMAL Lamine",
+    "output_path": "assets/player_photos/spain/yamal-lamine.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lamine_Yamal_in_2025.jpg/960px-Lamine_Yamal_in_2025.jpg",
+    "commons_title": "File:Lamine Yamal in 2025.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "佩德里",
+    "player_name_en": "PEDRI",
+    "output_path": "assets/player_photos/spain/pedri.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/f/f1/%D0%9C%D0%B0%D1%82%D1%87_%C2%AB%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%BE%C2%BB_-_%C2%AB%D0%91%D0%B0%D1%80%D1%81%D0%B5%D0%BB%D0%BE%D0%BD%D0%B0%C2%BB_0-4._24_%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8F_2020_%D0%B3%D0%BE%D0%B4%D0%B0_%E2%80%94_1166854_%28Pedro_Gonz%C3%A1lez_L%C3%B3pez%2C_Pedri%29.jpg",
+    "commons_title": "File:Матч «Динамо» - «Барселона» 0-4. 24 ноября 2020 года — 1166854 (Pedro González López, Pedri).jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "米克尔·奥亚萨瓦尔",
+    "player_name_en": "OYARZABAL Mikel",
+    "output_path": "assets/player_photos/spain/oyarzabal-mikel.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Mikel_Oyarzabal_4.jpg/960px-UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Mikel_Oyarzabal_4.jpg",
+    "commons_title": "File:UEFA EURO qualifiers Sweden vs Spain 20191015 Mikel Oyarzabal 4.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "保罗·库巴西",
+    "player_name_en": "CUBARSI Pau",
+    "output_path": "assets/player_photos/spain/cubarsi-pau.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Uzbekistan_vs._Spain%2C_2024_Summer_Olympic_men%27s_association_football%2C_2024-07-24_%28250%29_-_Pau_Cubars%C3%AD.jpg",
+    "commons_title": "File:Uzbekistan vs. Spain, 2024 Summer Olympic men's association football, 2024-07-24 (250) - Pau Cubarsí.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "乌奈·西蒙",
+    "player_name_en": "SIMON Unai",
+    "output_path": "assets/player_photos/spain/simon-unai.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Unai_Sim%C3%B3n_Mendibil.jpg",
+    "commons_title": "File:Unai Simón Mendibil.jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "马克·库库雷利亚",
+    "player_name_en": "CUCURELLA Marc",
+    "output_path": "assets/player_photos/spain/cucurella-marc.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/7/72/Marc_Cucurella.jpg",
+    "commons_title": "File:Marc Cucurella.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  {
+    "country": "Spain",
+    "player_name": "维克托·穆尼奥斯",
+    "player_name_en": "MUNOZ Victor",
+    "output_path": "assets/player_photos/spain/munoz-victor.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Spain",
+    "player_name": "博尔哈·伊格莱西亚斯",
+    "player_name_en": "IGLESIAS Borja",
+    "output_path": "assets/player_photos/spain/iglesias-borja.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "胡安·穆索",
+    "player_name_en": "MUSSO Juan",
+    "output_path": "assets/player_photos/argentina/musso-juan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "马科斯·塞内西",
+    "player_name_en": "SENESI Marcos",
+    "output_path": "assets/player_photos/argentina/senesi-marcos.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "尼古拉斯·塔利亚菲科",
+    "player_name_en": "TAGLIAFICO Nicolas",
+    "output_path": "assets/player_photos/argentina/tagliafico-nicolas.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "贡萨洛·蒙铁尔",
+    "player_name_en": "MONTIEL Gonzalo",
+    "output_path": "assets/player_photos/argentina/montiel-gonzalo.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "莱安德罗·帕雷德斯",
+    "player_name_en": "PAREDES Leandro",
+    "output_path": "assets/player_photos/argentina/paredes-leandro.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "利桑德罗·马丁内斯",
+    "player_name_en": "MARTINEZ Lisandro",
+    "output_path": "assets/player_photos/argentina/martinez.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "罗德里戈·德保罗",
+    "player_name_en": "DE PAUL Rodrigo",
+    "output_path": "assets/player_photos/argentina/de-paul-rodrigo.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "瓦伦廷·巴尔科",
+    "player_name_en": "BARCO Valentin",
+    "output_path": "assets/player_photos/argentina/barco-valentin.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "胡利安·阿尔瓦雷斯",
+    "player_name_en": "ALVAREZ Julian",
+    "output_path": "assets/player_photos/argentina/alvarez.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "莱昂内尔·梅西",
+    "player_name_en": "MESSI Lionel",
+    "output_path": "assets/player_photos/argentina/messi-lionel.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "吉奥瓦尼·洛塞尔索",
+    "player_name_en": "LO CELSO Giovani",
+    "output_path": "assets/player_photos/argentina/lo-celso-giovani.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Argentina",
+    "player_name": "赫罗尼莫·鲁利",
+    "player_name_en": "RULLI Geronimo",
+    "output_path": "assets/player_photos/argentina/rulli-geronimo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "克里斯蒂安·罗梅罗",
+    "player_name_en": "ROMERO Cristian",
+    "output_path": "assets/player_photos/argentina/romero-cristian.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "埃塞基耶尔·帕拉西奥斯",
+    "player_name_en": "PALACIOS Exequiel",
+    "output_path": "assets/player_photos/argentina/palacios-exequiel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "尼科·冈萨雷斯",
+    "player_name_en": "GONZALEZ Nico",
+    "output_path": "assets/player_photos/argentina/gonzalez-nico.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "蒂亚戈·阿尔马达",
+    "player_name_en": "ALMADA Thiago",
+    "output_path": "assets/player_photos/argentina/almada-thiago.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "朱利亚诺·西蒙尼",
+    "player_name_en": "SIMEONE Giuliano",
+    "output_path": "assets/player_photos/argentina/simeone-giuliano.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "尼科·帕斯",
+    "player_name_en": "PAZ Nico",
+    "output_path": "assets/player_photos/argentina/paz-nico.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "尼古拉斯·奥塔门迪",
+    "player_name_en": "OTAMENDI Nicolas",
+    "output_path": "assets/player_photos/argentina/otamendi-nicolas.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "亚历克西斯·麦卡利斯特",
+    "player_name_en": "MAC ALLISTER Alexis",
+    "output_path": "assets/player_photos/argentina/mac-allister-alexis.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "何塞·曼努埃尔·洛佩斯",
+    "player_name_en": "LOPEZ Jose Manuel",
+    "output_path": "assets/player_photos/argentina/lopez-jose-manuel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "劳塔罗·马丁内斯",
+    "player_name_en": "MARTINEZ Lautaro",
+    "output_path": "assets/player_photos/argentina/lautaro.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "埃米利亚诺·马丁内斯",
+    "player_name_en": "MARTINEZ Emiliano",
+    "output_path": "assets/player_photos/argentina/martinez-emiliano.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "恩佐·费尔南德斯",
+    "player_name_en": "FERNANDEZ Enzo",
+    "output_path": "assets/player_photos/argentina/fernandez-enzo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "法昆多·梅迪纳",
+    "player_name_en": "MEDINA Facundo",
+    "output_path": "assets/player_photos/argentina/medina-facundo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Argentina",
+    "player_name": "纳韦尔·莫利纳",
+    "player_name_en": "MOLINA Nahuel",
+    "output_path": "assets/player_photos/argentina/molina-nahuel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "曼努埃尔·诺伊尔",
+    "player_name_en": "NEUER Manuel",
+    "output_path": "assets/player_photos/germany/neuer-manuel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "安东尼奥·吕迪格",
+    "player_name_en": "RUEDIGER Antonio",
+    "output_path": "assets/player_photos/germany/ruediger-antonio.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "瓦尔德马·安东",
+    "player_name_en": "ANTON Waldemar",
+    "output_path": "assets/player_photos/germany/anton-waldemar.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "约纳坦·塔",
+    "player_name_en": "TAH Jonathan",
+    "output_path": "assets/player_photos/germany/tah-jonathan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "亚历山大·帕夫洛维奇",
+    "player_name_en": "PAVLOVIC Aleksandar",
+    "output_path": "assets/player_photos/germany/pavlovic-aleksandar.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "约书亚·基米希",
+    "player_name_en": "KIMMICH Joshua",
+    "output_path": "assets/player_photos/germany/kimmich.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "凯·哈弗茨",
+    "player_name_en": "HAVERTZ Kai",
+    "output_path": "assets/player_photos/germany/havertz.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "莱昂·格雷茨卡",
+    "player_name_en": "GORETZKA Leon",
+    "output_path": "assets/player_photos/germany/goretzka-leon.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "杰米·勒韦林",
+    "player_name_en": "LEWELING Jamie",
+    "output_path": "assets/player_photos/germany/leweling-jamie.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "贾马尔·穆西亚拉",
+    "player_name_en": "MUSIALA Jamal",
+    "output_path": "assets/player_photos/germany/musiala.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "尼克·沃尔特马德",
+    "player_name_en": "WOLTEMADE Nick",
+    "output_path": "assets/player_photos/germany/woltemade-nick.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "奥利弗·鲍曼",
+    "player_name_en": "BAUMANN Oliver",
+    "output_path": "assets/player_photos/germany/baumann-oliver.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "帕斯卡尔·格罗斯",
+    "player_name_en": "GROSS Pascal",
+    "output_path": "assets/player_photos/germany/gross-pascal.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "马克西米利安·拜尔",
+    "player_name_en": "BEIER Maximilian",
+    "output_path": "assets/player_photos/germany/beier-maximilian.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "尼科·施洛特贝克",
+    "player_name_en": "SCHLOTTERBECK Nico",
+    "output_path": "assets/player_photos/germany/schlotterbeck-nico.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "安杰洛·施蒂勒",
+    "player_name_en": "STILLER Angelo",
+    "output_path": "assets/player_photos/germany/stiller-angelo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "弗洛里安·维尔茨",
+    "player_name_en": "WIRTZ Florian",
+    "output_path": "assets/player_photos/germany/wirtz.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "纳撒尼尔·布朗",
+    "player_name_en": "BROWN Nathaniel",
+    "output_path": "assets/player_photos/germany/brown-nathaniel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "勒鲁瓦·萨内",
+    "player_name_en": "SANE Leroy",
+    "output_path": "assets/player_photos/germany/sane-leroy.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "纳迪姆·阿米里",
+    "player_name_en": "AMIRI Nadiem",
+    "output_path": "assets/player_photos/germany/amiri-nadiem.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "亚历山大·努贝尔",
+    "player_name_en": "NUEBEL Alexander",
+    "output_path": "assets/player_photos/germany/nuebel-alexander.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "大卫·劳姆",
+    "player_name_en": "RAUM David",
+    "output_path": "assets/player_photos/germany/raum-david.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "费利克斯·恩梅查",
+    "player_name_en": "NMECHA Felix",
+    "output_path": "assets/player_photos/germany/nmecha-felix.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "马利克·佳夫",
+    "player_name_en": "THIAW Malick",
+    "output_path": "assets/player_photos/germany/thiaw-malick.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "阿桑·韦德拉奥果",
+    "player_name_en": "OUEDRAOGO Assan",
+    "output_path": "assets/player_photos/germany/ouedraogo-assan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Germany",
+    "player_name": "德尼兹·温达夫",
+    "player_name_en": "UNDAV Deniz",
+    "output_path": "assets/player_photos/germany/undav-deniz.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "乔丹·皮克福德",
+    "player_name_en": "PICKFORD Jordan",
+    "output_path": "assets/player_photos/england/pickford-jordan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "埃兹里·孔萨",
+    "player_name_en": "KONSA Ezri",
+    "output_path": "assets/player_photos/england/konsa-ezri.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "尼科·奥赖利",
+    "player_name_en": "OREILLY Nico",
+    "output_path": "assets/player_photos/england/oreilly-nico.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "德克兰·赖斯",
+    "player_name_en": "RICE Declan",
+    "output_path": "assets/player_photos/england/rice.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "约翰·斯通斯",
+    "player_name_en": "STONES John",
+    "output_path": "assets/player_photos/england/stones-john.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "马克·格伊",
+    "player_name_en": "GUEHI Marc",
+    "output_path": "assets/player_photos/england/guehi-marc.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "布卡约·萨卡",
+    "player_name_en": "SAKA Bukayo",
+    "output_path": "assets/player_photos/england/saka.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "埃利奥特·安德森",
+    "player_name_en": "ANDERSON Elliot",
+    "output_path": "assets/player_photos/england/anderson-elliot.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "哈里·凯恩",
+    "player_name_en": "KANE Harry",
+    "output_path": "assets/player_photos/england/kane.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "裘德·贝林厄姆",
+    "player_name_en": "BELLINGHAM Jude",
+    "output_path": "assets/player_photos/england/bellingham.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "马库斯·拉什福德",
+    "player_name_en": "RASHFORD Marcus",
+    "output_path": "assets/player_photos/england/rashford-marcus.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Marcus_Rashford_2017-11-05_1.jpg",
+    "commons_title": "File:Marcus Rashford 2017-11-05 1.jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  {
+    "country": "England",
+    "player_name": "特雷沃·查洛巴",
+    "player_name_en": "CHALOBAH Trevoh",
+    "output_path": "assets/player_photos/england/chalobah-trevoh.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Trevoh_Chalobah.jpg/960px-Trevoh_Chalobah.jpg",
+    "commons_title": "File:Trevoh Chalobah.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "England",
+    "player_name": "迪恩·亨德森",
+    "player_name_en": "HENDERSON Dean",
+    "output_path": "assets/player_photos/england/henderson-dean.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Image download failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5026 cp5026, Varnish XID 133237260<br>Upstream caches: cp5026 int<br>Error: 429, Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1) at Wed, 17 Jun 2026 18:38:06 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "England",
+    "player_name": "乔丹·亨德森",
+    "player_name_en": "HENDERSON Jordan",
+    "output_path": "assets/player_photos/england/henderson-jordan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Image download failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5026 cp5026, Varnish XID 126929321<br>Upstream caches: cp5026 int<br>Error: 429, Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1) at Wed, 17 Jun 2026 18:38:08 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "England",
+    "player_name": "丹·伯恩",
+    "player_name_en": "BURN Dan",
+    "output_path": "assets/player_photos/england/burn-dan.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Dan_Burn_BCFC_2013.jpg",
+    "commons_title": "File:Dan Burn BCFC 2013.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  {
+    "country": "England",
+    "player_name": "科比·梅努",
+    "player_name_en": "MAINOO Kobbie",
+    "output_path": "assets/player_photos/england/mainoo-kobbie.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Manchester_United_wins_the_FA_Youth_Cup_2022.png/960px-Manchester_United_wins_the_FA_Youth_Cup_2022.png",
+    "commons_title": "File:Manchester United wins the FA Youth Cup 2022.png",
+    "license": "CC BY 2.0"
+  },
+  {
+    "country": "England",
+    "player_name": "摩根·罗杰斯",
+    "player_name_en": "ROGERS Morgan",
+    "output_path": "assets/player_photos/england/rogers-morgan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Image download failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5026 cp5026, Varnish XID 133400840<br>Upstream caches: cp5026 int<br>Error: 429, Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1) at Wed, 17 Jun 2026 18:38:13 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "England",
+    "player_name": "安东尼·戈登",
+    "player_name_en": "GORDON Anthony",
+    "output_path": "assets/player_photos/england/gordon-anthony.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Anthony_Gordon_%28cropped%29.jpg",
+    "commons_title": "File:Anthony Gordon (cropped).jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "England",
+    "player_name": "奥利·沃特金斯",
+    "player_name_en": "WATKINS Ollie",
+    "output_path": "assets/player_photos/england/watkins-ollie.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Ollie_Watkins_2021.jpg",
+    "commons_title": "File:Ollie Watkins 2021.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "England",
+    "player_name": "诺尼·马杜埃凯",
+    "player_name_en": "MADUEKE Noni",
+    "output_path": "assets/player_photos/england/madueke-noni.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Fulham_v_Chelsea_20042025_%287%29_%28Noni_Madueke%29.jpg",
+    "commons_title": "File:Fulham v Chelsea 20042025 (7) (Noni Madueke).jpg",
+    "license": "CC0"
+  },
+  {
+    "country": "England",
+    "player_name": "埃贝雷奇·埃泽",
+    "player_name_en": "EZE Eberechi",
+    "output_path": "assets/player_photos/england/eze-eberechi.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "伊万·托尼",
+    "player_name_en": "TONEY Ivan",
+    "output_path": "assets/player_photos/england/toney-ivan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "詹姆斯·特拉福德",
+    "player_name_en": "TRAFFORD James",
+    "output_path": "assets/player_photos/england/trafford-james.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "里斯·詹姆斯",
+    "player_name_en": "JAMES Reece",
+    "output_path": "assets/player_photos/england/james-reece.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "杰德·斯彭斯",
+    "player_name_en": "SPENCE Djed",
+    "output_path": "assets/player_photos/england/spence-djed.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "England",
+    "player_name": "贾雷尔·宽萨",
+    "player_name_en": "QUANSAH Jarell",
+    "output_path": "assets/player_photos/england/quansah-jarell.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "巴特·费尔布鲁根",
+    "player_name_en": "VERBRUGGEN Bart",
+    "output_path": "assets/player_photos/netherlands/verbruggen-bart.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "卢特沙雷尔·海特勒伊达",
+    "player_name_en": "GEERTRUIDA Lutsharel",
+    "output_path": "assets/player_photos/netherlands/geertruida-lutsharel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "马滕·德容",
+    "player_name_en": "DE ROON Marten",
+    "output_path": "assets/player_photos/netherlands/de-roon-marten.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "维吉尔·范戴克",
+    "player_name_en": "VAN DIJK Virgil",
+    "output_path": "assets/player_photos/netherlands/vandijk.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "内森·阿克",
+    "player_name_en": "AKE Nathan",
+    "output_path": "assets/player_photos/netherlands/ake-nathan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "扬·保罗·范赫克",
+    "player_name_en": "VAN HECKE Jan Paul",
+    "output_path": "assets/player_photos/netherlands/van-hecke-jan-paul.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "贾斯汀·克鲁伊维特",
+    "player_name_en": "KLUIVERT Justin",
+    "output_path": "assets/player_photos/netherlands/kluivert-justin.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "瑞安·赫拉芬贝赫",
+    "player_name_en": "GRAVENBERCH Ryan",
+    "output_path": "assets/player_photos/netherlands/gravenberch-ryan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "沃特·韦霍斯特",
+    "player_name_en": "WEGHORST Wout",
+    "output_path": "assets/player_photos/netherlands/weghorst-wout.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "孟菲斯·德佩",
+    "player_name_en": "DEPAY Memphis",
+    "output_path": "assets/player_photos/netherlands/depay-memphis.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "科迪·加克波",
+    "player_name_en": "GAKPO Cody",
+    "output_path": "assets/player_photos/netherlands/gakpo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "马茨·维弗",
+    "player_name_en": "WIEFFER Mats",
+    "output_path": "assets/player_photos/netherlands/wieffer-mats.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "罗宾·罗夫斯",
+    "player_name_en": "ROEFS Robin",
+    "output_path": "assets/player_photos/netherlands/roefs-robin.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "蒂贾尼·赖因德斯",
+    "player_name_en": "REIJNDERS Tijjani",
+    "output_path": "assets/player_photos/netherlands/reijnders-tijjani.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "米基·范德文",
+    "player_name_en": "VAN DE VEN Micky",
+    "output_path": "assets/player_photos/netherlands/van-de-ven-micky.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "古斯·蒂尔",
+    "player_name_en": "TIL Guus",
+    "output_path": "assets/player_photos/netherlands/til-guus.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "诺阿·朗",
+    "player_name_en": "LANG Noa",
+    "output_path": "assets/player_photos/netherlands/lang-noa.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "唐耶尔·马伦",
+    "player_name_en": "MALEN Donyell",
+    "output_path": "assets/player_photos/netherlands/malen-donyell.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "布莱恩·布罗比",
+    "player_name_en": "BROBBEY Brian",
+    "output_path": "assets/player_photos/netherlands/brobbey-brian.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "特恩·库普梅纳斯",
+    "player_name_en": "KOOPMEINERS Teun",
+    "output_path": "assets/player_photos/netherlands/koopmeiners-teun.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "弗伦基·德容",
+    "player_name_en": "DE JONG Frenkie",
+    "output_path": "assets/player_photos/netherlands/de-jong-frenkie.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "登泽尔·邓弗里斯",
+    "player_name_en": "DUMFRIES Denzel",
+    "output_path": "assets/player_photos/netherlands/dumfries-denzel.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "马克·弗莱肯",
+    "player_name_en": "FLEKKEN Mark",
+    "output_path": "assets/player_photos/netherlands/flekken-mark.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "克里森西奥·萨默维尔",
+    "player_name_en": "SUMMERVILLE Crysencio",
+    "output_path": "assets/player_photos/netherlands/summerville-crysencio.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "约雷尔·哈托",
+    "player_name_en": "HATO Jorrel",
+    "output_path": "assets/player_photos/netherlands/hato-jorrel.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Netherlands",
+    "player_name": "昆滕·廷贝尔",
+    "player_name_en": "TIMBER Quinten",
+    "output_path": "assets/player_photos/netherlands/timber-quinten.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "迪奥戈·科斯塔",
+    "player_name_en": "DIOGO COSTA",
+    "output_path": "assets/player_photos/portugal/diogo-costa.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "Portugal",
+    "player_name": "内尔松·塞梅多",
+    "player_name_en": "NELSON SEMEDO",
+    "output_path": "assets/player_photos/portugal/nelson-semedo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "鲁本·迪亚斯",
+    "player_name_en": "RUBEN DIAS",
+    "output_path": "assets/player_photos/portugal/rubendias.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "托马斯·阿劳若",
+    "player_name_en": "TOMAS ARAUJO",
+    "output_path": "assets/player_photos/portugal/tomas-araujo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "迪奥戈·达洛特",
+    "player_name_en": "DIOGO DALOT",
+    "output_path": "assets/player_photos/portugal/diogo-dalot.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "马特乌斯·努内斯",
+    "player_name_en": "MATHEUS NUNES",
+    "output_path": "assets/player_photos/portugal/matheus-nunes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "克里斯蒂亚诺·罗纳尔多",
+    "player_name_en": "CRISTIANO RONALDO",
+    "output_path": "assets/player_photos/portugal/ronaldo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "布鲁诺·费尔南德斯",
+    "player_name_en": "BRUNO FERNANDES",
+    "output_path": "assets/player_photos/portugal/bruno.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "贡萨洛·拉莫斯",
+    "player_name_en": "GONCALO RAMOS",
+    "output_path": "assets/player_photos/portugal/goncalo-ramos.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "贝尔纳多·席尔瓦",
+    "player_name_en": "BERNARDO SILVA",
+    "output_path": "assets/player_photos/portugal/bernardo-silva.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "若昂·菲利克斯",
+    "player_name_en": "JOAO FELIX",
+    "output_path": "assets/player_photos/portugal/joao-felix.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "若泽·萨",
+    "player_name_en": "JOSE SA",
+    "output_path": "assets/player_photos/portugal/jose-sa.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "雷纳托·维加",
+    "player_name_en": "RENATO VEIGA",
+    "output_path": "assets/player_photos/portugal/renato-veiga.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "贡萨洛·伊纳西奥",
+    "player_name_en": "GONCALO INACIO",
+    "output_path": "assets/player_photos/portugal/goncalo-inacio.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "若昂·内维斯",
+    "player_name_en": "JOAO NEVES",
+    "output_path": "assets/player_photos/portugal/joao-neves.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "弗朗西斯科·特林康",
+    "player_name_en": "FRANCISCO TRINCAO",
+    "output_path": "assets/player_photos/portugal/francisco-trincao.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "拉斐尔·莱奥",
+    "player_name_en": "RAFAEL LEAO",
+    "output_path": "assets/player_photos/portugal/leao.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "佩德罗·内托",
+    "player_name_en": "PEDRO NETO",
+    "output_path": "assets/player_photos/portugal/pedro-neto.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "贡萨洛·格德斯",
+    "player_name_en": "GONCALO GUEDES",
+    "output_path": "assets/player_photos/portugal/goncalo-guedes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "若昂·坎塞洛",
+    "player_name_en": "JOAO CANCELO",
+    "output_path": "assets/player_photos/portugal/joao-cancelo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "鲁本·内维斯",
+    "player_name_en": "RUBEN NEVES",
+    "output_path": "assets/player_photos/portugal/ruben-neves.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "鲁伊·席尔瓦",
+    "player_name_en": "RUI SILVA",
+    "output_path": "assets/player_photos/portugal/rui-silva.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "维蒂尼亚",
+    "player_name_en": "VITINHA",
+    "output_path": "assets/player_photos/portugal/vitinha.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "萨穆·科斯塔",
+    "player_name_en": "SAMU COSTA",
+    "output_path": "assets/player_photos/portugal/samu-costa.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "努诺·门德斯",
+    "player_name_en": "NUNO MENDES",
+    "output_path": "assets/player_photos/portugal/nuno-mendes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Portugal",
+    "player_name": "弗朗西斯科·孔塞桑",
+    "player_name_en": "FRANCISCO CONCEICAO",
+    "output_path": "assets/player_photos/portugal/francisco-conceicao.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "布里斯·桑巴",
+    "player_name_en": "SAMBA Brice",
+    "output_path": "assets/player_photos/france/samba-brice.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "马洛·古斯托",
+    "player_name_en": "GUSTO Malo",
+    "output_path": "assets/player_photos/france/gusto-malo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "卢卡斯·迪涅",
+    "player_name_en": "DIGNE Lucas",
+    "output_path": "assets/player_photos/france/digne-lucas.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "France",
+    "player_name": "达约·于帕梅卡诺",
+    "player_name_en": "UPAMECANO Dayot",
+    "output_path": "assets/player_photos/france/upamecano-dayot.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "朱尔·孔德",
+    "player_name_en": "KOUNDE Jules",
+    "output_path": "assets/player_photos/france/kounde-jules.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "马努·科内",
+    "player_name_en": "KONE Manu",
+    "output_path": "assets/player_photos/france/kone-manu.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "奥斯曼·登贝莱",
+    "player_name_en": "DEMBELE Ousmane",
+    "output_path": "assets/player_photos/france/dembele-ousmane.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "奥雷利安·楚阿梅尼",
+    "player_name_en": "TCHOUAMENI Aurelien",
+    "output_path": "assets/player_photos/france/tchouameni-aurelien.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "马库斯·图拉姆",
+    "player_name_en": "THURAM Marcus",
+    "output_path": "assets/player_photos/france/thuram-marcus.png",
+    "status": "exists",
+    "source": "Wikimedia Commons"
+  },
+  {
+    "country": "France",
+    "player_name": "基利安·姆巴佩",
+    "player_name_en": "MBAPPE Kylian",
+    "output_path": "assets/player_photos/france/mbappe-kylian.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "迈克尔·奥利塞",
+    "player_name_en": "OLISE Michael",
+    "output_path": "assets/player_photos/france/olise-michael.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "布拉德利·巴尔科拉",
+    "player_name_en": "BARCOLA Bradley",
+    "output_path": "assets/player_photos/france/barcola-bradley.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "恩戈洛·坎特",
+    "player_name_en": "KANTE Ngolo",
+    "output_path": "assets/player_photos/france/kante-ngolo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "阿德里安·拉比奥",
+    "player_name_en": "RABIOT Adrien",
+    "output_path": "assets/player_photos/france/rabiot-adrien.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "易卜拉希马·科纳特",
+    "player_name_en": "KONATE Ibrahima",
+    "output_path": "assets/player_photos/france/konate-ibrahima.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "迈克·迈尼昂",
+    "player_name_en": "MAIGNAN Mike",
+    "output_path": "assets/player_photos/france/maignan-mike.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "威廉·萨利巴",
+    "player_name_en": "SALIBA William",
+    "output_path": "assets/player_photos/france/saliba-william.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "沃伦·扎伊尔-埃梅里",
+    "player_name_en": "ZAIRE-EMERY Warren",
+    "output_path": "assets/player_photos/france/zaire-emery-warren.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "特奥·埃尔南德斯",
+    "player_name_en": "HERNANDEZ Theo",
+    "output_path": "assets/player_photos/france/hernandez-theo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "德西雷·杜埃",
+    "player_name_en": "DOUE Desire",
+    "output_path": "assets/player_photos/france/doue-desire.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "卢卡斯·埃尔南德斯",
+    "player_name_en": "HERNANDEZ Lucas",
+    "output_path": "assets/player_photos/france/hernandez-lucas.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "让-菲利普·马特塔",
+    "player_name_en": "MATETA Jean-Philippe",
+    "output_path": "assets/player_photos/france/mateta-jean-philippe.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 630959575<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:52 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "France",
+    "player_name": "罗宾·里瑟",
+    "player_name_en": "RISSER Robin",
+    "output_path": "assets/player_photos/france/risser-robin.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "拉扬·谢尔基",
+    "player_name_en": "CHERKI Rayan",
+    "output_path": "assets/player_photos/france/cherki-rayan.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 633382856<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:53 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "France",
+    "player_name": "马涅斯·阿克利乌什",
+    "player_name_en": "AKLIOUCHE Maghnes",
+    "output_path": "assets/player_photos/france/akliouche-maghnes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "France",
+    "player_name": "马克桑斯·拉克鲁瓦",
+    "player_name_en": "LACROIX Maxence",
+    "output_path": "assets/player_photos/france/lacroix-maxence.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 646451959<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:53 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "阿利松",
+    "player_name_en": "ALISSON",
+    "output_path": "assets/player_photos/brazil/alison.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "埃德森·席尔瓦",
+    "player_name_en": "EDERSON SILVA",
+    "output_path": "assets/player_photos/brazil/ederson-silva.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 597260341<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:54 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "加布里埃尔·马加良斯",
+    "player_name_en": "GABRIEL MAGALHAES",
+    "output_path": "assets/player_photos/brazil/gabriel-magalhaes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "马尔基尼奥斯",
+    "player_name_en": "MARQUINHOS",
+    "output_path": "assets/player_photos/brazil/marquinhos.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 630048000<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:55 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "卡塞米罗",
+    "player_name_en": "CASEMIRO",
+    "output_path": "assets/player_photos/brazil/casemiro.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "阿莱士·桑德罗",
+    "player_name_en": "ALEX SANDRO",
+    "output_path": "assets/player_photos/brazil/alex-sandro.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 641800566<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:55 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "维尼修斯",
+    "player_name_en": "VINICIUS JUNIOR",
+    "output_path": "assets/player_photos/brazil/vinicius.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "布鲁诺·吉马良斯",
+    "player_name_en": "BRUNO GUIMARAES",
+    "output_path": "assets/player_photos/brazil/bruno-guimaraes.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 634138017<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:56 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "马特乌斯·库尼亚",
+    "player_name_en": "MATHEUS CUNHA",
+    "output_path": "assets/player_photos/brazil/matheus-cunha.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "内马尔",
+    "player_name_en": "NEYMAR JR",
+    "output_path": "assets/player_photos/brazil/neymar.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 640294090<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:57 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "拉菲尼亚",
+    "player_name_en": "RAPHINHA",
+    "output_path": "assets/player_photos/brazil/raphinha.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "韦弗顿",
+    "player_name_en": "WEVERTON",
+    "output_path": "assets/player_photos/brazil/weverton.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 624347601<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:57 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "达尼洛",
+    "player_name_en": "DANILO",
+    "output_path": "assets/player_photos/brazil/danilo.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "布雷默",
+    "player_name_en": "BREMER",
+    "output_path": "assets/player_photos/brazil/bremer.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 616584107<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:58 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "莱奥·佩雷拉",
+    "player_name_en": "LEO PEREIRA",
+    "output_path": "assets/player_photos/brazil/leo-pereira.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "道格拉斯·桑托斯",
+    "player_name_en": "DOUGLAS SANTOS",
+    "output_path": "assets/player_photos/brazil/douglas-santos.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 648939976<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:59 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "法比尼奥",
+    "player_name_en": "FABINHO",
+    "output_path": "assets/player_photos/brazil/fabinho.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Brazil",
+    "player_name": "达尼洛·桑托斯",
+    "player_name_en": "DANILO SANTOS",
+    "output_path": "assets/player_photos/brazil/danilo-santos.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 <!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" role=\"main\">\n<a href=\"https://www.wikimedia.org\"><img id=\"logo\" src=\"https://www.wikimedia.org/static/images/wmf-logo.png\" srcset=\"https://www.wikimedia.org/static/images/wmf-logo-2x.png 2x\" alt=\"Wikimedia\" width=\"135\" height=\"101\">\n</a>\n<div class=\"content-text\">\n<h1>Error</h1>\n\n<p>Too many requests (f061ab2)</p>\n</div>\n</div>\n<div class=\"footer\"><p>If you report this error to the Wikimedia System Administrators, please include the details below.</p><p class=\"text-muted\"><code>Request served via cp5019 cp5019, Varnish XID 608630348<br>Upstream caches: cp5019 int<br>Error: 429, Too many requests (f061ab2) at Wed, 17 Jun 2026 18:38:59 GMT<br><details><summary>Sensitive client information</summary>IP address: 240e:b8f:3e0:b700:bcf9:8e47:6ef5:1ab8</details></code></p>\n</div>\n</html>\n"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "恩德里克",
+    "player_name_en": "ENDRICK",
+    "output_path": "assets/player_photos/brazil/endrick.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "卢卡斯·帕奎塔",
+    "player_name_en": "LUCAS PAQUETA",
+    "output_path": "assets/player_photos/brazil/lucas-paqueta.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "路易斯·恩里克",
+    "player_name_en": "LUIZ HENRIQUE",
+    "output_path": "assets/player_photos/brazil/luiz-henrique.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "加布里埃尔·马丁内利",
+    "player_name_en": "GABRIEL MARTINELLI",
+    "output_path": "assets/player_photos/brazil/gabriel-martinelli.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "埃德森",
+    "player_name_en": "EDERSON",
+    "output_path": "assets/player_photos/brazil/ederson.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "罗热·伊巴涅斯",
+    "player_name_en": "ROGER IBANEZ",
+    "output_path": "assets/player_photos/brazil/roger-ibanez.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "伊戈尔·蒂亚戈",
+    "player_name_en": "IGOR THIAGO",
+    "output_path": "assets/player_photos/brazil/igor-thiago.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "fetch failed"
+  },
+  {
+    "country": "Brazil",
+    "player_name": "拉扬",
+    "player_name_en": "RAYAN",
+    "output_path": "assets/player_photos/brazil/rayan.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Rayan_Frikeche_%28SCO_Angers%29.JPG",
+    "commons_title": "File:Rayan Frikeche (SCO Angers).JPG",
+    "license": "CC BY-SA 3.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "铃木彩艳",
+    "player_name_en": "SUZUKI Zion",
+    "output_path": "assets/player_photos/japan/suzuki-zion.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/ZION_SUZUKI_-_JPN_vs_THA_-_Friendly_Match_-_2024.01.01.jpg",
+    "commons_title": "File:ZION SUZUKI - JPN vs THA - Friendly Match - 2024.01.01.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "菅原由势",
+    "player_name_en": "SUGAWARA Yukinari",
+    "output_path": "assets/player_photos/japan/sugawara-yukinari.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/4a/4822940_AE7I9740_-_Yukinari_Sugawara.jpg",
+    "commons_title": "File:4822940 AE7I9740 - Yukinari Sugawara.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "谷口彰悟",
+    "player_name_en": "TANIGUCHI Shogo",
+    "output_path": "assets/player_photos/japan/taniguchi-shogo.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Shogo_Taniguchi.jpg",
+    "commons_title": "File:Shogo Taniguchi.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "板仓滉",
+    "player_name_en": "ITAKURA Kou",
+    "output_path": "assets/player_photos/japan/itakura-kou.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/2022_FIFA_World_Cup_Germany_1%E2%80%932_Japan_-_%285%29.jpg",
+    "commons_title": "File:2022 FIFA World Cup Germany 1–2 Japan - (5).jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "长友佑都",
+    "player_name_en": "NAGATOMO Yuto",
+    "output_path": "assets/player_photos/japan/nagatomo-yuto.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Y%C5%ABto_Nagatomo_in_Iran_-_Japan%2C_AFC_Asian_Cup_2019_20_%28cropped%29.jpg",
+    "commons_title": "File:Yūto Nagatomo in Iran - Japan, AFC Asian Cup 2019 20 (cropped).jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "町野修斗",
+    "player_name_en": "MACHINO Shuto",
+    "output_path": "assets/player_photos/japan/machino-shuto.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Sh%C5%ABto_Machino_20221208.jpg",
+    "commons_title": "File:Shūto Machino 20221208.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "田中碧",
+    "player_name_en": "TANAKA Ao",
+    "output_path": "assets/player_photos/japan/tanaka-ao.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Ao_Tanaka_13092025_%281%29.jpg/960px-Ao_Tanaka_13092025_%281%29.jpg",
+    "commons_title": "File:Ao Tanaka 13092025 (1).jpg",
+    "license": "CC0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "久保建英",
+    "player_name_en": "KUBO Takefusa",
+    "output_path": "assets/player_photos/japan/kubo-takefusa.png",
+    "status": "downloaded",
+    "source": "Wikimedia Commons",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Takefusa_Kubo_1053.jpg",
+    "commons_title": "File:Takefusa Kubo 1053.jpg",
+    "license": "CC BY 3.0"
+  },
+  {
+    "country": "Japan",
+    "player_name": "后藤启介",
+    "player_name_en": "GOTO Keisuke",
+    "output_path": "assets/player_photos/japan/goto-keisuke.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "堂安律",
+    "player_name_en": "DOAN Ritsu",
+    "output_path": "assets/player_photos/japan/doan-ritsu.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "前田大然",
+    "player_name_en": "MAEDA Daizen",
+    "output_path": "assets/player_photos/japan/maeda-daizen.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "大迫敬介",
+    "player_name_en": "OSAKO Keisuke",
+    "output_path": "assets/player_photos/japan/osako-keisuke.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "中村敬斗",
+    "player_name_en": "NAKAMURA Keito",
+    "output_path": "assets/player_photos/japan/nakamura-keito.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "伊东纯也",
+    "player_name_en": "ITO Junya",
+    "output_path": "assets/player_photos/japan/ito-junya.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "镰田大地",
+    "player_name_en": "KAMADA Daichi",
+    "output_path": "assets/player_photos/japan/kamada-daichi.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "渡边刚",
+    "player_name_en": "WATANABE Tsuyoshi",
+    "output_path": "assets/player_photos/japan/watanabe-tsuyoshi.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "铃木唯人",
+    "player_name_en": "SUZUKI Yuito",
+    "output_path": "assets/player_photos/japan/suzuki-yuito.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "上田绮世",
+    "player_name_en": "UEDA Ayase",
+    "output_path": "assets/player_photos/japan/ueda-ayase.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "小川航基",
+    "player_name_en": "OGAWA Koki",
+    "output_path": "assets/player_photos/japan/ogawa-koki.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "濑古步梦",
+    "player_name_en": "SEKO Ayumu",
+    "output_path": "assets/player_photos/japan/seko-ayumu.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "伊藤洋辉",
+    "player_name_en": "ITO Hiroki",
+    "output_path": "assets/player_photos/japan/ito-hiroki.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "富安健洋",
+    "player_name_en": "TOMIYASU Takehiro",
+    "output_path": "assets/player_photos/japan/tomiyasu-takehiro.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "早川友基",
+    "player_name_en": "HAYAKAWA Tomoki",
+    "output_path": "assets/player_photos/japan/hayakawa-tomoki.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "佐野海舟",
+    "player_name_en": "SANO Kaishu",
+    "output_path": "assets/player_photos/japan/sano-kaishu.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "铃木淳之介",
+    "player_name_en": "SUZUKI Junnosuke",
+    "output_path": "assets/player_photos/japan/suzuki-junnosuke.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  },
+  {
+    "country": "Japan",
+    "player_name": "盐贝健人",
+    "player_name_en": "SHIOGAI Kento",
+    "output_path": "assets/player_photos/japan/shiogai-kento.png",
+    "status": "failed",
+    "source": "Wikimedia Commons",
+    "reason": "Wikimedia API failed: 429 You are making too many requests to the API.\nPlease follow the best practices at <https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits>.\nIf you are unsure how to get the access you need, contact <bot-traffic@wikimedia.org>."
+  }
+]

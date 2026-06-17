@@ -1,0 +1,3530 @@
+{
+  "Spain": [
+    {
+      "country": "Spain",
+      "shirt_number": 1,
+      "player_name": "大卫·拉亚",
+      "player_name_en": "RAYA David",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "raya-david.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "RAYA David",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 2,
+      "player_name": "马克·普比尔",
+      "player_name_en": "PUBILL Marc",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "pubill-marc.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "PUBILL Marc",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 3,
+      "player_name": "亚历克斯·格里马尔多",
+      "player_name_en": "GRIMALDO Alex",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "grimaldo-alex.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "GRIMALDO Alex",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 4,
+      "player_name": "埃里克·加西亚",
+      "player_name_en": "GARCIA Eric",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "garcia-eric.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "GARCIA Eric",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 5,
+      "player_name": "马科斯·略伦特",
+      "player_name_en": "LLORENTE Marcos",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "llorente-marcos.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "LLORENTE Marcos",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 6,
+      "player_name": "米克尔·梅里诺",
+      "player_name_en": "MERINO Mikel",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "merino-mikel.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "MERINO Mikel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 7,
+      "player_name": "费兰·托雷斯",
+      "player_name_en": "TORRES Ferran",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "torres-ferran.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "TORRES Ferran",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 8,
+      "player_name": "法比安·鲁伊斯",
+      "player_name_en": "RUIZ Fabian",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ruiz-fabian.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "RUIZ Fabian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 9,
+      "player_name": "加维",
+      "player_name_en": "GAVI",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "gavi.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "GAVI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 10,
+      "player_name": "达尼·奥尔莫",
+      "player_name_en": "OLMO Dani",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "olmo-dani.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "OLMO Dani",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 11,
+      "player_name": "耶雷米·皮诺",
+      "player_name_en": "PINO Yeremy",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "pino-yeremy.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "PINO Yeremy",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 12,
+      "player_name": "佩德罗·波罗",
+      "player_name_en": "PORRO Pedro",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "porro-pedro.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "PORRO Pedro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 13,
+      "player_name": "霍安·加西亚",
+      "player_name_en": "GARCIA Joan",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "garcia-joan.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "GARCIA Joan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 14,
+      "player_name": "艾梅里克·拉波尔特",
+      "player_name_en": "LAPORTE Aymeric",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "laporte-aymeric.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "LAPORTE Aymeric",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 15,
+      "player_name": "亚历克斯·巴埃纳",
+      "player_name_en": "BAENA Alex",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "baena-alex.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "BAENA Alex",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 16,
+      "player_name": "罗德里",
+      "player_name_en": "RODRI",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "rodri.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "RODRI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 17,
+      "player_name": "尼科·威廉姆斯",
+      "player_name_en": "WILLIAMS Nico",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "williams-nico.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "WILLIAMS Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 18,
+      "player_name": "马丁·祖比门迪",
+      "player_name_en": "ZUBIMENDI Martin",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "zubimendi-martin.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "ZUBIMENDI Martin",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 19,
+      "player_name": "拉明·亚马尔",
+      "player_name_en": "YAMAL Lamine",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P1",
+      "card_filename_suggestion": "yamal-lamine.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "YAMAL Lamine",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 20,
+      "player_name": "佩德里",
+      "player_name_en": "PEDRI",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "pedri.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "PEDRI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 21,
+      "player_name": "米克尔·奥亚萨瓦尔",
+      "player_name_en": "OYARZABAL Mikel",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "oyarzabal-mikel.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "OYARZABAL Mikel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 22,
+      "player_name": "保罗·库巴西",
+      "player_name_en": "CUBARSI Pau",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "cubarsi-pau.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "CUBARSI Pau",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 23,
+      "player_name": "乌奈·西蒙",
+      "player_name_en": "SIMON Unai",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "simon-unai.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "SIMON Unai",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 24,
+      "player_name": "马克·库库雷利亚",
+      "player_name_en": "CUCURELLA Marc",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "cucurella-marc.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "CUCURELLA Marc",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 25,
+      "player_name": "维克托·穆尼奥斯",
+      "player_name_en": "MUNOZ Victor",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "munoz-victor.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "MUNOZ Victor",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "shirt_number": 26,
+      "player_name": "博尔哈·伊格莱西亚斯",
+      "player_name_en": "IGLESIAS Borja",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "iglesias-borja.png",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "IGLESIAS Borja",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Argentina": [
+    {
+      "country": "Argentina",
+      "shirt_number": 1,
+      "player_name": "胡安·穆索",
+      "player_name_en": "MUSSO Juan",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "musso-juan.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MUSSO Juan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 2,
+      "player_name": "马科斯·塞内西",
+      "player_name_en": "SENESI Marcos",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "senesi-marcos.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "SENESI Marcos",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 3,
+      "player_name": "尼古拉斯·塔利亚菲科",
+      "player_name_en": "TAGLIAFICO Nicolas",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "tagliafico-nicolas.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "TAGLIAFICO Nicolas",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 4,
+      "player_name": "贡萨洛·蒙铁尔",
+      "player_name_en": "MONTIEL Gonzalo",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "montiel-gonzalo.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MONTIEL Gonzalo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 5,
+      "player_name": "莱安德罗·帕雷德斯",
+      "player_name_en": "PAREDES Leandro",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "paredes-leandro.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "PAREDES Leandro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 6,
+      "player_name": "利桑德罗·马丁内斯",
+      "player_name_en": "MARTINEZ Lisandro",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P0",
+      "card_filename_suggestion": "martinez.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MARTINEZ Lisandro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 7,
+      "player_name": "罗德里戈·德保罗",
+      "player_name_en": "DE PAUL Rodrigo",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "de-paul-rodrigo.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "DE PAUL Rodrigo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 8,
+      "player_name": "瓦伦廷·巴尔科",
+      "player_name_en": "BARCO Valentin",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "barco-valentin.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "BARCO Valentin",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 9,
+      "player_name": "胡利安·阿尔瓦雷斯",
+      "player_name_en": "ALVAREZ Julian",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "alvarez.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "ALVAREZ Julian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 10,
+      "player_name": "莱昂内尔·梅西",
+      "player_name_en": "MESSI Lionel",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P1",
+      "card_filename_suggestion": "messi-lionel.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MESSI Lionel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 11,
+      "player_name": "吉奥瓦尼·洛塞尔索",
+      "player_name_en": "LO CELSO Giovani",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "lo-celso-giovani.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "LO CELSO Giovani",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 12,
+      "player_name": "赫罗尼莫·鲁利",
+      "player_name_en": "RULLI Geronimo",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "rulli-geronimo.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "RULLI Geronimo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 13,
+      "player_name": "克里斯蒂安·罗梅罗",
+      "player_name_en": "ROMERO Cristian",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "romero-cristian.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "ROMERO Cristian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 14,
+      "player_name": "埃塞基耶尔·帕拉西奥斯",
+      "player_name_en": "PALACIOS Exequiel",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "palacios-exequiel.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "PALACIOS Exequiel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 15,
+      "player_name": "尼科·冈萨雷斯",
+      "player_name_en": "GONZALEZ Nico",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "gonzalez-nico.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "GONZALEZ Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 16,
+      "player_name": "蒂亚戈·阿尔马达",
+      "player_name_en": "ALMADA Thiago",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "almada-thiago.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "ALMADA Thiago",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 17,
+      "player_name": "朱利亚诺·西蒙尼",
+      "player_name_en": "SIMEONE Giuliano",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "simeone-giuliano.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "SIMEONE Giuliano",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 18,
+      "player_name": "尼科·帕斯",
+      "player_name_en": "PAZ Nico",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "paz-nico.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "PAZ Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 19,
+      "player_name": "尼古拉斯·奥塔门迪",
+      "player_name_en": "OTAMENDI Nicolas",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "otamendi-nicolas.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "OTAMENDI Nicolas",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 20,
+      "player_name": "亚历克西斯·麦卡利斯特",
+      "player_name_en": "MAC ALLISTER Alexis",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "mac-allister-alexis.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MAC ALLISTER Alexis",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 21,
+      "player_name": "何塞·曼努埃尔·洛佩斯",
+      "player_name_en": "LOPEZ Jose Manuel",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "lopez-jose-manuel.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "LOPEZ Jose Manuel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 22,
+      "player_name": "劳塔罗·马丁内斯",
+      "player_name_en": "MARTINEZ Lautaro",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "lautaro.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MARTINEZ Lautaro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 23,
+      "player_name": "埃米利亚诺·马丁内斯",
+      "player_name_en": "MARTINEZ Emiliano",
+      "position": "GK",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "martinez-emiliano.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MARTINEZ Emiliano",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 24,
+      "player_name": "恩佐·费尔南德斯",
+      "player_name_en": "FERNANDEZ Enzo",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "fernandez-enzo.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "FERNANDEZ Enzo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 25,
+      "player_name": "法昆多·梅迪纳",
+      "player_name_en": "MEDINA Facundo",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "medina-facundo.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MEDINA Facundo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "shirt_number": 26,
+      "player_name": "纳韦尔·莫利纳",
+      "player_name_en": "MOLINA Nahuel",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "molina-nahuel.png",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MOLINA Nahuel",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Germany": [
+    {
+      "country": "Germany",
+      "shirt_number": 1,
+      "player_name": "曼努埃尔·诺伊尔",
+      "player_name_en": "NEUER Manuel",
+      "position": "GK",
+      "rarity": "Legend",
+      "production_priority": "P1",
+      "card_filename_suggestion": "neuer-manuel.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "NEUER Manuel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 2,
+      "player_name": "安东尼奥·吕迪格",
+      "player_name_en": "RUEDIGER Antonio",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "ruediger-antonio.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "RUEDIGER Antonio",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 3,
+      "player_name": "瓦尔德马·安东",
+      "player_name_en": "ANTON Waldemar",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "anton-waldemar.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "ANTON Waldemar",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 4,
+      "player_name": "约纳坦·塔",
+      "player_name_en": "TAH Jonathan",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "tah-jonathan.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "TAH Jonathan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 5,
+      "player_name": "亚历山大·帕夫洛维奇",
+      "player_name_en": "PAVLOVIC Aleksandar",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "pavlovic-aleksandar.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "PAVLOVIC Aleksandar",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 6,
+      "player_name": "约书亚·基米希",
+      "player_name_en": "KIMMICH Joshua",
+      "position": "DF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "kimmich.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "KIMMICH Joshua",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 7,
+      "player_name": "凯·哈弗茨",
+      "player_name_en": "HAVERTZ Kai",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "havertz.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "HAVERTZ Kai",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 8,
+      "player_name": "莱昂·格雷茨卡",
+      "player_name_en": "GORETZKA Leon",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "goretzka-leon.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "GORETZKA Leon",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 9,
+      "player_name": "杰米·勒韦林",
+      "player_name_en": "LEWELING Jamie",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "leweling-jamie.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "LEWELING Jamie",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 10,
+      "player_name": "贾马尔·穆西亚拉",
+      "player_name_en": "MUSIALA Jamal",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "musiala.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "MUSIALA Jamal",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 11,
+      "player_name": "尼克·沃尔特马德",
+      "player_name_en": "WOLTEMADE Nick",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "woltemade-nick.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "WOLTEMADE Nick",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 12,
+      "player_name": "奥利弗·鲍曼",
+      "player_name_en": "BAUMANN Oliver",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "baumann-oliver.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "BAUMANN Oliver",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 13,
+      "player_name": "帕斯卡尔·格罗斯",
+      "player_name_en": "GROSS Pascal",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "gross-pascal.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "GROSS Pascal",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 14,
+      "player_name": "马克西米利安·拜尔",
+      "player_name_en": "BEIER Maximilian",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "beier-maximilian.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "BEIER Maximilian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 15,
+      "player_name": "尼科·施洛特贝克",
+      "player_name_en": "SCHLOTTERBECK Nico",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "schlotterbeck-nico.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "SCHLOTTERBECK Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 16,
+      "player_name": "安杰洛·施蒂勒",
+      "player_name_en": "STILLER Angelo",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "stiller-angelo.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "STILLER Angelo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 17,
+      "player_name": "弗洛里安·维尔茨",
+      "player_name_en": "WIRTZ Florian",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "wirtz.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "WIRTZ Florian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 18,
+      "player_name": "纳撒尼尔·布朗",
+      "player_name_en": "BROWN Nathaniel",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "brown-nathaniel.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "BROWN Nathaniel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 19,
+      "player_name": "勒鲁瓦·萨内",
+      "player_name_en": "SANE Leroy",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "sane-leroy.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "SANE Leroy",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 20,
+      "player_name": "纳迪姆·阿米里",
+      "player_name_en": "AMIRI Nadiem",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "amiri-nadiem.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "AMIRI Nadiem",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 21,
+      "player_name": "亚历山大·努贝尔",
+      "player_name_en": "NUEBEL Alexander",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "nuebel-alexander.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "NUEBEL Alexander",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 22,
+      "player_name": "大卫·劳姆",
+      "player_name_en": "RAUM David",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "raum-david.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "RAUM David",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 23,
+      "player_name": "费利克斯·恩梅查",
+      "player_name_en": "NMECHA Felix",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "nmecha-felix.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "NMECHA Felix",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 24,
+      "player_name": "马利克·佳夫",
+      "player_name_en": "THIAW Malick",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "thiaw-malick.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "THIAW Malick",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 25,
+      "player_name": "阿桑·韦德拉奥果",
+      "player_name_en": "OUEDRAOGO Assan",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ouedraogo-assan.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "OUEDRAOGO Assan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "shirt_number": 26,
+      "player_name": "德尼兹·温达夫",
+      "player_name_en": "UNDAV Deniz",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "undav-deniz.png",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "UNDAV Deniz",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "England": [
+    {
+      "country": "England",
+      "shirt_number": 1,
+      "player_name": "乔丹·皮克福德",
+      "player_name_en": "PICKFORD Jordan",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "pickford-jordan.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "PICKFORD Jordan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 2,
+      "player_name": "埃兹里·孔萨",
+      "player_name_en": "KONSA Ezri",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "konsa-ezri.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "KONSA Ezri",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 3,
+      "player_name": "尼科·奥赖利",
+      "player_name_en": "OREILLY Nico",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "oreilly-nico.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "OREILLY Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 4,
+      "player_name": "德克兰·赖斯",
+      "player_name_en": "RICE Declan",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "rice.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "RICE Declan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 5,
+      "player_name": "约翰·斯通斯",
+      "player_name_en": "STONES John",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "stones-john.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "STONES John",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 6,
+      "player_name": "马克·格伊",
+      "player_name_en": "GUEHI Marc",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "guehi-marc.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "GUEHI Marc",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 7,
+      "player_name": "布卡约·萨卡",
+      "player_name_en": "SAKA Bukayo",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "saka.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "SAKA Bukayo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 8,
+      "player_name": "埃利奥特·安德森",
+      "player_name_en": "ANDERSON Elliot",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "anderson-elliot.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "ANDERSON Elliot",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 9,
+      "player_name": "哈里·凯恩",
+      "player_name_en": "KANE Harry",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P0",
+      "card_filename_suggestion": "kane.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "KANE Harry",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 10,
+      "player_name": "裘德·贝林厄姆",
+      "player_name_en": "BELLINGHAM Jude",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "bellingham.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "BELLINGHAM Jude",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 11,
+      "player_name": "马库斯·拉什福德",
+      "player_name_en": "RASHFORD Marcus",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "rashford-marcus.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "RASHFORD Marcus",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 12,
+      "player_name": "特雷沃·查洛巴",
+      "player_name_en": "CHALOBAH Trevoh",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "chalobah-trevoh.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "CHALOBAH Trevoh",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 13,
+      "player_name": "迪恩·亨德森",
+      "player_name_en": "HENDERSON Dean",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "henderson-dean.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "HENDERSON Dean",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 14,
+      "player_name": "乔丹·亨德森",
+      "player_name_en": "HENDERSON Jordan",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "henderson-jordan.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "HENDERSON Jordan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 15,
+      "player_name": "丹·伯恩",
+      "player_name_en": "BURN Dan",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "burn-dan.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "BURN Dan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 16,
+      "player_name": "科比·梅努",
+      "player_name_en": "MAINOO Kobbie",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "mainoo-kobbie.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "MAINOO Kobbie",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 17,
+      "player_name": "摩根·罗杰斯",
+      "player_name_en": "ROGERS Morgan",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "rogers-morgan.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "ROGERS Morgan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 18,
+      "player_name": "安东尼·戈登",
+      "player_name_en": "GORDON Anthony",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "gordon-anthony.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "GORDON Anthony",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 19,
+      "player_name": "奥利·沃特金斯",
+      "player_name_en": "WATKINS Ollie",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "watkins-ollie.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "WATKINS Ollie",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 20,
+      "player_name": "诺尼·马杜埃凯",
+      "player_name_en": "MADUEKE Noni",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "madueke-noni.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "MADUEKE Noni",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 21,
+      "player_name": "埃贝雷奇·埃泽",
+      "player_name_en": "EZE Eberechi",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "eze-eberechi.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "EZE Eberechi",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 22,
+      "player_name": "伊万·托尼",
+      "player_name_en": "TONEY Ivan",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "toney-ivan.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "TONEY Ivan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 23,
+      "player_name": "詹姆斯·特拉福德",
+      "player_name_en": "TRAFFORD James",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "trafford-james.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "TRAFFORD James",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 24,
+      "player_name": "里斯·詹姆斯",
+      "player_name_en": "JAMES Reece",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "james-reece.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "JAMES Reece",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 25,
+      "player_name": "杰德·斯彭斯",
+      "player_name_en": "SPENCE Djed",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "spence-djed.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "SPENCE Djed",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "shirt_number": 26,
+      "player_name": "贾雷尔·宽萨",
+      "player_name_en": "QUANSAH Jarell",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "quansah-jarell.png",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "QUANSAH Jarell",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Netherlands": [
+    {
+      "country": "Netherlands",
+      "shirt_number": 1,
+      "player_name": "巴特·费尔布鲁根",
+      "player_name_en": "VERBRUGGEN Bart",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "verbruggen-bart.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "VERBRUGGEN Bart",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 2,
+      "player_name": "卢特沙雷尔·海特勒伊达",
+      "player_name_en": "GEERTRUIDA Lutsharel",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "geertruida-lutsharel.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "GEERTRUIDA Lutsharel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 3,
+      "player_name": "马滕·德容",
+      "player_name_en": "DE ROON Marten",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "de-roon-marten.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DE ROON Marten",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 4,
+      "player_name": "维吉尔·范戴克",
+      "player_name_en": "VAN DIJK Virgil",
+      "position": "DF",
+      "rarity": "Legend",
+      "production_priority": "P0",
+      "card_filename_suggestion": "vandijk.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "VAN DIJK Virgil",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 5,
+      "player_name": "内森·阿克",
+      "player_name_en": "AKE Nathan",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "ake-nathan.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "AKE Nathan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 6,
+      "player_name": "扬·保罗·范赫克",
+      "player_name_en": "VAN HECKE Jan Paul",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "van-hecke-jan-paul.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "VAN HECKE Jan Paul",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 7,
+      "player_name": "贾斯汀·克鲁伊维特",
+      "player_name_en": "KLUIVERT Justin",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "kluivert-justin.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "KLUIVERT Justin",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 8,
+      "player_name": "瑞安·赫拉芬贝赫",
+      "player_name_en": "GRAVENBERCH Ryan",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "gravenberch-ryan.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "GRAVENBERCH Ryan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 9,
+      "player_name": "沃特·韦霍斯特",
+      "player_name_en": "WEGHORST Wout",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "weghorst-wout.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "WEGHORST Wout",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 10,
+      "player_name": "孟菲斯·德佩",
+      "player_name_en": "DEPAY Memphis",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "depay-memphis.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DEPAY Memphis",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 11,
+      "player_name": "科迪·加克波",
+      "player_name_en": "GAKPO Cody",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "gakpo.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "GAKPO Cody",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 12,
+      "player_name": "马茨·维弗",
+      "player_name_en": "WIEFFER Mats",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "wieffer-mats.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "WIEFFER Mats",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 13,
+      "player_name": "罗宾·罗夫斯",
+      "player_name_en": "ROEFS Robin",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "roefs-robin.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "ROEFS Robin",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 14,
+      "player_name": "蒂贾尼·赖因德斯",
+      "player_name_en": "REIJNDERS Tijjani",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "reijnders-tijjani.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "REIJNDERS Tijjani",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 15,
+      "player_name": "米基·范德文",
+      "player_name_en": "VAN DE VEN Micky",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "van-de-ven-micky.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "VAN DE VEN Micky",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 16,
+      "player_name": "古斯·蒂尔",
+      "player_name_en": "TIL Guus",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "til-guus.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "TIL Guus",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 17,
+      "player_name": "诺阿·朗",
+      "player_name_en": "LANG Noa",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "lang-noa.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "LANG Noa",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 18,
+      "player_name": "唐耶尔·马伦",
+      "player_name_en": "MALEN Donyell",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "malen-donyell.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "MALEN Donyell",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 19,
+      "player_name": "布莱恩·布罗比",
+      "player_name_en": "BROBBEY Brian",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "brobbey-brian.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "BROBBEY Brian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 20,
+      "player_name": "特恩·库普梅纳斯",
+      "player_name_en": "KOOPMEINERS Teun",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "koopmeiners-teun.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "KOOPMEINERS Teun",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 21,
+      "player_name": "弗伦基·德容",
+      "player_name_en": "DE JONG Frenkie",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "de-jong-frenkie.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DE JONG Frenkie",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 22,
+      "player_name": "登泽尔·邓弗里斯",
+      "player_name_en": "DUMFRIES Denzel",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "dumfries-denzel.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DUMFRIES Denzel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 23,
+      "player_name": "马克·弗莱肯",
+      "player_name_en": "FLEKKEN Mark",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "flekken-mark.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "FLEKKEN Mark",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 24,
+      "player_name": "克里森西奥·萨默维尔",
+      "player_name_en": "SUMMERVILLE Crysencio",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "summerville-crysencio.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "SUMMERVILLE Crysencio",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 25,
+      "player_name": "约雷尔·哈托",
+      "player_name_en": "HATO Jorrel",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "hato-jorrel.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "HATO Jorrel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "shirt_number": 26,
+      "player_name": "昆滕·廷贝尔",
+      "player_name_en": "TIMBER Quinten",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "timber-quinten.png",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "TIMBER Quinten",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Portugal": [
+    {
+      "country": "Portugal",
+      "shirt_number": 1,
+      "player_name": "迪奥戈·科斯塔",
+      "player_name_en": "DIOGO COSTA",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "diogo-costa.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "DIOGO COSTA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 2,
+      "player_name": "内尔松·塞梅多",
+      "player_name_en": "NELSON SEMEDO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "nelson-semedo.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "NELSON SEMEDO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 3,
+      "player_name": "鲁本·迪亚斯",
+      "player_name_en": "RUBEN DIAS",
+      "position": "DF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "rubendias.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "RUBEN DIAS",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 4,
+      "player_name": "托马斯·阿劳若",
+      "player_name_en": "TOMAS ARAUJO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "tomas-araujo.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "TOMAS ARAUJO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 5,
+      "player_name": "迪奥戈·达洛特",
+      "player_name_en": "DIOGO DALOT",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "diogo-dalot.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "DIOGO DALOT",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 6,
+      "player_name": "马特乌斯·努内斯",
+      "player_name_en": "MATHEUS NUNES",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "matheus-nunes.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "MATHEUS NUNES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 7,
+      "player_name": "克里斯蒂亚诺·罗纳尔多",
+      "player_name_en": "CRISTIANO RONALDO",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P0",
+      "card_filename_suggestion": "ronaldo.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "CRISTIANO RONALDO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 8,
+      "player_name": "布鲁诺·费尔南德斯",
+      "player_name_en": "BRUNO FERNANDES",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "bruno.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "BRUNO FERNANDES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 9,
+      "player_name": "贡萨洛·拉莫斯",
+      "player_name_en": "GONCALO RAMOS",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "goncalo-ramos.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "GONCALO RAMOS",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 10,
+      "player_name": "贝尔纳多·席尔瓦",
+      "player_name_en": "BERNARDO SILVA",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "bernardo-silva.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "BERNARDO SILVA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 11,
+      "player_name": "若昂·菲利克斯",
+      "player_name_en": "JOAO FELIX",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "joao-felix.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "JOAO FELIX",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 12,
+      "player_name": "若泽·萨",
+      "player_name_en": "JOSE SA",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "jose-sa.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "JOSE SA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 13,
+      "player_name": "雷纳托·维加",
+      "player_name_en": "RENATO VEIGA",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "renato-veiga.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "RENATO VEIGA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 14,
+      "player_name": "贡萨洛·伊纳西奥",
+      "player_name_en": "GONCALO INACIO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "goncalo-inacio.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "GONCALO INACIO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 15,
+      "player_name": "若昂·内维斯",
+      "player_name_en": "JOAO NEVES",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "joao-neves.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "JOAO NEVES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 16,
+      "player_name": "弗朗西斯科·特林康",
+      "player_name_en": "FRANCISCO TRINCAO",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "francisco-trincao.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "FRANCISCO TRINCAO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 17,
+      "player_name": "拉斐尔·莱奥",
+      "player_name_en": "RAFAEL LEAO",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "leao.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "RAFAEL LEAO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 18,
+      "player_name": "佩德罗·内托",
+      "player_name_en": "PEDRO NETO",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "pedro-neto.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "PEDRO NETO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 19,
+      "player_name": "贡萨洛·格德斯",
+      "player_name_en": "GONCALO GUEDES",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "goncalo-guedes.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "GONCALO GUEDES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 20,
+      "player_name": "若昂·坎塞洛",
+      "player_name_en": "JOAO CANCELO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "joao-cancelo.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "JOAO CANCELO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 21,
+      "player_name": "鲁本·内维斯",
+      "player_name_en": "RUBEN NEVES",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ruben-neves.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "RUBEN NEVES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 22,
+      "player_name": "鲁伊·席尔瓦",
+      "player_name_en": "RUI SILVA",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "rui-silva.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "RUI SILVA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 23,
+      "player_name": "维蒂尼亚",
+      "player_name_en": "VITINHA",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "vitinha.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "VITINHA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 24,
+      "player_name": "萨穆·科斯塔",
+      "player_name_en": "SAMU COSTA",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "samu-costa.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "SAMU COSTA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 25,
+      "player_name": "努诺·门德斯",
+      "player_name_en": "NUNO MENDES",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "nuno-mendes.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "NUNO MENDES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "shirt_number": 26,
+      "player_name": "弗朗西斯科·孔塞桑",
+      "player_name_en": "FRANCISCO CONCEICAO",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "francisco-conceicao.png",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "FRANCISCO CONCEICAO",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "France": [
+    {
+      "country": "France",
+      "shirt_number": 1,
+      "player_name": "布里斯·桑巴",
+      "player_name_en": "SAMBA Brice",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "samba-brice.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "SAMBA Brice",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 2,
+      "player_name": "马洛·古斯托",
+      "player_name_en": "GUSTO Malo",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "gusto-malo.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "GUSTO Malo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 3,
+      "player_name": "卢卡斯·迪涅",
+      "player_name_en": "DIGNE Lucas",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "digne-lucas.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "DIGNE Lucas",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 4,
+      "player_name": "达约·于帕梅卡诺",
+      "player_name_en": "UPAMECANO Dayot",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "upamecano-dayot.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "UPAMECANO Dayot",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 5,
+      "player_name": "朱尔·孔德",
+      "player_name_en": "KOUNDE Jules",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "kounde-jules.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "KOUNDE Jules",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 6,
+      "player_name": "马努·科内",
+      "player_name_en": "KONE Manu",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "kone-manu.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "KONE Manu",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 7,
+      "player_name": "奥斯曼·登贝莱",
+      "player_name_en": "DEMBELE Ousmane",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "dembele-ousmane.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "DEMBELE Ousmane",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 8,
+      "player_name": "奥雷利安·楚阿梅尼",
+      "player_name_en": "TCHOUAMENI Aurelien",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "tchouameni-aurelien.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "TCHOUAMENI Aurelien",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 9,
+      "player_name": "马库斯·图拉姆",
+      "player_name_en": "THURAM Marcus",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "thuram-marcus.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "THURAM Marcus",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 10,
+      "player_name": "基利安·姆巴佩",
+      "player_name_en": "MBAPPE Kylian",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P1",
+      "card_filename_suggestion": "mbappe-kylian.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "MBAPPE Kylian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 11,
+      "player_name": "迈克尔·奥利塞",
+      "player_name_en": "OLISE Michael",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "olise-michael.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "OLISE Michael",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 12,
+      "player_name": "布拉德利·巴尔科拉",
+      "player_name_en": "BARCOLA Bradley",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "barcola-bradley.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "BARCOLA Bradley",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 13,
+      "player_name": "恩戈洛·坎特",
+      "player_name_en": "KANTE Ngolo",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "kante-ngolo.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "KANTE Ngolo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 14,
+      "player_name": "阿德里安·拉比奥",
+      "player_name_en": "RABIOT Adrien",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "rabiot-adrien.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "RABIOT Adrien",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 15,
+      "player_name": "易卜拉希马·科纳特",
+      "player_name_en": "KONATE Ibrahima",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "konate-ibrahima.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "KONATE Ibrahima",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 16,
+      "player_name": "迈克·迈尼昂",
+      "player_name_en": "MAIGNAN Mike",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "maignan-mike.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "MAIGNAN Mike",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 17,
+      "player_name": "威廉·萨利巴",
+      "player_name_en": "SALIBA William",
+      "position": "DF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "saliba-william.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "SALIBA William",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 18,
+      "player_name": "沃伦·扎伊尔-埃梅里",
+      "player_name_en": "ZAIRE-EMERY Warren",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "zaire-emery-warren.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "ZAIRE-EMERY Warren",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 19,
+      "player_name": "特奥·埃尔南德斯",
+      "player_name_en": "HERNANDEZ Theo",
+      "position": "DF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "hernandez-theo.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "HERNANDEZ Theo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 20,
+      "player_name": "德西雷·杜埃",
+      "player_name_en": "DOUE Desire",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "doue-desire.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "DOUE Desire",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 21,
+      "player_name": "卢卡斯·埃尔南德斯",
+      "player_name_en": "HERNANDEZ Lucas",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "hernandez-lucas.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "HERNANDEZ Lucas",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 22,
+      "player_name": "让-菲利普·马特塔",
+      "player_name_en": "MATETA Jean-Philippe",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "mateta-jean-philippe.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "MATETA Jean-Philippe",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 23,
+      "player_name": "罗宾·里瑟",
+      "player_name_en": "RISSER Robin",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "risser-robin.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "RISSER Robin",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 24,
+      "player_name": "拉扬·谢尔基",
+      "player_name_en": "CHERKI Rayan",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "cherki-rayan.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "CHERKI Rayan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 25,
+      "player_name": "马涅斯·阿克利乌什",
+      "player_name_en": "AKLIOUCHE Maghnes",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "akliouche-maghnes.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "AKLIOUCHE Maghnes",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "shirt_number": 26,
+      "player_name": "马克桑斯·拉克鲁瓦",
+      "player_name_en": "LACROIX Maxence",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "lacroix-maxence.png",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "LACROIX Maxence",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Brazil": [
+    {
+      "country": "Brazil",
+      "shirt_number": 1,
+      "player_name": "阿利松",
+      "player_name_en": "ALISSON",
+      "position": "GK",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "alison.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "ALISSON",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 2,
+      "player_name": "埃德森·席尔瓦",
+      "player_name_en": "EDERSON SILVA",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ederson-silva.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "EDERSON SILVA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 3,
+      "player_name": "加布里埃尔·马加良斯",
+      "player_name_en": "GABRIEL MAGALHAES",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "gabriel-magalhaes.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "GABRIEL MAGALHAES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 4,
+      "player_name": "马尔基尼奥斯",
+      "player_name_en": "MARQUINHOS",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "marquinhos.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "MARQUINHOS",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 5,
+      "player_name": "卡塞米罗",
+      "player_name_en": "CASEMIRO",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "casemiro.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "CASEMIRO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 6,
+      "player_name": "阿莱士·桑德罗",
+      "player_name_en": "ALEX SANDRO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "alex-sandro.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "ALEX SANDRO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 7,
+      "player_name": "维尼修斯",
+      "player_name_en": "VINICIUS JUNIOR",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P0",
+      "card_filename_suggestion": "vinicius.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "VINICIUS JUNIOR",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 8,
+      "player_name": "布鲁诺·吉马良斯",
+      "player_name_en": "BRUNO GUIMARAES",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "bruno-guimaraes.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "BRUNO GUIMARAES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 9,
+      "player_name": "马特乌斯·库尼亚",
+      "player_name_en": "MATHEUS CUNHA",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "matheus-cunha.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "MATHEUS CUNHA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 10,
+      "player_name": "内马尔",
+      "player_name_en": "NEYMAR JR",
+      "position": "FW",
+      "rarity": "Legend",
+      "production_priority": "P0",
+      "card_filename_suggestion": "neymar.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "NEYMAR JR",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 11,
+      "player_name": "拉菲尼亚",
+      "player_name_en": "RAPHINHA",
+      "position": "FW",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "raphinha.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "RAPHINHA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 12,
+      "player_name": "韦弗顿",
+      "player_name_en": "WEVERTON",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "weverton.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "WEVERTON",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 13,
+      "player_name": "达尼洛",
+      "player_name_en": "DANILO",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "danilo.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "DANILO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 14,
+      "player_name": "布雷默",
+      "player_name_en": "BREMER",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "bremer.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "BREMER",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 15,
+      "player_name": "莱奥·佩雷拉",
+      "player_name_en": "LEO PEREIRA",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "leo-pereira.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "LEO PEREIRA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 16,
+      "player_name": "道格拉斯·桑托斯",
+      "player_name_en": "DOUGLAS SANTOS",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "douglas-santos.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "DOUGLAS SANTOS",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 17,
+      "player_name": "法比尼奥",
+      "player_name_en": "FABINHO",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "fabinho.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "FABINHO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 18,
+      "player_name": "达尼洛·桑托斯",
+      "player_name_en": "DANILO SANTOS",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "danilo-santos.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "DANILO SANTOS",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 19,
+      "player_name": "恩德里克",
+      "player_name_en": "ENDRICK",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "endrick.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "ENDRICK",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 20,
+      "player_name": "卢卡斯·帕奎塔",
+      "player_name_en": "LUCAS PAQUETA",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "lucas-paqueta.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "LUCAS PAQUETA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 21,
+      "player_name": "路易斯·恩里克",
+      "player_name_en": "LUIZ HENRIQUE",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "luiz-henrique.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "LUIZ HENRIQUE",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 22,
+      "player_name": "加布里埃尔·马丁内利",
+      "player_name_en": "GABRIEL MARTINELLI",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "gabriel-martinelli.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "GABRIEL MARTINELLI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 23,
+      "player_name": "埃德森",
+      "player_name_en": "EDERSON",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ederson.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "EDERSON",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 24,
+      "player_name": "罗热·伊巴涅斯",
+      "player_name_en": "ROGER IBANEZ",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "roger-ibanez.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "ROGER IBANEZ",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 25,
+      "player_name": "伊戈尔·蒂亚戈",
+      "player_name_en": "IGOR THIAGO",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "igor-thiago.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "IGOR THIAGO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "shirt_number": 26,
+      "player_name": "拉扬",
+      "player_name_en": "RAYAN",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "rayan.png",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "RAYAN",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "Japan": [
+    {
+      "country": "Japan",
+      "shirt_number": 1,
+      "player_name": "铃木彩艳",
+      "player_name_en": "SUZUKI Zion",
+      "position": "GK",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "suzuki-zion.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SUZUKI Zion",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 2,
+      "player_name": "菅原由势",
+      "player_name_en": "SUGAWARA Yukinari",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "sugawara-yukinari.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SUGAWARA Yukinari",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 3,
+      "player_name": "谷口彰悟",
+      "player_name_en": "TANIGUCHI Shogo",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "taniguchi-shogo.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "TANIGUCHI Shogo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 4,
+      "player_name": "板仓滉",
+      "player_name_en": "ITAKURA Kou",
+      "position": "DF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "itakura-kou.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "ITAKURA Kou",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 5,
+      "player_name": "长友佑都",
+      "player_name_en": "NAGATOMO Yuto",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "nagatomo-yuto.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "NAGATOMO Yuto",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 6,
+      "player_name": "町野修斗",
+      "player_name_en": "MACHINO Shuto",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "machino-shuto.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "MACHINO Shuto",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 7,
+      "player_name": "田中碧",
+      "player_name_en": "TANAKA Ao",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "tanaka-ao.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "TANAKA Ao",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 8,
+      "player_name": "久保建英",
+      "player_name_en": "KUBO Takefusa",
+      "position": "MF",
+      "rarity": "Legend",
+      "production_priority": "P1",
+      "card_filename_suggestion": "kubo-takefusa.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "KUBO Takefusa",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 9,
+      "player_name": "后藤启介",
+      "player_name_en": "GOTO Keisuke",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "goto-keisuke.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "GOTO Keisuke",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 10,
+      "player_name": "堂安律",
+      "player_name_en": "DOAN Ritsu",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "doan-ritsu.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "DOAN Ritsu",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 11,
+      "player_name": "前田大然",
+      "player_name_en": "MAEDA Daizen",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "maeda-daizen.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "MAEDA Daizen",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 12,
+      "player_name": "大迫敬介",
+      "player_name_en": "OSAKO Keisuke",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "osako-keisuke.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "OSAKO Keisuke",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 13,
+      "player_name": "中村敬斗",
+      "player_name_en": "NAKAMURA Keito",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "nakamura-keito.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "NAKAMURA Keito",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 14,
+      "player_name": "伊东纯也",
+      "player_name_en": "ITO Junya",
+      "position": "MF",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "ito-junya.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "ITO Junya",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 15,
+      "player_name": "镰田大地",
+      "player_name_en": "KAMADA Daichi",
+      "position": "MF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "kamada-daichi.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "KAMADA Daichi",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 16,
+      "player_name": "渡边刚",
+      "player_name_en": "WATANABE Tsuyoshi",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "watanabe-tsuyoshi.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "WATANABE Tsuyoshi",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 17,
+      "player_name": "铃木唯人",
+      "player_name_en": "SUZUKI Yuito",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "suzuki-yuito.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SUZUKI Yuito",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 18,
+      "player_name": "上田绮世",
+      "player_name_en": "UEDA Ayase",
+      "position": "FW",
+      "rarity": "Rare",
+      "production_priority": "P2",
+      "card_filename_suggestion": "ueda-ayase.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "UEDA Ayase",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 19,
+      "player_name": "小川航基",
+      "player_name_en": "OGAWA Koki",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ogawa-koki.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "OGAWA Koki",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 20,
+      "player_name": "濑古步梦",
+      "player_name_en": "SEKO Ayumu",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "seko-ayumu.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SEKO Ayumu",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 21,
+      "player_name": "伊藤洋辉",
+      "player_name_en": "ITO Hiroki",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "ito-hiroki.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "ITO Hiroki",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 22,
+      "player_name": "富安健洋",
+      "player_name_en": "TOMIYASU Takehiro",
+      "position": "DF",
+      "rarity": "Epic",
+      "production_priority": "P1",
+      "card_filename_suggestion": "tomiyasu-takehiro.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "TOMIYASU Takehiro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 23,
+      "player_name": "早川友基",
+      "player_name_en": "HAYAKAWA Tomoki",
+      "position": "GK",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "hayakawa-tomoki.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "HAYAKAWA Tomoki",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 24,
+      "player_name": "佐野海舟",
+      "player_name_en": "SANO Kaishu",
+      "position": "MF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "sano-kaishu.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SANO Kaishu",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 25,
+      "player_name": "铃木淳之介",
+      "player_name_en": "SUZUKI Junnosuke",
+      "position": "DF",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "suzuki-junnosuke.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SUZUKI Junnosuke",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "shirt_number": 26,
+      "player_name": "盐贝健人",
+      "player_name_en": "SHIOGAI Kento",
+      "position": "FW",
+      "rarity": "Common",
+      "production_priority": "P3",
+      "card_filename_suggestion": "shiogai-kento.png",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "SHIOGAI Kento",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ]
+}

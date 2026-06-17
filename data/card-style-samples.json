@@ -1,0 +1,82 @@
+[
+  {
+    "sample_type": "Legend sample",
+    "country": "Portugal",
+    "shirt_number": 7,
+    "player_name": "克里斯蒂亚诺·罗纳尔多",
+    "player_name_en": "CRISTIANO RONALDO",
+    "position": "FW",
+    "rarity": "Legend",
+    "title": "永恒队长",
+    "short_copy": "以国家荣耀为名，把每一次登场都变成时代记忆。",
+    "visual_direction": "黑金主视觉，国家荣耀，史诗电影海报感，强光效，最高稀有度。",
+    "card_image_path": "public/cards/portugal/sample-legend-ronaldo.png",
+    "card_filename_suggestion": "sample-legend-ronaldo.png",
+    "supabase_match_key": {
+      "team": "Portugal",
+      "player_name_en": "CRISTIANO RONALDO",
+      "roster_source": "fifa_official_squad"
+    },
+    "ai_prompt": "Create a vertical World Cup collectible player card illustration, 2:3 ratio, premium black and gold Legend rarity. Player: Cristiano Ronaldo, Portuguese football icon, original illustrated heroic half-body portrait inspired by a veteran Portugal captain, not a real photo, no club logos, no brand logos. Card text areas must include Chinese name 克里斯蒂亚诺·罗纳尔多, English name CRISTIANO RONALDO, country Portugal, position FW, rarity Legend, shirt number 7, title 永恒队长, short copy 以国家荣耀为名，把每一次登场都变成时代记忆。 Visual style: cinematic national glory poster, black lacquer background, metallic gold frame, Portugal red and green light accents, strong rim light, subtle stadium light beams, premium foil texture, elegant collectible album card, no ability ratings, no attack defense speed numbers, no FUT-style overall number."
+  },
+  {
+    "sample_type": "Epic sample",
+    "country": "Portugal",
+    "shirt_number": 8,
+    "player_name": "布鲁诺·费尔南德斯",
+    "player_name_en": "BRUNO FERNANDES",
+    "position": "MF",
+    "rarity": "Epic",
+    "title": "中场引擎",
+    "short_copy": "在节奏与灵感之间，为葡萄牙点亮下一次进攻。",
+    "visual_direction": "紫金或队色能量，明星特写，冲击力强，但低于 Legend。",
+    "card_image_path": "public/cards/portugal/sample-epic-bruno.png",
+    "card_filename_suggestion": "sample-epic-bruno.png",
+    "supabase_match_key": {
+      "team": "Portugal",
+      "player_name_en": "BRUNO FERNANDES",
+      "roster_source": "fifa_official_squad"
+    },
+    "ai_prompt": "Create a vertical World Cup collectible player card illustration, 2:3 ratio, Epic rarity. Player: Bruno Fernandes, Portugal midfield star, original illustrated energetic half-body portrait, not a real photo, no club logos, no brand logos. Card text areas must include Chinese name 布鲁诺·费尔南德斯, English name BRUNO FERNANDES, country Portugal, position MF, rarity Epic, shirt number 8, title 中场引擎, short copy 在节奏与灵感之间，为葡萄牙点亮下一次进攻。 Visual style: purple and gold energy with Portugal red and green team accents, dynamic diagonal light streaks, star-player spotlight, polished foil border, powerful but clearly below Legend tier, collectible World Cup album card, no ability ratings, no attack defense speed numbers, no FUT-style overall number."
+  },
+  {
+    "sample_type": "Rare sample",
+    "country": "Portugal",
+    "shirt_number": 1,
+    "player_name": "迪奥戈·科斯塔",
+    "player_name_en": "DIOGO COSTA",
+    "position": "GK",
+    "rarity": "Rare",
+    "title": "门前屏障",
+    "short_copy": "冷静守住最后一线，让每一次扑救都成为信心。",
+    "visual_direction": "银蓝或国家队色边框，正式球员图鉴感，清晰、稳定、收藏感。",
+    "card_image_path": "public/cards/portugal/sample-rare-diogo-costa.png",
+    "card_filename_suggestion": "sample-rare-diogo-costa.png",
+    "supabase_match_key": {
+      "team": "Portugal",
+      "player_name_en": "DIOGO COSTA",
+      "roster_source": "fifa_official_squad"
+    },
+    "ai_prompt": "Create a vertical World Cup collectible player card illustration, 2:3 ratio, Rare rarity. Player: Diogo Costa, Portugal goalkeeper, original illustrated composed half-body portrait in goalkeeper pose, not a real photo, no club logos, no brand logos. Card text areas must include Chinese name 迪奥戈·科斯塔, English name DIOGO COSTA, country Portugal, position GK, rarity Rare, shirt number 1, title 门前屏障, short copy 冷静守住最后一线，让每一次扑救都成为信心。 Visual style: silver and deep blue frame with restrained Portugal red and green accents, clean official squad album feeling, crisp lighting, stable collectible card layout, subtle metallic border, clear portrait area, no ability ratings, no attack defense speed numbers, no FUT-style overall number."
+  },
+  {
+    "sample_type": "Common sample",
+    "country": "Portugal",
+    "shirt_number": 2,
+    "player_name": "内尔松·塞梅多",
+    "player_name_en": "NELSON SEMEDO",
+    "position": "DF",
+    "rarity": "Common",
+    "title": "边路守卫",
+    "short_copy": "稳健覆盖边线，把每一次防守做成球队的底色。",
+    "visual_direction": "简洁国家队图鉴风，干净、轻量、可批量生产。",
+    "card_image_path": "public/cards/portugal/sample-common-nelson-semedo.png",
+    "card_filename_suggestion": "sample-common-nelson-semedo.png",
+    "supabase_match_key": {
+      "team": "Portugal",
+      "player_name_en": "NELSON SEMEDO",
+      "roster_source": "fifa_official_squad"
+    },
+    "ai_prompt": "Create a vertical World Cup collectible player card illustration, 2:3 ratio, Common rarity. Player: Nelson Semedo, Portugal defender, original illustrated clean half-body portrait, not a real photo, no club logos, no brand logos. Card text areas must include Chinese name 内尔松·塞梅多, English name NELSON SEMEDO, country Portugal, position DF, rarity Common, shirt number 2, title 边路守卫, short copy 稳健覆盖边线，把每一次防守做成球队的底色。 Visual style: simple national team album card, clean white and light silver frame, Portugal red and green small accents, lightweight production-friendly layout, clear typography, neat portrait window, minimal foil, no ability ratings, no attack defense speed numbers, no FUT-style overall number."
+  }
+]
