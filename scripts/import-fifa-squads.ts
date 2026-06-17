@@ -25,6 +25,7 @@ type SquadPlayer = {
   shirt_number: number;
   position: string;
   player_name: string;
+  player_name_en: string;
   first_name: string;
   last_name: string;
   name_on_shirt: string;
@@ -77,13 +78,69 @@ function loadPlayerNameZhMap(): PlayerNameZhMap {
 
 const playerNameZhMap = loadPlayerNameZhMap();
 
+function normalizePlayerNameMapKey(value: string | null | undefined) {
+  return cleanText(value ?? "")
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/[^A-Z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function getOfficialPlayerName(player: SquadPlayer) {
+  return player.player_name_en || player.player_name;
+}
+
+function getPlayerNameZhLookup(country: string) {
+  const rawMap = playerNameZhMap[country] ?? {};
+  const lookup = new Map<string, string>();
+
+  for (const [key, value] of Object.entries(rawMap)) {
+    lookup.set(normalizePlayerNameMapKey(key), value);
+  }
+
+  return lookup;
+}
+
 function getPlayerCardDisplayName(player: SquadPlayer) {
-  return (
-    playerNameZhMap[player.country]?.[player.player_name] ??
-    (player.name_on_shirt ||
-    player.player_name
-    )
-  );
+  const lookup = getPlayerNameZhLookup(player.country);
+  const officialName = getOfficialPlayerName(player);
+  const candidates = [
+    player.player_name_en,
+    player.player_name,
+    officialName,
+    player.name_on_shirt,
+    `${player.last_name} ${player.first_name}`,
+    `${player.first_name} ${player.last_name}`,
+    player.last_name,
+  ];
+
+  for (const candidate of candidates) {
+    const normalized = normalizePlayerNameMapKey(candidate);
+
+    if (normalized && lookup.has(normalized)) {
+      return lookup.get(normalized) as string;
+    }
+  }
+
+  return player.name_on_shirt || officialName;
+}
+
+function applyChineseDisplayNames(countries: SquadCountry[]) {
+  return countries.map((country) => ({
+    ...country,
+    players: country.players.map((player) => {
+      const officialName = getOfficialPlayerName(player);
+
+      return {
+        ...player,
+        player_name: getPlayerCardDisplayName(player),
+        player_name_en: officialName,
+      };
+    }),
+  }));
 }
 
 function loadLocalEnv() {
@@ -145,7 +202,7 @@ function getLegacyMatchKey(team: string, value: string | null | undefined) {
 function getSquadPlayerKeys(player: SquadPlayer) {
   return new Set(
     [
-      player.player_name,
+      getOfficialPlayerName(player),
       `${player.first_name} ${player.last_name}`,
       player.name_on_shirt,
       player.first_name,
@@ -201,6 +258,7 @@ function parsePlayerLine(line: string, country: string, countryCode: string, shi
     shirt_number: shirtNumber,
     position: firstColumnMatch[1],
     player_name: firstColumnMatch[2],
+    player_name_en: firstColumnMatch[2],
     first_name: parts[1] ?? "",
     last_name: parts[2] ?? "",
     name_on_shirt: parts[3] ?? "",
@@ -260,7 +318,7 @@ function parseSquadsFromText(text: string) {
 }
 
 function getRarityAndPrice(player: SquadPlayer) {
-  const key = `${player.country}:${player.player_name}`;
+  const key = `${player.country}:${getOfficialPlayerName(player)}`;
   const legendPlayers = new Set([
     "Argentina:MESSI Lionel",
     "Brazil:NEYMAR JR",
@@ -269,7 +327,7 @@ function getRarityAndPrice(player: SquadPlayer) {
     "England:KANE Harry",
     "France:MBAPPE Kylian",
     "Netherlands:VAN DIJK Virgil",
-    "Portugal:RONALDO Cristiano",
+    "Portugal:CRISTIANO RONALDO",
     "Spain:RODRI",
     "Spain:YAMAL Lamine",
   ]);
@@ -295,7 +353,7 @@ function getRarityAndPrice(player: SquadPlayer) {
 
 function getCardArtUrl(player: SquadPlayer, existingCard?: PlayerCardRow) {
   const preservedArt =
-    preservedArtByOfficialName[`${player.country}:${player.player_name}`];
+    preservedArtByOfficialName[`${player.country}:${getOfficialPlayerName(player)}`];
 
   return preservedArt ?? existingCard?.card_art_url ?? null;
 }
@@ -304,12 +362,14 @@ function buildFifaSquadsSql(players: SquadPlayer[]) {
   const teams = [...new Set(players.map((player) => player.country))];
   const insertValues = players.map((player) => {
     const rarity = getRarityAndPrice(player);
-    const artUrl = preservedArtByOfficialName[`${player.country}:${player.player_name}`] ?? null;
+    const artUrl =
+      preservedArtByOfficialName[`${player.country}:${getOfficialPlayerName(player)}`] ??
+      null;
 
     return `(${[
       escapeSql(player.country),
-      escapeSql(getPlayerCardDisplayName(player)),
       escapeSql(player.player_name),
+      escapeSql(getOfficialPlayerName(player)),
       escapeSql(player.country_code),
       escapeSql(player.position),
       escapeSql(player.shirt_number),
@@ -429,7 +489,7 @@ async function downloadAndParseSquads() {
   const result = await parser.getText();
   await parser.destroy();
 
-  const countries = parseSquadsFromText(result.text);
+  const countries = applyChineseDisplayNames(parseSquadsFromText(result.text));
   const players = countries.flatMap((country) => country.players);
 
   return {
@@ -539,8 +599,8 @@ async function syncPlayerCards(players: SquadPlayer[]) {
     const cardArtUrl = getCardArtUrl(player, existingCard);
     const payload = {
       team: player.country,
-      player_name: getPlayerCardDisplayName(player),
-      player_name_en: player.player_name,
+      player_name: player.player_name,
+      player_name_en: getOfficialPlayerName(player),
       position: player.position,
       shirt_number: player.shirt_number,
       rarity: rarity.rarity,
@@ -557,7 +617,9 @@ async function syncPlayerCards(players: SquadPlayer[]) {
       .upsert(payload, { onConflict: "team,shirt_number" });
 
     if (error) {
-      throw new Error(`Failed to upsert ${player.country} ${player.player_name}: ${error.message}`);
+      throw new Error(
+        `Failed to upsert ${player.country} ${getOfficialPlayerName(player)}: ${error.message}`,
+      );
     }
   }
 
@@ -570,7 +632,7 @@ function printTeamSummary(players: SquadPlayer[], country: string) {
   console.log(`${country}名单:`);
   for (const player of teamPlayers) {
     console.log(
-      `${player.shirt_number}. ${player.position} ${player.player_name} (${player.name_on_shirt})`,
+      `${player.shirt_number}. ${player.position} ${player.player_name} / ${getOfficialPlayerName(player)} (${player.name_on_shirt})`,
     );
   }
 }
