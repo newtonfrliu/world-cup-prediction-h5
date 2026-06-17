@@ -274,49 +274,9 @@ function getCardArtUrl(player: SquadPlayer, existingCard?: PlayerCardRow) {
   return preservedArt ?? existingCard?.card_art_url ?? null;
 }
 
-function buildFifaSquadsSql(
-  players: SquadPlayer[],
-  matchesByPlayer: Map<SquadPlayer, PlayerCardRow>,
-  inactiveCards: PlayerCardRow[],
-) {
-  const updateStatements = players
-    .map((player) => {
-      const existingCard = matchesByPlayer.get(player);
-
-      if (!existingCard) {
-        return null;
-      }
-
-      const rarity = getRarityAndPrice(player);
-      const artUrl = getCardArtUrl(player, existingCard);
-
-      return `update public.player_cards
-set player_name = ${escapeSql(player.name_on_shirt || player.player_name)},
-    player_name_en = ${escapeSql(player.player_name)},
-    country_code = ${escapeSql(player.country_code)},
-    position = ${escapeSql(player.position)},
-    shirt_number = ${escapeSql(player.shirt_number)},
-    first_name = ${escapeSql(player.first_name)},
-    last_name = ${escapeSql(player.last_name)},
-    name_on_shirt = ${escapeSql(player.name_on_shirt)},
-    dob = ${escapeSql(player.dob)},
-    club = ${escapeSql(player.club)},
-    height_cm = ${escapeSql(player.height_cm)},
-    caps = ${escapeSql(player.caps)},
-    goals = ${escapeSql(player.goals)},
-    rarity = ${escapeSql(rarity.rarity)},
-    price = ${escapeSql(rarity.price)},
-    star_level = ${escapeSql(rarity.star_level)},
-    card_art_url = coalesce(${escapeSql(artUrl)}, card_art_url),
-    card_thumb_url = coalesce(${escapeSql(artUrl)}, card_thumb_url),
-    roster_source = '${rosterSource}',
-    roster_version = '${rosterVersion}'
-where id = ${escapeSql(existingCard.id)};`;
-    })
-    .filter(Boolean)
-    .join("\n\n");
-  const matchedPlayers = new Set(matchesByPlayer.keys());
-  const insertValues = players.filter((player) => !matchedPlayers.has(player)).map((player) => {
+function buildFifaSquadsSql(players: SquadPlayer[]) {
+  const teams = [...new Set(players.map((player) => player.country))];
+  const insertValues = players.map((player) => {
     const rarity = getRarityAndPrice(player);
     const artUrl = preservedArtByOfficialName[`${player.country}:${player.player_name}`] ?? null;
 
@@ -343,18 +303,15 @@ where id = ${escapeSql(existingCard.id)};`;
     ].join(", ")})`;
   });
 
-  const inactiveStatements = inactiveCards
-    .map(
-      (card) => `update public.player_cards
+  const inactiveSql = `update public.player_cards
 set roster_source = 'inactive',
     roster_version = '${rosterVersion}',
     shirt_number = null
-where id = ${escapeSql(card.id)};`,
-    )
-    .join("\n\n");
+where team in (${teams.map((team) => escapeSql(team)).join(", ")})
+  and roster_source is distinct from '${rosterSource}';`;
 
   const insertSql = insertValues.length
-    ? `-- Insert official cards that did not exist before.
+    ? `-- Upsert the full FIFA official squad by the real unique key.
 insert into public.player_cards (
   team,
   player_name,
@@ -401,7 +358,7 @@ do update set
   card_thumb_url = coalesce(excluded.card_thumb_url, public.player_cards.card_thumb_url),
   roster_source = '${rosterSource}',
   roster_version = '${rosterVersion}';`
-    : "-- No new official cards to insert.";
+    : "-- No official cards to upsert.";
 
   return `begin;
 
@@ -422,12 +379,9 @@ alter table public.player_cards
   add column if not exists price integer default 5000,
   add column if not exists star_level integer default 1;
 
--- Mark old cards that are not in the FIFA official squad as inactive.
+-- Mark old non-official cards as inactive and release their shirt numbers.
 -- Do not delete them, so user_cards keeps historical assets intact.
-${inactiveStatements || "-- No inactive old cards detected."}
-
--- Update existing official cards while preserving card IDs and user ownership.
-${updateStatements || "-- No existing official cards detected."}
+${inactiveSql}
 
 ${insertSql}
 
@@ -526,7 +480,7 @@ async function syncPlayerCards(players: SquadPlayer[]) {
 
   writeFileSync(
     sqlOutputPath,
-    buildFifaSquadsSql(players, matchesByPlayer, inactiveCards),
+    buildFifaSquadsSql(players),
     "utf8",
   );
 
@@ -537,19 +491,18 @@ async function syncPlayerCards(players: SquadPlayer[]) {
     return { inactiveCards };
   }
 
-  for (const card of inactiveCards) {
-    const { error } = await supabase
-      .from("player_cards")
-      .update({
-        roster_source: "inactive",
-        roster_version: rosterVersion,
-        shirt_number: null,
-      })
-      .eq("id", card.id);
+  const { error: inactiveError } = await supabase
+    .from("player_cards")
+    .update({
+      roster_source: "inactive",
+      roster_version: rosterVersion,
+      shirt_number: null,
+    })
+    .in("team", teams)
+    .neq("roster_source", rosterSource);
 
-    if (error) {
-      throw new Error(`Failed to mark inactive ${card.team} ${card.player_name}: ${error.message}`);
-    }
+  if (inactiveError) {
+    throw new Error(`Failed to mark old player_cards inactive: ${inactiveError.message}`);
   }
 
   for (const player of players) {
@@ -571,23 +524,12 @@ async function syncPlayerCards(players: SquadPlayer[]) {
       card_thumb_url: cardArtUrl ?? existingCard?.card_thumb_url ?? null,
     };
 
-    if (existingCard) {
-      const { error } = await supabase
-        .from("player_cards")
-        .update(payload)
-        .eq("id", existingCard.id);
+    const { error } = await supabase
+      .from("player_cards")
+      .upsert(payload, { onConflict: "team,shirt_number" });
 
-      if (error) {
-        throw new Error(`Failed to update ${player.country} ${player.player_name}: ${error.message}`);
-      }
-    } else {
-      const { error } = await supabase
-        .from("player_cards")
-        .upsert(payload, { onConflict: "team,shirt_number" });
-
-      if (error) {
-        throw new Error(`Failed to insert ${player.country} ${player.player_name}: ${error.message}`);
-      }
+    if (error) {
+      throw new Error(`Failed to upsert ${player.country} ${player.player_name}: ${error.message}`);
     }
   }
 
