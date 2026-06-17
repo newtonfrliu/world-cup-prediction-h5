@@ -282,11 +282,11 @@ function buildFifaSquadsSql(players: SquadPlayer[]) {
 
     return `(${[
       escapeSql(player.country),
-      escapeSql(player.country_code),
-      escapeSql(player.shirt_number),
-      escapeSql(player.position),
       escapeSql(player.name_on_shirt || player.player_name),
       escapeSql(player.player_name),
+      escapeSql(player.country_code),
+      escapeSql(player.position),
+      escapeSql(player.shirt_number),
       escapeSql(player.first_name),
       escapeSql(player.last_name),
       escapeSql(player.name_on_shirt),
@@ -300,6 +300,8 @@ function buildFifaSquadsSql(players: SquadPlayer[]) {
       escapeSql(rarity.star_level),
       escapeSql(artUrl),
       escapeSql(artUrl),
+      escapeSql(rosterSource),
+      escapeSql(rosterVersion),
     ].join(", ")})`;
   });
 
