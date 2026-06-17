@@ -59,9 +59,22 @@ type PlayerCardRow = {
 type PlayerNameZhMap = Record<string, Record<string, string>>;
 
 const preservedArtByOfficialName: Record<string, string> = {
+  "Argentina:ALVAREZ Julian": "/cards/argentina/alvarez.png",
+  "Argentina:MARTINEZ Lautaro": "/cards/argentina/lautaro.png",
+  "Argentina:MARTINEZ Lisandro": "/cards/argentina/martinez.png",
+  "Brazil:ALISSON": "/cards/brazil/alison.png",
   "Brazil:VINICIUS JUNIOR": "/cards/brazil/vinicius.png",
   "Brazil:CASEMIRO": "/cards/brazil/casemiro.png",
   "Brazil:NEYMAR JR": "/cards/brazil/neymar.png",
+  "England:BELLINGHAM Jude": "/cards/england/bellingham.png",
+  "England:KANE Harry": "/cards/england/kane.png",
+  "England:RICE Declan": "/cards/england/rice.png",
+  "England:SAKA Bukayo": "/cards/england/saka.png",
+  "Germany:HAVERTZ Kai": "/cards/germany/havertz.png",
+  "Germany:KIMMICH Joshua": "/cards/germany/kimmich.png",
+  "Germany:MUSIALA Jamal": "/cards/germany/musiala.png",
+  "Germany:WIRTZ Florian": "/cards/germany/wirtz.png",
+  "Netherlands:VAN DIJK Virgil": "/cards/netherlands/vandijk.png",
   "Portugal:BRUNO FERNANDES": "/cards/portugal/bruno.png",
   "Portugal:CRISTIANO RONALDO": "/cards/portugal/ronaldo.png",
   "Portugal:RAFAEL LEAO": "/cards/portugal/leao.png",

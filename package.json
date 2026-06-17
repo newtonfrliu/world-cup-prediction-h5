@@ -9,6 +9,7 @@
     "lint": "eslint",
     "import:schedule": "node scripts/importSchedule.ts",
     "import:fifa-squads": "node scripts/import-fifa-squads.ts",
+    "check:card-assets": "node scripts/check-card-assets.ts",
     "check:teams": "node scripts/checkTeams.ts",
     "sync:odds": "node scripts/syncOdds.ts",
     "sync:scores": "node scripts/syncScores.ts"
