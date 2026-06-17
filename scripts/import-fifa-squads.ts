@@ -62,6 +62,10 @@ const preservedArtByOfficialName: Record<string, string> = {
   "Brazil:VINICIUS JUNIOR": "/cards/brazil/vinicius.png",
   "Brazil:CASEMIRO": "/cards/brazil/casemiro.png",
   "Brazil:NEYMAR JR": "/cards/brazil/neymar.png",
+  "Portugal:BRUNO FERNANDES": "/cards/portugal/bruno.png",
+  "Portugal:CRISTIANO RONALDO": "/cards/portugal/ronaldo.png",
+  "Portugal:RAFAEL LEAO": "/cards/portugal/leao.png",
+  "Portugal:RUBEN DIAS": "/cards/portugal/rubendias.png",
 };
 
 const legacyNameAliases: Record<string, string> = {
@@ -391,12 +395,123 @@ function buildFifaSquadsSql(players: SquadPlayer[]) {
     ].join(", ")})`;
   });
 
-  const inactiveSql = `update public.player_cards
+  const importTableSql = `create temporary table fifa_squad_import (
+  team text,
+  player_name text,
+  player_name_en text,
+  country_code text,
+  position text,
+  shirt_number integer,
+  first_name text,
+  last_name text,
+  name_on_shirt text,
+  dob text,
+  club text,
+  height_cm integer,
+  caps integer,
+  goals integer,
+  rarity text,
+  price integer,
+  star_level integer,
+  card_art_url text,
+  card_thumb_url text,
+  roster_source text,
+  roster_version text
+) on commit drop;
+
+insert into fifa_squad_import (
+  team,
+  player_name,
+  player_name_en,
+  country_code,
+  position,
+  shirt_number,
+  first_name,
+  last_name,
+  name_on_shirt,
+  dob,
+  club,
+  height_cm,
+  caps,
+  goals,
+  rarity,
+  price,
+  star_level,
+  card_art_url,
+  card_thumb_url,
+  roster_source,
+  roster_version
+)
+values
+${insertValues.join(",\n")};`;
+
+  const inactiveSql = `update public.player_cards legacy
 set roster_source = 'inactive',
     roster_version = '${rosterVersion}',
     shirt_number = null
-where team in (${teams.map((team) => escapeSql(team)).join(", ")})
-  and roster_source is distinct from '${rosterSource}';`;
+where legacy.team in (${teams.map((team) => escapeSql(team)).join(", ")})
+  and legacy.roster_source is distinct from '${rosterSource}'
+  and not exists (
+    select 1
+    from fifa_squad_import official
+    where official.team = legacy.team
+      and (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+  );`;
+
+  const mergeLegacyAssetSql = `with legacy_matches as (
+  select distinct on (official.id)
+    official.id as official_id,
+    legacy.id as legacy_id,
+    legacy.card_art_url,
+    legacy.card_thumb_url,
+    legacy.price,
+    legacy.rarity,
+    legacy.star_level
+  from public.player_cards official
+  join public.player_cards legacy
+    on legacy.team = official.team
+   and legacy.id <> official.id
+   and legacy.roster_source is distinct from '${rosterSource}'
+   and (
+      regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.player_name, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+   )
+  where official.roster_source = '${rosterSource}'
+    and official.team in (${teams.map((team) => escapeSql(team)).join(", ")})
+    and (
+      legacy.card_art_url is not null
+      or legacy.card_thumb_url is not null
+      or legacy.price is not null
+      or legacy.rarity is not null
+      or legacy.star_level is not null
+    )
+  order by official.id,
+    case when legacy.card_art_url is not null then 0 else 1 end,
+    case when legacy.card_thumb_url is not null then 0 else 1 end
+)
+update public.player_cards official
+set card_art_url = coalesce(official.card_art_url, legacy_matches.card_art_url),
+    card_thumb_url = coalesce(official.card_thumb_url, legacy_matches.card_thumb_url, legacy_matches.card_art_url),
+    price = coalesce(legacy_matches.price, official.price),
+    rarity = coalesce(legacy_matches.rarity, official.rarity),
+    star_level = coalesce(legacy_matches.star_level, official.star_level)
+from legacy_matches
+where official.id = legacy_matches.official_id;`;
 
   const insertSql = insertValues.length
     ? `-- Upsert the full FIFA official squad by the real unique key.
@@ -423,8 +538,29 @@ insert into public.player_cards (
   roster_source,
   roster_version
 )
-values
-${insertValues.join(",\n")}
+select
+  team,
+  player_name,
+  player_name_en,
+  country_code,
+  position,
+  shirt_number,
+  first_name,
+  last_name,
+  name_on_shirt,
+  dob,
+  club,
+  height_cm,
+  caps,
+  goals,
+  rarity,
+  price,
+  star_level,
+  card_art_url,
+  card_thumb_url,
+  roster_source,
+  roster_version
+from fifa_squad_import
 on conflict (team, shirt_number)
 do update set
   player_name = excluded.player_name,
@@ -467,11 +603,19 @@ alter table public.player_cards
   add column if not exists price integer default 5000,
   add column if not exists star_level integer default 1;
 
+-- Stage the full FIFA official squad before touching legacy cards.
+${importTableSql}
+
 -- Mark old non-official cards as inactive and release their shirt numbers.
--- Do not delete them, so user_cards keeps historical assets intact.
+-- Legacy cards that match an official player keep their shirt number, so the
+-- upsert can update the old row instead of creating a second player.
 ${inactiveSql}
 
 ${insertSql}
+
+-- Merge legacy card assets into the FIFA official records.
+-- Legacy rows stay inactive/hidden to avoid breaking existing user_cards ownership.
+${mergeLegacyAssetSql}
 
 commit;
 `;

@@ -17,17 +17,32 @@ alter table public.player_cards
   add column if not exists price integer default 5000,
   add column if not exists star_level integer default 1;
 
--- Mark old non-official cards as inactive and release their shirt numbers.
--- Do not delete them, so user_cards keeps historical assets intact.
-update public.player_cards
-set roster_source = 'inactive',
-    roster_version = '2026_world_cup_final_squad_fifa_pdf_v1',
-    shirt_number = null
-where team in ('Algeria', 'Argentina', 'Australia', 'Austria', 'Belgium', 'Bosnia And Herzegovina', 'Brazil', 'Cabo Verde', 'Canada', 'Colombia', 'Congo DR', 'Côte D''Ivoire', 'Croatia', 'Curaçao', 'Czechia', 'Ecuador', 'Egypt', 'England', 'France', 'Germany', 'Ghana', 'Haiti', 'IR Iran', 'Iraq', 'Japan', 'Jordan', 'Korea Republic', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand', 'Norway', 'Panama', 'Paraguay', 'Portugal', 'Qatar', 'Saudi Arabia', 'Scotland', 'Senegal', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 'Tunisia', 'Türkiye', 'Uruguay', 'USA', 'Uzbekistan')
-  and roster_source is distinct from 'fifa_official_squad';
+-- Stage the full FIFA official squad before touching legacy cards.
+create temporary table fifa_squad_import (
+  team text,
+  player_name text,
+  player_name_en text,
+  country_code text,
+  position text,
+  shirt_number integer,
+  first_name text,
+  last_name text,
+  name_on_shirt text,
+  dob text,
+  club text,
+  height_cm integer,
+  caps integer,
+  goals integer,
+  rarity text,
+  price integer,
+  star_level integer,
+  card_art_url text,
+  card_thumb_url text,
+  roster_source text,
+  roster_version text
+) on commit drop;
 
--- Upsert the full FIFA official squad by the real unique key.
-insert into public.player_cards (
+insert into fifa_squad_import (
   team,
   player_name,
   player_name_en,
@@ -937,12 +952,12 @@ values
 ('Paraguay', '马伊丹阿·亚历克斯安德罗', 'MAIDANA Alexandro', 'PAR', 'DF', 26, 'Alexandro', 'MAIDANA MENDIETA', 'MAIDANA', '26/07/2005', 'CA Talleres (ARG)', 173, 2, 1, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '迪奥戈·科斯塔', 'DIOGO COSTA', 'POR', 'GK', 1, 'Diogo', 'MEIRELES DA COSTA', 'DIOGO COSTA', '19/09/1999', 'FC Porto (POR)', 188, 43, 0, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '内尔松·塞梅多', 'NELSON SEMEDO', 'POR', 'DF', 2, 'Nélson', 'CABRAL SEMEDO', 'N. SEMEDO', '16/11/1993', 'Fenerbahçe SK (TUR)', 179, 50, 0, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
-('Portugal', '鲁本·迪亚斯', 'RUBEN DIAS', 'POR', 'DF', 3, 'Rúben', 'DOS SANTOS GATO ALVES DIAS', 'RÚBEN DIAS', '14/05/1997', 'Manchester City FC (ENG)', 187, 76, 3, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
+('Portugal', '鲁本·迪亚斯', 'RUBEN DIAS', 'POR', 'DF', 3, 'Rúben', 'DOS SANTOS GATO ALVES DIAS', 'RÚBEN DIAS', '14/05/1997', 'Manchester City FC (ENG)', 187, 76, 3, 'epic', 40000, 4, '/cards/portugal/rubendias.png', '/cards/portugal/rubendias.png', 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '托马斯·阿劳若', 'TOMAS ARAUJO', 'POR', 'DF', 4, 'Tomás', 'LEMOS ARAÚJO', 'TOMÁS A.', '16/05/2002', 'SL Benfica (POR)', 187, 5, 0, 'common', 10000, 2, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '迪奥戈·达洛特', 'DIOGO DALOT', 'POR', 'DF', 5, 'José Diogo', 'DALOT TEIXEIRA', 'DALOT', '18/03/1999', 'Manchester United FC (ENG)', 184, 35, 3, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '马特乌斯·努内斯', 'MATHEUS NUNES', 'POR', 'MF', 6, 'Matheus Luiz', 'NUNES', 'MATHEUS N.', '27/08/1998', 'Manchester City FC (ENG)', 183, 20, 2, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
-('Portugal', '克里斯蒂亚诺·罗纳尔多', 'CRISTIANO RONALDO', 'POR', 'FW', 7, 'Cristiano Ronaldo', 'DOS SANTOS AVEIRO', 'RONALDO', '05/02/1985', 'Al Nassr FC (KSA)', 185, 228, 143, 'legend', 70000, 5, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
-('Portugal', '布鲁诺·费尔南德斯', 'BRUNO FERNANDES', 'POR', 'MF', 8, 'Bruno Miguel', 'BORGES FERNANDES', 'B. FERNANDES', '08/09/1994', 'Manchester United FC (ENG)', 183, 89, 29, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
+('Portugal', '克里斯蒂亚诺·罗纳尔多', 'CRISTIANO RONALDO', 'POR', 'FW', 7, 'Cristiano Ronaldo', 'DOS SANTOS AVEIRO', 'RONALDO', '05/02/1985', 'Al Nassr FC (KSA)', 185, 228, 143, 'legend', 70000, 5, '/cards/portugal/ronaldo.png', '/cards/portugal/ronaldo.png', 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
+('Portugal', '布鲁诺·费尔南德斯', 'BRUNO FERNANDES', 'POR', 'MF', 8, 'Bruno Miguel', 'BORGES FERNANDES', 'B. FERNANDES', '08/09/1994', 'Manchester United FC (ENG)', 183, 89, 29, 'epic', 40000, 4, '/cards/portugal/bruno.png', '/cards/portugal/bruno.png', 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '贡萨洛·拉莫斯', 'GONCALO RAMOS', 'POR', 'FW', 9, 'Gonçalo', 'MATIAS RAMOS', 'G. RAMOS', '20/06/2001', 'Paris Saint-Germain (FRA)', 185, 25, 10, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '贝尔纳多·席尔瓦', 'BERNARDO SILVA', 'POR', 'MF', 10, 'Bernardo', 'MOTA VEIGA DE CARVALHO E SILVA', 'BERNARDO', '10/08/1994', 'Manchester City FC (ENG)', 173, 109, 14, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '若昂·菲利克斯', 'JOAO FELIX', 'POR', 'FW', 11, 'João', 'FÉLIX SEQUEIRA', 'JOÃO FÉLIX', '10/11/1999', 'Al Nassr FC (KSA)', 179, 54, 12, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
@@ -951,7 +966,7 @@ values
 ('Portugal', '贡萨洛·伊纳西奥', 'GONCALO INACIO', 'POR', 'DF', 14, 'Gonçalo', 'BERNARDO INÁCIO', 'G. INÁCIO', '25/08/2001', 'Sporting CP (POR)', 185, 22, 2, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '若昂·内维斯', 'JOAO NEVES', 'POR', 'MF', 15, 'João Pedro', 'GONÇALVES NEVES', 'JOÃO NEVES', '27/09/2004', 'Paris Saint-Germain (FRA)', 171, 22, 3, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '弗朗西斯科·特林康', 'FRANCISCO TRINCAO', 'POR', 'FW', 16, 'Francisco António', 'MACHADO MOTA DE CASTRO TRINCÃO', 'TRINCÃO', '29/12/1999', 'Sporting CP (POR)', 184, 18, 3, 'common', 10000, 2, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
-('Portugal', '拉斐尔·莱奥', 'RAFAEL LEAO', 'POR', 'FW', 17, 'Rafael Alexandre', 'DA CONCEIÇÃO LEÃO', 'RAFA LEÃO', '10/06/1999', 'AC Milan (ITA)', 188, 44, 5, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
+('Portugal', '拉斐尔·莱奥', 'RAFAEL LEAO', 'POR', 'FW', 17, 'Rafael Alexandre', 'DA CONCEIÇÃO LEÃO', 'RAFA LEÃO', '10/06/1999', 'AC Milan (ITA)', 188, 44, 5, 'rare', 20000, 3, '/cards/portugal/leao.png', '/cards/portugal/leao.png', 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '佩德罗·内托', 'PEDRO NETO', 'POR', 'FW', 18, 'Pedro', 'LOMBA NETO', 'NETO', '09/03/2000', 'Chelsea FC (ENG)', 174, 25, 3, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '贡萨洛·格德斯', 'GONCALO GUEDES', 'POR', 'FW', 19, 'Gonçalo Manuel', 'GANCHINHO GUEDES', 'G. GUEDES', '29/11/1996', 'Real Sociedad (ESP)', 179, 35, 8, 'rare', 20000, 3, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Portugal', '若昂·坎塞洛', 'JOAO CANCELO', 'POR', 'DF', 20, 'João Pedro', 'CAVACO CANCELO', 'JOÃO CANCELO', '27/05/1994', 'FC Barcelona (ESP)', 173, 68, 12, 'epic', 40000, 4, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
@@ -1298,7 +1313,80 @@ values
 ('Uzbekistan', '埃桑奥维·谢尔兹奥德', 'ESANOV Sherzod', 'UZB', 'MF', 23, 'Sherzod', 'ESANOV', 'ESANOV', '01/02/2003', 'FK Buxoro (UZB)', 190, 1, 0, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Uzbekistan', '卡尔伊莫维·贝赫鲁兹乔纳', 'KARIMOV Behruzjon', 'UZB', 'DF', 24, 'Behruzjon', 'KARIMOV', 'KARIMOV', '07/08/2007', 'Surkhon FK (UZB)', 172, 2, 0, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
 ('Uzbekistan', '乌勒马萨利伊埃维·阿瓦兹贝克', 'ULMASALIYEV Avazbek', 'UZB', 'DF', 25, 'Avazbek', 'ULMASALIYEV', 'ULMASALIYEV', '27/03/2000', 'OKMK FK (UZB)', 187, 0, 0, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1'),
-('Uzbekistan', '乌罗兹奥维·贾霍恩吉尔', 'UROZOV Jakhongir', 'UZB', 'DF', 26, 'Jakhongir', 'UROZOV', 'UROZOV', '18/01/2004', 'FK Dinamo Samarkand (UZB)', 190, 4, 1, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1')
+('Uzbekistan', '乌罗兹奥维·贾霍恩吉尔', 'UROZOV Jakhongir', 'UZB', 'DF', 26, 'Jakhongir', 'UROZOV', 'UROZOV', '18/01/2004', 'FK Dinamo Samarkand (UZB)', 190, 4, 1, 'common', 5000, 1, null, null, 'fifa_official_squad', '2026_world_cup_final_squad_fifa_pdf_v1');
+
+-- Mark old non-official cards as inactive and release their shirt numbers.
+-- Legacy cards that match an official player keep their shirt number, so the
+-- upsert can update the old row instead of creating a second player.
+update public.player_cards legacy
+set roster_source = 'inactive',
+    roster_version = '2026_world_cup_final_squad_fifa_pdf_v1',
+    shirt_number = null
+where legacy.team in ('Algeria', 'Argentina', 'Australia', 'Austria', 'Belgium', 'Bosnia And Herzegovina', 'Brazil', 'Cabo Verde', 'Canada', 'Colombia', 'Congo DR', 'Côte D''Ivoire', 'Croatia', 'Curaçao', 'Czechia', 'Ecuador', 'Egypt', 'England', 'France', 'Germany', 'Ghana', 'Haiti', 'IR Iran', 'Iraq', 'Japan', 'Jordan', 'Korea Republic', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand', 'Norway', 'Panama', 'Paraguay', 'Portugal', 'Qatar', 'Saudi Arabia', 'Scotland', 'Senegal', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 'Tunisia', 'Türkiye', 'Uruguay', 'USA', 'Uzbekistan')
+  and legacy.roster_source is distinct from 'fifa_official_squad'
+  and not exists (
+    select 1
+    from fifa_squad_import official
+    where official.team = legacy.team
+      and (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+  );
+
+-- Upsert the full FIFA official squad by the real unique key.
+insert into public.player_cards (
+  team,
+  player_name,
+  player_name_en,
+  country_code,
+  position,
+  shirt_number,
+  first_name,
+  last_name,
+  name_on_shirt,
+  dob,
+  club,
+  height_cm,
+  caps,
+  goals,
+  rarity,
+  price,
+  star_level,
+  card_art_url,
+  card_thumb_url,
+  roster_source,
+  roster_version
+)
+select
+  team,
+  player_name,
+  player_name_en,
+  country_code,
+  position,
+  shirt_number,
+  first_name,
+  last_name,
+  name_on_shirt,
+  dob,
+  club,
+  height_cm,
+  caps,
+  goals,
+  rarity,
+  price,
+  star_level,
+  card_art_url,
+  card_thumb_url,
+  roster_source,
+  roster_version
+from fifa_squad_import
 on conflict (team, shirt_number)
 do update set
   player_name = excluded.player_name,
@@ -1320,5 +1408,53 @@ do update set
   card_thumb_url = coalesce(excluded.card_thumb_url, public.player_cards.card_thumb_url),
   roster_source = 'fifa_official_squad',
   roster_version = '2026_world_cup_final_squad_fifa_pdf_v1';
+
+-- Merge legacy card assets into the FIFA official records.
+-- Legacy rows stay inactive/hidden to avoid breaking existing user_cards ownership.
+with legacy_matches as (
+  select distinct on (official.id)
+    official.id as official_id,
+    legacy.id as legacy_id,
+    legacy.card_art_url,
+    legacy.card_thumb_url,
+    legacy.price,
+    legacy.rarity,
+    legacy.star_level
+  from public.player_cards official
+  join public.player_cards legacy
+    on legacy.team = official.team
+   and legacy.id <> official.id
+   and legacy.roster_source is distinct from 'fifa_official_squad'
+   and (
+      regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.player_name, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      or regexp_replace(upper(coalesce(legacy.player_name, '')), '[^A-Z0-9]+', '', 'g') =
+        regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+   )
+  where official.roster_source = 'fifa_official_squad'
+    and official.team in ('Algeria', 'Argentina', 'Australia', 'Austria', 'Belgium', 'Bosnia And Herzegovina', 'Brazil', 'Cabo Verde', 'Canada', 'Colombia', 'Congo DR', 'Côte D''Ivoire', 'Croatia', 'Curaçao', 'Czechia', 'Ecuador', 'Egypt', 'England', 'France', 'Germany', 'Ghana', 'Haiti', 'IR Iran', 'Iraq', 'Japan', 'Jordan', 'Korea Republic', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand', 'Norway', 'Panama', 'Paraguay', 'Portugal', 'Qatar', 'Saudi Arabia', 'Scotland', 'Senegal', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 'Tunisia', 'Türkiye', 'Uruguay', 'USA', 'Uzbekistan')
+    and (
+      legacy.card_art_url is not null
+      or legacy.card_thumb_url is not null
+      or legacy.price is not null
+      or legacy.rarity is not null
+      or legacy.star_level is not null
+    )
+  order by official.id,
+    case when legacy.card_art_url is not null then 0 else 1 end,
+    case when legacy.card_thumb_url is not null then 0 else 1 end
+)
+update public.player_cards official
+set card_art_url = coalesce(official.card_art_url, legacy_matches.card_art_url),
+    card_thumb_url = coalesce(official.card_thumb_url, legacy_matches.card_thumb_url, legacy_matches.card_art_url),
+    price = coalesce(legacy_matches.price, official.price),
+    rarity = coalesce(legacy_matches.rarity, official.rarity),
+    star_level = coalesce(legacy_matches.star_level, official.star_level)
+from legacy_matches
+where official.id = legacy_matches.official_id;
 
 commit;
