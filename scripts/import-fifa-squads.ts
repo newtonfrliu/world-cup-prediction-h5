@@ -7,6 +7,11 @@ import { PDFParse } from "pdf-parse";
 const squadPdfUrl =
   "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf";
 const outputPath = path.join(process.cwd(), "data", "fifa-2026-squads.json");
+const playerNameZhMapPath = path.join(
+  process.cwd(),
+  "data",
+  "player-name-zh-map.json",
+);
 const sqlOutputPath = path.join(
   process.cwd(),
   "supabase_fifa_squads_migration.sql",
@@ -50,6 +55,8 @@ type PlayerCardRow = {
   roster_source: string | null;
 };
 
+type PlayerNameZhMap = Record<string, Record<string, string>>;
+
 const preservedArtByOfficialName: Record<string, string> = {
   "Brazil:VINICIUS JUNIOR": "/cards/brazil/vinicius.png",
   "Brazil:CASEMIRO": "/cards/brazil/casemiro.png",
@@ -59,6 +66,25 @@ const preservedArtByOfficialName: Record<string, string> = {
 const legacyNameAliases: Record<string, string> = {
   "brazil:neymar": "neymar jr",
 };
+
+function loadPlayerNameZhMap(): PlayerNameZhMap {
+  if (!existsSync(playerNameZhMapPath)) {
+    return {};
+  }
+
+  return JSON.parse(readFileSync(playerNameZhMapPath, "utf8")) as PlayerNameZhMap;
+}
+
+const playerNameZhMap = loadPlayerNameZhMap();
+
+function getPlayerCardDisplayName(player: SquadPlayer) {
+  return (
+    playerNameZhMap[player.country]?.[player.player_name] ??
+    (player.name_on_shirt ||
+    player.player_name
+    )
+  );
+}
 
 function loadLocalEnv() {
   const envFilePath = path.join(process.cwd(), ".env.local");
@@ -282,7 +308,7 @@ function buildFifaSquadsSql(players: SquadPlayer[]) {
 
     return `(${[
       escapeSql(player.country),
-      escapeSql(player.name_on_shirt || player.player_name),
+      escapeSql(getPlayerCardDisplayName(player)),
       escapeSql(player.player_name),
       escapeSql(player.country_code),
       escapeSql(player.position),
@@ -513,7 +539,7 @@ async function syncPlayerCards(players: SquadPlayer[]) {
     const cardArtUrl = getCardArtUrl(player, existingCard);
     const payload = {
       team: player.country,
-      player_name: player.name_on_shirt || player.player_name,
+      player_name: getPlayerCardDisplayName(player),
       player_name_en: player.player_name,
       position: player.position,
       shirt_number: player.shirt_number,

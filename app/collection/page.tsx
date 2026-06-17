@@ -34,7 +34,10 @@ type ExchangeCardResult = {
 };
 
 function isCollectionProgressCard(card: PlayerCard) {
-  return card.roster_source === "fifa_official_squad";
+  return (
+    card.roster_source === "fifa_official_squad" &&
+    card.shirt_number !== null
+  );
 }
 
 function getRarityLabel(rarity: string) {
@@ -128,6 +131,11 @@ function StarCard({
         <h2 className="truncate text-lg font-black">
           {card.player_name}
         </h2>
+        {card.player_name_en && card.player_name_en !== card.player_name ? (
+          <p className="mt-1 truncate text-[11px] font-black uppercase text-[#9fb3c8]">
+            {card.player_name_en}
+          </p>
+        ) : null}
         <p className="mt-1 text-xs font-bold text-[#627d98]">
           {card.position ?? "-"} · {getCountryDisplayName(card.team)}
         </p>
@@ -256,6 +264,8 @@ export default function CollectionPage() {
       .from("player_cards")
       .select("*")
       .eq("team", canonicalTeamName)
+      .eq("roster_source", "fifa_official_squad")
+      .not("shirt_number", "is", null)
       .order("shirt_number", { ascending: true });
 
     if (cardError) {
@@ -265,13 +275,6 @@ export default function CollectionPage() {
         error: cardError,
       });
       throw cardError;
-    }
-
-    if ((cardData ?? []).length === 0) {
-      setPlayer(playerData);
-      setCards([]);
-      setOwnedCardIds(new Set());
-      return;
     }
 
     const { data: userCardData, error: userCardError } = await supabase
@@ -287,13 +290,38 @@ export default function CollectionPage() {
       throw userCardError;
     }
 
-    const cards = cardData ?? [];
+    const officialCards = cardData ?? [];
+    const userCardIds = ((userCardData ?? []) as UserCard[]).map(
+      (item) => item.card_id,
+    );
+    const { data: historicalCardData, error: historicalCardError } =
+      userCardIds.length > 0
+        ? await supabase
+            .from("player_cards")
+            .select("*")
+            .eq("team", canonicalTeamName)
+            .in("id", userCardIds)
+            .or(
+              "roster_source.neq.fifa_official_squad,shirt_number.is.null",
+            )
+            .order("player_name", { ascending: true })
+        : { data: [], error: null };
+
+    if (historicalCardError) {
+      console.error("collection historical player_cards query failed", {
+        playerId: currentPlayerId,
+        rawTeam: playerData.country,
+        canonicalTeamName,
+        userCardIds,
+        error: historicalCardError,
+      });
+      throw historicalCardError;
+    }
+
+    const cards = [...officialCards, ...(historicalCardData ?? [])];
     const cardIdSet = new Set(cards.map((card) => card.id));
     const progressCardIdSet = new Set(
       cards.filter(isCollectionProgressCard).map((card) => card.id),
-    );
-    const userCardIds = ((userCardData ?? []) as UserCard[]).map(
-      (item) => item.card_id,
     );
 
     console.log("COLLECTION_USER_CARDS_RAW", {
@@ -301,6 +329,8 @@ export default function CollectionPage() {
       userCardsRawCount: userCardData?.length ?? 0,
       userCardIds,
       equippedCardId: playerData.equipped_card_id,
+      officialCardPoolCount: officialCards.length,
+      historicalOwnedCardPoolCount: historicalCardData?.length ?? 0,
       cardPoolCount: cards.length,
       progressCardPoolCount: progressCardIdSet.size,
       extraOwnedCardId: options.extraOwnedCardId ?? null,
