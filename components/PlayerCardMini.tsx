@@ -253,10 +253,7 @@ export function PlayerCardMini({
         : card?.card_art_url?.trim() || card?.card_thumb_url?.trim()) || "",
     [card, size],
   );
-  const imageCandidate = useMemo(
-    () => card?.card_image?.trim() || getCardImagePath(card),
-    [card],
-  );
+  const imageCandidate = useMemo(() => card?.card_image?.trim() || "", [card]);
   const [artSrc, setArtSrc] = useState(artCandidate);
   const [imageSrc, setImageSrc] = useState(imageCandidate);
 

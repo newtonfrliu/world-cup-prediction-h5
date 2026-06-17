@@ -359,7 +359,7 @@ function getCardArtUrl(player: SquadPlayer, existingCard?: PlayerCardRow) {
   const preservedArt =
     preservedArtByOfficialName[`${player.country}:${getOfficialPlayerName(player)}`];
 
-  return preservedArt ?? existingCard?.card_art_url ?? null;
+  return preservedArt ?? null;
 }
 
 function buildFifaSquadsSql(players: SquadPlayer[]) {
@@ -471,8 +471,26 @@ where legacy.team in (${teams.map((team) => escapeSql(team)).join(", ")})
   select distinct on (official.id)
     official.id as official_id,
     legacy.id as legacy_id,
-    legacy.card_art_url,
-    legacy.card_thumb_url,
+    case
+      when (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+      then legacy.card_art_url
+      else null
+    end as card_art_url,
+    case
+      when (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+      then legacy.card_thumb_url
+      else null
+    end as card_thumb_url,
     legacy.price,
     legacy.rarity,
     legacy.star_level
@@ -501,7 +519,13 @@ where legacy.team in (${teams.map((team) => escapeSql(team)).join(", ")})
       or legacy.star_level is not null
     )
   order by official.id,
-    case when legacy.card_art_url is not null then 0 else 1 end,
+    case
+      when legacy.card_art_url is not null
+       and regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+      then 0
+      else 1
+    end,
     case when legacy.card_thumb_url is not null then 0 else 1 end
 )
 update public.player_cards official
@@ -512,6 +536,43 @@ set card_art_url = coalesce(official.card_art_url, legacy_matches.card_art_url),
     star_level = coalesce(legacy_matches.star_level, official.star_level)
 from legacy_matches
 where official.id = legacy_matches.official_id;`;
+
+  const allowedArtValues = Object.entries(preservedArtByOfficialName)
+    .map(([key, artUrl]) => {
+      const [team, playerNameEn] = key.split(":");
+
+      return `(${escapeSql(team)}, ${escapeSql(playerNameEn)}, ${escapeSql(artUrl)})`;
+    })
+    .join(",\n");
+
+  const officialArtWhitelistSql = `with allowed_art(team, player_name_en, card_art_url) as (
+  values
+${allowedArtValues}
+)
+update public.player_cards card
+set card_art_url = case
+      when resolved_art.card_art_url is not null then resolved_art.card_art_url
+      else null
+    end,
+    card_thumb_url = case
+      when resolved_art.card_art_url is not null then resolved_art.card_art_url
+      else null
+    end
+from (
+  select official.id, allowed_art.card_art_url
+  from public.player_cards official
+  left join allowed_art
+    on allowed_art.team = official.team
+   and regexp_replace(upper(coalesce(allowed_art.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+      regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+  where official.roster_source = '${rosterSource}'
+    and official.team in (${teams.map((team) => escapeSql(team)).join(", ")})
+) resolved_art
+where card.id = resolved_art.id
+  and (
+    card.card_art_url is distinct from resolved_art.card_art_url
+    or card.card_thumb_url is distinct from resolved_art.card_art_url
+  );`;
 
   const insertSql = insertValues.length
     ? `-- Upsert the full FIFA official squad by the real unique key.
@@ -616,6 +677,10 @@ ${insertSql}
 -- Merge legacy card assets into the FIFA official records.
 -- Legacy rows stay inactive/hidden to avoid breaking existing user_cards ownership.
 ${mergeLegacyAssetSql}
+
+-- Enforce explicit card-art ownership. Official cards without a dedicated asset
+-- must render the template card instead of reusing another player's image.
+${officialArtWhitelistSql}
 
 commit;
 `;

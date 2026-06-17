@@ -1415,8 +1415,26 @@ with legacy_matches as (
   select distinct on (official.id)
     official.id as official_id,
     legacy.id as legacy_id,
-    legacy.card_art_url,
-    legacy.card_thumb_url,
+    case
+      when (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+      then legacy.card_art_url
+      else null
+    end as card_art_url,
+    case
+      when (
+        regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+        or regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.name_on_shirt, '')), '[^A-Z0-9]+', '', 'g')
+      )
+      then legacy.card_thumb_url
+      else null
+    end as card_thumb_url,
     legacy.price,
     legacy.rarity,
     legacy.star_level
@@ -1445,7 +1463,13 @@ with legacy_matches as (
       or legacy.star_level is not null
     )
   order by official.id,
-    case when legacy.card_art_url is not null then 0 else 1 end,
+    case
+      when legacy.card_art_url is not null
+       and regexp_replace(upper(coalesce(legacy.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+          regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+      then 0
+      else 1
+    end,
     case when legacy.card_thumb_url is not null then 0 else 1 end
 )
 update public.player_cards official
@@ -1456,5 +1480,42 @@ set card_art_url = coalesce(official.card_art_url, legacy_matches.card_art_url),
     star_level = coalesce(legacy_matches.star_level, official.star_level)
 from legacy_matches
 where official.id = legacy_matches.official_id;
+
+-- Enforce explicit card-art ownership. Official cards without a dedicated asset
+-- must render the template card instead of reusing another player's image.
+with allowed_art(team, player_name_en, card_art_url) as (
+  values
+('Brazil', 'VINICIUS JUNIOR', '/cards/brazil/vinicius.png'),
+('Brazil', 'CASEMIRO', '/cards/brazil/casemiro.png'),
+('Brazil', 'NEYMAR JR', '/cards/brazil/neymar.png'),
+('Portugal', 'BRUNO FERNANDES', '/cards/portugal/bruno.png'),
+('Portugal', 'CRISTIANO RONALDO', '/cards/portugal/ronaldo.png'),
+('Portugal', 'RAFAEL LEAO', '/cards/portugal/leao.png'),
+('Portugal', 'RUBEN DIAS', '/cards/portugal/rubendias.png')
+)
+update public.player_cards card
+set card_art_url = case
+      when resolved_art.card_art_url is not null then resolved_art.card_art_url
+      else null
+    end,
+    card_thumb_url = case
+      when resolved_art.card_art_url is not null then resolved_art.card_art_url
+      else null
+    end
+from (
+  select official.id, allowed_art.card_art_url
+  from public.player_cards official
+  left join allowed_art
+    on allowed_art.team = official.team
+   and regexp_replace(upper(coalesce(allowed_art.player_name_en, '')), '[^A-Z0-9]+', '', 'g') =
+      regexp_replace(upper(coalesce(official.player_name_en, '')), '[^A-Z0-9]+', '', 'g')
+  where official.roster_source = 'fifa_official_squad'
+    and official.team in ('Algeria', 'Argentina', 'Australia', 'Austria', 'Belgium', 'Bosnia And Herzegovina', 'Brazil', 'Cabo Verde', 'Canada', 'Colombia', 'Congo DR', 'Côte D''Ivoire', 'Croatia', 'Curaçao', 'Czechia', 'Ecuador', 'Egypt', 'England', 'France', 'Germany', 'Ghana', 'Haiti', 'IR Iran', 'Iraq', 'Japan', 'Jordan', 'Korea Republic', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand', 'Norway', 'Panama', 'Paraguay', 'Portugal', 'Qatar', 'Saudi Arabia', 'Scotland', 'Senegal', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 'Tunisia', 'Türkiye', 'Uruguay', 'USA', 'Uzbekistan')
+) resolved_art
+where card.id = resolved_art.id
+  and (
+    card.card_art_url is distinct from resolved_art.card_art_url
+    or card.card_thumb_url is distinct from resolved_art.card_art_url
+  );
 
 commit;
