@@ -224,11 +224,7 @@ export default function PredictPage() {
       myPredictions.map((prediction) => [prediction.match_id, prediction]),
     );
   }, [myPredictions]);
-  const bettingExistingPrediction = bettingMatch
-    ? predictionsByMatchId.get(bettingMatch.id)
-    : undefined;
-  const bettingAvailableCoins =
-    (player?.coins ?? 0) + (bettingExistingPrediction?.stake ?? 0);
+  const bettingAvailableCoins = player?.coins ?? 0;
 
   async function loadMyPredictions(currentPlayerId: string) {
     const queryWithStatus = supabase
@@ -456,7 +452,7 @@ export default function PredictPage() {
     setToast("");
   }
 
-  async function insertPredictionWithFallback({
+  async function savePredictionWithFallback({
     match,
     selectedOption,
     stake,
@@ -473,39 +469,42 @@ export default function PredictPage() {
       stake,
       payout: 0,
       status: "active",
+      settled_at: null,
+      created_at: new Date().toISOString(),
     };
-    const { error: insertError } = await supabase
+    const { error: upsertError } = await supabase
       .from("predictions")
-      .insert(payload);
+      .upsert(payload, { onConflict: "player_id,match_id" });
 
-    if (!insertError) {
+    if (!upsertError) {
       return;
     }
 
-    if (!isMissingPredictionStatusError(insertError)) {
-      console.error("prediction insert failed", { payload, error: insertError });
-      throw new Error(`预测保存失败：${insertError.message}`);
+    if (!isMissingPredictionStatusError(upsertError)) {
+      console.error("prediction upsert failed", { payload, error: upsertError });
+      throw new Error(`预测保存失败：${upsertError.message}`);
     }
 
-    console.error("prediction insert fallback without status", {
+    console.error("prediction upsert fallback without status", {
       payload,
-      error: insertError,
+      error: upsertError,
     });
 
-    const fallbackPayload: Omit<typeof payload, "status"> = {
+    const fallbackPayload: Omit<typeof payload, "status" | "settled_at"> = {
       player_id: payload.player_id,
       match_id: payload.match_id,
       prediction: payload.prediction,
       odds_at_prediction: payload.odds_at_prediction,
       stake: payload.stake,
       payout: payload.payout,
+      created_at: payload.created_at,
     };
     const { error: fallbackError } = await supabase
       .from("predictions")
-      .insert(fallbackPayload);
+      .upsert(fallbackPayload, { onConflict: "player_id,match_id" });
 
     if (fallbackError) {
-      console.error("prediction insert fallback failed", {
+      console.error("prediction upsert fallback failed", {
         payload: fallbackPayload,
         error: fallbackError,
       });
@@ -514,12 +513,28 @@ export default function PredictPage() {
   }
 
   async function cancelPredictionRecord(prediction: MyPrediction) {
-    const { error: cancelError } = await supabase
+    const { data: cancelledRows, error: cancelError } = await supabase
       .from("predictions")
-      .update({ status: "cancelled" })
-      .eq("id", prediction.id);
+      .update({
+        status: "cancelled",
+        stake: 0,
+        payout: 0,
+        settled_at: null,
+      })
+      .eq("id", prediction.id)
+      .eq("player_id", playerId as string)
+      .eq("match_id", prediction.match_id)
+      .or("status.eq.active,status.is.null")
+      .select("id");
 
     if (!cancelError) {
+      if (!cancelledRows || cancelledRows.length === 0) {
+        console.error("prediction cancel skipped because active row was not found", {
+          prediction,
+          playerId,
+        });
+        throw new Error("投注不存在或已撤回，金币未重复返还。");
+      }
       return;
     }
 
@@ -531,22 +546,36 @@ export default function PredictPage() {
       throw new Error(`撤单失败：${cancelError.message}`);
     }
 
-    console.error("prediction cancel fallback delete", {
+    console.error("prediction cancel fallback without status", {
       prediction,
       error: cancelError,
     });
 
-    const { error: deleteError } = await supabase
+    const { data: fallbackRows, error: fallbackError } = await supabase
       .from("predictions")
-      .delete()
-      .eq("id", prediction.id);
+      .update({
+        stake: 0,
+        payout: 0,
+      })
+      .eq("id", prediction.id)
+      .eq("player_id", playerId as string)
+      .eq("match_id", prediction.match_id)
+      .select("id");
 
-    if (deleteError) {
-      console.error("prediction cancel fallback delete failed", {
+    if (fallbackError) {
+      console.error("prediction cancel fallback failed", {
         prediction,
-        error: deleteError,
+        error: fallbackError,
       });
-      throw new Error(`撤单失败：${deleteError.message}`);
+      throw new Error(`撤单失败：${fallbackError.message}`);
+    }
+
+    if (!fallbackRows || fallbackRows.length === 0) {
+      console.error("prediction cancel fallback skipped because row was not found", {
+        prediction,
+        playerId,
+      });
+      throw new Error("投注不存在或已撤回，金币未重复返还。");
     }
   }
 
@@ -590,7 +619,13 @@ export default function PredictPage() {
     }
 
     const existingPrediction = predictionsByMatchId.get(match.id);
-    const availableCoins = player.coins + (existingPrediction?.stake ?? 0);
+
+    if ((existingPrediction?.status ?? "active") === "active") {
+      setBetError("你已下注，请先撤回投注后再重新下注。");
+      return;
+    }
+
+    const availableCoins = player.coins;
 
     if (stake > availableCoins) {
       setBetError("金币不足。");
@@ -603,11 +638,7 @@ export default function PredictPage() {
     setToast("");
 
     try {
-      await insertPredictionWithFallback({ match, selectedOption, stake });
-
-      if (existingPrediction) {
-        await cancelPredictionRecord(existingPrediction);
-      }
+      await savePredictionWithFallback({ match, selectedOption, stake });
 
       const nextCoins = availableCoins - stake;
       const { error: coinUpdateError } = await supabase
