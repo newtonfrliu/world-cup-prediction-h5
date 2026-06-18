@@ -107,6 +107,23 @@ function normalizeMatchResult(result: string | null) {
   return null;
 }
 
+function normalizePredictionStatus(status: string | null | undefined) {
+  return (status ?? "active").trim().toLowerCase();
+}
+
+function isCancelledPrediction(prediction: Pick<Prediction, "status">) {
+  return normalizePredictionStatus(prediction.status) === "cancelled";
+}
+
+function isActivePrediction(prediction: Pick<Prediction, "status">) {
+  const status = normalizePredictionStatus(prediction.status);
+  return status === "active";
+}
+
+function isDisplayablePrediction(prediction: Pick<Prediction, "status">) {
+  return !isCancelledPrediction(prediction);
+}
+
 function parseMatchTime(value: string) {
   const date = new Date(value);
 
@@ -221,7 +238,9 @@ export default function PredictPage() {
     playerTheme.accent.toLowerCase() === "#071b3a" ? "#ffffff" : "#071b3a";
   const predictionsByMatchId = useMemo(() => {
     return new Map(
-      myPredictions.map((prediction) => [prediction.match_id, prediction]),
+      myPredictions
+        .filter(isDisplayablePrediction)
+        .map((prediction) => [prediction.match_id, prediction]),
     );
   }, [myPredictions]);
   const bettingAvailableCoins = player?.coins ?? 0;
@@ -271,9 +290,8 @@ export default function PredictPage() {
         ...prediction,
         status: "active",
         settled_at: null,
-      })).filter(
-        (prediction) => (prediction.status ?? "active") !== "cancelled",
-      ) as MyPrediction[];
+      }))
+        .filter(isDisplayablePrediction) as MyPrediction[];
 
       setMyPredictions(fallbackPredictions);
       setPredictedMatchIds(
@@ -287,9 +305,7 @@ export default function PredictPage() {
         ...prediction,
         status: prediction.status ?? "active",
       }))
-      .filter(
-        (prediction) => (prediction.status ?? "active") !== "cancelled",
-      );
+      .filter(isDisplayablePrediction);
 
     setMyPredictions(predictions);
     setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
@@ -620,7 +636,7 @@ export default function PredictPage() {
 
     const existingPrediction = predictionsByMatchId.get(match.id);
 
-    if ((existingPrediction?.status ?? "active") === "active") {
+    if (existingPrediction && isActivePrediction(existingPrediction)) {
       setBetError("你已下注，请先撤回投注后再重新下注。");
       return;
     }
