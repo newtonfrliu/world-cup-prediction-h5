@@ -23,12 +23,29 @@ import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
 
 type Player = Database["public"]["Tables"]["players"]["Row"];
+type Match = Database["public"]["Tables"]["matches"]["Row"];
+type PredictionChoice =
+  Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
 type Prediction = Pick<
   Database["public"]["Tables"]["predictions"]["Row"],
-  "id" | "points" | "stake" | "payout" | "status"
->;
+  | "id"
+  | "match_id"
+  | "prediction"
+  | "odds_at_prediction"
+  | "points"
+  | "stake"
+  | "payout"
+  | "status"
+  | "settled_at"
+> & {
+  matches: Pick<
+    Match,
+    "home_team" | "away_team" | "start_time" | "status" | "result"
+  > | null;
+};
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
 type PlayerCard = Database["public"]["Tables"]["player_cards"]["Row"];
+type ProfileTabKey = "stats" | "history";
 
 type ProfileStats = {
   totalPoints: number;
@@ -48,6 +65,12 @@ type StoredBracketPrediction = {
 };
 
 const officialSiteUrl = "https://2026wc.fun/";
+
+const predictionLabels: Record<PredictionChoice, string> = {
+  home_win: "主胜",
+  draw: "平局",
+  away_win: "客胜",
+};
 
 type CollectionProgress = {
   owned: number;
@@ -70,6 +93,87 @@ function buildEmptyStats(): ProfileStats {
 
 function formatRank(value: number | null) {
   return value ? `第 ${value} 名` : "-";
+}
+
+function formatMatchTime(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
+function normalizePredictionStatus(status: string | null | undefined) {
+  return (status ?? "active").trim().toLowerCase();
+}
+
+function isCancelledPrediction(prediction: Pick<Prediction, "status">) {
+  return normalizePredictionStatus(prediction.status) === "cancelled";
+}
+
+function getPredictionResultInfo(
+  prediction: Pick<Prediction, "status" | "settled_at" | "payout" | "points">,
+) {
+  const status = normalizePredictionStatus(prediction.status);
+
+  if (status === "won") {
+    return {
+      label: "成功",
+      badgeClass: "bg-[#e3f9e5] text-[#0f7b3f] border-[#9ae6b4]",
+      cardClass: "border-[#9ae6b4] bg-[#f0fff4]",
+      order: 2,
+    };
+  }
+
+  if (status === "lost") {
+    return {
+      label: "失败",
+      badgeClass: "bg-[#fde8e8] text-[#9b1c1c] border-[#f7c6c7]",
+      cardClass: "border-[#f7c6c7] bg-[#fff5f5]",
+      order: 2,
+    };
+  }
+
+  if (status === "cancelled") {
+    return {
+      label: "已撤回",
+      badgeClass: "bg-[#edf1f5] text-[#52606d] border-[#cbd2d9]",
+      cardClass: "border-[#d9e2ec] bg-[#f5f7fa]",
+      order: 3,
+    };
+  }
+
+  if (status === "settled" || prediction.settled_at) {
+    const won = (prediction.payout ?? 0) > 0 || (prediction.points ?? 0) > 0;
+
+    return won
+      ? {
+          label: "成功",
+          badgeClass: "bg-[#e3f9e5] text-[#0f7b3f] border-[#9ae6b4]",
+          cardClass: "border-[#9ae6b4] bg-[#f0fff4]",
+          order: 2,
+        }
+      : {
+          label: "失败",
+          badgeClass: "bg-[#fde8e8] text-[#9b1c1c] border-[#f7c6c7]",
+          cardClass: "border-[#f7c6c7] bg-[#fff5f5]",
+          order: 2,
+        };
+  }
+
+  return {
+    label: "未结算",
+    badgeClass: "bg-[#fff8db] text-[#8d6b00] border-[#f6c84c]",
+    cardClass: "border-[#f6c84c]/60 bg-[#fffdf0]",
+    order: 1,
+  };
 }
 
 function buildShareLink(inviteCode: string) {
@@ -113,6 +217,8 @@ export default function ProfilePage() {
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [player, setPlayer] = useState<Player | null>(null);
   const [stats, setStats] = useState<ProfileStats>(() => buildEmptyStats());
+  const [activeTab, setActiveTab] = useState<ProfileTabKey>("stats");
+  const [predictionHistory, setPredictionHistory] = useState<Prediction[]>([]);
   const [shareLink, setShareLink] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [championPrediction, setChampionPrediction] = useState("");
@@ -346,7 +452,9 @@ export default function ProfilePage() {
       const { data: predictionDataWithStatus, error: predictionError } =
         await supabase
           .from("predictions")
-          .select("id, points, stake, payout, status")
+          .select(
+            "id, match_id, prediction, odds_at_prediction, points, stake, payout, status, settled_at, matches(home_team, away_team, start_time, status, result)",
+          )
           .eq("player_id", currentPlayerId);
 
       if (predictionError && isMissingPredictionStatusError(predictionError)) {
@@ -357,7 +465,9 @@ export default function ProfilePage() {
         const { data: fallbackPredictionData, error: fallbackPredictionError } =
           await supabase
             .from("predictions")
-            .select("id, points, stake, payout")
+            .select(
+              "id, match_id, prediction, odds_at_prediction, points, stake, payout, matches(home_team, away_team, start_time, status, result)",
+            )
             .eq("player_id", currentPlayerId);
 
         if (fallbackPredictionError) {
@@ -366,11 +476,18 @@ export default function ProfilePage() {
           return;
         }
 
-        predictionData = ((fallbackPredictionData ?? []) as Prediction[]).map(
-          (prediction) => ({ ...prediction, status: "active" }),
+        predictionData = ((fallbackPredictionData ?? []) as unknown as Omit<
+          Prediction,
+          "status" | "settled_at"
+        >[]).map(
+          (prediction) => ({
+            ...prediction,
+            status: "active",
+            settled_at: null,
+          }),
         );
       } else {
-        predictionData = predictionDataWithStatus as Prediction[] | null;
+        predictionData = predictionDataWithStatus as unknown as Prediction[] | null;
       }
 
       if (leaderboardError) {
@@ -386,8 +503,15 @@ export default function ProfilePage() {
       }
 
       const leaderboard = (leaderboardData ?? []) as LeaderboardRow[];
-      const predictions = ((predictionData ?? []) as Prediction[]).filter(
-        (prediction) => (prediction.status ?? "active") !== "cancelled",
+      const allPredictions = ((predictionData ?? []) as Prediction[]).map(
+        (prediction) => ({
+          ...prediction,
+          status: prediction.status ?? "active",
+          settled_at: prediction.settled_at ?? null,
+        }),
+      );
+      const predictions = allPredictions.filter(
+        (prediction) => !isCancelledPrediction(prediction),
       );
       const playerRowIndex = leaderboard.findIndex(
         (row) =>
@@ -432,6 +556,20 @@ export default function ProfilePage() {
         activeStake,
         totalPayout,
       });
+      setPredictionHistory(
+        [...allPredictions].sort((left, right) => {
+          const leftInfo = getPredictionResultInfo(left);
+          const rightInfo = getPredictionResultInfo(right);
+          const leftTime = left.matches?.start_time
+            ? new Date(left.matches.start_time).getTime()
+            : 0;
+          const rightTime = right.matches?.start_time
+            ? new Date(right.matches.start_time).getTime()
+            : 0;
+
+          return leftInfo.order - rightInfo.order || rightTime - leftTime;
+        }),
+      );
       setLoading(false);
     }
 
@@ -719,61 +857,156 @@ export default function ProfilePage() {
           </article>
 
           <article className="wc-card p-4">
-            <h2 className="text-lg font-black text-[#102a43]">战绩数据</h2>
-            <div className="mt-4 space-y-3">
-              <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-black uppercase">Total Points</p>
-                  <p className="text-2xl font-black">
-                    {Math.round(stats.totalPoints)}
-                  </p>
-                </div>
-              </div>
+            <div className="grid grid-cols-2 gap-2 rounded-2xl bg-[#f6f1e7] p-1">
               {[
-                ["全球排名", formatRank(stats.globalRank)],
-                ["地区排名", formatRank(stats.regionRank)],
-                ["已预测场数", `${stats.predictionCount}`],
-                ["命中场数", `${stats.hitCount}`],
-                ["命中率", `${(stats.hitRate * 100).toFixed(0)}%`],
-                ["总下注", `${stats.totalStake} 金币`],
-                ["当前有效下注", `${stats.activeStake} 金币`],
-                ["总返还", `${stats.totalPayout} 金币`],
-                [
-                  "今日登录奖励",
-                  rewardStatus || "🪙 今日登录奖励：可领取 200 金币",
-                ],
-                [
-                  "收藏进度",
-                  `${collectionProgress.owned} / ${collectionProgress.total}`,
-                ],
-                ["当前主队主题", playerCountry?.nameZh ?? "世界杯默认"],
-              ].map(([label, value]) => (
-                <div
-                  key={label}
-                  className="rounded-xl border border-[#071b3a]/10 bg-[#f6f1e7] p-3"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="text-xs font-black text-[#627d98]">
-                      {label}
+                ["stats", "战绩数据"],
+                ["history", "我的战果"],
+              ].map(([key, label]) => {
+                const isActive = activeTab === key;
+
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setActiveTab(key as ProfileTabKey)}
+                    className={`rounded-xl px-3 py-2 text-sm font-black transition ${
+                      isActive
+                        ? "bg-[#071b3a] text-white shadow-sm"
+                        : "text-[#071b3a]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {activeTab === "stats" ? (
+              <div className="mt-4 space-y-3">
+                <h2 className="text-lg font-black text-[#102a43]">
+                  战绩数据
+                </h2>
+                <div className="rounded-xl bg-[#f6c84c] p-3 text-[#071b3a]">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-black uppercase">Total Points</p>
+                    <p className="text-2xl font-black">
+                      {Math.round(stats.totalPoints)}
                     </p>
-                    <p className="text-lg font-black text-[#071b3a]">
-                      {value}
-                    </p>
-                  </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
-                    <div
-                      className="h-full rounded-full bg-[#e63535]"
-                      style={{
-                        width:
-                          label === "命中率"
-                            ? `${Math.min(stats.hitRate * 100, 100)}%`
-                            : "68%",
-                      }}
-                    />
                   </div>
                 </div>
-              ))}
+                {[
+                  ["全球排名", formatRank(stats.globalRank)],
+                  ["地区排名", formatRank(stats.regionRank)],
+                  ["已预测场数", `${stats.predictionCount}`],
+                  ["命中场数", `${stats.hitCount}`],
+                  ["命中率", `${(stats.hitRate * 100).toFixed(0)}%`],
+                  ["总下注", `${stats.totalStake} 金币`],
+                  ["当前有效下注", `${stats.activeStake} 金币`],
+                  ["总返还", `${stats.totalPayout} 金币`],
+                  [
+                    "今日登录奖励",
+                    rewardStatus || "🪙 今日登录奖励：可领取 200 金币",
+                  ],
+                  [
+                    "收藏进度",
+                    `${collectionProgress.owned} / ${collectionProgress.total}`,
+                  ],
+                  ["当前主队主题", playerCountry?.nameZh ?? "世界杯默认"],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-xl border border-[#071b3a]/10 bg-[#f6f1e7] p-3"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-xs font-black text-[#627d98]">
+                        {label}
+                      </p>
+                      <p className="text-lg font-black text-[#071b3a]">
+                        {value}
+                      </p>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
+                      <div
+                        className="h-full rounded-full bg-[#e63535]"
+                        style={{
+                          width:
+                            label === "命中率"
+                              ? `${Math.min(stats.hitRate * 100, 100)}%`
+                              : "68%",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
+            ) : (
+              <div className="mt-4 space-y-3">
+                <h2 className="text-lg font-black text-[#102a43]">
+                  我的战果
+                </h2>
+                {predictionHistory.length === 0 ? (
+                  <div className="rounded-2xl bg-[#f6f1e7] p-4 text-sm font-bold text-[#52606d]">
+                    暂无下注记录。
+                  </div>
+                ) : null}
+                {predictionHistory.map((prediction) => {
+                  const match = prediction.matches;
+                  const resultInfo = getPredictionResultInfo(prediction);
+
+                  return (
+                    <article
+                      key={prediction.id}
+                      className={`rounded-2xl border p-4 text-sm shadow-sm ${resultInfo.cardClass}`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-base font-black text-[#071b3a]">
+                          {match ? (
+                            <span className="flex flex-wrap items-center gap-2">
+                              <CountryDisplay team={match.home_team} />
+                              <span className="text-[#e63535]">VS</span>
+                              <CountryDisplay team={match.away_team} />
+                            </span>
+                          ) : (
+                            "未知比赛"
+                          )}
+                        </h3>
+                        <span
+                          className={`shrink-0 rounded-full border px-3 py-1 text-xs font-black ${resultInfo.badgeClass}`}
+                        >
+                          {resultInfo.label}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm font-bold text-[#627d98]">
+                        开赛时间：
+                        {match ? formatMatchTime(match.start_time) : "-"}
+                      </p>
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        {[
+                          ["我的选择", predictionLabels[prediction.prediction]],
+                          ["下注赔率", `${prediction.odds_at_prediction}`],
+                          ["下注金币", `${prediction.stake}`],
+                          ["实际获得金币", `${prediction.payout ?? 0}`],
+                          ["本场积分", `${prediction.points ?? 0}`],
+                          ["结果状态", resultInfo.label],
+                        ].map(([label, value]) => (
+                          <div
+                            key={label}
+                            className="rounded-xl bg-white/80 px-3 py-2"
+                          >
+                            <p className="text-[11px] font-black text-[#627d98]">
+                              {label}
+                            </p>
+                            <p className="mt-1 text-sm font-black text-[#071b3a]">
+                              {value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
           </article>
 
           <article className="wc-card p-4">

@@ -124,6 +124,57 @@ function isDisplayablePrediction(prediction: Pick<Prediction, "status">) {
   return !isCancelledPrediction(prediction);
 }
 
+function getPredictionResultInfo(
+  prediction: Pick<Prediction, "status" | "settled_at" | "payout" | "points">,
+) {
+  const status = normalizePredictionStatus(prediction.status);
+
+  if (status === "won") {
+    return {
+      label: "成功",
+      badgeClass: "bg-[#e3f9e5] text-[#0f7b3f] border-[#9ae6b4]",
+      cardClass: "border-[#9ae6b4] bg-[#f0fff4]",
+    };
+  }
+
+  if (status === "lost") {
+    return {
+      label: "失败",
+      badgeClass: "bg-[#fde8e8] text-[#9b1c1c] border-[#f7c6c7]",
+      cardClass: "border-[#f7c6c7] bg-[#fff5f5]",
+    };
+  }
+
+  if (status === "cancelled") {
+    return {
+      label: "已撤回",
+      badgeClass: "bg-[#edf1f5] text-[#52606d] border-[#cbd2d9]",
+      cardClass: "border-[#d9e2ec] bg-[#f5f7fa]",
+    };
+  }
+
+  if (status === "settled" || prediction.settled_at) {
+    const won = (prediction.payout ?? 0) > 0 || (prediction.points ?? 0) > 0;
+    return won
+      ? {
+          label: "成功",
+          badgeClass: "bg-[#e3f9e5] text-[#0f7b3f] border-[#9ae6b4]",
+          cardClass: "border-[#9ae6b4] bg-[#f0fff4]",
+        }
+      : {
+          label: "失败",
+          badgeClass: "bg-[#fde8e8] text-[#9b1c1c] border-[#f7c6c7]",
+          cardClass: "border-[#f7c6c7] bg-[#fff5f5]",
+        };
+  }
+
+  return {
+    label: "未结算",
+    badgeClass: "bg-[#fff8db] text-[#8d6b00] border-[#f6c84c]",
+    cardClass: "border-[#f6c84c]/60 bg-[#fffdf0]",
+  };
+}
+
 function parseMatchTime(value: string) {
   const date = new Date(value);
 
@@ -147,27 +198,6 @@ function formatMatchTime(value: string) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(date);
-}
-
-function formatOddsSyncTime(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  const parts = new Intl.DateTimeFormat("zh-CN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(date);
-  const getPart = (type: Intl.DateTimeFormatPartTypes) =>
-    parts.find((part) => part.type === type)?.value ?? "";
-
-  return `${getPart("year")}-${getPart("month")}-${getPart("day")} ${getPart("hour")}:${getPart("minute")}`;
 }
 
 function getErrorMessage(error: unknown) {
@@ -222,7 +252,6 @@ export default function PredictPage() {
     (typeof predictionOptions)[number] | null
   >(null);
   const [stakeInput, setStakeInput] = useState("50");
-  const [lastOddsSync, setLastOddsSync] = useState("");
   const [loading, setLoading] = useState(true);
   const [submittingMatchId, setSubmittingMatchId] = useState<string | null>(
     null,
@@ -385,14 +414,6 @@ export default function PredictPage() {
       }
 
       setMatches(matchData ?? []);
-
-      const { data: settingData } = await supabase
-        .from("system_settings")
-        .select("value")
-        .eq("key", "last_odds_sync")
-        .maybeSingle();
-
-      setLastOddsSync(settingData?.value ?? "");
 
       if (storedPlayerId) {
         const { data: playerData, error: playerError } = await supabase
@@ -826,17 +847,6 @@ export default function PredictPage() {
           </div>
         ) : null}
 
-        <div
-          className="mb-5 rounded-full border bg-white px-4 py-3 text-sm font-black text-readable shadow-sm"
-          style={{
-            borderColor: playerTheme.accent,
-            boxShadow: playerTheme.glow,
-          }}
-        >
-          <span className="text-[#e63535]">ODDS TICKER</span> ·
-          赔率更新时间：
-          {lastOddsSync ? formatOddsSyncTime(lastOddsSync) : "暂无同步记录"}
-        </div>
         <div className="mb-5 rounded-2xl bg-white p-4 text-sm font-black text-[#071b3a] shadow-sm">
           我的金币：{player?.coins ?? "-"}
           {player?.coins === 0 ? (
@@ -864,45 +874,57 @@ export default function PredictPage() {
 
             {myPredictions.map((prediction) => {
               const match = prediction.matches;
+              const resultInfo = getPredictionResultInfo(prediction);
 
               return (
                 <article
                   key={prediction.id}
-                  className="wc-card p-4 text-sm"
+                  className={`rounded-2xl border p-4 text-sm shadow-sm ${resultInfo.cardClass}`}
                 >
-                  <h2 className="text-base font-black text-[#102a43]">
-                    {match ? (
-                      <span className="flex items-center gap-2">
-                        <CountryDisplay team={match.home_team} />
-                        <span className="text-[#e63535]">VS</span>
-                        <CountryDisplay team={match.away_team} />
-                      </span>
-                    ) : (
-                      "未知比赛"
-                    )}
-                  </h2>
+                  <div className="flex items-start justify-between gap-3">
+                    <h2 className="text-base font-black text-[#102a43]">
+                      {match ? (
+                        <span className="flex flex-wrap items-center gap-2">
+                          <CountryDisplay team={match.home_team} />
+                          <span className="text-[#e63535]">VS</span>
+                          <CountryDisplay team={match.away_team} />
+                        </span>
+                      ) : (
+                        "未知比赛"
+                      )}
+                    </h2>
+                    <span
+                      className={`shrink-0 rounded-full border px-3 py-1 text-xs font-black ${resultInfo.badgeClass}`}
+                    >
+                      {resultInfo.label}
+                    </span>
+                  </div>
                   <p className="mt-2 text-[#627d98]">
                     开赛时间：
                     {match ? formatMatchTime(match.start_time) : "-"}
                   </p>
-                  <p className="mt-1 text-[#627d98]">
-                    我的选择：{predictionLabels[prediction.prediction]}
-                  </p>
-                  <p className="mt-1 text-[#627d98]">
-                    预测时赔率：{prediction.odds_at_prediction}
-                  </p>
-                  <p className="mt-1 text-[#627d98]">
-                    下注金币：{prediction.stake}
-                  </p>
-                  <p className="mt-1 text-[#627d98]">
-                    返还金币：{prediction.payout}
-                  </p>
-                  <p className="mt-1 text-[#627d98]">
-                    比赛状态：{match?.status ?? "-"}
-                  </p>
-                  <p className="mt-1 text-[#102a43]">
-                    当前得分：{prediction.points ?? 0}
-                  </p>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {[
+                      ["我的选择", predictionLabels[prediction.prediction]],
+                      ["预测时赔率", `${prediction.odds_at_prediction}`],
+                      ["下注金币", `${prediction.stake}`],
+                      ["实际获得", `${prediction.payout ?? 0}`],
+                      ["本场积分", `${prediction.points ?? 0}`],
+                      ["结果", resultInfo.label],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label}
+                        className="rounded-xl bg-white/80 px-3 py-2"
+                      >
+                        <p className="text-[11px] font-black text-[#627d98]">
+                          {label}
+                        </p>
+                        <p className="mt-1 text-sm font-black text-[#071b3a]">
+                          {value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </article>
               );
             })}
