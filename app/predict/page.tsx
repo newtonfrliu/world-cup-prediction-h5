@@ -175,6 +175,40 @@ function getPredictionResultInfo(
   };
 }
 
+function getPredictionSortGroup(prediction: MyPrediction) {
+  const status = normalizePredictionStatus(prediction.status);
+
+  if (status === "active") {
+    return 0;
+  }
+
+  if (status === "won" || status === "lost" || status === "settled") {
+    return 1;
+  }
+
+  return 2;
+}
+
+function sortPredictionsForDisplay(predictions: MyPrediction[]) {
+  return [...predictions].sort((left, right) => {
+    const groupDiff =
+      getPredictionSortGroup(left) - getPredictionSortGroup(right);
+
+    if (groupDiff !== 0) {
+      return groupDiff;
+    }
+
+    const leftTime = left.matches?.start_time
+      ? new Date(left.matches.start_time).getTime()
+      : 0;
+    const rightTime = right.matches?.start_time
+      ? new Date(right.matches.start_time).getTime()
+      : 0;
+
+    return rightTime - leftTime;
+  });
+}
+
 function parseMatchTime(value: string) {
   const date = new Date(value);
 
@@ -312,7 +346,7 @@ export default function PredictPage() {
         throw fallbackError;
       }
 
-      const fallbackPredictions = ((fallbackData ?? []) as unknown as Omit<
+      const fallbackPredictions = sortPredictionsForDisplay(((fallbackData ?? []) as unknown as Omit<
         MyPrediction,
         "status" | "settled_at"
       >[]).map((prediction) => ({
@@ -320,7 +354,7 @@ export default function PredictPage() {
         status: "active",
         settled_at: null,
       }))
-        .filter(isDisplayablePrediction) as MyPrediction[];
+        .filter(isDisplayablePrediction) as MyPrediction[]);
 
       setMyPredictions(fallbackPredictions);
       setPredictedMatchIds(
@@ -329,12 +363,12 @@ export default function PredictPage() {
       return;
     }
 
-    const predictions = ((data ?? []) as unknown as MyPrediction[])
+    const predictions = sortPredictionsForDisplay(((data ?? []) as unknown as MyPrediction[])
       .map((prediction) => ({
         ...prediction,
         status: prediction.status ?? "active",
       }))
-      .filter(isDisplayablePrediction);
+      .filter(isDisplayablePrediction));
 
     setMyPredictions(predictions);
     setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
