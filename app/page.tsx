@@ -132,29 +132,6 @@ export default function Home() {
     "";
 
   useEffect(() => {
-    console.log(
-      "HOME_EQUIPPED_CARD_RENDER",
-      JSON.stringify(
-        {
-          playerId: currentPlayer?.id ?? null,
-          playerEquippedCardId: currentPlayer?.equipped_card_id ?? null,
-          equippedCard,
-          imageSrc: equippedCardImageSrc,
-        },
-        null,
-        2,
-      ),
-    );
-  }, [currentPlayer?.equipped_card_id, currentPlayer?.id, equippedCard, equippedCardImageSrc]);
-
-  useEffect(() => {
-    console.log(
-      "HOME_EQUIPPED_CARD_STATE",
-      JSON.stringify(equippedCard, null, 2),
-    );
-  }, [equippedCard]);
-
-  useEffect(() => {
     async function hydrateRef() {
       const params = new URLSearchParams(window.location.search);
       const ref =
@@ -229,18 +206,6 @@ export default function Home() {
       .eq("id", cardId)
       .maybeSingle();
 
-    console.log(
-      "HOME_EQUIPPED_CARD_QUERY_RESULT",
-      JSON.stringify(
-        {
-          equippedCard: cardData,
-          error: cardError,
-        },
-        null,
-        2,
-      ),
-    );
-
     if (cardError) {
       console.error("failed to load home equipped card", {
         cardId,
@@ -284,11 +249,8 @@ export default function Home() {
       }
 
       if (!data) {
-        console.log("HOME_PLAYER", null);
         return;
       }
-
-      console.log("HOME_PLAYER", JSON.stringify(data, null, 2));
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
       let inviteCode = data.invite_code ?? "";
@@ -596,27 +558,13 @@ export default function Home() {
             </p>
           </div>
           {equippedCard ? (
-            <div className="absolute bottom-4 right-[8.5rem] z-30 flex w-[120px] flex-col items-center border-2 border-red-500 bg-white/95 p-1 text-[#071b3a] shadow-2xl sm:right-36 sm:w-[145px] md:bottom-5 md:right-44 md:w-[180px]">
-              <div className="mb-1 w-full rounded bg-red-50 p-1 text-[9px] font-black leading-tight text-red-700">
-                <p>{equippedCard.player_name}</p>
-                <p className="break-all">{equippedCard.card_art_url}</p>
-                <p>
-                  canShowCard:{" "}
-                  {String(
-                    equippedCard.roster_source === "fifa_official_squad" ||
-                      Boolean(equippedCard.card_art_url?.trim()),
-                  )}
-                </p>
-              </div>
+            <div className="absolute bottom-4 right-[8.25rem] z-20 flex h-[150px] w-[104px] items-end justify-center sm:right-36 sm:h-[170px] sm:w-[118px] md:bottom-5 md:right-44 md:h-[220px] md:w-[152px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={equippedCardImageSrc}
                 alt={`${equippedCard.player_name} equipped card`}
-                className="h-auto w-full rounded-xl object-contain shadow-[0_20px_45px_rgba(7,27,58,0.38)]"
+                className="max-h-full max-w-full object-contain drop-shadow-[0_20px_35px_rgba(7,27,58,0.38)]"
               />
-              <span className="mt-2 rounded-full border border-[#f6c84c]/70 bg-[#071b3a]/75 px-3 py-1 text-[11px] font-black text-[#f6c84c] shadow-lg backdrop-blur">
-                已装备球星卡
-              </span>
             </div>
           ) : null}
           <div className="absolute bottom-4 right-4 z-10 flex w-28 flex-col items-center rounded-2xl border border-white/20 bg-[#071b3a]/35 p-2 backdrop-blur">
