@@ -802,6 +802,8 @@ export default function PredictPage() {
 
   const sortByStartTimeAsc = (left: Match, right: Match) =>
     new Date(left.start_time).getTime() - new Date(right.start_time).getTime();
+  const sortByStartTimeDesc = (left: Match, right: Match) =>
+    new Date(right.start_time).getTime() - new Date(left.start_time).getTime();
   const upcomingMatches = matches
     .filter((match) => getMatchState(match) === "not_started")
     .sort(sortByStartTimeAsc);
@@ -810,7 +812,7 @@ export default function PredictPage() {
     .sort(sortByStartTimeAsc);
   const finishedMatches = matches
     .filter((match) => getMatchState(match) === "finished")
-    .sort(sortByStartTimeAsc);
+    .sort(sortByStartTimeDesc);
   const matchTabs: Array<{
     key: MatchTabKey;
     label: string;

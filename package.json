@@ -11,18 +11,26 @@
     "import:fifa-squads": "node scripts/import-fifa-squads.ts",
     "check:card-assets": "node scripts/check-card-assets.ts",
     "fetch:player-photos": "node scripts/fetch-player-photos.ts",
+    "cards:poc:fetch-images": "node scripts/card-factory/fetch-player-images.ts",
+    "cards:poc:download": "node scripts/card-factory/download-player-source-images.ts",
+    "cards:poc:matting": "node scripts/card-factory/process-player-portraits.ts",
+    "cards:poc:process": "node scripts/card-factory/process-player-portraits.ts",
+    "cards:poc:compose": "node scripts/card-factory/compose-player-cards.ts",
+    "cards:poc": "npm run cards:poc:download && npm run cards:poc:process && npm run cards:poc:compose",
     "check:teams": "node scripts/checkTeams.ts",
     "sync:odds": "node scripts/syncOdds.ts",
     "sync:scores": "node scripts/syncScores.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
+    "dotenv": "^17.4.2",
     "flag-icons": "^7.5.0",
     "html-to-image": "^1.11.13",
     "next": "15.5.19",
     "pdf-parse": "^2.4.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "sharp": "^0.35.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
