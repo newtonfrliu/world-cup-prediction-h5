@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-06-20T05:46:33.863Z",
+  "source": "manual rarity candidates in task request matched against data/card-production-packages.json",
+  "unmatched_count": 0,
+  "unmatched": [],
+  "downgraded_from_old_epic_count": 2,
+  "excluded_not_written": [
+    {
+      "player_name_en": "FRIMPONG",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "MITOMA",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "XAVI SIMONS",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "RODRYGO",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    }
+  ]
+}

@@ -1,0 +1,1057 @@
+{
+  "generated_at": "2026-06-20T05:46:33.863Z",
+  "source": "data/card-production-packages.json",
+  "scope": "Only roster_source = 'fifa_official_squad' should be updated in Supabase.",
+  "price_table": {
+    "Legend": 10000,
+    "Epic": 5000,
+    "Rare": 2000,
+    "Common": 500
+  },
+  "star_level_table": {
+    "Legend": 5,
+    "Epic": 4,
+    "Rare": 3,
+    "Common": 1
+  },
+  "excluded_not_written": [
+    {
+      "player_name_en": "FRIMPONG",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "MITOMA",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "XAVI SIMONS",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    },
+    {
+      "player_name_en": "RODRYGO",
+      "in_overrides": false,
+      "in_sql_rows": false,
+      "found_in_package": false
+    }
+  ],
+  "downgraded_from_old_epic": [
+    {
+      "team": "Portugal",
+      "player_name": "鲁本·迪亚斯",
+      "player_name_en": "RUBEN DIAS",
+      "shirt_number": 3,
+      "old_rarity": "Epic",
+      "new_rarity": "Rare",
+      "reason": "Not included in the manual Epic list, so old Epic is downgraded."
+    },
+    {
+      "team": "Portugal",
+      "player_name": "拉斐尔·莱奥",
+      "player_name_en": "RAFAEL LEAO",
+      "shirt_number": 17,
+      "old_rarity": "Epic",
+      "new_rarity": "Rare",
+      "reason": "Not included in the manual Epic list, so old Epic is downgraded."
+    }
+  ],
+  "overrides": [
+    {
+      "country": "Portugal",
+      "team": "Portugal",
+      "player_name": "克里斯蒂亚诺·罗纳尔多",
+      "player_name_en": "CRISTIANO RONALDO",
+      "normalized_player_name_en": "cristianoronaldo",
+      "shirt_number": 7,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "CRISTIANO RONALDO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "莱昂内尔·梅西",
+      "player_name_en": "MESSI Lionel",
+      "normalized_player_name_en": "messilionel",
+      "shirt_number": 10,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MESSI Lionel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "team": "Brazil",
+      "player_name": "内马尔",
+      "player_name_en": "NEYMAR JR",
+      "normalized_player_name_en": "neymarjr",
+      "shirt_number": 10,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "NEYMAR JR",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "team": "Brazil",
+      "player_name": "维尼修斯",
+      "player_name_en": "VINICIUS JUNIOR",
+      "normalized_player_name_en": "viniciusjunior",
+      "shirt_number": 7,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "VINICIUS JUNIOR",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "team": "France",
+      "player_name": "基利安·姆巴佩",
+      "player_name_en": "MBAPPE Kylian",
+      "normalized_player_name_en": "mbappekylian",
+      "shirt_number": 10,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "MBAPPE Kylian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "team": "France",
+      "player_name": "奥斯曼·登贝莱",
+      "player_name_en": "DEMBELE Ousmane",
+      "normalized_player_name_en": "dembeleousmane",
+      "shirt_number": 7,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "DEMBELE Ousmane",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "team": "England",
+      "player_name": "哈里·凯恩",
+      "player_name_en": "KANE Harry",
+      "normalized_player_name_en": "kaneharry",
+      "shirt_number": 9,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "KANE Harry",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "team": "Germany",
+      "player_name": "曼努埃尔·诺伊尔",
+      "player_name_en": "NEUER Manuel",
+      "normalized_player_name_en": "neuermanuel",
+      "shirt_number": 1,
+      "position": "GK",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "NEUER Manuel",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "team": "Spain",
+      "player_name": "拉明·亚马尔",
+      "player_name_en": "YAMAL Lamine",
+      "normalized_player_name_en": "yamallamine",
+      "shirt_number": 19,
+      "position": "FW",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "YAMAL Lamine",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "team": "Netherlands",
+      "player_name": "维吉尔·范戴克",
+      "player_name_en": "VAN DIJK Virgil",
+      "normalized_player_name_en": "vandijkvirgil",
+      "shirt_number": 4,
+      "position": "DF",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "VAN DIJK Virgil",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "team": "Japan",
+      "player_name": "久保建英",
+      "player_name_en": "KUBO Takefusa",
+      "normalized_player_name_en": "kubotakefusa",
+      "shirt_number": 8,
+      "position": "MF",
+      "rarity": "legend",
+      "rarity_label": "Legend",
+      "price": 10000,
+      "star_level": 5,
+      "source_rarity": "Legend",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "KUBO Takefusa",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "team": "Portugal",
+      "player_name": "布鲁诺·费尔南德斯",
+      "player_name_en": "BRUNO FERNANDES",
+      "normalized_player_name_en": "brunofernandes",
+      "shirt_number": 8,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "BRUNO FERNANDES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "team": "Portugal",
+      "player_name": "贝尔纳多·席尔瓦",
+      "player_name_en": "BERNARDO SILVA",
+      "normalized_player_name_en": "bernardosilva",
+      "shirt_number": 10,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "BERNARDO SILVA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "team": "Portugal",
+      "player_name": "维蒂尼亚",
+      "player_name_en": "VITINHA",
+      "normalized_player_name_en": "vitinha",
+      "shirt_number": 23,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Rare",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "VITINHA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Portugal",
+      "team": "Portugal",
+      "player_name": "若昂·内维斯",
+      "player_name_en": "JOAO NEVES",
+      "normalized_player_name_en": "joaoneves",
+      "shirt_number": 15,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Rare",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Portugal",
+        "player_name_en": "JOAO NEVES",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "劳塔罗·马丁内斯",
+      "player_name_en": "MARTINEZ Lautaro",
+      "normalized_player_name_en": "martinezlautaro",
+      "shirt_number": 22,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MARTINEZ Lautaro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "胡利安·阿尔瓦雷斯",
+      "player_name_en": "ALVAREZ Julian",
+      "normalized_player_name_en": "alvarezjulian",
+      "shirt_number": 9,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "ALVAREZ Julian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "恩佐·费尔南德斯",
+      "player_name_en": "FERNANDEZ Enzo",
+      "normalized_player_name_en": "fernandezenzo",
+      "shirt_number": 24,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "FERNANDEZ Enzo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "亚历克西斯·麦卡利斯特",
+      "player_name_en": "MAC ALLISTER Alexis",
+      "normalized_player_name_en": "macallisteralexis",
+      "shirt_number": 20,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MAC ALLISTER Alexis",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Argentina",
+      "team": "Argentina",
+      "player_name": "埃米利亚诺·马丁内斯",
+      "player_name_en": "MARTINEZ Emiliano",
+      "normalized_player_name_en": "martinezemiliano",
+      "shirt_number": 23,
+      "position": "GK",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Argentina",
+        "player_name_en": "MARTINEZ Emiliano",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "team": "Brazil",
+      "player_name": "拉菲尼亚",
+      "player_name_en": "RAPHINHA",
+      "normalized_player_name_en": "raphinha",
+      "shirt_number": 11,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "RAPHINHA",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "team": "Brazil",
+      "player_name": "卡塞米罗",
+      "player_name_en": "CASEMIRO",
+      "normalized_player_name_en": "casemiro",
+      "shirt_number": 5,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "CASEMIRO",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Brazil",
+      "team": "Brazil",
+      "player_name": "阿利松",
+      "player_name_en": "ALISSON",
+      "normalized_player_name_en": "alisson",
+      "shirt_number": 1,
+      "position": "GK",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Brazil",
+        "player_name_en": "ALISSON",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "team": "France",
+      "player_name": "奥雷利安·楚阿梅尼",
+      "player_name_en": "TCHOUAMENI Aurelien",
+      "normalized_player_name_en": "tchouameniaurelien",
+      "shirt_number": 8,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "TCHOUAMENI Aurelien",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "team": "France",
+      "player_name": "威廉·萨利巴",
+      "player_name_en": "SALIBA William",
+      "normalized_player_name_en": "salibawilliam",
+      "shirt_number": 17,
+      "position": "DF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "SALIBA William",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "France",
+      "team": "France",
+      "player_name": "特奥·埃尔南德斯",
+      "player_name_en": "HERNANDEZ Theo",
+      "normalized_player_name_en": "hernandeztheo",
+      "shirt_number": 19,
+      "position": "DF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "France",
+        "player_name_en": "HERNANDEZ Theo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "team": "England",
+      "player_name": "裘德·贝林厄姆",
+      "player_name_en": "BELLINGHAM Jude",
+      "normalized_player_name_en": "bellinghamjude",
+      "shirt_number": 10,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "BELLINGHAM Jude",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "team": "England",
+      "player_name": "布卡约·萨卡",
+      "player_name_en": "SAKA Bukayo",
+      "normalized_player_name_en": "sakabukayo",
+      "shirt_number": 7,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "SAKA Bukayo",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "team": "England",
+      "player_name": "德克兰·赖斯",
+      "player_name_en": "RICE Declan",
+      "normalized_player_name_en": "ricedeclan",
+      "shirt_number": 4,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "RICE Declan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "England",
+      "team": "England",
+      "player_name": "马库斯·拉什福德",
+      "player_name_en": "RASHFORD Marcus",
+      "normalized_player_name_en": "rashfordmarcus",
+      "shirt_number": 11,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "England",
+        "player_name_en": "RASHFORD Marcus",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "team": "Germany",
+      "player_name": "贾马尔·穆西亚拉",
+      "player_name_en": "MUSIALA Jamal",
+      "normalized_player_name_en": "musialajamal",
+      "shirt_number": 10,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "MUSIALA Jamal",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "team": "Germany",
+      "player_name": "弗洛里安·维尔茨",
+      "player_name_en": "WIRTZ Florian",
+      "normalized_player_name_en": "wirtzflorian",
+      "shirt_number": 17,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "WIRTZ Florian",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "team": "Germany",
+      "player_name": "约书亚·基米希",
+      "player_name_en": "KIMMICH Joshua",
+      "normalized_player_name_en": "kimmichjoshua",
+      "shirt_number": 6,
+      "position": "DF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "KIMMICH Joshua",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Germany",
+      "team": "Germany",
+      "player_name": "凯·哈弗茨",
+      "player_name_en": "HAVERTZ Kai",
+      "normalized_player_name_en": "havertzkai",
+      "shirt_number": 7,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Germany",
+        "player_name_en": "HAVERTZ Kai",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "team": "Spain",
+      "player_name": "佩德里",
+      "player_name_en": "PEDRI",
+      "normalized_player_name_en": "pedri",
+      "shirt_number": 20,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "PEDRI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "team": "Spain",
+      "player_name": "罗德里",
+      "player_name_en": "RODRI",
+      "normalized_player_name_en": "rodri",
+      "shirt_number": 16,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "RODRI",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "team": "Spain",
+      "player_name": "尼科·威廉姆斯",
+      "player_name_en": "WILLIAMS Nico",
+      "normalized_player_name_en": "williamsnico",
+      "shirt_number": 17,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "WILLIAMS Nico",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Spain",
+      "team": "Spain",
+      "player_name": "达尼·奥尔莫",
+      "player_name_en": "OLMO Dani",
+      "normalized_player_name_en": "olmodani",
+      "shirt_number": 10,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Spain",
+        "player_name_en": "OLMO Dani",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "team": "Netherlands",
+      "player_name": "科迪·加克波",
+      "player_name_en": "GAKPO Cody",
+      "normalized_player_name_en": "gakpocody",
+      "shirt_number": 11,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "GAKPO Cody",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "team": "Netherlands",
+      "player_name": "弗伦基·德容",
+      "player_name_en": "DE JONG Frenkie",
+      "normalized_player_name_en": "dejongfrenkie",
+      "shirt_number": 21,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DE JONG Frenkie",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "team": "Netherlands",
+      "player_name": "内森·阿克",
+      "player_name_en": "AKE Nathan",
+      "normalized_player_name_en": "akenathan",
+      "shirt_number": 5,
+      "position": "DF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Rare",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "AKE Nathan",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Netherlands",
+      "team": "Netherlands",
+      "player_name": "孟菲斯·德佩",
+      "player_name_en": "DEPAY Memphis",
+      "normalized_player_name_en": "depaymemphis",
+      "shirt_number": 10,
+      "position": "FW",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Rare",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Netherlands",
+        "player_name_en": "DEPAY Memphis",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "team": "Japan",
+      "player_name": "富安健洋",
+      "player_name_en": "TOMIYASU Takehiro",
+      "normalized_player_name_en": "tomiyasutakehiro",
+      "shirt_number": 22,
+      "position": "DF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "TOMIYASU Takehiro",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "team": "Japan",
+      "player_name": "堂安律",
+      "player_name_en": "DOAN Ritsu",
+      "normalized_player_name_en": "doanritsu",
+      "shirt_number": 10,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "DOAN Ritsu",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "team": "Japan",
+      "player_name": "镰田大地",
+      "player_name_en": "KAMADA Daichi",
+      "normalized_player_name_en": "kamadadaichi",
+      "shirt_number": 15,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Epic",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "KAMADA Daichi",
+        "roster_source": "fifa_official_squad"
+      }
+    },
+    {
+      "country": "Japan",
+      "team": "Japan",
+      "player_name": "伊东纯也",
+      "player_name_en": "ITO Junya",
+      "normalized_player_name_en": "itojunya",
+      "shirt_number": 14,
+      "position": "MF",
+      "rarity": "epic",
+      "rarity_label": "Epic",
+      "price": 5000,
+      "star_level": 4,
+      "source_rarity": "Rare",
+      "match_type": "exact",
+      "supabase_match_key": {
+        "team": "Japan",
+        "player_name_en": "ITO Junya",
+        "roster_source": "fifa_official_squad"
+      }
+    }
+  ],
+  "counts_by_country": {
+    "Spain": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 4,
+      "Common": 17,
+      "Total": 26
+    },
+    "Argentina": {
+      "Legend": 1,
+      "Epic": 5,
+      "Rare": 4,
+      "Common": 16,
+      "Total": 26
+    },
+    "Germany": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 5,
+      "Common": 16,
+      "Total": 26
+    },
+    "England": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 5,
+      "Common": 16,
+      "Total": 26
+    },
+    "Netherlands": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 3,
+      "Common": 18,
+      "Total": 26
+    },
+    "Portugal": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 5,
+      "Common": 16,
+      "Total": 26
+    },
+    "France": {
+      "Legend": 2,
+      "Epic": 3,
+      "Rare": 5,
+      "Common": 16,
+      "Total": 26
+    },
+    "Brazil": {
+      "Legend": 2,
+      "Epic": 3,
+      "Rare": 4,
+      "Common": 17,
+      "Total": 26
+    },
+    "Japan": {
+      "Legend": 1,
+      "Epic": 4,
+      "Rare": 5,
+      "Common": 16,
+      "Total": 26
+    }
+  },
+  "global_counts": {
+    "Legend": 11,
+    "Epic": 35,
+    "Rare": 40,
+    "Common": 148,
+    "Total": 234
+  }
+}
