@@ -4,7 +4,6 @@ import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
-import { PlayerCardMini } from "@/components/PlayerCardMini";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import {
   getCanonicalTeamName,
@@ -52,6 +51,7 @@ type PlayerCard = {
   card_theme: string | null;
   card_number: string | null;
   card_image: string | null;
+  roster_source: string | null;
 };
 
 const popularTeams = [
@@ -119,6 +119,8 @@ export default function Home() {
   const [inviteCode, setInviteCode] = useState("");
   const [currentPlayer, setCurrentPlayer] = useState<HomePlayer | null>(null);
   const [equippedCard, setEquippedCard] = useState<PlayerCard | null>(null);
+  const [isEquippedCardImageHidden, setIsEquippedCardImageHidden] =
+    useState(false);
   const [rewardStatus, setRewardStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
@@ -132,6 +134,10 @@ export default function Home() {
   const selectedTheme = getCountryTheme(country);
   const selectedAccentText =
     selectedTheme.textOnTheme === "dark" ? "#AA151B" : selectedTheme.accent;
+  const equippedCardImageSrc =
+    equippedCard?.card_art_url?.trim() ||
+    equippedCard?.card_thumb_url?.trim() ||
+    "";
 
   useEffect(() => {
     async function hydrateRef() {
@@ -202,13 +208,27 @@ export default function Home() {
   }, []);
 
   async function loadEquippedCard(cardId: string) {
-    const { data: cardData } = await supabase
+    const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
-      .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image")
+      .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image, roster_source")
       .eq("id", cardId)
       .maybeSingle();
 
-    setEquippedCard(cardData);
+    if (cardError) {
+      console.error("failed to load home equipped card", {
+        cardId,
+        error: cardError,
+      });
+      setEquippedCard(null);
+      return;
+    }
+
+    const canShowCard =
+      cardData?.roster_source === "fifa_official_squad" ||
+      Boolean(cardData?.card_art_url?.trim());
+
+    setEquippedCard(canShowCard ? cardData : null);
+    setIsEquippedCardImageHidden(false);
   }
 
   async function loadPlayer(
@@ -271,6 +291,7 @@ export default function Home() {
         await loadEquippedCard(data.equipped_card_id);
       } else {
         setEquippedCard(null);
+        setIsEquippedCardImageHidden(false);
       }
       const shouldAwardDaily = options.awardDaily ?? true;
       const nextCoins = shouldAwardDaily
@@ -481,6 +502,7 @@ export default function Home() {
     setCurrentPlayer(null);
     setCoinBalance(null);
     setEquippedCard(null);
+    setIsEquippedCardImageHidden(false);
     setRecoveryPlayer(null);
     setRewardStatus("");
     setNotice("");
@@ -551,15 +573,22 @@ export default function Home() {
               加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
             </p>
           </div>
-          <div className="absolute bottom-4 right-4 z-10 flex w-28 flex-col items-center rounded-2xl border border-white/20 bg-[#071b3a]/35 p-2 backdrop-blur">
-            {equippedCard ? (
-              <PlayerCardMini
-                card={equippedCard}
-                country={currentPlayer?.country ?? country}
-                size="small"
-                equipped
+          {equippedCard && equippedCardImageSrc && !isEquippedCardImageHidden ? (
+            <div className="relative z-20 ml-auto mr-32 mt-5 flex w-[120px] flex-col items-center md:absolute md:bottom-5 md:right-40 md:mr-0 md:mt-0 md:w-[180px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={equippedCardImageSrc}
+                alt={`${equippedCard.player_name} equipped card`}
+                className="h-auto w-full rounded-xl object-contain shadow-[0_20px_45px_rgba(7,27,58,0.38)]"
+                onError={() => setIsEquippedCardImageHidden(true)}
               />
-            ) : selectedCountry ? (
+              <span className="mt-2 rounded-full border border-[#f6c84c]/70 bg-[#071b3a]/75 px-3 py-1 text-[11px] font-black text-[#f6c84c] shadow-lg backdrop-blur">
+                已装备球星卡
+              </span>
+            </div>
+          ) : null}
+          <div className="absolute bottom-4 right-4 z-10 flex w-28 flex-col items-center rounded-2xl border border-white/20 bg-[#071b3a]/35 p-2 backdrop-blur">
+            {selectedCountry ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
