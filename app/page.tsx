@@ -119,8 +119,6 @@ export default function Home() {
   const [inviteCode, setInviteCode] = useState("");
   const [currentPlayer, setCurrentPlayer] = useState<HomePlayer | null>(null);
   const [equippedCard, setEquippedCard] = useState<PlayerCard | null>(null);
-  const [isEquippedCardImageHidden, setIsEquippedCardImageHidden] =
-    useState(false);
   const [rewardStatus, setRewardStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
@@ -138,6 +136,15 @@ export default function Home() {
     equippedCard?.card_art_url?.trim() ||
     equippedCard?.card_thumb_url?.trim() ||
     "";
+
+  useEffect(() => {
+    console.log("HOME_EQUIPPED_CARD_RENDER", {
+      playerId: currentPlayer?.id ?? null,
+      playerEquippedCardId: currentPlayer?.equipped_card_id ?? null,
+      equippedCard,
+      imageSrc: equippedCardImageSrc,
+    });
+  }, [currentPlayer?.equipped_card_id, currentPlayer?.id, equippedCard, equippedCardImageSrc]);
 
   useEffect(() => {
     async function hydrateRef() {
@@ -227,8 +234,17 @@ export default function Home() {
       cardData?.roster_source === "fifa_official_squad" ||
       Boolean(cardData?.card_art_url?.trim());
 
+    console.log("HOME_EQUIPPED_CARD_QUERY_RESULT", {
+      id: cardData?.id ?? null,
+      player_name: cardData?.player_name ?? null,
+      player_name_en: cardData?.player_name_en ?? null,
+      card_art_url: cardData?.card_art_url ?? null,
+      card_thumb_url: cardData?.card_thumb_url ?? null,
+      roster_source: cardData?.roster_source ?? null,
+      canShowCard,
+    });
+
     setEquippedCard(canShowCard ? cardData : null);
-    setIsEquippedCardImageHidden(false);
   }
 
   async function loadPlayer(
@@ -291,7 +307,6 @@ export default function Home() {
         await loadEquippedCard(data.equipped_card_id);
       } else {
         setEquippedCard(null);
-        setIsEquippedCardImageHidden(false);
       }
       const shouldAwardDaily = options.awardDaily ?? true;
       const nextCoins = shouldAwardDaily
@@ -502,7 +517,6 @@ export default function Home() {
     setCurrentPlayer(null);
     setCoinBalance(null);
     setEquippedCard(null);
-    setIsEquippedCardImageHidden(false);
     setRecoveryPlayer(null);
     setRewardStatus("");
     setNotice("");
@@ -573,14 +587,24 @@ export default function Home() {
               加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
             </p>
           </div>
-          {equippedCard && equippedCardImageSrc && !isEquippedCardImageHidden ? (
-            <div className="relative z-20 ml-auto mr-32 mt-5 flex w-[120px] flex-col items-center md:absolute md:bottom-5 md:right-40 md:mr-0 md:mt-0 md:w-[180px]">
+          {equippedCard ? (
+            <div className="absolute bottom-4 right-[8.5rem] z-30 flex w-[120px] flex-col items-center border-2 border-red-500 bg-white/95 p-1 text-[#071b3a] shadow-2xl sm:right-36 sm:w-[145px] md:bottom-5 md:right-44 md:w-[180px]">
+              <div className="mb-1 w-full rounded bg-red-50 p-1 text-[9px] font-black leading-tight text-red-700">
+                <p>{equippedCard.player_name}</p>
+                <p className="break-all">{equippedCard.card_art_url}</p>
+                <p>
+                  canShowCard:{" "}
+                  {String(
+                    equippedCard.roster_source === "fifa_official_squad" ||
+                      Boolean(equippedCard.card_art_url?.trim()),
+                  )}
+                </p>
+              </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={equippedCardImageSrc}
                 alt={`${equippedCard.player_name} equipped card`}
                 className="h-auto w-full rounded-xl object-contain shadow-[0_20px_45px_rgba(7,27,58,0.38)]"
-                onError={() => setIsEquippedCardImageHidden(true)}
               />
               <span className="mt-2 rounded-full border border-[#f6c84c]/70 bg-[#071b3a]/75 px-3 py-1 text-[11px] font-black text-[#f6c84c] shadow-lg backdrop-blur">
                 已装备球星卡
