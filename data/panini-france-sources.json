@@ -1,0 +1,338 @@
+[
+  {
+    "player_slug": "samba-brice",
+    "player_name": "布里斯·桑巴",
+    "player_name_en": "SAMBA Brice",
+    "shirt_number": 1,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"SAMBA Brice\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"SAMBA Brice\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"SAMBA Brice\"",
+      "\"Panini France 2026\" \"SAMBA Brice\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "gusto-malo",
+    "player_name": "马洛·古斯托",
+    "player_name_en": "GUSTO Malo",
+    "shirt_number": 2,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"GUSTO Malo\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"GUSTO Malo\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"GUSTO Malo\"",
+      "\"Panini France 2026\" \"GUSTO Malo\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "digne-lucas",
+    "player_name": "卢卡斯·迪涅",
+    "player_name_en": "DIGNE Lucas",
+    "shirt_number": 3,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"DIGNE Lucas\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"DIGNE Lucas\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"DIGNE Lucas\"",
+      "\"Panini France 2026\" \"DIGNE Lucas\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "upamecano-dayot",
+    "player_name": "达约·于帕梅卡诺",
+    "player_name_en": "UPAMECANO Dayot",
+    "shirt_number": 4,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"UPAMECANO Dayot\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"UPAMECANO Dayot\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"UPAMECANO Dayot\"",
+      "\"Panini France 2026\" \"UPAMECANO Dayot\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "kounde-jules",
+    "player_name": "朱尔·孔德",
+    "player_name_en": "KOUNDE Jules",
+    "shirt_number": 5,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"KOUNDE Jules\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"KOUNDE Jules\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"KOUNDE Jules\"",
+      "\"Panini France 2026\" \"KOUNDE Jules\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "kone-manu",
+    "player_name": "马努·科内",
+    "player_name_en": "KONE Manu",
+    "shirt_number": 6,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"KONE Manu\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"KONE Manu\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"KONE Manu\"",
+      "\"Panini France 2026\" \"KONE Manu\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "thuram-marcus",
+    "player_name": "马库斯·图拉姆",
+    "player_name_en": "THURAM Marcus",
+    "shirt_number": 9,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"THURAM Marcus\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"THURAM Marcus\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"THURAM Marcus\"",
+      "\"Panini France 2026\" \"THURAM Marcus\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "olise-michael",
+    "player_name": "迈克尔·奥利塞",
+    "player_name_en": "OLISE Michael",
+    "shirt_number": 11,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"OLISE Michael\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"OLISE Michael\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"OLISE Michael\"",
+      "\"Panini France 2026\" \"OLISE Michael\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "barcola-bradley",
+    "player_name": "布拉德利·巴尔科拉",
+    "player_name_en": "BARCOLA Bradley",
+    "shirt_number": 12,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"BARCOLA Bradley\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"BARCOLA Bradley\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"BARCOLA Bradley\"",
+      "\"Panini France 2026\" \"BARCOLA Bradley\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "kante-ngolo",
+    "player_name": "恩戈洛·坎特",
+    "player_name_en": "KANTE Ngolo",
+    "shirt_number": 13,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"KANTE Ngolo\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"KANTE Ngolo\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"KANTE Ngolo\"",
+      "\"Panini France 2026\" \"KANTE Ngolo\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "rabiot-adrien",
+    "player_name": "阿德里安·拉比奥",
+    "player_name_en": "RABIOT Adrien",
+    "shirt_number": 14,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"RABIOT Adrien\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"RABIOT Adrien\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"RABIOT Adrien\"",
+      "\"Panini France 2026\" \"RABIOT Adrien\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "konate-ibrahima",
+    "player_name": "易卜拉希马·科纳特",
+    "player_name_en": "KONATE Ibrahima",
+    "shirt_number": 15,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"KONATE Ibrahima\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"KONATE Ibrahima\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"KONATE Ibrahima\"",
+      "\"Panini France 2026\" \"KONATE Ibrahima\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "maignan-mike",
+    "player_name": "迈克·迈尼昂",
+    "player_name_en": "MAIGNAN Mike",
+    "shirt_number": 16,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"MAIGNAN Mike\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"MAIGNAN Mike\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"MAIGNAN Mike\"",
+      "\"Panini France 2026\" \"MAIGNAN Mike\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "zaire-emery-warren",
+    "player_name": "沃伦·扎伊尔-埃梅里",
+    "player_name_en": "ZAIRE-EMERY Warren",
+    "shirt_number": 18,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"ZAIRE-EMERY Warren\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"ZAIRE-EMERY Warren\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"ZAIRE-EMERY Warren\"",
+      "\"Panini France 2026\" \"ZAIRE-EMERY Warren\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "doue-desire",
+    "player_name": "德西雷·杜埃",
+    "player_name_en": "DOUE Desire",
+    "shirt_number": 20,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"DOUE Desire\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"DOUE Desire\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"DOUE Desire\"",
+      "\"Panini France 2026\" \"DOUE Desire\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "hernandez-lucas",
+    "player_name": "卢卡斯·埃尔南德斯",
+    "player_name_en": "HERNANDEZ Lucas",
+    "shirt_number": 21,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"HERNANDEZ Lucas\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"HERNANDEZ Lucas\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"HERNANDEZ Lucas\"",
+      "\"Panini France 2026\" \"HERNANDEZ Lucas\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "mateta-jean-philippe",
+    "player_name": "让-菲利普·马特塔",
+    "player_name_en": "MATETA Jean-Philippe",
+    "shirt_number": 22,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"MATETA Jean-Philippe\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"MATETA Jean-Philippe\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"MATETA Jean-Philippe\"",
+      "\"Panini France 2026\" \"MATETA Jean-Philippe\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "risser-robin",
+    "player_name": "罗宾·里瑟",
+    "player_name_en": "RISSER Robin",
+    "shirt_number": 23,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"RISSER Robin\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"RISSER Robin\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"RISSER Robin\"",
+      "\"Panini France 2026\" \"RISSER Robin\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "cherki-rayan",
+    "player_name": "拉扬·谢尔基",
+    "player_name_en": "CHERKI Rayan",
+    "shirt_number": 24,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"CHERKI Rayan\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"CHERKI Rayan\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"CHERKI Rayan\"",
+      "\"Panini France 2026\" \"CHERKI Rayan\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "akliouche-maghnes",
+    "player_name": "马涅斯·阿克利乌什",
+    "player_name_en": "AKLIOUCHE Maghnes",
+    "shirt_number": 25,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"AKLIOUCHE Maghnes\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"AKLIOUCHE Maghnes\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"AKLIOUCHE Maghnes\"",
+      "\"Panini France 2026\" \"AKLIOUCHE Maghnes\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "lacroix-maxence",
+    "player_name": "马克桑斯·拉克鲁瓦",
+    "player_name_en": "LACROIX Maxence",
+    "shirt_number": 26,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"LACROIX Maxence\" \"France\"",
+      "\"Panini Adrenalyn XL 2026\" \"LACROIX Maxence\" \"France\"",
+      "\"Panini 2026 World Cup card\" \"LACROIX Maxence\"",
+      "\"Panini France 2026\" \"LACROIX Maxence\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  }
+]

@@ -1,0 +1,1520 @@
+{
+  "generated_at": "2026-06-20T19:47:40.077Z",
+  "source": {
+    "squad_file": "data/fifa-2026-squads.json",
+    "core_cards_file": "data/core-cards.json",
+    "output_rule": "core_cards.json players are skipped permanently; all other players require Panini completion cards."
+  },
+  "totals": {
+    "countries": 9,
+    "total_players": 234,
+    "core_cards": 45,
+    "panini_cards": 189,
+    "missing": 0
+  },
+  "countries": [
+    {
+      "country": "Spain",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "达尼·奥尔莫",
+          "player_name_en": "OLMO Dani",
+          "shirt_number": 10,
+          "position": "FW"
+        },
+        {
+          "player_name": "罗德里",
+          "player_name_en": "RODRI",
+          "shirt_number": 16,
+          "position": "MF"
+        },
+        {
+          "player_name": "尼科·威廉姆斯",
+          "player_name_en": "WILLIAMS Nico",
+          "shirt_number": 17,
+          "position": "FW"
+        },
+        {
+          "player_name": "拉明·亚马尔",
+          "player_name_en": "YAMAL Lamine",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "佩德里",
+          "player_name_en": "PEDRI",
+          "shirt_number": 20,
+          "position": "MF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "大卫·拉亚",
+          "player_name_en": "RAYA David",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "马克·普比尔",
+          "player_name_en": "PUBILL Marc",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "亚历克斯·格里马尔多",
+          "player_name_en": "GRIMALDO Alex",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "埃里克·加西亚",
+          "player_name_en": "GARCIA Eric",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "马科斯·略伦特",
+          "player_name_en": "LLORENTE Marcos",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "米克尔·梅里诺",
+          "player_name_en": "MERINO Mikel",
+          "shirt_number": 6,
+          "position": "MF"
+        },
+        {
+          "player_name": "费兰·托雷斯",
+          "player_name_en": "TORRES Ferran",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "法比安·鲁伊斯",
+          "player_name_en": "RUIZ Fabian",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "加维",
+          "player_name_en": "GAVI",
+          "shirt_number": 9,
+          "position": "MF"
+        },
+        {
+          "player_name": "耶雷米·皮诺",
+          "player_name_en": "PINO Yeremy",
+          "shirt_number": 11,
+          "position": "FW"
+        },
+        {
+          "player_name": "佩德罗·波罗",
+          "player_name_en": "PORRO Pedro",
+          "shirt_number": 12,
+          "position": "DF"
+        },
+        {
+          "player_name": "霍安·加西亚",
+          "player_name_en": "GARCIA Joan",
+          "shirt_number": 13,
+          "position": "GK"
+        },
+        {
+          "player_name": "艾梅里克·拉波尔特",
+          "player_name_en": "LAPORTE Aymeric",
+          "shirt_number": 14,
+          "position": "DF"
+        },
+        {
+          "player_name": "亚历克斯·巴埃纳",
+          "player_name_en": "BAENA Alex",
+          "shirt_number": 15,
+          "position": "MF"
+        },
+        {
+          "player_name": "马丁·祖比门迪",
+          "player_name_en": "ZUBIMENDI Martin",
+          "shirt_number": 18,
+          "position": "MF"
+        },
+        {
+          "player_name": "米克尔·奥亚萨瓦尔",
+          "player_name_en": "OYARZABAL Mikel",
+          "shirt_number": 21,
+          "position": "FW"
+        },
+        {
+          "player_name": "保罗·库巴西",
+          "player_name_en": "CUBARSI Pau",
+          "shirt_number": 22,
+          "position": "DF"
+        },
+        {
+          "player_name": "乌奈·西蒙",
+          "player_name_en": "SIMON Unai",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "马克·库库雷利亚",
+          "player_name_en": "CUCURELLA Marc",
+          "shirt_number": 24,
+          "position": "DF"
+        },
+        {
+          "player_name": "维克托·穆尼奥斯",
+          "player_name_en": "MUNOZ Victor",
+          "shirt_number": 25,
+          "position": "FW"
+        },
+        {
+          "player_name": "博尔哈·伊格莱西亚斯",
+          "player_name_en": "IGLESIAS Borja",
+          "shirt_number": 26,
+          "position": "FW"
+        }
+      ]
+    },
+    {
+      "country": "Argentina",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "胡利安·阿尔瓦雷斯",
+          "player_name_en": "ALVAREZ Julian",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "莱昂内尔·梅西",
+          "player_name_en": "MESSI Lionel",
+          "shirt_number": 10,
+          "position": "FW"
+        },
+        {
+          "player_name": "劳塔罗·马丁内斯",
+          "player_name_en": "MARTINEZ Lautaro",
+          "shirt_number": 22,
+          "position": "FW"
+        },
+        {
+          "player_name": "埃米利亚诺·马丁内斯",
+          "player_name_en": "MARTINEZ Emiliano",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "恩佐·费尔南德斯",
+          "player_name_en": "FERNANDEZ Enzo",
+          "shirt_number": 24,
+          "position": "MF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "胡安·穆索",
+          "player_name_en": "MUSSO Juan",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "马科斯·塞内西",
+          "player_name_en": "SENESI Marcos",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "尼古拉斯·塔利亚菲科",
+          "player_name_en": "TAGLIAFICO Nicolas",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "贡萨洛·蒙铁尔",
+          "player_name_en": "MONTIEL Gonzalo",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "莱安德罗·帕雷德斯",
+          "player_name_en": "PAREDES Leandro",
+          "shirt_number": 5,
+          "position": "MF"
+        },
+        {
+          "player_name": "利桑德罗·马丁内斯",
+          "player_name_en": "MARTINEZ Lisandro",
+          "shirt_number": 6,
+          "position": "DF"
+        },
+        {
+          "player_name": "罗德里戈·德保罗",
+          "player_name_en": "DE PAUL Rodrigo",
+          "shirt_number": 7,
+          "position": "MF"
+        },
+        {
+          "player_name": "瓦伦廷·巴尔科",
+          "player_name_en": "BARCO Valentin",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "吉奥瓦尼·洛塞尔索",
+          "player_name_en": "LO CELSO Giovani",
+          "shirt_number": 11,
+          "position": "MF"
+        },
+        {
+          "player_name": "赫罗尼莫·鲁利",
+          "player_name_en": "RULLI Geronimo",
+          "shirt_number": 12,
+          "position": "GK"
+        },
+        {
+          "player_name": "克里斯蒂安·罗梅罗",
+          "player_name_en": "ROMERO Cristian",
+          "shirt_number": 13,
+          "position": "DF"
+        },
+        {
+          "player_name": "埃塞基耶尔·帕拉西奥斯",
+          "player_name_en": "PALACIOS Exequiel",
+          "shirt_number": 14,
+          "position": "MF"
+        },
+        {
+          "player_name": "尼科·冈萨雷斯",
+          "player_name_en": "GONZALEZ Nico",
+          "shirt_number": 15,
+          "position": "MF"
+        },
+        {
+          "player_name": "蒂亚戈·阿尔马达",
+          "player_name_en": "ALMADA Thiago",
+          "shirt_number": 16,
+          "position": "FW"
+        },
+        {
+          "player_name": "朱利亚诺·西蒙尼",
+          "player_name_en": "SIMEONE Giuliano",
+          "shirt_number": 17,
+          "position": "FW"
+        },
+        {
+          "player_name": "尼科·帕斯",
+          "player_name_en": "PAZ Nico",
+          "shirt_number": 18,
+          "position": "FW"
+        },
+        {
+          "player_name": "尼古拉斯·奥塔门迪",
+          "player_name_en": "OTAMENDI Nicolas",
+          "shirt_number": 19,
+          "position": "DF"
+        },
+        {
+          "player_name": "亚历克西斯·麦卡利斯特",
+          "player_name_en": "MAC ALLISTER Alexis",
+          "shirt_number": 20,
+          "position": "MF"
+        },
+        {
+          "player_name": "何塞·曼努埃尔·洛佩斯",
+          "player_name_en": "LOPEZ Jose Manuel",
+          "shirt_number": 21,
+          "position": "FW"
+        },
+        {
+          "player_name": "法昆多·梅迪纳",
+          "player_name_en": "MEDINA Facundo",
+          "shirt_number": 25,
+          "position": "DF"
+        },
+        {
+          "player_name": "纳韦尔·莫利纳",
+          "player_name_en": "MOLINA Nahuel",
+          "shirt_number": 26,
+          "position": "DF"
+        }
+      ]
+    },
+    {
+      "country": "Germany",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "曼努埃尔·诺伊尔",
+          "player_name_en": "NEUER Manuel",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "约书亚·基米希",
+          "player_name_en": "KIMMICH Joshua",
+          "shirt_number": 6,
+          "position": "DF"
+        },
+        {
+          "player_name": "凯·哈弗茨",
+          "player_name_en": "HAVERTZ Kai",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "贾马尔·穆西亚拉",
+          "player_name_en": "MUSIALA Jamal",
+          "shirt_number": 10,
+          "position": "MF"
+        },
+        {
+          "player_name": "弗洛里安·维尔茨",
+          "player_name_en": "WIRTZ Florian",
+          "shirt_number": 17,
+          "position": "MF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "安东尼奥·吕迪格",
+          "player_name_en": "RUEDIGER Antonio",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "瓦尔德马·安东",
+          "player_name_en": "ANTON Waldemar",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "约纳坦·塔",
+          "player_name_en": "TAH Jonathan",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "亚历山大·帕夫洛维奇",
+          "player_name_en": "PAVLOVIC Aleksandar",
+          "shirt_number": 5,
+          "position": "MF"
+        },
+        {
+          "player_name": "莱昂·格雷茨卡",
+          "player_name_en": "GORETZKA Leon",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "杰米·勒韦林",
+          "player_name_en": "LEWELING Jamie",
+          "shirt_number": 9,
+          "position": "MF"
+        },
+        {
+          "player_name": "尼克·沃尔特马德",
+          "player_name_en": "WOLTEMADE Nick",
+          "shirt_number": 11,
+          "position": "FW"
+        },
+        {
+          "player_name": "奥利弗·鲍曼",
+          "player_name_en": "BAUMANN Oliver",
+          "shirt_number": 12,
+          "position": "GK"
+        },
+        {
+          "player_name": "帕斯卡尔·格罗斯",
+          "player_name_en": "GROSS Pascal",
+          "shirt_number": 13,
+          "position": "MF"
+        },
+        {
+          "player_name": "马克西米利安·拜尔",
+          "player_name_en": "BEIER Maximilian",
+          "shirt_number": 14,
+          "position": "FW"
+        },
+        {
+          "player_name": "尼科·施洛特贝克",
+          "player_name_en": "SCHLOTTERBECK Nico",
+          "shirt_number": 15,
+          "position": "DF"
+        },
+        {
+          "player_name": "安杰洛·施蒂勒",
+          "player_name_en": "STILLER Angelo",
+          "shirt_number": 16,
+          "position": "MF"
+        },
+        {
+          "player_name": "纳撒尼尔·布朗",
+          "player_name_en": "BROWN Nathaniel",
+          "shirt_number": 18,
+          "position": "DF"
+        },
+        {
+          "player_name": "勒鲁瓦·萨内",
+          "player_name_en": "SANE Leroy",
+          "shirt_number": 19,
+          "position": "MF"
+        },
+        {
+          "player_name": "纳迪姆·阿米里",
+          "player_name_en": "AMIRI Nadiem",
+          "shirt_number": 20,
+          "position": "MF"
+        },
+        {
+          "player_name": "亚历山大·努贝尔",
+          "player_name_en": "NUEBEL Alexander",
+          "shirt_number": 21,
+          "position": "GK"
+        },
+        {
+          "player_name": "大卫·劳姆",
+          "player_name_en": "RAUM David",
+          "shirt_number": 22,
+          "position": "DF"
+        },
+        {
+          "player_name": "费利克斯·恩梅查",
+          "player_name_en": "NMECHA Felix",
+          "shirt_number": 23,
+          "position": "MF"
+        },
+        {
+          "player_name": "马利克·佳夫",
+          "player_name_en": "THIAW Malick",
+          "shirt_number": 24,
+          "position": "DF"
+        },
+        {
+          "player_name": "阿桑·韦德拉奥果",
+          "player_name_en": "OUEDRAOGO Assan",
+          "shirt_number": 25,
+          "position": "MF"
+        },
+        {
+          "player_name": "德尼兹·温达夫",
+          "player_name_en": "UNDAV Deniz",
+          "shirt_number": 26,
+          "position": "FW"
+        }
+      ]
+    },
+    {
+      "country": "England",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "德克兰·赖斯",
+          "player_name_en": "RICE Declan",
+          "shirt_number": 4,
+          "position": "MF"
+        },
+        {
+          "player_name": "布卡约·萨卡",
+          "player_name_en": "SAKA Bukayo",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "哈里·凯恩",
+          "player_name_en": "KANE Harry",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "裘德·贝林厄姆",
+          "player_name_en": "BELLINGHAM Jude",
+          "shirt_number": 10,
+          "position": "MF"
+        },
+        {
+          "player_name": "马库斯·拉什福德",
+          "player_name_en": "RASHFORD Marcus",
+          "shirt_number": 11,
+          "position": "FW"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "乔丹·皮克福德",
+          "player_name_en": "PICKFORD Jordan",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "埃兹里·孔萨",
+          "player_name_en": "KONSA Ezri",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "尼科·奥赖利",
+          "player_name_en": "OREILLY Nico",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "约翰·斯通斯",
+          "player_name_en": "STONES John",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "马克·格伊",
+          "player_name_en": "GUEHI Marc",
+          "shirt_number": 6,
+          "position": "DF"
+        },
+        {
+          "player_name": "埃利奥特·安德森",
+          "player_name_en": "ANDERSON Elliot",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "特雷沃·查洛巴",
+          "player_name_en": "CHALOBAH Trevoh",
+          "shirt_number": 12,
+          "position": "DF"
+        },
+        {
+          "player_name": "迪恩·亨德森",
+          "player_name_en": "HENDERSON Dean",
+          "shirt_number": 13,
+          "position": "GK"
+        },
+        {
+          "player_name": "乔丹·亨德森",
+          "player_name_en": "HENDERSON Jordan",
+          "shirt_number": 14,
+          "position": "MF"
+        },
+        {
+          "player_name": "丹·伯恩",
+          "player_name_en": "BURN Dan",
+          "shirt_number": 15,
+          "position": "DF"
+        },
+        {
+          "player_name": "科比·梅努",
+          "player_name_en": "MAINOO Kobbie",
+          "shirt_number": 16,
+          "position": "MF"
+        },
+        {
+          "player_name": "摩根·罗杰斯",
+          "player_name_en": "ROGERS Morgan",
+          "shirt_number": 17,
+          "position": "MF"
+        },
+        {
+          "player_name": "安东尼·戈登",
+          "player_name_en": "GORDON Anthony",
+          "shirt_number": 18,
+          "position": "FW"
+        },
+        {
+          "player_name": "奥利·沃特金斯",
+          "player_name_en": "WATKINS Ollie",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "诺尼·马杜埃凯",
+          "player_name_en": "MADUEKE Noni",
+          "shirt_number": 20,
+          "position": "FW"
+        },
+        {
+          "player_name": "埃贝雷奇·埃泽",
+          "player_name_en": "EZE Eberechi",
+          "shirt_number": 21,
+          "position": "MF"
+        },
+        {
+          "player_name": "伊万·托尼",
+          "player_name_en": "TONEY Ivan",
+          "shirt_number": 22,
+          "position": "FW"
+        },
+        {
+          "player_name": "詹姆斯·特拉福德",
+          "player_name_en": "TRAFFORD James",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "里斯·詹姆斯",
+          "player_name_en": "JAMES Reece",
+          "shirt_number": 24,
+          "position": "DF"
+        },
+        {
+          "player_name": "杰德·斯彭斯",
+          "player_name_en": "SPENCE Djed",
+          "shirt_number": 25,
+          "position": "DF"
+        },
+        {
+          "player_name": "贾雷尔·宽萨",
+          "player_name_en": "QUANSAH Jarell",
+          "shirt_number": 26,
+          "position": "DF"
+        }
+      ]
+    },
+    {
+      "country": "Netherlands",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "维吉尔·范戴克",
+          "player_name_en": "VAN DIJK Virgil",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "内森·阿克",
+          "player_name_en": "AKE Nathan",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "孟菲斯·德佩",
+          "player_name_en": "DEPAY Memphis",
+          "shirt_number": 10,
+          "position": "FW"
+        },
+        {
+          "player_name": "科迪·加克波",
+          "player_name_en": "GAKPO Cody",
+          "shirt_number": 11,
+          "position": "FW"
+        },
+        {
+          "player_name": "弗伦基·德容",
+          "player_name_en": "DE JONG Frenkie",
+          "shirt_number": 21,
+          "position": "MF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "巴特·费尔布鲁根",
+          "player_name_en": "VERBRUGGEN Bart",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "卢特沙雷尔·海特勒伊达",
+          "player_name_en": "GEERTRUIDA Lutsharel",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "马滕·德容",
+          "player_name_en": "DE ROON Marten",
+          "shirt_number": 3,
+          "position": "MF"
+        },
+        {
+          "player_name": "扬·保罗·范赫克",
+          "player_name_en": "VAN HECKE Jan Paul",
+          "shirt_number": 6,
+          "position": "DF"
+        },
+        {
+          "player_name": "贾斯汀·克鲁伊维特",
+          "player_name_en": "KLUIVERT Justin",
+          "shirt_number": 7,
+          "position": "MF"
+        },
+        {
+          "player_name": "瑞安·赫拉芬贝赫",
+          "player_name_en": "GRAVENBERCH Ryan",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "沃特·韦霍斯特",
+          "player_name_en": "WEGHORST Wout",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "马茨·维弗",
+          "player_name_en": "WIEFFER Mats",
+          "shirt_number": 12,
+          "position": "DF"
+        },
+        {
+          "player_name": "罗宾·罗夫斯",
+          "player_name_en": "ROEFS Robin",
+          "shirt_number": 13,
+          "position": "GK"
+        },
+        {
+          "player_name": "蒂贾尼·赖因德斯",
+          "player_name_en": "REIJNDERS Tijjani",
+          "shirt_number": 14,
+          "position": "MF"
+        },
+        {
+          "player_name": "米基·范德文",
+          "player_name_en": "VAN DE VEN Micky",
+          "shirt_number": 15,
+          "position": "DF"
+        },
+        {
+          "player_name": "古斯·蒂尔",
+          "player_name_en": "TIL Guus",
+          "shirt_number": 16,
+          "position": "MF"
+        },
+        {
+          "player_name": "诺阿·朗",
+          "player_name_en": "LANG Noa",
+          "shirt_number": 17,
+          "position": "FW"
+        },
+        {
+          "player_name": "唐耶尔·马伦",
+          "player_name_en": "MALEN Donyell",
+          "shirt_number": 18,
+          "position": "FW"
+        },
+        {
+          "player_name": "布莱恩·布罗比",
+          "player_name_en": "BROBBEY Brian",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "特恩·库普梅纳斯",
+          "player_name_en": "KOOPMEINERS Teun",
+          "shirt_number": 20,
+          "position": "MF"
+        },
+        {
+          "player_name": "登泽尔·邓弗里斯",
+          "player_name_en": "DUMFRIES Denzel",
+          "shirt_number": 22,
+          "position": "DF"
+        },
+        {
+          "player_name": "马克·弗莱肯",
+          "player_name_en": "FLEKKEN Mark",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "克里森西奥·萨默维尔",
+          "player_name_en": "SUMMERVILLE Crysencio",
+          "shirt_number": 24,
+          "position": "FW"
+        },
+        {
+          "player_name": "约雷尔·哈托",
+          "player_name_en": "HATO Jorrel",
+          "shirt_number": 25,
+          "position": "DF"
+        },
+        {
+          "player_name": "昆滕·廷贝尔",
+          "player_name_en": "TIMBER Quinten",
+          "shirt_number": 26,
+          "position": "MF"
+        }
+      ]
+    },
+    {
+      "country": "Portugal",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "克里斯蒂亚诺·罗纳尔多",
+          "player_name_en": "CRISTIANO RONALDO",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "布鲁诺·费尔南德斯",
+          "player_name_en": "BRUNO FERNANDES",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "贝尔纳多·席尔瓦",
+          "player_name_en": "BERNARDO SILVA",
+          "shirt_number": 10,
+          "position": "MF"
+        },
+        {
+          "player_name": "若昂·内维斯",
+          "player_name_en": "JOAO NEVES",
+          "shirt_number": 15,
+          "position": "MF"
+        },
+        {
+          "player_name": "维蒂尼亚",
+          "player_name_en": "VITINHA",
+          "shirt_number": 23,
+          "position": "MF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "迪奥戈·科斯塔",
+          "player_name_en": "DIOGO COSTA",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "内尔松·塞梅多",
+          "player_name_en": "NELSON SEMEDO",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "鲁本·迪亚斯",
+          "player_name_en": "RUBEN DIAS",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "托马斯·阿劳若",
+          "player_name_en": "TOMAS ARAUJO",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "迪奥戈·达洛特",
+          "player_name_en": "DIOGO DALOT",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "马特乌斯·努内斯",
+          "player_name_en": "MATHEUS NUNES",
+          "shirt_number": 6,
+          "position": "MF"
+        },
+        {
+          "player_name": "贡萨洛·拉莫斯",
+          "player_name_en": "GONCALO RAMOS",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "若昂·菲利克斯",
+          "player_name_en": "JOAO FELIX",
+          "shirt_number": 11,
+          "position": "FW"
+        },
+        {
+          "player_name": "若泽·萨",
+          "player_name_en": "JOSE SA",
+          "shirt_number": 12,
+          "position": "GK"
+        },
+        {
+          "player_name": "雷纳托·维加",
+          "player_name_en": "RENATO VEIGA",
+          "shirt_number": 13,
+          "position": "DF"
+        },
+        {
+          "player_name": "贡萨洛·伊纳西奥",
+          "player_name_en": "GONCALO INACIO",
+          "shirt_number": 14,
+          "position": "DF"
+        },
+        {
+          "player_name": "弗朗西斯科·特林康",
+          "player_name_en": "FRANCISCO TRINCAO",
+          "shirt_number": 16,
+          "position": "FW"
+        },
+        {
+          "player_name": "拉斐尔·莱奥",
+          "player_name_en": "RAFAEL LEAO",
+          "shirt_number": 17,
+          "position": "FW"
+        },
+        {
+          "player_name": "佩德罗·内托",
+          "player_name_en": "PEDRO NETO",
+          "shirt_number": 18,
+          "position": "FW"
+        },
+        {
+          "player_name": "贡萨洛·格德斯",
+          "player_name_en": "GONCALO GUEDES",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "若昂·坎塞洛",
+          "player_name_en": "JOAO CANCELO",
+          "shirt_number": 20,
+          "position": "DF"
+        },
+        {
+          "player_name": "鲁本·内维斯",
+          "player_name_en": "RUBEN NEVES",
+          "shirt_number": 21,
+          "position": "MF"
+        },
+        {
+          "player_name": "鲁伊·席尔瓦",
+          "player_name_en": "RUI SILVA",
+          "shirt_number": 22,
+          "position": "GK"
+        },
+        {
+          "player_name": "萨穆·科斯塔",
+          "player_name_en": "SAMU COSTA",
+          "shirt_number": 24,
+          "position": "DF"
+        },
+        {
+          "player_name": "努诺·门德斯",
+          "player_name_en": "NUNO MENDES",
+          "shirt_number": 25,
+          "position": "DF"
+        },
+        {
+          "player_name": "弗朗西斯科·孔塞桑",
+          "player_name_en": "FRANCISCO CONCEICAO",
+          "shirt_number": 26,
+          "position": "FW"
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "奥斯曼·登贝莱",
+          "player_name_en": "DEMBELE Ousmane",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "奥雷利安·楚阿梅尼",
+          "player_name_en": "TCHOUAMENI Aurelien",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "基利安·姆巴佩",
+          "player_name_en": "MBAPPE Kylian",
+          "shirt_number": 10,
+          "position": "FW"
+        },
+        {
+          "player_name": "威廉·萨利巴",
+          "player_name_en": "SALIBA William",
+          "shirt_number": 17,
+          "position": "DF"
+        },
+        {
+          "player_name": "特奥·埃尔南德斯",
+          "player_name_en": "HERNANDEZ Theo",
+          "shirt_number": 19,
+          "position": "DF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "布里斯·桑巴",
+          "player_name_en": "SAMBA Brice",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "马洛·古斯托",
+          "player_name_en": "GUSTO Malo",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "卢卡斯·迪涅",
+          "player_name_en": "DIGNE Lucas",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "达约·于帕梅卡诺",
+          "player_name_en": "UPAMECANO Dayot",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "朱尔·孔德",
+          "player_name_en": "KOUNDE Jules",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "马努·科内",
+          "player_name_en": "KONE Manu",
+          "shirt_number": 6,
+          "position": "MF"
+        },
+        {
+          "player_name": "马库斯·图拉姆",
+          "player_name_en": "THURAM Marcus",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "迈克尔·奥利塞",
+          "player_name_en": "OLISE Michael",
+          "shirt_number": 11,
+          "position": "FW"
+        },
+        {
+          "player_name": "布拉德利·巴尔科拉",
+          "player_name_en": "BARCOLA Bradley",
+          "shirt_number": 12,
+          "position": "FW"
+        },
+        {
+          "player_name": "恩戈洛·坎特",
+          "player_name_en": "KANTE Ngolo",
+          "shirt_number": 13,
+          "position": "MF"
+        },
+        {
+          "player_name": "阿德里安·拉比奥",
+          "player_name_en": "RABIOT Adrien",
+          "shirt_number": 14,
+          "position": "MF"
+        },
+        {
+          "player_name": "易卜拉希马·科纳特",
+          "player_name_en": "KONATE Ibrahima",
+          "shirt_number": 15,
+          "position": "DF"
+        },
+        {
+          "player_name": "迈克·迈尼昂",
+          "player_name_en": "MAIGNAN Mike",
+          "shirt_number": 16,
+          "position": "GK"
+        },
+        {
+          "player_name": "沃伦·扎伊尔-埃梅里",
+          "player_name_en": "ZAIRE-EMERY Warren",
+          "shirt_number": 18,
+          "position": "MF"
+        },
+        {
+          "player_name": "德西雷·杜埃",
+          "player_name_en": "DOUE Desire",
+          "shirt_number": 20,
+          "position": "FW"
+        },
+        {
+          "player_name": "卢卡斯·埃尔南德斯",
+          "player_name_en": "HERNANDEZ Lucas",
+          "shirt_number": 21,
+          "position": "DF"
+        },
+        {
+          "player_name": "让-菲利普·马特塔",
+          "player_name_en": "MATETA Jean-Philippe",
+          "shirt_number": 22,
+          "position": "FW"
+        },
+        {
+          "player_name": "罗宾·里瑟",
+          "player_name_en": "RISSER Robin",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "拉扬·谢尔基",
+          "player_name_en": "CHERKI Rayan",
+          "shirt_number": 24,
+          "position": "MF"
+        },
+        {
+          "player_name": "马涅斯·阿克利乌什",
+          "player_name_en": "AKLIOUCHE Maghnes",
+          "shirt_number": 25,
+          "position": "MF"
+        },
+        {
+          "player_name": "马克桑斯·拉克鲁瓦",
+          "player_name_en": "LACROIX Maxence",
+          "shirt_number": 26,
+          "position": "DF"
+        }
+      ]
+    },
+    {
+      "country": "Brazil",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "阿利松",
+          "player_name_en": "ALISSON",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "卡塞米罗",
+          "player_name_en": "CASEMIRO",
+          "shirt_number": 5,
+          "position": "MF"
+        },
+        {
+          "player_name": "维尼修斯",
+          "player_name_en": "VINICIUS JUNIOR",
+          "shirt_number": 7,
+          "position": "FW"
+        },
+        {
+          "player_name": "内马尔",
+          "player_name_en": "NEYMAR JR",
+          "shirt_number": 10,
+          "position": "FW"
+        },
+        {
+          "player_name": "拉菲尼亚",
+          "player_name_en": "RAPHINHA",
+          "shirt_number": 11,
+          "position": "FW"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "埃德森·席尔瓦",
+          "player_name_en": "EDERSON SILVA",
+          "shirt_number": 2,
+          "position": "MF"
+        },
+        {
+          "player_name": "加布里埃尔·马加良斯",
+          "player_name_en": "GABRIEL MAGALHAES",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "马尔基尼奥斯",
+          "player_name_en": "MARQUINHOS",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "阿莱士·桑德罗",
+          "player_name_en": "ALEX SANDRO",
+          "shirt_number": 6,
+          "position": "DF"
+        },
+        {
+          "player_name": "布鲁诺·吉马良斯",
+          "player_name_en": "BRUNO GUIMARAES",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "马特乌斯·库尼亚",
+          "player_name_en": "MATHEUS CUNHA",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "韦弗顿",
+          "player_name_en": "WEVERTON",
+          "shirt_number": 12,
+          "position": "GK"
+        },
+        {
+          "player_name": "达尼洛",
+          "player_name_en": "DANILO",
+          "shirt_number": 13,
+          "position": "DF"
+        },
+        {
+          "player_name": "布雷默",
+          "player_name_en": "BREMER",
+          "shirt_number": 14,
+          "position": "DF"
+        },
+        {
+          "player_name": "莱奥·佩雷拉",
+          "player_name_en": "LEO PEREIRA",
+          "shirt_number": 15,
+          "position": "DF"
+        },
+        {
+          "player_name": "道格拉斯·桑托斯",
+          "player_name_en": "DOUGLAS SANTOS",
+          "shirt_number": 16,
+          "position": "DF"
+        },
+        {
+          "player_name": "法比尼奥",
+          "player_name_en": "FABINHO",
+          "shirt_number": 17,
+          "position": "MF"
+        },
+        {
+          "player_name": "达尼洛·桑托斯",
+          "player_name_en": "DANILO SANTOS",
+          "shirt_number": 18,
+          "position": "MF"
+        },
+        {
+          "player_name": "恩德里克",
+          "player_name_en": "ENDRICK",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "卢卡斯·帕奎塔",
+          "player_name_en": "LUCAS PAQUETA",
+          "shirt_number": 20,
+          "position": "MF"
+        },
+        {
+          "player_name": "路易斯·恩里克",
+          "player_name_en": "LUIZ HENRIQUE",
+          "shirt_number": 21,
+          "position": "FW"
+        },
+        {
+          "player_name": "加布里埃尔·马丁内利",
+          "player_name_en": "GABRIEL MARTINELLI",
+          "shirt_number": 22,
+          "position": "FW"
+        },
+        {
+          "player_name": "埃德森",
+          "player_name_en": "EDERSON",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "罗热·伊巴涅斯",
+          "player_name_en": "ROGER IBANEZ",
+          "shirt_number": 24,
+          "position": "DF"
+        },
+        {
+          "player_name": "伊戈尔·蒂亚戈",
+          "player_name_en": "IGOR THIAGO",
+          "shirt_number": 25,
+          "position": "FW"
+        },
+        {
+          "player_name": "拉扬",
+          "player_name_en": "RAYAN",
+          "shirt_number": 26,
+          "position": "FW"
+        }
+      ]
+    },
+    {
+      "country": "Japan",
+      "total_players": 26,
+      "core_cards": 5,
+      "panini_cards": 21,
+      "missing": [],
+      "core_players": [
+        {
+          "player_name": "久保建英",
+          "player_name_en": "KUBO Takefusa",
+          "shirt_number": 8,
+          "position": "MF"
+        },
+        {
+          "player_name": "堂安律",
+          "player_name_en": "DOAN Ritsu",
+          "shirt_number": 10,
+          "position": "MF"
+        },
+        {
+          "player_name": "伊东纯也",
+          "player_name_en": "ITO Junya",
+          "shirt_number": 14,
+          "position": "MF"
+        },
+        {
+          "player_name": "镰田大地",
+          "player_name_en": "KAMADA Daichi",
+          "shirt_number": 15,
+          "position": "MF"
+        },
+        {
+          "player_name": "富安健洋",
+          "player_name_en": "TOMIYASU Takehiro",
+          "shirt_number": 22,
+          "position": "DF"
+        }
+      ],
+      "panini_players": [
+        {
+          "player_name": "铃木彩艳",
+          "player_name_en": "SUZUKI Zion",
+          "shirt_number": 1,
+          "position": "GK"
+        },
+        {
+          "player_name": "菅原由势",
+          "player_name_en": "SUGAWARA Yukinari",
+          "shirt_number": 2,
+          "position": "DF"
+        },
+        {
+          "player_name": "谷口彰悟",
+          "player_name_en": "TANIGUCHI Shogo",
+          "shirt_number": 3,
+          "position": "DF"
+        },
+        {
+          "player_name": "板仓滉",
+          "player_name_en": "ITAKURA Kou",
+          "shirt_number": 4,
+          "position": "DF"
+        },
+        {
+          "player_name": "长友佑都",
+          "player_name_en": "NAGATOMO Yuto",
+          "shirt_number": 5,
+          "position": "DF"
+        },
+        {
+          "player_name": "町野修斗",
+          "player_name_en": "MACHINO Shuto",
+          "shirt_number": 6,
+          "position": "FW"
+        },
+        {
+          "player_name": "田中碧",
+          "player_name_en": "TANAKA Ao",
+          "shirt_number": 7,
+          "position": "MF"
+        },
+        {
+          "player_name": "后藤启介",
+          "player_name_en": "GOTO Keisuke",
+          "shirt_number": 9,
+          "position": "FW"
+        },
+        {
+          "player_name": "前田大然",
+          "player_name_en": "MAEDA Daizen",
+          "shirt_number": 11,
+          "position": "MF"
+        },
+        {
+          "player_name": "大迫敬介",
+          "player_name_en": "OSAKO Keisuke",
+          "shirt_number": 12,
+          "position": "GK"
+        },
+        {
+          "player_name": "中村敬斗",
+          "player_name_en": "NAKAMURA Keito",
+          "shirt_number": 13,
+          "position": "MF"
+        },
+        {
+          "player_name": "渡边刚",
+          "player_name_en": "WATANABE Tsuyoshi",
+          "shirt_number": 16,
+          "position": "DF"
+        },
+        {
+          "player_name": "铃木唯人",
+          "player_name_en": "SUZUKI Yuito",
+          "shirt_number": 17,
+          "position": "MF"
+        },
+        {
+          "player_name": "上田绮世",
+          "player_name_en": "UEDA Ayase",
+          "shirt_number": 18,
+          "position": "FW"
+        },
+        {
+          "player_name": "小川航基",
+          "player_name_en": "OGAWA Koki",
+          "shirt_number": 19,
+          "position": "FW"
+        },
+        {
+          "player_name": "濑古步梦",
+          "player_name_en": "SEKO Ayumu",
+          "shirt_number": 20,
+          "position": "DF"
+        },
+        {
+          "player_name": "伊藤洋辉",
+          "player_name_en": "ITO Hiroki",
+          "shirt_number": 21,
+          "position": "DF"
+        },
+        {
+          "player_name": "早川友基",
+          "player_name_en": "HAYAKAWA Tomoki",
+          "shirt_number": 23,
+          "position": "GK"
+        },
+        {
+          "player_name": "佐野海舟",
+          "player_name_en": "SANO Kaishu",
+          "shirt_number": 24,
+          "position": "MF"
+        },
+        {
+          "player_name": "铃木淳之介",
+          "player_name_en": "SUZUKI Junnosuke",
+          "shirt_number": 25,
+          "position": "DF"
+        },
+        {
+          "player_name": "盐贝健人",
+          "player_name_en": "SHIOGAI Kento",
+          "shirt_number": 26,
+          "position": "FW"
+        }
+      ]
+    }
+  ]
+}

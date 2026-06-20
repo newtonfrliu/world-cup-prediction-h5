@@ -1,0 +1,65 @@
+{
+  "Spain": [
+    "Lamine Yamal",
+    "Rodri",
+    "Pedri",
+    "Nico Williams",
+    "Dani Olmo"
+  ],
+  "Argentina": [
+    "Lionel Messi",
+    "Lautaro Martinez",
+    "Julian Alvarez",
+    "Enzo Fernandez",
+    "Emiliano Martinez"
+  ],
+  "Germany": [
+    "Manuel Neuer",
+    "Jamal Musiala",
+    "Florian Wirtz",
+    "Joshua Kimmich",
+    "Kai Havertz"
+  ],
+  "England": [
+    "Harry Kane",
+    "Jude Bellingham",
+    "Bukayo Saka",
+    "Declan Rice",
+    "Marcus Rashford"
+  ],
+  "Netherlands": [
+    "Virgil van Dijk",
+    "Cody Gakpo",
+    "Frenkie de Jong",
+    "Nathan Ake",
+    "Memphis Depay"
+  ],
+  "Portugal": [
+    "Cristiano Ronaldo",
+    "Bruno Fernandes",
+    "Bernardo Silva",
+    "Vitinha",
+    "Joao Neves"
+  ],
+  "France": [
+    "Kylian Mbappe",
+    "Ousmane Dembele",
+    "Aurelien Tchouameni",
+    "William Saliba",
+    "Theo Hernandez"
+  ],
+  "Brazil": [
+    "Neymar Jr",
+    "Vinicius Junior",
+    "Raphinha",
+    "Casemiro",
+    "Alisson"
+  ],
+  "Japan": [
+    "Takefusa Kubo",
+    "Ritsu Doan",
+    "Daichi Kamada",
+    "Takehiro Tomiyasu",
+    "Junya Ito"
+  ]
+}

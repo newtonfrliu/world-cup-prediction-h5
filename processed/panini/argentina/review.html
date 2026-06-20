@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panini Argentina Review</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f1e7;
+      color: #071b3a;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 18px 56px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0 14px;
+    }
+    .metric, .card {
+      border: 1px solid rgba(7,27,58,.12);
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 12px 30px rgba(7,27,58,.08);
+    }
+    .metric {
+      padding: 16px;
+      font-weight: 900;
+    }
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: #e63535;
+      font-size: 26px;
+    }
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 -18px 18px;
+      padding: 12px 18px;
+      background: rgba(246,241,231,.92);
+      backdrop-filter: blur(12px);
+    }
+    .filters button {
+      flex: 0 0 auto;
+      border: 1px solid rgba(7,27,58,.16);
+      border-radius: 999px;
+      background: #fff;
+      color: #071b3a;
+      padding: 10px 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .filters button.active {
+      background: #071b3a;
+      color: #fff;
+    }
+    .card {
+      margin: 20px 0;
+      padding: 18px;
+    }
+    .card.status-pending {
+      border-color: #f6c84c;
+      box-shadow: 0 12px 34px rgba(246,200,76,.2);
+    }
+    .card.status-rejected {
+      border-color: #e63535;
+      box-shadow: 0 12px 34px rgba(230,53,53,.18);
+    }
+    .card.status-approved {
+      border-color: #38a169;
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .card p {
+      margin: 6px 0 0;
+      color: #4a6280;
+      font-weight: 700;
+    }
+    .status-badge {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 1000;
+      letter-spacing: .08em;
+    }
+    .status-badge.status-approved {
+      background: #e3f9e5;
+      color: #0f7b3f;
+    }
+    .status-badge.status-pending {
+      background: #fff4bd;
+      color: #8a5a00;
+    }
+    .status-badge.status-rejected {
+      background: #fde8e8;
+      color: #9b1c1c;
+    }
+    .status-badge.status-usable_low_quality {
+      background: #e0f2fe;
+      color: #075985;
+    }
+    .flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .flags li {
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #4a6280;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    figure {
+      margin: 0;
+      border-radius: 14px;
+      background: #f1f5f9;
+      padding: 10px;
+    }
+    figcaption {
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #627d98;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    img {
+      display: block;
+      width: 100%;
+      max-height: 560px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #f6f1e7;
+    }
+    .empty {
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      color: #829ab1;
+      font-weight: 900;
+    }
+    details {
+      margin-top: 16px;
+      border-radius: 14px;
+      background: #f8fafc;
+      padding: 12px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 1000;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px 12px;
+      margin: 16px 0 0;
+      font-size: 13px;
+    }
+    dt {
+      color: #627d98;
+      font-weight: 900;
+    }
+    dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid #e4e7eb;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    tfoot th {
+      color: #e63535;
+    }
+    a {
+      color: #d64545;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Panini Argentina Review</h1>
+    <p>Generated at 2026-06-20T19:17:47.458Z</p>
+    <section class="summary">
+      <div class="metric">Total<span>26</span></div>
+      <div class="metric">Approved<span>16</span></div>
+      <div class="metric">Pending<span>10</span></div>
+      <div class="metric">Rejected<span>0</span></div>
+      <div class="metric">Usable low quality<span>0</span></div>
+    </section>
+    <nav class="filters" aria-label="Review filters">
+      <button type="button" class="active" data-filter="all">All (26)</button>
+      <button type="button" data-filter="approved">Approved (16)</button>
+      <button type="button" data-filter="pending">Pending (10)</button>
+      <button type="button" data-filter="rejected">Rejected (0)</button>
+    </nav>
+    <section id="cards">
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#2 马科斯·塞内西</h2>
+              <p>SENESI Marcos · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/senesi-marcos/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="senesi-marcos.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/Gl4AAOSwkCNoTI0J/s-l500.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/Gl4AAOSwkCNoTI0J/s-l500.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/198321918235" target="_blank" rel="noreferrer">https://www.ebay.com/itm/198321918235</a></dd>
+              <dt>dimensions</dt>
+              <dd>362 x 500</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#4 贡萨洛·蒙铁尔</h2>
+              <p>MONTIEL Gonzalo · DF · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/montiel-gonzalo/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="montiel-gonzalo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-27_mp1hxw.webp?v=1755278219" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-27_mp1hxw.webp?v=1755278219</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/gonzalo-montiel-027-ca-river-plate-panini-club-world-cup-adrenalyn-xl-2025-fans-crowd-hero?srsltid=AfmBOoqZHsk29VsGnTm5kDuUqO4PnDaiOQT2NW6pgyNluAn-STEICCuQ" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/gonzalo-montiel-027-ca-river-plate-panini-club-world-cup-adrenalyn-xl-2025-fans-crowd-hero?srsltid=AfmBOoqZHsk29VsGnTm5kDuUqO4PnDaiOQT2NW6pgyNluAn-STEICCuQ</a></dd>
+              <dt>dimensions</dt>
+              <dd>421 x 600</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#5 莱安德罗·帕雷德斯</h2>
+              <p>PAREDES Leandro · MF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/paredes-leandro/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="paredes-leandro.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.solvecollectibles.com/cdn/shop/files/Leandro-Paredes-Argentina-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809848" target="_blank" rel="noreferrer">http://www.solvecollectibles.com/cdn/shop/files/Leandro-Paredes-Argentina-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809848</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.solvecollectibles.com/products/031-leandro-paredes-argentina-hero-panini-world-cup-2022-adrenalyn-xl" target="_blank" rel="noreferrer">https://www.solvecollectibles.com/products/031-leandro-paredes-argentina-hero-panini-world-cup-2022-adrenalyn-xl</a></dd>
+              <dt>dimensions</dt>
+              <dd>533 x 711</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#9 胡利安·阿尔瓦雷斯</h2>
+              <p>ALVAREZ Julian · FW · score 150</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/alvarez-julian/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="alvarez-julian.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/00/s/NzYxWDU0OA==/z/4NEAAeSw6OBors0B/$_57.PNG?set_id=880000500F" target="_blank" rel="noreferrer">https://i.ebayimg.com/00/s/NzYxWDU0OA==/z/4NEAAeSw6OBors0B/$_57.PNG?set_id=880000500F</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/187521867705" target="_blank" rel="noreferrer">https://www.ebay.com/itm/187521867705</a></dd>
+              <dt>dimensions</dt>
+              <dd>548 x 761</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>150</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#11 吉奥瓦尼·洛塞尔索</h2>
+              <p>LO CELSO Giovani · MF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/lo-celso-giovani/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="lo-celso-giovani.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.solvecollectibles.com/cdn/shop/files/Giovani-Lo-Celso-Argentina-Top-Keeper-Panini-World-Cup-2022-Adrenalyn-XL-Card_grande.jpg?v=1730809879" target="_blank" rel="noreferrer">https://www.solvecollectibles.com/cdn/shop/files/Giovani-Lo-Celso-Argentina-Top-Keeper-Panini-World-Cup-2022-Adrenalyn-XL-Card_grande.jpg?v=1730809879</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.solvecollectibles.com/products/406-giovani-lo-celso-argentina-game-changer-panini-world-cup-2022-adrenalyn-xl" target="_blank" rel="noreferrer">https://www.solvecollectibles.com/products/406-giovani-lo-celso-argentina-game-changer-panini-world-cup-2022-adrenalyn-xl</a></dd>
+              <dt>dimensions</dt>
+              <dd>450 x 600</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#18 尼科·帕斯</h2>
+              <p>PAZ Nico · FW · score 210</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>ratio abnormal</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/paz-nico/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="paz-nico.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://img.leboncoin.fr/api/v1/lbcpb1/images/b9/b9/af/b9b9afe1d8263f23f48bac27caea829c2bf04202.jpg?rule=ad-large" target="_blank" rel="noreferrer">https://img.leboncoin.fr/api/v1/lbcpb1/images/b9/b9/af/b9b9afe1d8263f23f48bac27caea829c2bf04202.jpg?rule=ad-large</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.leboncoin.fr/ad/collection/3193046402" target="_blank" rel="noreferrer">https://www.leboncoin.fr/ad/collection/3193046402</a></dd>
+              <dt>dimensions</dt>
+              <dd>799 x 800</dd>
+              <dt>note</dt>
+              <dd>ratio 异常</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>argentina_team_set</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>210</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#20 亚历克西斯·麦卡利斯特</h2>
+              <p>MAC ALLISTER Alexis · MF · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/mac-allister-alexis/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="mac-allister-alexis.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/nygAAeSwpvJpqMZp/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/nygAAeSwpvJpqMZp/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/p/25092838172?iid=188121738953&amp;var=695752166030" target="_blank" rel="noreferrer">https://www.ebay.com/p/25092838172?iid=188121738953&amp;var=695752166030</a></dd>
+              <dt>dimensions</dt>
+              <dd>490 x 696</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#21 何塞·曼努埃尔·洛佩斯</h2>
+              <p>LOPEZ Jose Manuel · FW · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/lopez-jose-manuel/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="lopez-jose-manuel.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-71_t3z7uc.webp?v=1755278590" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-71_t3z7uc.webp?v=1755278590</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/jose-manuel-lopez-071-se-palmeiras-panini-club-world-cup-adrenalyn-xl-2025-core-team-mate?srsltid=AfmBOopb1S0RvjrCPXpcGl-Lckuh5__yXG7QpDYpGFUwRL7MhEed_dcf" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/jose-manuel-lopez-071-se-palmeiras-panini-club-world-cup-adrenalyn-xl-2025-core-team-mate?srsltid=AfmBOopb1S0RvjrCPXpcGl-Lckuh5__yXG7QpDYpGFUwRL7MhEed_dcf</a></dd>
+              <dt>dimensions</dt>
+              <dd>422 x 600</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#22 劳塔罗·马丁内斯</h2>
+              <p>MARTINEZ Lautaro · FW · score 150</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/martinez-lautaro/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="martinez-lautaro.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-324_gugiay.webp?v=1755280715" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-324_gugiay.webp?v=1755280715</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/lautaro-martinez-324-fc-internazionale-milano-panini-club-world-cup-adrenalyn-xl-2025-power-goal-machine?srsltid=AfmBOoqoC4cn_J1lYDnSfcBzCwSdNT2JRW9WN3kwYbPHUhMEZUc0GfcW" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/lautaro-martinez-324-fc-internazionale-milano-panini-club-world-cup-adrenalyn-xl-2025-power-goal-machine?srsltid=AfmBOoqoC4cn_J1lYDnSfcBzCwSdNT2JRW9WN3kwYbPHUhMEZUc0GfcW</a></dd>
+              <dt>dimensions</dt>
+              <dd>419 x 600</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>150</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#24 恩佐·费尔南德斯</h2>
+              <p>FERNANDEZ Enzo · MF · score 150</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/fernandez-enzo/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="fernandez-enzo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/PDIAAeSwQIpqFj2W/s-l500.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/PDIAAeSwQIpqFj2W/s-l500.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/306824513030" target="_blank" rel="noreferrer">https://www.ebay.com/itm/306824513030</a></dd>
+              <dt>dimensions</dt>
+              <dd>355 x 500</dd>
+              <dt>note</dt>
+              <dd>image width &lt; 600</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>150</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#1 胡安·穆索</h2>
+              <p>MUSSO Juan · GK · score 170</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/musso-juan/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="musso-juan.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/039_ADRENALYN_2025_26_ATLETICO_MADRID.webp?v=1768859540" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/039_ADRENALYN_2025_26_ATLETICO_MADRID.webp?v=1768859540</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/musso-39-atletico-de-madrid-panini-adrenalyn-xl-basico?srsltid=AfmBOorOIYPFpCTVD2R8WLVDNFVfiRfvh__Jhvbb7JjhmiUxY77HpVgg" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/musso-39-atletico-de-madrid-panini-adrenalyn-xl-basico?srsltid=AfmBOorOIYPFpCTVD2R8WLVDNFVfiRfvh__Jhvbb7JjhmiUxY77HpVgg</a></dd>
+              <dt>dimensions</dt>
+              <dd>720 x 1024</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#3 尼古拉斯·塔利亚菲科</h2>
+              <p>TAGLIAFICO Nicolas · DF · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/tagliafico-nicolas/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="tagliafico-nicolas.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U001.webp?v=1775655636" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U001.webp?v=1775655636</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/nicolas-tagliafico-u01-argentina-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOorrnVUkvecNS_tQaXHc4nY8A_zXNn-ZKJwSirEb5oyXbDewk6ri" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/nicolas-tagliafico-u01-argentina-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOorrnVUkvecNS_tQaXHc4nY8A_zXNn-ZKJwSirEb5oyXbDewk6ri</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#6 利桑德罗·马丁内斯</h2>
+              <p>MARTINEZ Lisandro · DF · score 210</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/martinez-lisandro/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="martinez-lisandro.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/p/19092862740" target="_blank" rel="noreferrer">https://www.ebay.com/p/19092862740</a></dd>
+              <dt>dimensions</dt>
+              <dd>848 x 1200</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>210</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#7 罗德里戈·德保罗</h2>
+              <p>DE PAUL Rodrigo · MF · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/de-paul-rodrigo/02.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="de-paul-rodrigo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://a.allegroimg.com/original/11bcd6/ed5d432c4bed852d82bf51053678/FIFA-365-2026-ADRENALYN-XL-PANINI-Vykop-FWC5-Argentina-De-Paul" target="_blank" rel="noreferrer">https://a.allegroimg.com/original/11bcd6/ed5d432c4bed852d82bf51053678/FIFA-365-2026-ADRENALYN-XL-PANINI-Vykop-FWC5-Argentina-De-Paul</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://allegro.cz/produkt/fifa-365-2026-kick-off-road-to-fifa-world-cup-fwc5-de-paul-argentina-c2365d01-4e13-46fa-88d6-872a2198d7bd?srsltid=AfmBOopsI11IF9xIVrqyARFxO8Usl2twKbuifHwHUFUHWph3hWBjji54" target="_blank" rel="noreferrer">https://allegro.cz/produkt/fifa-365-2026-kick-off-road-to-fifa-world-cup-fwc5-de-paul-argentina-c2365d01-4e13-46fa-88d6-872a2198d7bd?srsltid=AfmBOopsI11IF9xIVrqyARFxO8Usl2twKbuifHwHUFUHWph3hWBjji54</a></dd>
+              <dt>dimensions</dt>
+              <dd>1800 x 2400</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#8 瓦伦廷·巴尔科</h2>
+              <p>BARCO Valentin · MF · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/barco-valentin/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="barco-valentin.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.mumbly.net/wp-content/uploads/2023/03/nggallery_import/F2022_449.jpg" target="_blank" rel="noreferrer">https://www.mumbly.net/wp-content/uploads/2023/03/nggallery_import/F2022_449.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.mumbly.net/produit/panini-adrenalyn-xl-2025-26-valentin-barco-rc-strasbourg-alsace-292/" target="_blank" rel="noreferrer">https://www.mumbly.net/produit/panini-adrenalyn-xl-2025-26-valentin-barco-rc-strasbourg-alsace-292/</a></dd>
+              <dt>dimensions</dt>
+              <dd>860 x 1200</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#10 莱昂内尔·梅西</h2>
+              <p>MESSI Lionel · FW · score 210</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/messi-lionel/03.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="messi-lionel.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://waynejacksongaming.co.uk/cdn/shop/files/Lionel_Messi_Golden_Baller_Card_1_-_FIFA_World_Cup_2026_-_Panini_Adrenalyn_XL_-_Argentina_-_top_loader.jpg?v=1771324909&amp;width=1946" target="_blank" rel="noreferrer">https://waynejacksongaming.co.uk/cdn/shop/files/Lionel_Messi_Golden_Baller_Card_1_-_FIFA_World_Cup_2026_-_Panini_Adrenalyn_XL_-_Argentina_-_top_loader.jpg?v=1771324909&amp;width=1946</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://waynejacksongaming.co.uk/products/lionel-messi-golden-baller-card-1-fifa-world-cup-2026-panini-adrenalyn-xl-argentina?srsltid=AfmBOoqqQiT46kVUH0TgDfZgc7BOrpsGvmt8pIpDPTwLH-9EsFmgIiaT" target="_blank" rel="noreferrer">https://waynejacksongaming.co.uk/products/lionel-messi-golden-baller-card-1-fifa-world-cup-2026-panini-adrenalyn-xl-argentina?srsltid=AfmBOoqqQiT46kVUH0TgDfZgc7BOrpsGvmt8pIpDPTwLH-9EsFmgIiaT</a></dd>
+              <dt>dimensions</dt>
+              <dd>1946 x 2595</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>210</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#12 赫罗尼莫·鲁利</h2>
+              <p>RULLI Geronimo · GK · score 170</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/rulli-geronimo/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="rulli-geronimo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/W4sAAOSw34xkfpjS/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/W4sAAOSw34xkfpjS/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/296197073126" target="_blank" rel="noreferrer">https://www.ebay.com/itm/296197073126</a></dd>
+              <dt>dimensions</dt>
+              <dd>900 x 1200</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#13 克里斯蒂安·罗梅罗</h2>
+              <p>ROMERO Cristian · DF · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/romero-cristian/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="romero-cristian.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_27.png?v=1773343949" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_27.png?v=1773343949</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/cristian-romero-27-argentina-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOorRk8bJ_-dXkuPAgDc0BS7LKeIO1oFdDRXulUGxJElweQytaKcv" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/cristian-romero-27-argentina-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOorRk8bJ_-dXkuPAgDc0BS7LKeIO1oFdDRXulUGxJElweQytaKcv</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#14 埃塞基耶尔·帕拉西奥斯</h2>
+              <p>PALACIOS Exequiel · MF · score 170</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/palacios-exequiel/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="palacios-exequiel.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.mumbly.net/wp-content/uploads/2026/01/F365_2026_FAN16.jpg" target="_blank" rel="noreferrer">https://www.mumbly.net/wp-content/uploads/2026/01/F365_2026_FAN16.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.mumbly.net/produit/panini-adrenalyn-fifa-365-2026-exequiel-palacios-bayer-04-leverkusen-ble6/" target="_blank" rel="noreferrer">https://www.mumbly.net/produit/panini-adrenalyn-fifa-365-2026-exequiel-palacios-bayer-04-leverkusen-ble6/</a></dd>
+              <dt>dimensions</dt>
+              <dd>913 x 1280</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#15 尼科·冈萨雷斯</h2>
+              <p>GONZALEZ Nico · MF · score 170</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/gonzalez-nico/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="gonzalez-nico.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/WZ8AAOSwLbhnoApe/s-l1200.png" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/WZ8AAOSwLbhnoApe/s-l1200.png</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/p/17058344322?iid=186925699173" target="_blank" rel="noreferrer">https://www.ebay.com/p/17058344322?iid=186925699173</a></dd>
+              <dt>dimensions</dt>
+              <dd>813 x 1128</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#16 蒂亚戈·阿尔马达</h2>
+              <p>ALMADA Thiago · FW · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/almada-thiago/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="almada-thiago.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://a.allegroimg.com/original/118ed0/bf5967e849928b15e4b51b2aa7c3/FIFA-365-2026-ADRENALYN-XL-PANINI-Kick-Off-FWC6-Argentina-Almada" target="_blank" rel="noreferrer">https://a.allegroimg.com/original/118ed0/bf5967e849928b15e4b51b2aa7c3/FIFA-365-2026-ADRENALYN-XL-PANINI-Kick-Off-FWC6-Argentina-Almada</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://allegro.pl/produkt/fifa-365-2026-kick-off-road-to-fifa-world-cup-fwc6-thiago-almada-argentyna-e2e0eefd-a8b5-4900-9e39-3712b5d800bf" target="_blank" rel="noreferrer">https://allegro.pl/produkt/fifa-365-2026-kick-off-road-to-fifa-world-cup-fwc6-thiago-almada-argentyna-e2e0eefd-a8b5-4900-9e39-3712b5d800bf</a></dd>
+              <dt>dimensions</dt>
+              <dd>1800 x 2400</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#17 朱利亚诺·西蒙尼</h2>
+              <p>SIMEONE Giuliano · FW · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/simeone-giuliano/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="simeone-giuliano.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_32.png?v=1773343959" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_32.png?v=1773343959</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/giuliano-simeone-32-argentina-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOop8Qc6QzndzuoEwXe94lhD3ZELncdRgFzpeaNG7bIUZrYpIlPdB" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/giuliano-simeone-32-argentina-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOop8Qc6QzndzuoEwXe94lhD3ZELncdRgFzpeaNG7bIUZrYpIlPdB</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#19 尼古拉斯·奥塔门迪</h2>
+              <p>OTAMENDI Nicolas · DF · score 210</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/otamendi-nicolas/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="otamendi-nicolas.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/4FMAAeSwrclqFj2k/s-l1600.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/4FMAAeSwrclqFj2k/s-l1600.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/p/4092870607" target="_blank" rel="noreferrer">https://www.ebay.com/p/4092870607</a></dd>
+              <dt>dimensions</dt>
+              <dd>711 x 998</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>210</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#23 埃米利亚诺·马丁内斯</h2>
+              <p>MARTINEZ Emiliano · GK · score 170</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/martinez-emiliano/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="martinez-emiliano.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://a.allegroimg.com/original/112977/52ef407943a4b1f1dbcabc8e6325/FIFA-365-2026-ADRENALYN-XL-PANINI-Fans-FAN7-Martinez-cervena" target="_blank" rel="noreferrer">https://a.allegroimg.com/original/112977/52ef407943a4b1f1dbcabc8e6325/FIFA-365-2026-ADRENALYN-XL-PANINI-Fans-FAN7-Martinez-cervena</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://allegro.cz/vyhledavani?string=martinez%20emiliano&amp;srsltid=AfmBOoobL7ojXw7lJ4va20KmoHmF7icwRvpUALQPw62Lmi2yDtltiqmx" target="_blank" rel="noreferrer">https://allegro.cz/vyhledavani?string=martinez%20emiliano&amp;srsltid=AfmBOoobL7ojXw7lJ4va20KmoHmF7icwRvpUALQPw62Lmi2yDtltiqmx</a></dd>
+              <dt>dimensions</dt>
+              <dd>1800 x 2400</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#25 法昆多·梅迪纳</h2>
+              <p>MEDINA Facundo · DF · score 190</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/medina-facundo/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="medina-facundo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.mumbly.net/wp-content/uploads/2025/09/nggallery_import/XL2026_150ba.jpg" target="_blank" rel="noreferrer">https://www.mumbly.net/wp-content/uploads/2025/09/nggallery_import/XL2026_150ba.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.mumbly.net/produit/panini-adrenalyn-xl-2025-26-facundo-medina-olympique-de-marseille-150-bis/" target="_blank" rel="noreferrer">https://www.mumbly.net/produit/panini-adrenalyn-xl-2025-26-facundo-medina-olympique-de-marseille-150-bis/</a></dd>
+              <dt>dimensions</dt>
+              <dd>858 x 1200</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-approved" data-status="approved">
+          <header class="card-header">
+            <div>
+              <h2>#26 纳韦尔·莫利纳</h2>
+              <p>MOLINA Nahuel · DF · score 210</p>
+            </div>
+            <span class="status-badge status-approved">APPROVED</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/argentina/raw/molina-nahuel/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="molina-nahuel.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/p/19092862740" target="_blank" rel="noreferrer">https://www.ebay.com/p/19092862740</a></dd>
+              <dt>dimensions</dt>
+              <dd>848 x 1200</dd>
+              <dt>note</dt>
+              <dd>-</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>210</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      </section>
+  </main>
+  <script>
+    const buttons = Array.from(document.querySelectorAll(".filters button"));
+    const cards = Array.from(document.querySelectorAll(".card"));
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        buttons.forEach((item) => item.classList.toggle("active", item === button));
+        cards.forEach((card) => {
+          card.style.display = filter === "all" || card.dataset.status === filter ? "" : "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>

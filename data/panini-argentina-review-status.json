@@ -1,0 +1,236 @@
+[
+  {
+    "player_slug": "musso-juan",
+    "player_name": "胡安·穆索",
+    "output_path": "public/cards/panini/argentina/musso-juan.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/039_ADRENALYN_2025_26_ATLETICO_MADRID.webp?v=1768859540",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "senesi-marcos",
+    "player_name": "马科斯·塞内西",
+    "output_path": "public/cards/panini/argentina/senesi-marcos.png",
+    "source_url": "https://i.ebayimg.com/images/g/Gl4AAOSwkCNoTI0J/s-l500.jpg",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "tagliafico-nicolas",
+    "player_name": "尼古拉斯·塔利亚菲科",
+    "output_path": "public/cards/panini/argentina/tagliafico-nicolas.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U001.webp?v=1775655636",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "montiel-gonzalo",
+    "player_name": "贡萨洛·蒙铁尔",
+    "output_path": "public/cards/panini/argentina/montiel-gonzalo.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-27_mp1hxw.webp?v=1755278219",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "paredes-leandro",
+    "player_name": "莱安德罗·帕雷德斯",
+    "output_path": "public/cards/panini/argentina/paredes-leandro.png",
+    "source_url": "http://www.solvecollectibles.com/cdn/shop/files/Leandro-Paredes-Argentina-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809848",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "martinez-lisandro",
+    "player_name": "利桑德罗·马丁内斯",
+    "output_path": "public/cards/panini/argentina/martinez-lisandro.png",
+    "source_url": "https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "de-paul-rodrigo",
+    "player_name": "罗德里戈·德保罗",
+    "output_path": "public/cards/panini/argentina/de-paul-rodrigo.png",
+    "source_url": "https://a.allegroimg.com/original/11bcd6/ed5d432c4bed852d82bf51053678/FIFA-365-2026-ADRENALYN-XL-PANINI-Vykop-FWC5-Argentina-De-Paul",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "barco-valentin",
+    "player_name": "瓦伦廷·巴尔科",
+    "output_path": "public/cards/panini/argentina/barco-valentin.png",
+    "source_url": "https://www.mumbly.net/wp-content/uploads/2023/03/nggallery_import/F2022_449.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "alvarez-julian",
+    "player_name": "胡利安·阿尔瓦雷斯",
+    "output_path": "public/cards/panini/argentina/alvarez-julian.png",
+    "source_url": "https://i.ebayimg.com/00/s/NzYxWDU0OA==/z/4NEAAeSw6OBors0B/$_57.PNG?set_id=880000500F",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "messi-lionel",
+    "player_name": "莱昂内尔·梅西",
+    "output_path": "public/cards/panini/argentina/messi-lionel.png",
+    "source_url": "https://waynejacksongaming.co.uk/cdn/shop/files/Lionel_Messi_Golden_Baller_Card_1_-_FIFA_World_Cup_2026_-_Panini_Adrenalyn_XL_-_Argentina_-_top_loader.jpg?v=1771324909&width=1946",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "lo-celso-giovani",
+    "player_name": "吉奥瓦尼·洛塞尔索",
+    "output_path": "public/cards/panini/argentina/lo-celso-giovani.png",
+    "source_url": "https://www.solvecollectibles.com/cdn/shop/files/Giovani-Lo-Celso-Argentina-Top-Keeper-Panini-World-Cup-2022-Adrenalyn-XL-Card_grande.jpg?v=1730809879",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "rulli-geronimo",
+    "player_name": "赫罗尼莫·鲁利",
+    "output_path": "public/cards/panini/argentina/rulli-geronimo.png",
+    "source_url": "https://i.ebayimg.com/images/g/W4sAAOSw34xkfpjS/s-l1200.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "romero-cristian",
+    "player_name": "克里斯蒂安·罗梅罗",
+    "output_path": "public/cards/panini/argentina/romero-cristian.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_27.png?v=1773343949",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "palacios-exequiel",
+    "player_name": "埃塞基耶尔·帕拉西奥斯",
+    "output_path": "public/cards/panini/argentina/palacios-exequiel.png",
+    "source_url": "https://www.mumbly.net/wp-content/uploads/2026/01/F365_2026_FAN16.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "gonzalez-nico",
+    "player_name": "尼科·冈萨雷斯",
+    "output_path": "public/cards/panini/argentina/gonzalez-nico.png",
+    "source_url": "https://i.ebayimg.com/images/g/WZ8AAOSwLbhnoApe/s-l1200.png",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "almada-thiago",
+    "player_name": "蒂亚戈·阿尔马达",
+    "output_path": "public/cards/panini/argentina/almada-thiago.png",
+    "source_url": "https://a.allegroimg.com/original/118ed0/bf5967e849928b15e4b51b2aa7c3/FIFA-365-2026-ADRENALYN-XL-PANINI-Kick-Off-FWC6-Argentina-Almada",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "simeone-giuliano",
+    "player_name": "朱利亚诺·西蒙尼",
+    "output_path": "public/cards/panini/argentina/simeone-giuliano.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_32.png?v=1773343959",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "paz-nico",
+    "player_name": "尼科·帕斯",
+    "output_path": "public/cards/panini/argentina/paz-nico.png",
+    "source_url": "https://img.leboncoin.fr/api/v1/lbcpb1/images/b9/b9/af/b9b9afe1d8263f23f48bac27caea829c2bf04202.jpg?rule=ad-large",
+    "review_flag": true,
+    "status": "pending",
+    "note": "ratio 异常"
+  },
+  {
+    "player_slug": "otamendi-nicolas",
+    "player_name": "尼古拉斯·奥塔门迪",
+    "output_path": "public/cards/panini/argentina/otamendi-nicolas.png",
+    "source_url": "https://i.ebayimg.com/images/g/4FMAAeSwrclqFj2k/s-l1600.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "mac-allister-alexis",
+    "player_name": "亚历克西斯·麦卡利斯特",
+    "output_path": "public/cards/panini/argentina/mac-allister-alexis.png",
+    "source_url": "https://i.ebayimg.com/images/g/nygAAeSwpvJpqMZp/s-l1200.jpg",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "lopez-jose-manuel",
+    "player_name": "何塞·曼努埃尔·洛佩斯",
+    "output_path": "public/cards/panini/argentina/lopez-jose-manuel.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-71_t3z7uc.webp?v=1755278590",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "martinez-lautaro",
+    "player_name": "劳塔罗·马丁内斯",
+    "output_path": "public/cards/panini/argentina/martinez-lautaro.png",
+    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-324_gugiay.webp?v=1755280715",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "martinez-emiliano",
+    "player_name": "埃米利亚诺·马丁内斯",
+    "output_path": "public/cards/panini/argentina/martinez-emiliano.png",
+    "source_url": "https://a.allegroimg.com/original/112977/52ef407943a4b1f1dbcabc8e6325/FIFA-365-2026-ADRENALYN-XL-PANINI-Fans-FAN7-Martinez-cervena",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "fernandez-enzo",
+    "player_name": "恩佐·费尔南德斯",
+    "output_path": "public/cards/panini/argentina/fernandez-enzo.png",
+    "source_url": "https://i.ebayimg.com/images/g/PDIAAeSwQIpqFj2W/s-l500.jpg",
+    "review_flag": true,
+    "status": "pending",
+    "note": "image width < 600"
+  },
+  {
+    "player_slug": "medina-facundo",
+    "player_name": "法昆多·梅迪纳",
+    "output_path": "public/cards/panini/argentina/medina-facundo.png",
+    "source_url": "https://www.mumbly.net/wp-content/uploads/2025/09/nggallery_import/XL2026_150ba.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  },
+  {
+    "player_slug": "molina-nahuel",
+    "player_name": "纳韦尔·莫利纳",
+    "output_path": "public/cards/panini/argentina/molina-nahuel.png",
+    "source_url": "https://i.ebayimg.com/images/g/c1wAAeSwBXRp4Qy5/s-l1200.jpg",
+    "review_flag": false,
+    "status": "approved",
+    "note": ""
+  }
+]

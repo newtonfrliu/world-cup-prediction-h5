@@ -1,0 +1,338 @@
+[
+  {
+    "player_slug": "raya-david",
+    "player_name": "大卫·拉亚",
+    "player_name_en": "RAYA David",
+    "shirt_number": 1,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"RAYA David\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"RAYA David\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"RAYA David\"",
+      "\"Panini Spain 2026\" \"RAYA David\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "pubill-marc",
+    "player_name": "马克·普比尔",
+    "player_name_en": "PUBILL Marc",
+    "shirt_number": 2,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"PUBILL Marc\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"PUBILL Marc\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"PUBILL Marc\"",
+      "\"Panini Spain 2026\" \"PUBILL Marc\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "grimaldo-alex",
+    "player_name": "亚历克斯·格里马尔多",
+    "player_name_en": "GRIMALDO Alex",
+    "shirt_number": 3,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"GRIMALDO Alex\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"GRIMALDO Alex\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"GRIMALDO Alex\"",
+      "\"Panini Spain 2026\" \"GRIMALDO Alex\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "garcia-eric",
+    "player_name": "埃里克·加西亚",
+    "player_name_en": "GARCIA Eric",
+    "shirt_number": 4,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"GARCIA Eric\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"GARCIA Eric\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"GARCIA Eric\"",
+      "\"Panini Spain 2026\" \"GARCIA Eric\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "llorente-marcos",
+    "player_name": "马科斯·略伦特",
+    "player_name_en": "LLORENTE Marcos",
+    "shirt_number": 5,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"LLORENTE Marcos\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"LLORENTE Marcos\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"LLORENTE Marcos\"",
+      "\"Panini Spain 2026\" \"LLORENTE Marcos\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "merino-mikel",
+    "player_name": "米克尔·梅里诺",
+    "player_name_en": "MERINO Mikel",
+    "shirt_number": 6,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"MERINO Mikel\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"MERINO Mikel\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"MERINO Mikel\"",
+      "\"Panini Spain 2026\" \"MERINO Mikel\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "torres-ferran",
+    "player_name": "费兰·托雷斯",
+    "player_name_en": "TORRES Ferran",
+    "shirt_number": 7,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"TORRES Ferran\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"TORRES Ferran\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"TORRES Ferran\"",
+      "\"Panini Spain 2026\" \"TORRES Ferran\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "ruiz-fabian",
+    "player_name": "法比安·鲁伊斯",
+    "player_name_en": "RUIZ Fabian",
+    "shirt_number": 8,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"RUIZ Fabian\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"RUIZ Fabian\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"RUIZ Fabian\"",
+      "\"Panini Spain 2026\" \"RUIZ Fabian\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "gavi",
+    "player_name": "加维",
+    "player_name_en": "GAVI",
+    "shirt_number": 9,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"GAVI\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"GAVI\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"GAVI\"",
+      "\"Panini Spain 2026\" \"GAVI\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "pino-yeremy",
+    "player_name": "耶雷米·皮诺",
+    "player_name_en": "PINO Yeremy",
+    "shirt_number": 11,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"PINO Yeremy\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"PINO Yeremy\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"PINO Yeremy\"",
+      "\"Panini Spain 2026\" \"PINO Yeremy\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "porro-pedro",
+    "player_name": "佩德罗·波罗",
+    "player_name_en": "PORRO Pedro",
+    "shirt_number": 12,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"PORRO Pedro\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"PORRO Pedro\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"PORRO Pedro\"",
+      "\"Panini Spain 2026\" \"PORRO Pedro\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "garcia-joan",
+    "player_name": "霍安·加西亚",
+    "player_name_en": "GARCIA Joan",
+    "shirt_number": 13,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"GARCIA Joan\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"GARCIA Joan\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"GARCIA Joan\"",
+      "\"Panini Spain 2026\" \"GARCIA Joan\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "laporte-aymeric",
+    "player_name": "艾梅里克·拉波尔特",
+    "player_name_en": "LAPORTE Aymeric",
+    "shirt_number": 14,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"LAPORTE Aymeric\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"LAPORTE Aymeric\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"LAPORTE Aymeric\"",
+      "\"Panini Spain 2026\" \"LAPORTE Aymeric\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "baena-alex",
+    "player_name": "亚历克斯·巴埃纳",
+    "player_name_en": "BAENA Alex",
+    "shirt_number": 15,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"BAENA Alex\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"BAENA Alex\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"BAENA Alex\"",
+      "\"Panini Spain 2026\" \"BAENA Alex\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "zubimendi-martin",
+    "player_name": "马丁·祖比门迪",
+    "player_name_en": "ZUBIMENDI Martin",
+    "shirt_number": 18,
+    "position": "MF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"ZUBIMENDI Martin\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"ZUBIMENDI Martin\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"ZUBIMENDI Martin\"",
+      "\"Panini Spain 2026\" \"ZUBIMENDI Martin\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "oyarzabal-mikel",
+    "player_name": "米克尔·奥亚萨瓦尔",
+    "player_name_en": "OYARZABAL Mikel",
+    "shirt_number": 21,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"OYARZABAL Mikel\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"OYARZABAL Mikel\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"OYARZABAL Mikel\"",
+      "\"Panini Spain 2026\" \"OYARZABAL Mikel\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "cubarsi-pau",
+    "player_name": "保罗·库巴西",
+    "player_name_en": "CUBARSI Pau",
+    "shirt_number": 22,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"CUBARSI Pau\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"CUBARSI Pau\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"CUBARSI Pau\"",
+      "\"Panini Spain 2026\" \"CUBARSI Pau\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "simon-unai",
+    "player_name": "乌奈·西蒙",
+    "player_name_en": "SIMON Unai",
+    "shirt_number": 23,
+    "position": "GK",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"SIMON Unai\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"SIMON Unai\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"SIMON Unai\"",
+      "\"Panini Spain 2026\" \"SIMON Unai\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "cucurella-marc",
+    "player_name": "马克·库库雷利亚",
+    "player_name_en": "CUCURELLA Marc",
+    "shirt_number": 24,
+    "position": "DF",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"CUCURELLA Marc\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"CUCURELLA Marc\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"CUCURELLA Marc\"",
+      "\"Panini Spain 2026\" \"CUCURELLA Marc\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "munoz-victor",
+    "player_name": "维克托·穆尼奥斯",
+    "player_name_en": "MUNOZ Victor",
+    "shirt_number": 25,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"MUNOZ Victor\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"MUNOZ Victor\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"MUNOZ Victor\"",
+      "\"Panini Spain 2026\" \"MUNOZ Victor\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  },
+  {
+    "player_slug": "iglesias-borja",
+    "player_name": "博尔哈·伊格莱西亚斯",
+    "player_name_en": "IGLESIAS Borja",
+    "shirt_number": 26,
+    "position": "FW",
+    "search_queries": [
+      "\"Panini FIFA World Cup 2026\" \"IGLESIAS Borja\" \"Spain\"",
+      "\"Panini Adrenalyn XL 2026\" \"IGLESIAS Borja\" \"Spain\"",
+      "\"Panini 2026 World Cup card\" \"IGLESIAS Borja\"",
+      "\"Panini Spain 2026\" \"IGLESIAS Borja\""
+    ],
+    "candidates": [],
+    "selected_source_url": null,
+    "selected_local_path": null
+  }
+]

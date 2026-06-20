@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-06-20T21:09:52.489Z",
+  "skipped_countries": [
+    "Argentina",
+    "Portugal"
+  ],
+  "note": "Run was interrupted after SerpAPI returned 429: Your account has run out of searches.",
+  "countries": [
+    {
+      "country": "Brazil",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 2,
+      "missing": 19,
+      "pending_review": 19
+    },
+    {
+      "country": "Netherlands",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 21
+    },
+    {
+      "country": "Spain",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 21
+    },
+    {
+      "country": "Germany",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 21
+    },
+    {
+      "country": "England",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 21
+    },
+    {
+      "country": "France",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 21
+    },
+    {
+      "country": "Japan",
+      "total_players": 26,
+      "core_skip": 5,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 21,
+      "pending_review": 0,
+      "error": "Interrupted after SerpAPI quota was exhausted before Japan completed."
+    }
+  ],
+  "totals": {
+    "processed": 2,
+    "missing": 145,
+    "pending_review": 124
+  }
+}

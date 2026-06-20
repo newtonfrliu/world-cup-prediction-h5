@@ -15,6 +15,7 @@ import {
   getStoredPlayerId,
   savePlayerSession,
 } from "@/lib/playerSession";
+import { resolvePlayerCardImage } from "@/lib/playerCardImages";
 import {
   ensurePlayerInviteCode,
   generateUniqueInviteCode,
@@ -127,9 +128,7 @@ export default function Home() {
   const selectedAccentText =
     selectedTheme.textOnTheme === "dark" ? "#AA151B" : selectedTheme.accent;
   const equippedCardImageSrc =
-    equippedCard?.card_art_url?.trim() ||
-    equippedCard?.card_thumb_url?.trim() ||
-    "";
+    resolvePlayerCardImage(equippedCard);
 
   useEffect(() => {
     async function hydrateRef() {
@@ -557,7 +556,7 @@ export default function Home() {
               加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
             </p>
           </div>
-          {equippedCard ? (
+            {equippedCard && equippedCardImageSrc ? (
             <div className="absolute bottom-4 right-[8.25rem] z-20 flex h-[150px] w-[104px] items-end justify-center sm:right-36 sm:h-[170px] sm:w-[118px] md:bottom-5 md:right-44 md:h-[220px] md:w-[152px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

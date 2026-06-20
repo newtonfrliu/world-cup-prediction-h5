@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { getCanonicalTeamName, getCountryTheme, resolveCountry } from "@/lib/countries";
+import {
+  resolveNextPlayerCardImage,
+  resolvePlayerCardImage,
+} from "@/lib/playerCardImages";
 
 export type PlayerCardMiniData = {
   id?: string;
@@ -247,10 +251,7 @@ export function PlayerCardMini({
   const position = card?.position ?? "国家队";
   const compact = size === "small";
   const artCandidate = useMemo(
-    () =>
-      (size === "small"
-        ? card?.card_thumb_url?.trim() || card?.card_art_url?.trim()
-        : card?.card_art_url?.trim() || card?.card_thumb_url?.trim()) || "",
+    () => resolvePlayerCardImage(card, { preferThumb: size === "small" }),
     [card, size],
   );
   const imageCandidate = useMemo(() => card?.card_image?.trim() || "", [card]);
@@ -279,7 +280,13 @@ export function PlayerCardMini({
           <img
             src={artSrc}
             alt={name}
-            onError={() => setArtSrc("")}
+            onError={() => {
+              const nextSrc = resolveNextPlayerCardImage(card, artSrc, {
+                preferThumb: size === "small",
+              });
+
+              setArtSrc(nextSrc);
+            }}
             className="absolute inset-[3px] z-10 h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-[inherit] object-cover"
           />
           {locked ? (

@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panini Portugal Review</title>
+  <style>
+    body { margin: 0; background: #f6f1e7; color: #071b3a; font-family: Arial, "Microsoft YaHei", sans-serif; }
+    main { max-width: 1180px; margin: 0 auto; padding: 32px 18px 56px; }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 24px 0 14px; }
+    .metric, .card { border: 1px solid rgba(7,27,58,.12); border-radius: 16px; background: white; box-shadow: 0 12px 30px rgba(7,27,58,.08); }
+    .metric { padding: 16px; font-weight: 900; }
+    .metric span { display: block; margin-top: 8px; color: #e63535; font-size: 26px; }
+    .filters { position: sticky; top: 0; z-index: 10; display: flex; gap: 8px; overflow-x: auto; margin: 0 -18px 18px; padding: 12px 18px; background: rgba(246,241,231,.92); backdrop-filter: blur(12px); }
+    .filters button { flex: 0 0 auto; border: 1px solid rgba(7,27,58,.16); border-radius: 999px; background: #fff; color: #071b3a; padding: 10px 14px; font-weight: 900; cursor: pointer; }
+    .filters button.active { background: #071b3a; color: #fff; }
+    .card { margin: 20px 0; padding: 18px; }
+    .card.status-pending { border-color: #f6c84c; box-shadow: 0 12px 34px rgba(246,200,76,.2); }
+    .card.status-rejected { border-color: #e63535; box-shadow: 0 12px 34px rgba(230,53,53,.18); }
+    .card.status-approved { border-color: #38a169; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .card h2 { margin: 0; font-size: 22px; }
+    .card p { margin: 6px 0 0; color: #4a6280; font-weight: 700; }
+    .status-badge { flex: 0 0 auto; border-radius: 999px; padding: 8px 10px; font-size: 12px; font-weight: 1000; letter-spacing: .08em; }
+    .status-badge.status-approved { background: #e3f9e5; color: #0f7b3f; }
+    .status-badge.status-pending { background: #fff4bd; color: #8a5a00; }
+    .status-badge.status-rejected { background: #fde8e8; color: #9b1c1c; }
+    .status-badge.status-usable_low_quality { background: #e0f2fe; color: #075985; }
+    .flags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+    .flags li { border-radius: 999px; background: #f1f5f9; color: #4a6280; padding: 6px 9px; font-size: 12px; font-weight: 900; }
+    .images { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    figure { margin: 0; border-radius: 14px; background: #f1f5f9; padding: 10px; }
+    figcaption { margin-bottom: 8px; font-size: 12px; font-weight: 900; color: #627d98; text-transform: uppercase; letter-spacing: .08em; }
+    img { display: block; width: 100%; max-height: 560px; object-fit: contain; border-radius: 10px; background: #f6f1e7; }
+    .empty { min-height: 240px; display: grid; place-items: center; color: #829ab1; font-weight: 900; }
+    details { margin-top: 16px; border-radius: 14px; background: #f8fafc; padding: 12px; }
+    summary { cursor: pointer; font-weight: 1000; }
+    dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 12px; margin: 16px 0 0; font-size: 13px; }
+    dt { color: #627d98; font-weight: 900; }
+    dd { margin: 0; overflow-wrap: anywhere; font-weight: 700; }
+    table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 13px; background: white; border-radius: 12px; overflow: hidden; }
+    th, td { border-bottom: 1px solid #e4e7eb; padding: 8px 10px; text-align: left; }
+    tfoot th { color: #e63535; }
+    a { color: #d64545; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Panini Portugal Review</h1>
+    <p>Generated at 2026-06-20T20:19:52.346Z</p>
+    <section class="summary">
+      <div class="metric">Total<span>21</span></div>
+      <div class="metric">Approved<span>0</span></div>
+      <div class="metric">Pending<span>21</span></div>
+      <div class="metric">Rejected<span>0</span></div>
+      <div class="metric">Usable low quality<span>0</span></div>
+    </section>
+    <nav class="filters" aria-label="Review filters">
+      <button type="button" class="active" data-filter="all">All (21)</button>
+      <button type="button" data-filter="approved">Approved (0)</button>
+      <button type="button" data-filter="pending">Pending (21)</button>
+      <button type="button" data-filter="rejected">Rejected (0)</button>
+    </nav>
+    <section id="cards">
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#1 迪奥戈·科斯塔</h2>
+              <p>DIOGO COSTA · GK · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/diogo-costa/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="diogo-costa.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_373.png?v=1773344812" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_373.png?v=1773344812</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/diogo-costa-373-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqlRZ3XuWsuKXEFPVJdq0krfTIgzBin37vmuGWDVxtGzs7-0dQ8" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/diogo-costa-373-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqlRZ3XuWsuKXEFPVJdq0krfTIgzBin37vmuGWDVxtGzs7-0dQ8</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#2 内尔松·塞梅多</h2>
+              <p>NELSON SEMEDO · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/nelson-semedo/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="nelson-semedo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.marasportscards.cz/fotky118109/fotos/_vyr_7286020250204104852_0010.jpg" target="_blank" rel="noreferrer">https://www.marasportscards.cz/fotky118109/fotos/_vyr_7286020250204104852_0010.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.marasportscards.cz/NELSON-SEMEDO-2020-Panini-FIFA-365-d72860.htm?tab=description" target="_blank" rel="noreferrer">https://www.marasportscards.cz/NELSON-SEMEDO-2020-Panini-FIFA-365-d72860.htm?tab=description</a></dd>
+              <dt>dimensions</dt>
+              <dd>744 x 1046</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#3 鲁本·迪亚斯</h2>
+              <p>RUBEN DIAS · DF · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/ruben-dias/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="ruben-dias.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/GusAAeSwisJp~Z2Q/s-l1200.webp" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/GusAAeSwisJp~Z2Q/s-l1200.webp</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/b/2026-Panini-Adrenalyn-XL-Fifa-World-Cup-Ruben-Dias-374/212/bn_217848283161" target="_blank" rel="noreferrer">https://www.ebay.com/b/2026-Panini-Adrenalyn-XL-Fifa-World-Cup-Ruben-Dias-374/212/bn_217848283161</a></dd>
+              <dt>dimensions</dt>
+              <dd>924 x 1200</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#4 托马斯·阿劳若</h2>
+              <p>TOMAS ARAUJO · DF · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/tomas-araujo/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="tomas-araujo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/00/s/MTA4OFg3ODA=/z/CIUAAOSwpFpm9CNi/$_57.JPG?set_id=880000500F" target="_blank" rel="noreferrer">https://i.ebayimg.com/00/s/MTA4OFg3ODA=/z/CIUAAOSwpFpm9CNi/$_57.JPG?set_id=880000500F</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/315785846864" target="_blank" rel="noreferrer">https://www.ebay.com/itm/315785846864</a></dd>
+              <dt>dimensions</dt>
+              <dd>780 x 1088</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#5 迪奥戈·达洛特</h2>
+              <p>DIOGO DALOT · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/diogo-dalot/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="diogo-dalot.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/~vwAAOSwn~Nmr-F8/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/~vwAAOSwn~Nmr-F8/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.co.uk/itm/116431619862" target="_blank" rel="noreferrer">https://www.ebay.co.uk/itm/116431619862</a></dd>
+              <dt>dimensions</dt>
+              <dd>900 x 1200</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#6 马特乌斯·努内斯</h2>
+              <p>MATHEUS NUNES · MF · score 0</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>missing source image</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <div class="empty">missing</div>
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <div class="empty">missing</div>
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd>missing</dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.tiktok.com/@bantertoys/video/7569847757066800405" target="_blank" rel="noreferrer">https://www.tiktok.com/@bantertoys/video/7569847757066800405</a></dd>
+              <dt>dimensions</dt>
+              <dd> x </dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>card_number</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>0</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#9 贡萨洛·拉莫斯</h2>
+              <p>GONCALO RAMOS · FW · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/goncalo-ramos/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="goncalo-ramos.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U033.webp?v=1775826551" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U033.webp?v=1775826551</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/goncalo-ramos-u33-portugal-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOorgbUdnauS6kfG_EKbxaPNsKN3hBAuGSHHf8gynB2_LaQKKCZFJ" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/goncalo-ramos-u33-portugal-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOorgbUdnauS6kfG_EKbxaPNsKN3hBAuGSHHf8gynB2_LaQKKCZFJ</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#11 若昂·菲利克斯</h2>
+              <p>JOAO FELIX · FW · score 150</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/joao-felix/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="joao-felix.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/41_FWC_POR_017.webp?v=1777745264" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/41_FWC_POR_017.webp?v=1777745264</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/joao-felix-por017-portugal-panini-fifa-world-cup-stickers-base-international-version?srsltid=AfmBOopVV-eRq8VS55-EHfZUlBo-2yc9I52GtDnFKXrzb2fo6nhVc0hi" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/joao-felix-por017-portugal-panini-fifa-world-cup-stickers-base-international-version?srsltid=AfmBOopVV-eRq8VS55-EHfZUlBo-2yc9I52GtDnFKXrzb2fo6nhVc0hi</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>150</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#12 若泽·萨</h2>
+              <p>JOSE SA · GK · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/jose-sa/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="jose-sa.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/Mk4AAOSwVmpmvRuE/s-l1200.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/Mk4AAOSwVmpmvRuE/s-l1200.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.co.uk/itm/116431624167" target="_blank" rel="noreferrer">https://www.ebay.co.uk/itm/116431624167</a></dd>
+              <dt>dimensions</dt>
+              <dd>893 x 1200</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#13 雷纳托·维加</h2>
+              <p>RENATO VEIGA · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/renato-veiga/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="renato-veiga.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/349_ADRENALYN_2025_26_VILLARREAL.webp?v=1768825919" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/349_ADRENALYN_2025_26_VILLARREAL.webp?v=1768825919</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/renato-veiga-349-villarreal-cf-panini-adrenalyn-xl-basico?srsltid=AfmBOoqYIcAZ58yil3XFmIZKjOI8JkN70f1m1xK8sQCqKIOWP2R8ppyv" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/renato-veiga-349-villarreal-cf-panini-adrenalyn-xl-basico?srsltid=AfmBOoqYIcAZ58yil3XFmIZKjOI8JkN70f1m1xK8sQCqKIOWP2R8ppyv</a></dd>
+              <dt>dimensions</dt>
+              <dd>722 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#14 贡萨洛·伊纳西奥</h2>
+              <p>GONCALO INACIO · DF · score 150</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/goncalo-inacio/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="goncalo-inacio.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/41_FWC_POR_008.webp?v=1777745222" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/41_FWC_POR_008.webp?v=1777745222</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/goncalo-inacio-por008-portugal-panini-fifa-world-cup-stickers-base-international-version?srsltid=AfmBOorSIA8HvGM-KkHRBGfGt5Bx2TXA2KErY1ivCDatJt-PjHx6sTgu" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/goncalo-inacio-por008-portugal-panini-fifa-world-cup-stickers-base-international-version?srsltid=AfmBOorSIA8HvGM-KkHRBGfGt5Bx2TXA2KErY1ivCDatJt-PjHx6sTgu</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>150</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#16 弗朗西斯科·特林康</h2>
+              <p>FRANCISCO TRINCAO · FW · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>ratio abnormal</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/francisco-trincao/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="francisco-trincao.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://www.picclickimg.com/i~0AAeSwajBp9UdH/Panini-World-cup-2026-Adrenalyn-XL-FIFA-Cards.webp" target="_blank" rel="noreferrer">https://www.picclickimg.com/i~0AAeSwajBp9UdH/Panini-World-cup-2026-Adrenalyn-XL-FIFA-Cards.webp</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://picclick.es/Panini-Adrenalyn-XL-FIFA-365-2026-No-Trincao-236602779590.html" target="_blank" rel="noreferrer">https://picclick.es/Panini-Adrenalyn-XL-FIFA-365-2026-No-Trincao-236602779590.html</a></dd>
+              <dt>dimensions</dt>
+              <dd>640 x 640</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#17 拉斐尔·莱奥</h2>
+              <p>RAFAEL LEAO · FW · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/rafael-leao/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="rafael-leao.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_381.png?v=1773344833" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_381.png?v=1773344833</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/rafael-leao-381-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopMdgC0iU9Gsqk72GwZg1ygA_N9GiwdCewYwCChsws3Q7ta8A92" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/rafael-leao-381-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopMdgC0iU9Gsqk72GwZg1ygA_N9GiwdCewYwCChsws3Q7ta8A92</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#18 佩德罗·内托</h2>
+              <p>PEDRO NETO · FW · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/pedro-neto/01.jpeg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="pedro-neto.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://antci.com/wp-content/uploads/2026/03/2026-Panini-Adrenalyn-XL-FIFA-World-Cup-2026-006-Son-Heung-Min-GB-.jpeg" target="_blank" rel="noreferrer">https://antci.com/wp-content/uploads/2026/03/2026-Panini-Adrenalyn-XL-FIFA-World-Cup-2026-006-Son-Heung-Min-GB-.jpeg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://antci.com/product/2026-panini-adrenalyn-xl-fifa-world-cup-2026-380-pedro-neto/" target="_blank" rel="noreferrer">https://antci.com/product/2026-panini-adrenalyn-xl-fifa-world-cup-2026-380-pedro-neto/</a></dd>
+              <dt>dimensions</dt>
+              <dd>704 x 1000</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#19 贡萨洛·格德斯</h2>
+              <p>GONCALO GUEDES · FW · score 130</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/goncalo-guedes/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="goncalo-guedes.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="https://i.ebayimg.com/images/g/asEAAOSw1aln2hBf/s-l500.jpg" target="_blank" rel="noreferrer">https://i.ebayimg.com/images/g/asEAAOSw1aln2hBf/s-l500.jpg</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.ebay.com/itm/186136609280" target="_blank" rel="noreferrer">https://www.ebay.com/itm/186136609280</a></dd>
+              <dt>dimensions</dt>
+              <dd>357 x 500</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>130</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#20 若昂·坎塞洛</h2>
+              <p>JOAO CANCELO · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/joao-cancelo/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="joao-cancelo.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/058BIS_ADRENALYN_2025_26_BARCELONA.webp?v=1774049278" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/058BIS_ADRENALYN_2025_26_BARCELONA.webp?v=1774049278</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/joao-cancelo-058-bis-fc-barcelona-panini-adrenalyn-xl-nuevo-fichaje?srsltid=AfmBOorSPLvpQFPZyzKXnE65xfK02x30XWn7kTm1-VKn5Z9hvM_WIzVB" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/joao-cancelo-058-bis-fc-barcelona-panini-adrenalyn-xl-nuevo-fichaje?srsltid=AfmBOorSPLvpQFPZyzKXnE65xfK02x30XWn7kTm1-VKn5Z9hvM_WIzVB</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#21 鲁本·内维斯</h2>
+              <p>RUBEN NEVES · MF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>image width &lt; 600</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/ruben-neves/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="ruben-neves.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-349_vtgulz.webp?v=1755280926" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-349_vtgulz.webp?v=1755280926</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/ruben-neves-349-al-hilal-sfc-panini-club-world-cup-adrenalyn-xl-2025-gold-game-changer?srsltid=AfmBOoqvT6iep-w9fnF4wL3RPgnkbu24W-S2QkHu-OdA3mJYz-rwHIRu" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/ruben-neves-349-al-hilal-sfc-panini-club-world-cup-adrenalyn-xl-2025-gold-game-changer?srsltid=AfmBOoqvT6iep-w9fnF4wL3RPgnkbu24W-S2QkHu-OdA3mJYz-rwHIRu</a></dd>
+              <dt>dimensions</dt>
+              <dd>426 x 600</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#22 鲁伊·席尔瓦</h2>
+              <p>RUI SILVA · GK · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/rui-silva/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="rui-silva.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/BETIS_074.jpg?v=1737662245" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/BETIS_074.jpg?v=1737662245</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/panini-adrenalyn-xl-la-liga-2024-2025-074-rui-silva-betis-1%C2%AA-edicion-cromo-raw?srsltid=AfmBOor7LrvOxac09K0AiLQrqXSEJlKMHeYTEmUht9i2dnvUi4uFhhPj" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/panini-adrenalyn-xl-la-liga-2024-2025-074-rui-silva-betis-1%C2%AA-edicion-cromo-raw?srsltid=AfmBOor7LrvOxac09K0AiLQrqXSEJlKMHeYTEmUht9i2dnvUi4uFhhPj</a></dd>
+              <dt>dimensions</dt>
+              <dd>708 x 1026</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#24 萨穆·科斯塔</h2>
+              <p>SAMU COSTA · DF · score 170</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/samu-costa/01.webp" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="samu-costa.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/226_ADRENALYN_2025_26_MALLORCA.webp?v=1768857329" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/226_ADRENALYN_2025_26_MALLORCA.webp?v=1768857329</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/samu-costa-226-rcd-mallorca-panini-adrenalyn-xl-basico?srsltid=AfmBOorlhlnAhblmeipvaa-nEOSOznmX7ipZVUxthRc0ZuBKTKMF_ghX" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/samu-costa-226-rcd-mallorca-panini-adrenalyn-xl-basico?srsltid=AfmBOorlhlnAhblmeipvaa-nEOSOznmX7ipZVUxthRc0ZuBKTKMF_ghX</a></dd>
+              <dt>dimensions</dt>
+              <dd>720 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>170</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#25 努诺·门德斯</h2>
+              <p>NUNO MENDES · DF · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/nuno-mendes/01.jpg" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="nuno-mendes.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE64.jpg?v=1773345825" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE64.jpg?v=1773345825</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en-us/products/nuno-mendes-le64-portugal-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOorSe4Vs61dRRS9QE_vrvp0lpscx48l86WG2SGCUVGy2yQiQjcjL" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en-us/products/nuno-mendes-le64-portugal-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOorSe4Vs61dRRS9QE_vrvp0lpscx48l86WG2SGCUVGy2yQiQjcjL</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      
+
+        <article class="card status-pending" data-status="pending">
+          <header class="card-header">
+            <div>
+              <h2>#26 弗朗西斯科·孔塞桑</h2>
+              <p>FRANCISCO CONCEICAO · FW · score 190</p>
+            </div>
+            <span class="status-badge status-pending">PENDING</span>
+          </header>
+          <ul class="flags">
+            <li>OK</li>
+          </ul>
+          <div class="images">
+            <figure>
+              <figcaption>Raw</figcaption>
+              <img src="../../../source_images/panini/portugal/raw/francisco-conceicao/01.png" loading="lazy" />
+            </figure>
+            <figure>
+              <figcaption>Processed 1024x1536</figcaption>
+              <img src="francisco-conceicao.png" loading="lazy" />
+            </figure>
+          </div>
+          <details>
+            <summary>Source / score details</summary>
+            <dl>
+              <dt>source_url</dt>
+              <dd><a href="http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_379.png?v=1773344828" target="_blank" rel="noreferrer">http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_379.png?v=1773344828</a></dd>
+              <dt>source_page</dt>
+              <dd><a href="https://www.worldtradingcards.com/en/products/francisco-conceicao-379-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoq-Fe1EaS9yB2SdD8G2AnS-9cK2flijljVD5y1GvZl9Wc5faCnO" target="_blank" rel="noreferrer">https://www.worldtradingcards.com/en/products/francisco-conceicao-379-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoq-Fe1EaS9yB2SdD8G2AnS-9cK2flijljVD5y1GvZl9Wc5faCnO</a></dd>
+              <dt>dimensions</dt>
+              <dd>736 x 1024</dd>
+              <dt>note</dt>
+              <dd>missing source image</dd>
+              
+            </dl>
+            <table>
+              <thead>
+                <tr><th>score_breakdown</th><th>value</th></tr>
+              </thead>
+              <tbody><tr><td>player_name</td><td>40</td></tr><tr><td>panini</td><td>50</td></tr><tr><td>adrenalyn</td><td>40</td></tr><tr><td>world_cup</td><td>20</td></tr><tr><td>portrait_card_ratio</td><td>20</td></tr><tr><td>width_gt_600</td><td>20</td></tr></tbody>
+              <tfoot>
+                <tr><th>total_score</th><th>190</th></tr>
+              </tfoot>
+            </table>
+          </details>
+        </article>
+      </section>
+  </main>
+  <script>
+    const buttons = Array.from(document.querySelectorAll(".filters button"));
+    const cards = Array.from(document.querySelectorAll(".card"));
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        buttons.forEach((item) => item.classList.toggle("active", item === button));
+        cards.forEach((card) => {
+          card.style.display = filter === "all" || card.dataset.status === filter ? "" : "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
