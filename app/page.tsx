@@ -41,16 +41,10 @@ type PlayerCard = {
   team: string;
   player_name: string;
   player_name_en: string | null;
-  position: string | null;
   shirt_number: number | null;
   rarity: string | null;
-  price: number | null;
-  star_level: number | null;
   card_art_url: string | null;
   card_thumb_url: string | null;
-  card_theme: string | null;
-  card_number: string | null;
-  card_image: string | null;
   roster_source: string | null;
 };
 
@@ -231,7 +225,7 @@ export default function Home() {
   async function loadEquippedCard(cardId: string) {
     const { data: cardData, error: cardError } = await supabase
       .from("player_cards")
-      .select("id, team, player_name, player_name_en, position, shirt_number, rarity, price, star_level, card_art_url, card_thumb_url, card_theme, card_number, card_image, roster_source")
+      .select("id, team, player_name, player_name_en, shirt_number, rarity, card_art_url, card_thumb_url, roster_source")
       .eq("id", cardId)
       .maybeSingle();
 
