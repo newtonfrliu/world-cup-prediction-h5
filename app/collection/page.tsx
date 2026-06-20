@@ -33,6 +33,122 @@ type ExchangeCardResult = {
   already_owned: boolean;
 };
 
+const RARITY_ORDER: Record<string, number> = {
+  legend: 0,
+  epic: 1,
+  rare: 2,
+  common: 3,
+};
+
+const MANUAL_CORE_PLAYERS: Record<string, Record<string, string[]>> = {
+  Portugal: {
+    legend: ["CRISTIANO RONALDO"],
+    epic: ["BRUNO FERNANDES", "BERNARDO SILVA", "VITINHA", "JOAO NEVES"],
+  },
+  Argentina: {
+    legend: ["MESSI Lionel"],
+    epic: [
+      "MARTINEZ Lautaro",
+      "ALVAREZ Julian",
+      "FERNANDEZ Enzo",
+      "MAC ALLISTER Alexis",
+      "MARTINEZ Emiliano",
+    ],
+  },
+  Brazil: {
+    legend: ["NEYMAR JR", "VINICIUS JUNIOR"],
+    epic: ["RAPHINHA", "CASEMIRO", "ALISSON"],
+  },
+  France: {
+    legend: ["MBAPPE Kylian", "DEMBELE Ousmane"],
+    epic: ["TCHOUAMENI Aurelien", "SALIBA William", "HERNANDEZ Theo"],
+  },
+  England: {
+    legend: ["KANE Harry"],
+    epic: ["BELLINGHAM Jude", "SAKA Bukayo", "RICE Declan", "RASHFORD Marcus"],
+  },
+  Germany: {
+    legend: ["NEUER Manuel"],
+    epic: ["MUSIALA Jamal", "WIRTZ Florian", "KIMMICH Joshua", "HAVERTZ Kai"],
+  },
+  Spain: {
+    legend: ["YAMAL Lamine"],
+    epic: ["PEDRI", "RODRI", "WILLIAMS Nico", "OLMO Dani"],
+  },
+  Netherlands: {
+    legend: ["VAN DIJK Virgil"],
+    epic: ["GAKPO Cody", "DE JONG Frenkie", "AKE Nathan", "DEPAY Memphis"],
+  },
+  Japan: {
+    legend: ["KUBO Takefusa"],
+    epic: ["TOMIYASU Takehiro", "DOAN Ritsu", "KAMADA Daichi", "ITO Junya"],
+  },
+};
+
+function normalizeCardKey(value: string | null | undefined) {
+  return (value ?? "")
+    .trim()
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getManualCoreRank(card: PlayerCard) {
+  const team = getCanonicalTeamName(card.team);
+  const rarity = (card.rarity ?? "common").toLowerCase();
+  const manualPlayers = MANUAL_CORE_PLAYERS[team]?.[rarity] ?? [];
+  const cardName = normalizeCardKey(card.player_name_en);
+  const index = manualPlayers.findIndex(
+    (playerName) => normalizeCardKey(playerName) === cardName,
+  );
+
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+}
+
+function sortPlayerCards(cards: PlayerCard[]) {
+  return [...cards].sort((a, b) => {
+    const rarityA = RARITY_ORDER[(a.rarity ?? "common").toLowerCase()] ?? 99;
+    const rarityB = RARITY_ORDER[(b.rarity ?? "common").toLowerCase()] ?? 99;
+
+    if (rarityA !== rarityB) {
+      return rarityA - rarityB;
+    }
+
+    const coreRankA = getManualCoreRank(a);
+    const coreRankB = getManualCoreRank(b);
+
+    if (coreRankA !== coreRankB) {
+      return coreRankA - coreRankB;
+    }
+
+    const hasArtA = a.card_art_url?.trim() ? 0 : 1;
+    const hasArtB = b.card_art_url?.trim() ? 0 : 1;
+
+    if (hasArtA !== hasArtB) {
+      return hasArtA - hasArtB;
+    }
+
+    const priceA = a.price ?? 0;
+    const priceB = b.price ?? 0;
+
+    if (priceA !== priceB) {
+      return priceB - priceA;
+    }
+
+    const shirtA = a.shirt_number ?? Number.MAX_SAFE_INTEGER;
+    const shirtB = b.shirt_number ?? Number.MAX_SAFE_INTEGER;
+
+    if (shirtA !== shirtB) {
+      return shirtA - shirtB;
+    }
+
+    return (a.player_name ?? "").localeCompare(b.player_name ?? "", "zh-CN");
+  });
+}
+
 function isCollectionProgressCard(card: PlayerCard) {
   return (
     card.roster_source === "fifa_official_squad" &&
@@ -318,7 +434,10 @@ export default function CollectionPage() {
       throw historicalCardError;
     }
 
-    const cards = [...officialCards, ...(historicalCardData ?? [])];
+    const cards = [
+      ...sortPlayerCards(officialCards),
+      ...sortPlayerCards(historicalCardData ?? []),
+    ];
     const cardIdSet = new Set(cards.map((card) => card.id));
     const progressCardIdSet = new Set(
       cards.filter(isCollectionProgressCard).map((card) => card.id),
