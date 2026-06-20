@@ -1,6 +1,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
+export {};
+
 const root = process.cwd();
 const sourcePath = path.join(root, "data", "card-production-packages.json");
 const jsonOutputPath = path.join(root, "data", "card-image-prompts.json");
