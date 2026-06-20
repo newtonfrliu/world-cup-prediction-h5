@@ -138,16 +138,26 @@ export default function Home() {
     "";
 
   useEffect(() => {
-    console.log("HOME_EQUIPPED_CARD_RENDER", {
-      playerId: currentPlayer?.id ?? null,
-      playerEquippedCardId: currentPlayer?.equipped_card_id ?? null,
-      equippedCard,
-      imageSrc: equippedCardImageSrc,
-    });
+    console.log(
+      "HOME_EQUIPPED_CARD_RENDER",
+      JSON.stringify(
+        {
+          playerId: currentPlayer?.id ?? null,
+          playerEquippedCardId: currentPlayer?.equipped_card_id ?? null,
+          equippedCard,
+          imageSrc: equippedCardImageSrc,
+        },
+        null,
+        2,
+      ),
+    );
   }, [currentPlayer?.equipped_card_id, currentPlayer?.id, equippedCard, equippedCardImageSrc]);
 
   useEffect(() => {
-    console.log("HOME_EQUIPPED_CARD_STATE", equippedCard);
+    console.log(
+      "HOME_EQUIPPED_CARD_STATE",
+      JSON.stringify(equippedCard, null, 2),
+    );
   }, [equippedCard]);
 
   useEffect(() => {
@@ -225,17 +235,23 @@ export default function Home() {
       .eq("id", cardId)
       .maybeSingle();
 
-    console.log("HOME_EQUIPPED_CARD_QUERY_RESULT", {
-      equippedCard: cardData,
-      error: cardError,
-    });
+    console.log(
+      "HOME_EQUIPPED_CARD_QUERY_RESULT",
+      JSON.stringify(
+        {
+          equippedCard: cardData,
+          error: cardError,
+        },
+        null,
+        2,
+      ),
+    );
 
     if (cardError) {
       console.error("failed to load home equipped card", {
         cardId,
         error: cardError,
       });
-      setEquippedCard(null);
       return;
     }
 
@@ -278,7 +294,7 @@ export default function Home() {
         return;
       }
 
-      console.log("HOME_PLAYER", data);
+      console.log("HOME_PLAYER", JSON.stringify(data, null, 2));
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
       let inviteCode = data.invite_code ?? "";
