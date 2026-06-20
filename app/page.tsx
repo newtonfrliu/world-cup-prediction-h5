@@ -147,6 +147,10 @@ export default function Home() {
   }, [currentPlayer?.equipped_card_id, currentPlayer?.id, equippedCard, equippedCardImageSrc]);
 
   useEffect(() => {
+    console.log("HOME_EQUIPPED_CARD_STATE", equippedCard);
+  }, [equippedCard]);
+
+  useEffect(() => {
     async function hydrateRef() {
       const params = new URLSearchParams(window.location.search);
       const ref =
@@ -221,6 +225,11 @@ export default function Home() {
       .eq("id", cardId)
       .maybeSingle();
 
+    console.log("HOME_EQUIPPED_CARD_QUERY_RESULT", {
+      equippedCard: cardData,
+      error: cardError,
+    });
+
     if (cardError) {
       console.error("failed to load home equipped card", {
         cardId,
@@ -233,16 +242,6 @@ export default function Home() {
     const canShowCard =
       cardData?.roster_source === "fifa_official_squad" ||
       Boolean(cardData?.card_art_url?.trim());
-
-    console.log("HOME_EQUIPPED_CARD_QUERY_RESULT", {
-      id: cardData?.id ?? null,
-      player_name: cardData?.player_name ?? null,
-      player_name_en: cardData?.player_name_en ?? null,
-      card_art_url: cardData?.card_art_url ?? null,
-      card_thumb_url: cardData?.card_thumb_url ?? null,
-      roster_source: cardData?.roster_source ?? null,
-      canShowCard,
-    });
 
     setEquippedCard(canShowCard ? cardData : null);
   }
@@ -279,8 +278,11 @@ export default function Home() {
       }
 
       if (!data) {
+        console.log("HOME_PLAYER", null);
         return;
       }
+
+      console.log("HOME_PLAYER", data);
 
       const canonicalTeamName = getCanonicalTeamName(data.country);
       let inviteCode = data.invite_code ?? "";
