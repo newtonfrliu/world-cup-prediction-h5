@@ -239,11 +239,7 @@ export default function Home() {
       return;
     }
 
-    const canShowCard =
-      cardData?.roster_source === "fifa_official_squad" ||
-      Boolean(cardData?.card_art_url?.trim());
-
-    setEquippedCard(canShowCard ? cardData : null);
+    setEquippedCard(cardData);
   }
 
   async function loadPlayer(
