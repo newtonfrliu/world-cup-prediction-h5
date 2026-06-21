@@ -1,0 +1,20 @@
+[
+  {
+    "player_slug": "nakamura-keito",
+    "player_name": "中村敬斗",
+    "player_name_en": "NAKAMURA Keito",
+    "reason": "player_timeout"
+  },
+  {
+    "player_slug": "hayakawa-tomoki",
+    "player_name": "早川友基",
+    "player_name_en": "HAYAKAWA Tomoki",
+    "reason": "player_timeout"
+  },
+  {
+    "player_slug": "suzuki-junnosuke",
+    "player_name": "铃木淳之介",
+    "player_name_en": "SUZUKI Junnosuke",
+    "reason": "no candidate downloaded"
+  }
+]

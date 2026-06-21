@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-20T21:08:00.067Z",
+  "generated_at": "2026-06-21T09:58:06.241Z",
   "country": "Germany",
   "target_size": "1024x1536",
   "target_ratio": 0.6666666666666666,
-  "total_records": 21,
-  "processed_count": 0,
-  "missing_count": 21,
+  "total_records": 20,
+  "processed_count": 20,
+  "missing_count": 1,
   "records": [
     {
       "player_slug": "ruediger-antonio",
@@ -13,16 +13,14 @@
       "player_name_en": "RUEDIGER Antonio",
       "shirt_number": 2,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_194.png?v=1773344364",
+      "source_path": "source_images/panini/germany/raw/ruediger-antonio/01.png",
+      "processed_path": "processed/panini/germany/ruediger-antonio.png",
+      "public_path": "public/cards/panini/germany/ruediger-antonio.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "anton-waldemar",
@@ -30,16 +28,14 @@
       "player_name_en": "ANTON Waldemar",
       "shirt_number": 3,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/17_FWC_GER_007.webp?v=1777743722",
+      "source_path": "source_images/panini/germany/raw/anton-waldemar/01.webp",
+      "processed_path": "processed/panini/germany/anton-waldemar.png",
+      "public_path": "public/cards/panini/germany/anton-waldemar.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "tah-jonathan",
@@ -47,16 +43,14 @@
       "player_name_en": "TAH Jonathan",
       "shirt_number": 4,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE85.webp?v=1775836633",
+      "source_path": "source_images/panini/germany/raw/tah-jonathan/01.webp",
+      "processed_path": "processed/panini/germany/tah-jonathan.png",
+      "public_path": "public/cards/panini/germany/tah-jonathan.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "pavlovic-aleksandar",
@@ -64,16 +58,14 @@
       "player_name_en": "PAVLOVIC Aleksandar",
       "shirt_number": 5,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U020.webp?v=1775820525",
+      "source_path": "source_images/panini/germany/raw/pavlovic-aleksandar/01.webp",
+      "processed_path": "processed/panini/germany/pavlovic-aleksandar.png",
+      "public_path": "public/cards/panini/germany/pavlovic-aleksandar.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "goretzka-leon",
@@ -81,16 +73,14 @@
       "player_name_en": "GORETZKA Leon",
       "shirt_number": 8,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE84.webp?v=1775836509",
+      "source_path": "source_images/panini/germany/raw/goretzka-leon/01.webp",
+      "processed_path": "processed/panini/germany/goretzka-leon.png",
+      "public_path": "public/cards/panini/germany/goretzka-leon.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "leweling-jamie",
@@ -98,16 +88,14 @@
       "player_name_en": "LEWELING Jamie",
       "shirt_number": 9,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.21.20.webp?v=1775500224",
+      "source_path": "source_images/panini/germany/raw/leweling-jamie/01.webp",
+      "processed_path": "processed/panini/germany/leweling-jamie.png",
+      "public_path": "public/cards/panini/germany/leweling-jamie.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "woltemade-nick",
@@ -115,16 +103,14 @@
       "player_name_en": "WOLTEMADE Nick",
       "shirt_number": 11,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-03-23ALAS17.55.17.webp?v=1775504628",
+      "source_path": "source_images/panini/germany/raw/woltemade-nick/01.webp",
+      "processed_path": "processed/panini/germany/woltemade-nick.png",
+      "public_path": "public/cards/panini/germany/woltemade-nick.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "baumann-oliver",
@@ -132,16 +118,14 @@
       "player_name_en": "BAUMANN Oliver",
       "shirt_number": 12,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_569.png?v=1773345313",
+      "source_path": "source_images/panini/germany/raw/baumann-oliver/02.png",
+      "processed_path": "processed/panini/germany/baumann-oliver.png",
+      "public_path": "public/cards/panini/germany/baumann-oliver.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "gross-pascal",
@@ -149,15 +133,15 @@
       "player_name_en": "GROSS Pascal",
       "shirt_number": 13,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-121_lhmkeb.webp?v=1755279006",
+      "source_path": "source_images/panini/germany/raw/gross-pascal/01.webp",
+      "processed_path": "processed/panini/germany/gross-pascal.png",
+      "public_path": "public/cards/panini/germany/gross-pascal.png",
+      "score": 170,
+      "width": 411,
+      "height": 600,
       "review_flags": [
-        "missing source image"
+        "image width < 600"
       ]
     },
     {
@@ -166,16 +150,14 @@
       "player_name_en": "BEIER Maximilian",
       "shirt_number": 14,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE36.jpg?v=1773345759",
+      "source_path": "source_images/panini/germany/raw/beier-maximilian/01.jpg",
+      "processed_path": "processed/panini/germany/beier-maximilian.png",
+      "public_path": "public/cards/panini/germany/beier-maximilian.png",
+      "score": 170,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "schlotterbeck-nico",
@@ -183,33 +165,14 @@
       "player_name_en": "SCHLOTTERBECK Nico",
       "shirt_number": 15,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "stiller-angelo",
-      "player_name": "安杰洛·施蒂勒",
-      "player_name_en": "STILLER Angelo",
-      "shirt_number": 16,
-      "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U018.webp?v=1775820339",
+      "source_path": "source_images/panini/germany/raw/schlotterbeck-nico/01.webp",
+      "processed_path": "processed/panini/germany/schlotterbeck-nico.png",
+      "public_path": "public/cards/panini/germany/schlotterbeck-nico.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "brown-nathaniel",
@@ -217,15 +180,15 @@
       "player_name_en": "BROWN Nathaniel",
       "shirt_number": 18,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
+      "source_url": "https://i.ebayimg.com/images/g/Sk8AAOSwVldhsPxC/s-l500.jpg",
+      "source_path": "source_images/panini/germany/raw/brown-nathaniel/01.jpg",
+      "processed_path": "processed/panini/germany/brown-nathaniel.png",
+      "public_path": "public/cards/panini/germany/brown-nathaniel.png",
+      "score": 150,
+      "width": 375,
+      "height": 500,
       "review_flags": [
-        "missing source image"
+        "image width < 600"
       ]
     },
     {
@@ -234,16 +197,14 @@
       "player_name_en": "SANE Leroy",
       "shirt_number": 19,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_PLE5.jpg?v=1773345882",
+      "source_path": "source_images/panini/germany/raw/sane-leroy/01.jpg",
+      "processed_path": "processed/panini/germany/sane-leroy.png",
+      "public_path": "public/cards/panini/germany/sane-leroy.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "amiri-nadiem",
@@ -251,16 +212,14 @@
       "player_name_en": "AMIRI Nadiem",
       "shirt_number": 20,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://c8.alamy.com/comp/3EE9YWH/09052026-einzelhandel-ein-laden-in-bad-wrishofen-bayern-bietet-sammelhefte-und-sammelbilder-von-duplo-und-nutella-ferrero-zur-fussball-wm-2026-in-den-usa-an-ferrero-sammelheft-joshua-kimmich-deutschland-serge-gnabry-florian-wirtz-deutschland-serge-gnabry-deutschland-david-raum-kai-havertz-nick-woltemade-deutschland-leon-goretzka-deutschland-nadiem-amiri-angelo-stiller-jonathan-burkardt-09052026-einzelhandel-09052026-einzelhandel-09-05-2026-retail-a-store-in-bad-wrishofen-bavaria-offers-collectible-booklets-and-collectible-pictures-from-duplo-and-nutella-ferrero-3EE9YWH.jpg",
+      "source_path": "source_images/panini/germany/raw/amiri-nadiem/01.jpg",
+      "processed_path": "processed/panini/germany/amiri-nadiem.png",
+      "public_path": "public/cards/panini/germany/amiri-nadiem.png",
+      "score": 130,
+      "width": 1014,
+      "height": 1390,
+      "review_flags": []
     },
     {
       "player_slug": "nuebel-alexander",
@@ -268,16 +227,14 @@
       "player_name_en": "NUEBEL Alexander",
       "shirt_number": 21,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_49.jpg?v=1773344004",
+      "source_path": "source_images/panini/germany/raw/nuebel-alexander/01.jpg",
+      "processed_path": "processed/panini/germany/nuebel-alexander.png",
+      "public_path": "public/cards/panini/germany/nuebel-alexander.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "raum-david",
@@ -285,16 +242,14 @@
       "player_name_en": "RAUM David",
       "shirt_number": 22,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U019.webp?v=1775820421",
+      "source_path": "source_images/panini/germany/raw/raum-david/01.webp",
+      "processed_path": "processed/panini/germany/raum-david.png",
+      "public_path": "public/cards/panini/germany/raum-david.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "nmecha-felix",
@@ -302,16 +257,14 @@
       "player_name_en": "NMECHA Felix",
       "shirt_number": 23,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_196.png?v=1773344372",
+      "source_path": "source_images/panini/germany/raw/nmecha-felix/01.png",
+      "processed_path": "processed/panini/germany/nmecha-felix.png",
+      "public_path": "public/cards/panini/germany/nmecha-felix.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "thiaw-malick",
@@ -319,16 +272,14 @@
       "player_name_en": "THIAW Malick",
       "shirt_number": 24,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/O9UAAOSwjNNm9Bve/s-l1200.jpg",
+      "source_path": "source_images/panini/germany/raw/thiaw-malick/01.jpg",
+      "processed_path": "processed/panini/germany/thiaw-malick.png",
+      "public_path": "public/cards/panini/germany/thiaw-malick.png",
+      "score": 190,
+      "width": 772,
+      "height": 1116,
+      "review_flags": []
     },
     {
       "player_slug": "ouedraogo-assan",
@@ -336,16 +287,14 @@
       "player_name_en": "OUEDRAOGO Assan",
       "shirt_number": 25,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE38.webp?v=1775837156",
+      "source_path": "source_images/panini/germany/raw/ouedraogo-assan/01.webp",
+      "processed_path": "processed/panini/germany/ouedraogo-assan.png",
+      "public_path": "public/cards/panini/germany/ouedraogo-assan.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "undav-deniz",
@@ -353,16 +302,14 @@
       "player_name_en": "UNDAV Deniz",
       "shirt_number": 26,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://cdn11.bigcommerce.com/s-ced6hlkx82/images/stencil/1280x1280/products/24455/24514/2025-12-31_090842_5__59102.1767978346.jpg?c=1",
+      "source_path": "source_images/panini/germany/raw/undav-deniz/01.jpg",
+      "processed_path": "processed/panini/germany/undav-deniz.png",
+      "public_path": "public/cards/panini/germany/undav-deniz.png",
+      "score": 170,
+      "width": 736,
+      "height": 1040,
+      "review_flags": []
     }
   ]
 }

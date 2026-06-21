@@ -27,15 +27,6 @@
     "note": "missing source image"
   },
   {
-    "player_slug": "upamecano-dayot",
-    "player_name": "达约·于帕梅卡诺",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
     "player_slug": "kounde-jules",
     "player_name": "朱尔·孔德",
     "output_path": null,
@@ -117,15 +108,6 @@
     "note": "missing source image"
   },
   {
-    "player_slug": "zaire-emery-warren",
-    "player_name": "沃伦·扎伊尔-埃梅里",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
     "player_slug": "doue-desire",
     "player_name": "德西雷·杜埃",
     "output_path": null,
@@ -155,15 +137,6 @@
   {
     "player_slug": "risser-robin",
     "player_name": "罗宾·里瑟",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "cherki-rayan",
-    "player_name": "拉扬·谢尔基",
     "output_path": null,
     "source_url": null,
     "review_flag": true,

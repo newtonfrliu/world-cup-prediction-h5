@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-20T21:08:39.985Z",
+  "generated_at": "2026-06-21T10:13:17.802Z",
   "country": "France",
   "target_size": "1024x1536",
   "target_ratio": 0.6666666666666666,
-  "total_records": 21,
-  "processed_count": 0,
-  "missing_count": 21,
+  "total_records": 18,
+  "processed_count": 16,
+  "missing_count": 4,
   "records": [
     {
       "player_slug": "samba-brice",
@@ -13,16 +13,14 @@
       "player_name_en": "SAMBA Brice",
       "shirt_number": 1,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/vZkAAOSwejplFtP9/$_57.JPG?set_id=880000500F",
+      "source_path": "source_images/panini/france/raw/samba-brice/01.jpg",
+      "processed_path": "processed/panini/france/samba-brice.png",
+      "public_path": "public/cards/panini/france/samba-brice.png",
+      "score": 170,
+      "width": 1200,
+      "height": 1600,
+      "review_flags": []
     },
     {
       "player_slug": "gusto-malo",
@@ -30,15 +28,15 @@
       "player_name_en": "GUSTO Malo",
       "shirt_number": 2,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-85_yfrvuj.webp?v=1755278706",
+      "source_path": "source_images/panini/france/raw/gusto-malo/01.webp",
+      "processed_path": "processed/panini/france/gusto-malo.png",
+      "public_path": "public/cards/panini/france/gusto-malo.png",
+      "score": 170,
+      "width": 415,
+      "height": 600,
       "review_flags": [
-        "missing source image"
+        "image width < 600"
       ]
     },
     {
@@ -59,38 +57,19 @@
       ]
     },
     {
-      "player_slug": "upamecano-dayot",
-      "player_name": "达约·于帕梅卡诺",
-      "player_name_en": "UPAMECANO Dayot",
-      "shirt_number": 4,
-      "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
       "player_slug": "kounde-jules",
       "player_name": "朱尔·孔德",
       "player_name_en": "KOUNDE Jules",
       "shirt_number": 5,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_183.jpg?v=1773344336",
+      "source_path": "source_images/panini/france/raw/kounde-jules/01.jpg",
+      "processed_path": "processed/panini/france/kounde-jules.png",
+      "public_path": "public/cards/panini/france/kounde-jules.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "kone-manu",
@@ -98,16 +77,14 @@
       "player_name_en": "KONE Manu",
       "shirt_number": 6,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://img.tradera.net/images/474/620583474_23a4e46c-391b-4b49-bbd6-a2d48da89563.jpg",
+      "source_path": "source_images/panini/france/raw/kone-manu/01.jpg",
+      "processed_path": "processed/panini/france/kone-manu.png",
+      "public_path": "public/cards/panini/france/kone-manu.png",
+      "score": 190,
+      "width": 1536,
+      "height": 2048,
+      "review_flags": []
     },
     {
       "player_slug": "thuram-marcus",
@@ -115,16 +92,14 @@
       "player_name_en": "THURAM Marcus",
       "shirt_number": 9,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_188.png?v=1773344353",
+      "source_path": "source_images/panini/france/raw/thuram-marcus/01.png",
+      "processed_path": "processed/panini/france/thuram-marcus.png",
+      "public_path": "public/cards/panini/france/thuram-marcus.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "olise-michael",
@@ -132,16 +107,14 @@
       "player_name_en": "OLISE Michael",
       "shirt_number": 11,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE36.jpg?v=1773345759",
+      "source_path": "source_images/panini/france/raw/olise-michael/01.jpg",
+      "processed_path": "processed/panini/france/olise-michael.png",
+      "public_path": "public/cards/panini/france/olise-michael.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "barcola-bradley",
@@ -149,16 +122,14 @@
       "player_name_en": "BARCOLA Bradley",
       "shirt_number": 12,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_187.png?v=1773344347",
+      "source_path": "source_images/panini/france/raw/barcola-bradley/01.png",
+      "processed_path": "processed/panini/france/barcola-bradley.png",
+      "public_path": "public/cards/panini/france/barcola-bradley.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "kante-ngolo",
@@ -166,16 +137,14 @@
       "player_name_en": "KANTE Ngolo",
       "shirt_number": 13,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/SvkAAOSw~JRavibo/s-l1200.jpg",
+      "source_path": "source_images/panini/france/raw/kante-ngolo/01.jpg",
+      "processed_path": "processed/panini/france/kante-ngolo.png",
+      "public_path": "public/cards/panini/france/kante-ngolo.png",
+      "score": 190,
+      "width": 900,
+      "height": 1200,
+      "review_flags": []
     },
     {
       "player_slug": "rabiot-adrien",
@@ -183,16 +152,17 @@
       "player_name_en": "RABIOT Adrien",
       "shirt_number": 14,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
+      "source_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=27042367175449852",
+      "source_path": "source_images/panini/france/raw/rabiot-adrien/03.jpg",
       "processed_path": null,
       "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
+      "score": 170,
+      "width": 1536,
+      "height": 2048,
       "review_flags": [
-        "missing source image"
-      ]
+        "processing failed"
+      ],
+      "error": "Input file contains unsupported image format"
     },
     {
       "player_slug": "konate-ibrahima",
@@ -200,16 +170,14 @@
       "player_name_en": "KONATE Ibrahima",
       "shirt_number": 15,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/4rcAAOSwI6xm~cYB/s-l1200.jpg",
+      "source_path": "source_images/panini/france/raw/konate-ibrahima/01.jpg",
+      "processed_path": "processed/panini/france/konate-ibrahima.png",
+      "public_path": "public/cards/panini/france/konate-ibrahima.png",
+      "score": 190,
+      "width": 900,
+      "height": 1200,
+      "review_flags": []
     },
     {
       "player_slug": "maignan-mike",
@@ -217,33 +185,14 @@
       "player_name_en": "MAIGNAN Mike",
       "shirt_number": 16,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "zaire-emery-warren",
-      "player_name": "沃伦·扎伊尔-埃梅里",
-      "player_name_en": "ZAIRE-EMERY Warren",
-      "shirt_number": 18,
-      "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_181.png?v=1773344333",
+      "source_path": "source_images/panini/france/raw/maignan-mike/01.png",
+      "processed_path": "processed/panini/france/maignan-mike.png",
+      "public_path": "public/cards/panini/france/maignan-mike.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "doue-desire",
@@ -251,16 +200,14 @@
       "player_name_en": "DOUE Desire",
       "shirt_number": 20,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE32.png?v=1773345750",
+      "source_path": "source_images/panini/france/raw/doue-desire/01.png",
+      "processed_path": "processed/panini/france/doue-desire.png",
+      "public_path": "public/cards/panini/france/doue-desire.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "hernandez-lucas",
@@ -268,15 +215,15 @@
       "player_name_en": "HERNANDEZ Lucas",
       "shirt_number": 21,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
+      "source_url": "https://www.laststicker.com/i/album/12029.jpg",
+      "source_path": "source_images/panini/france/raw/hernandez-lucas/02.jpg",
+      "processed_path": "processed/panini/france/hernandez-lucas.png",
+      "public_path": "public/cards/panini/france/hernandez-lucas.png",
+      "score": 130,
+      "width": 460,
+      "height": 600,
       "review_flags": [
-        "missing source image"
+        "image width < 600"
       ]
     },
     {
@@ -285,16 +232,14 @@
       "player_name_en": "MATETA Jean-Philippe",
       "shirt_number": 22,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://www.footballcardsdirect.com/wp-content/uploads/2023/08/PLADR2324-151.jpg",
+      "source_path": "source_images/panini/france/raw/mateta-jean-philippe/02.jpg",
+      "processed_path": "processed/panini/france/mateta-jean-philippe.png",
+      "public_path": "public/cards/panini/france/mateta-jean-philippe.png",
+      "score": 170,
+      "width": 751,
+      "height": 1064,
+      "review_flags": []
     },
     {
       "player_slug": "risser-robin",
@@ -302,33 +247,14 @@
       "player_name_en": "RISSER Robin",
       "shirt_number": 23,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "cherki-rayan",
-      "player_name": "拉扬·谢尔基",
-      "player_name_en": "CHERKI Rayan",
-      "shirt_number": 24,
-      "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.37.53.webp?v=1775501817",
+      "source_path": "source_images/panini/france/raw/risser-robin/01.webp",
+      "processed_path": "processed/panini/france/risser-robin.png",
+      "public_path": "public/cards/panini/france/risser-robin.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "akliouche-maghnes",
@@ -336,16 +262,14 @@
       "player_name_en": "AKLIOUCHE Maghnes",
       "shirt_number": 25,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/1gcAAOSwS0pm6p4o/s-l1200.jpg",
+      "source_path": "source_images/panini/france/raw/akliouche-maghnes/01.jpg",
+      "processed_path": "processed/panini/france/akliouche-maghnes.png",
+      "public_path": "public/cards/panini/france/akliouche-maghnes.png",
+      "score": 170,
+      "width": 900,
+      "height": 1200,
+      "review_flags": []
     },
     {
       "player_slug": "lacroix-maxence",
@@ -353,16 +277,14 @@
       "player_name_en": "LACROIX Maxence",
       "shirt_number": 26,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://jaqjnr.com.au/cdn/shop/files/E87E5BB5-CCAF-4134-A2F8-6BDC410EE09F_1946x.jpg?v=1741425908",
+      "source_path": "source_images/panini/france/raw/lacroix-maxence/01.jpg",
+      "processed_path": "processed/panini/france/lacroix-maxence.png",
+      "public_path": "public/cards/panini/france/lacroix-maxence.png",
+      "score": 170,
+      "width": 1946,
+      "height": 2721,
+      "review_flags": []
     }
   ]
 }

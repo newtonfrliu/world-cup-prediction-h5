@@ -11,9 +11,79 @@
       "\"Panini 2026 World Cup card\" \"SAMBA Brice\"",
       "\"Panini France 2026\" \"SAMBA Brice\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "samba-brice",
+        "player_name": "布里斯·桑巴",
+        "player_name_en": "SAMBA Brice",
+        "shirt_number": 1,
+        "position": "GK",
+        "title": "CARD PANINI ADRENALYN XL FOOT 2023/24 BRICE SAMBA LENS # 65 NEW | eBay",
+        "alt": "CARD PANINI ADRENALYN XL FOOT 2023/24 BRICE SAMBA LENS # 65 NEW | eBay",
+        "image_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/vZkAAOSwejplFtP9/$_57.JPG?set_id=880000500F",
+        "source_page": "https://www.ebay.fr/itm/405152556833",
+        "provider": "serpapi",
+        "width": 1200,
+        "height": 1600,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/samba-brice/01.jpg"
+      },
+      {
+        "player_slug": "samba-brice",
+        "player_name": "布里斯·桑巴",
+        "player_name_en": "SAMBA Brice",
+        "shirt_number": 1,
+        "position": "GK",
+        "title": "Panini 2024 Deutschland & Die Besten EM Sticker No. 186 Brice Samba | eBay",
+        "alt": "Panini 2024 Deutschland & Die Besten EM Sticker No. 186 Brice Samba | eBay",
+        "image_url": "https://i.ebayimg.com/00/s/ODA4WDYxNg==/z/e-sAAOSwPB9mUNZi/$_57.JPG?set_id=880000500F",
+        "source_page": "https://www.ebay.com/itm/335408328641",
+        "provider": "serpapi",
+        "width": 616,
+        "height": 808,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/samba-brice/02.jpg"
+      },
+      {
+        "player_slug": "samba-brice",
+        "player_name": "布里斯·桑巴",
+        "player_name_en": "SAMBA Brice",
+        "shirt_number": 1,
+        "position": "GK",
+        "title": "Football Trading Card-Bruno Guimaraes-Brazil-Panini Adrenalyn XL Fifa World  Cup 2026-78-BASE",
+        "alt": "Football Trading Card-Bruno Guimaraes-Brazil-Panini Adrenalyn XL Fifa World  Cup 2026-78-BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_78.png?v=1773344079",
+        "source_page": "https://www.worldtradingcards.com/en/products/bruno-guimaraes-78-brasil-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopjKMU_WAWbMn3MZfDi-P-uRS0b0SE6ZBxbikqzn7JX2fl7DYi2",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/samba-brice/03.png"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/vZkAAOSwejplFtP9/$_57.JPG?set_id=880000500F",
+    "selected_local_path": "source_images/panini/france/raw/samba-brice/01.jpg"
   },
   {
     "player_slug": "gusto-malo",
@@ -27,9 +97,79 @@
       "\"Panini 2026 World Cup card\" \"GUSTO Malo\"",
       "\"Panini France 2026\" \"GUSTO Malo\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "gusto-malo",
+        "player_name": "马洛·古斯托",
+        "player_name_en": "GUSTO Malo",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Football Trading Card-Malo Gusto-Chelsea-Panini Club World Cup Adrenalyn XL  2025-#085-CORE / Team Mate",
+        "alt": "Football Trading Card-Malo Gusto-Chelsea-Panini Club World Cup Adrenalyn XL  2025-#085-CORE / Team Mate",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-85_yfrvuj.webp?v=1755278706",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/malo-gusto-085-chelsea-panini-club-world-cup-adrenalyn-xl-2025-core-team-mate?srsltid=AfmBOorTLt5KieNfUA4zDKEAqaNJhfCHRUwMQBzrawK6BKnRon8JHvO8",
+        "provider": "serpapi",
+        "width": 415,
+        "height": 600,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/gusto-malo/01.webp"
+      },
+      {
+        "player_slug": "gusto-malo",
+        "player_name": "马洛·古斯托",
+        "player_name_en": "GUSTO Malo",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Panini Premier League Adrenalyn XL 2024/2025 Malo Gusto Hypersonic Chelsea  Card | eBay",
+        "alt": "Panini Premier League Adrenalyn XL 2024/2025 Malo Gusto Hypersonic Chelsea  Card | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/5lQAAOSwtGtmu4W5/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/itm/387292715728",
+        "provider": "serpapi",
+        "width": 673,
+        "height": 960,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/gusto-malo/02.jpg"
+      },
+      {
+        "player_slug": "gusto-malo",
+        "player_name": "马洛·古斯托",
+        "player_name_en": "GUSTO Malo",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "381 Malo Gusto (France) Panini World Class 2024 Sticker Collection -  Footballstickershop.com",
+        "alt": "381 Malo Gusto (France) Panini World Class 2024 Sticker Collection -  Footballstickershop.com",
+        "image_url": "https://cdn11.bigcommerce.com/s-qhnhkvfqhu/images/stencil/1280x1280/products/4991/4198/IMG_20240309_0383__99370.1710939427.jpg?c=1",
+        "source_page": "https://footballstickershop.com/381-malo-gusto-france-panini-world-class-2024-sticker-collection/",
+        "provider": "serpapi",
+        "width": 612,
+        "height": 868,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "france_team_set": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/gusto-malo/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-85_yfrvuj.webp?v=1755278706",
+    "selected_local_path": "source_images/panini/france/raw/gusto-malo/01.webp"
   },
   {
     "player_slug": "digne-lucas",
@@ -43,23 +183,79 @@
       "\"Panini 2026 World Cup card\" \"DIGNE Lucas\"",
       "\"Panini France 2026\" \"DIGNE Lucas\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "upamecano-dayot",
-    "player_name": "达约·于帕梅卡诺",
-    "player_name_en": "UPAMECANO Dayot",
-    "shirt_number": 4,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"UPAMECANO Dayot\" \"France\"",
-      "\"Panini Adrenalyn XL 2026\" \"UPAMECANO Dayot\" \"France\"",
-      "\"Panini 2026 World Cup card\" \"UPAMECANO Dayot\"",
-      "\"Panini France 2026\" \"UPAMECANO Dayot\""
+    "candidates": [
+      {
+        "player_slug": "digne-lucas",
+        "player_name": "卢卡斯·迪涅",
+        "player_name_en": "DIGNE Lucas",
+        "shirt_number": 3,
+        "position": "DF",
+        "title": "Lucas Digne - France - Russia 2018 : FIFA World Cup Adrenalyn XL card 142 -  Price & Rarity",
+        "alt": "Lucas Digne - France - Russia 2018 : FIFA World Cup Adrenalyn XL card 142 -  Price & Rarity",
+        "image_url": "https://www.coleka.com/media/item/201806/11/russia-2018-fifa-world-cup-lucas-digne-france-142.jpg",
+        "source_page": "https://www.coleka.com/en/trading-cards/sports-cards/football-soccer-cards/adrenalyn-xl-panini/russia-2018-fifa-world-cup-adrenalyn-xl/lucas-digne-france_i245562",
+        "provider": "serpapi",
+        "width": 746,
+        "height": 1054,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "download_error": "download failed: 403"
+      },
+      {
+        "player_slug": "digne-lucas",
+        "player_name": "卢卡斯·迪涅",
+        "player_name_en": "DIGNE Lucas",
+        "shirt_number": 3,
+        "position": "DF",
+        "title": "Lucas Digne - France - Russia 2018 : FIFA World Cup Adrenalyn XL card 142 -  Price & Rarity",
+        "alt": "Lucas Digne - France - Russia 2018 : FIFA World Cup Adrenalyn XL card 142 -  Price & Rarity",
+        "image_url": "https://thumbs.coleka.com/media/item/201806/11/russia-2018-fifa-world-cup-lucas-digne-france-142.webp",
+        "source_page": "https://www.coleka.com/en/trading-cards/sports-cards/football-soccer-cards/adrenalyn-xl-panini/russia-2018-fifa-world-cup-adrenalyn-xl/lucas-digne-france_i245562",
+        "provider": "serpapi",
+        "width": 746,
+        "height": 1054,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "download_error": "download failed: 403"
+      },
+      {
+        "player_slug": "digne-lucas",
+        "player_name": "卢卡斯·迪涅",
+        "player_name_en": "DIGNE Lucas",
+        "shirt_number": 3,
+        "position": "DF",
+        "title": "Lucas Digne - Adrenalyn XL Premier League 2024/25 card 52 - Price & Rarity",
+        "alt": "Lucas Digne - Adrenalyn XL Premier League 2024/25 card 52 - Price & Rarity",
+        "image_url": "https://www.coleka.com/media/item/202408/23/adrenalyn-xl-premier-league-2024-25-lucas-digne.webp",
+        "source_page": "https://www.coleka.com/en/trading-cards/sports-cards/football-soccer-cards/adrenalyn-xl-panini/adrenalyn-xl-premier-league-2024-25/lucas-digne_i1718966",
+        "provider": "serpapi",
+        "width": 739,
+        "height": 1041,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "download_error": "download failed: 403"
+      }
     ],
-    "candidates": [],
     "selected_source_url": null,
     "selected_local_path": null
   },
@@ -75,9 +271,82 @@
       "\"Panini 2026 World Cup card\" \"KOUNDE Jules\"",
       "\"Panini France 2026\" \"KOUNDE Jules\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "kounde-jules",
+        "player_name": "朱尔·孔德",
+        "player_name_en": "KOUNDE Jules",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "Football Trading Card - Jules Kounde - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 183 - BASE",
+        "alt": "Football Trading Card - Jules Kounde - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 183 - BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_183.jpg?v=1773344336",
+        "source_page": "https://www.worldtradingcards.com/en/products/jules-kounde-183-francia-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOooRt_VBza2OM2-Vz76eC8Xw2w3BJf9LBz25TSXRff2dZh-evK0k",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kounde-jules/01.jpg"
+      },
+      {
+        "player_slug": "kounde-jules",
+        "player_name": "朱尔·孔德",
+        "player_name_en": "KOUNDE Jules",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "Panini FIFA World Cup Adrenalyn 2026 No. Jules Kounde Limited Edition | eBay",
+        "alt": "Panini FIFA World Cup Adrenalyn 2026 No. Jules Kounde Limited Edition | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/vcYAAeSw-olpqf7J/s-l1200.png",
+        "source_page": "https://www.ebay.com/itm/236671006160",
+        "provider": "serpapi",
+        "width": 793,
+        "height": 1101,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kounde-jules/02.png"
+      },
+      {
+        "player_slug": "kounde-jules",
+        "player_name": "朱尔·孔德",
+        "player_name_en": "KOUNDE Jules",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "FIFA 365 2026 KICK-OFF ROAD TO FIFA WORLD CUP 26 POWER FWC21 JULES KUNDE •  Cena • Opinie - Allegro",
+        "alt": "FIFA 365 2026 KICK-OFF ROAD TO FIFA WORLD CUP 26 POWER FWC21 JULES KUNDE •  Cena • Opinie - Allegro",
+        "image_url": "https://a.allegroimg.com/original/11fbed/29340ba64a1795a85683325834d8/FIFA-365-2026-ADRENALYN-XL-PANINI-Kick-Off-FWC21-France-Kounde",
+        "source_page": "https://allegro.pl/produkt/fifa-365-2026-kick-off-road-to-fifa-world-cup-26-power-fwc21-jules-kunde-6f9fb043-552e-4b7d-ae2b-469417693b87",
+        "provider": "serpapi",
+        "width": 1800,
+        "height": 2400,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kounde-jules/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_183.jpg?v=1773344336",
+    "selected_local_path": "source_images/panini/france/raw/kounde-jules/01.jpg"
   },
   {
     "player_slug": "kone-manu",
@@ -91,9 +360,82 @@
       "\"Panini 2026 World Cup card\" \"KONE Manu\"",
       "\"Panini France 2026\" \"KONE Manu\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "kone-manu",
+        "player_name": "马努·科内",
+        "player_name_en": "KONE Manu",
+        "shirt_number": 6,
+        "position": "MF",
+        "title": "Kone FWC22 FIFA 2026 365 Panini Adrenalyn XL Ro.. | Köp på Tradera  (700198792)",
+        "alt": "Kone FWC22 FIFA 2026 365 Panini Adrenalyn XL Ro.. | Köp på Tradera  (700198792)",
+        "image_url": "http://img.tradera.net/images/474/620583474_23a4e46c-391b-4b49-bbd6-a2d48da89563.jpg",
+        "source_page": "https://www.tradera.com/item/293311/700198792/kone-fwc22-fifa-2026-365-panini-adrenalyn-xl-road-to-world-cup",
+        "provider": "serpapi",
+        "width": 1536,
+        "height": 2048,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kone-manu/01.jpg"
+      },
+      {
+        "player_slug": "kone-manu",
+        "player_name": "马努·科内",
+        "player_name_en": "KONE Manu",
+        "shirt_number": 6,
+        "position": "MF",
+        "title": "Soccer Trading Card-Ismael Kone-Canada-Panini Adrenalyn XL Fifa World Cup  2026-89-BASE",
+        "alt": "Soccer Trading Card-Ismael Kone-Canada-Panini Adrenalyn XL Fifa World Cup  2026-89-BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_89.png?v=1773344102",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/ismael-kone-89-canada-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqQeuo1gyVVnC7cE6EGalUGSK30ClJmX4wMH_syCdhoL2v8Y7ax",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kone-manu/02.png"
+      },
+      {
+        "player_slug": "kone-manu",
+        "player_name": "马努·科内",
+        "player_name_en": "KONE Manu",
+        "shirt_number": 6,
+        "position": "MF",
+        "title": "Kone FWC22 FIFA 2026 365 Panini Adrenalyn XL Ro.. | Köp på Tradera  (700198792)",
+        "alt": "Kone FWC22 FIFA 2026 365 Panini Adrenalyn XL Ro.. | Köp på Tradera  (700198792)",
+        "image_url": "https://img.tradera.net/large-fit/474/620583474_23a4e46c-391b-4b49-bbd6-a2d48da89563.jpg",
+        "source_page": "https://www.tradera.com/item/293311/700198792/kone-fwc22-fifa-2026-365-panini-adrenalyn-xl-road-to-world-cup",
+        "provider": "serpapi",
+        "width": 675,
+        "height": 900,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kone-manu/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://img.tradera.net/images/474/620583474_23a4e46c-391b-4b49-bbd6-a2d48da89563.jpg",
+    "selected_local_path": "source_images/panini/france/raw/kone-manu/01.jpg"
   },
   {
     "player_slug": "thuram-marcus",
@@ -107,9 +449,82 @@
       "\"Panini 2026 World Cup card\" \"THURAM Marcus\"",
       "\"Panini France 2026\" \"THURAM Marcus\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "thuram-marcus",
+        "player_name": "马库斯·图拉姆",
+        "player_name_en": "THURAM Marcus",
+        "shirt_number": 9,
+        "position": "FW",
+        "title": "Soccer Trading Card - Marcus Thuram - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 188 - BASIC",
+        "alt": "Soccer Trading Card - Marcus Thuram - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 188 - BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_188.png?v=1773344353",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/marcus-thuram-188-francia-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOooGq-Iuu3LTItOqo05MZZguQ9AA8wOo-39hq1YX2If1A4FDwhvo",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/thuram-marcus/01.png"
+      },
+      {
+        "player_slug": "thuram-marcus",
+        "player_name": "马库斯·图拉姆",
+        "player_name_en": "THURAM Marcus",
+        "shirt_number": 9,
+        "position": "FW",
+        "title": "Football Trading Card-Marcus Thuram-France-Panini Adrenalyn XL Fifa World  Cup 2026-LE35-Limited Edition",
+        "alt": "Football Trading Card-Marcus Thuram-France-Panini Adrenalyn XL Fifa World  Cup 2026-LE35-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE35.jpg?v=1773345757",
+        "source_page": "https://www.worldtradingcards.com/en/products/marcus-thuram-le35-francia-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOoprf3BU34meeHgTCQf5PhL9ltvkzWO1w9tH5qoqNN8mGLtOURh9",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/thuram-marcus/02.jpg"
+      },
+      {
+        "player_slug": "thuram-marcus",
+        "player_name": "马库斯·图拉姆",
+        "player_name_en": "THURAM Marcus",
+        "shirt_number": 9,
+        "position": "FW",
+        "title": "Limited Edition Marcus Thuram Panini Adrenalyn XL 2026 World Cup France #  LE-MT",
+        "alt": "Limited Edition Marcus Thuram Panini Adrenalyn XL 2026 World Cup France #  LE-MT",
+        "image_url": "https://i.ebayimg.com/images/g/wGAAAeSwQvpprB6e/s-l1200.jpg",
+        "source_page": "https://www.ebay.co.uk/itm/117074773225",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/thuram-marcus/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_188.png?v=1773344353",
+    "selected_local_path": "source_images/panini/france/raw/thuram-marcus/01.png"
   },
   {
     "player_slug": "olise-michael",
@@ -123,9 +538,82 @@
       "\"Panini 2026 World Cup card\" \"OLISE Michael\"",
       "\"Panini France 2026\" \"OLISE Michael\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "olise-michael",
+        "player_name": "迈克尔·奥利塞",
+        "player_name_en": "OLISE Michael",
+        "shirt_number": 11,
+        "position": "FW",
+        "title": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-LE36-Limited Edition",
+        "alt": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-LE36-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE36.jpg?v=1773345759",
+        "source_page": "https://www.worldtradingcards.com/en/products/michael-olise-le36-francia-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOopyh9sY_rSHHqiwOZ7rMOWM2Psp6vEHXyNW_xatH7evmajQtaPA",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/olise-michael/01.jpg"
+      },
+      {
+        "player_slug": "olise-michael",
+        "player_name": "迈克尔·奥利塞",
+        "player_name_en": "OLISE Michael",
+        "shirt_number": 11,
+        "position": "FW",
+        "title": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-U17-Update",
+        "alt": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-U17-Update",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U017.webp?v=1775820232",
+        "source_page": "https://www.worldtradingcards.com/en/products/michael-olise-u17-francia-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOooV_ByReosrSi0bsUh3D2Paqlpw4HY7OP8sXkFSL7ahTeshoz41",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/olise-michael/02.webp"
+      },
+      {
+        "player_slug": "olise-michael",
+        "player_name": "迈克尔·奥利塞",
+        "player_name_en": "OLISE Michael",
+        "shirt_number": 11,
+        "position": "FW",
+        "title": "Michael Olise collectible card Panini… - € 16,99 - Vendora.cy",
+        "alt": "Michael Olise collectible card Panini… - € 16,99 - Vendora.cy",
+        "image_url": "https://bcdn.vendora.gr/0/c9/1a/c91a610733d7838168679b43f43e8c0358a74707.jpg?class=xl",
+        "source_page": "https://vendora.cy/items/3j4m0j/sillektiki-karta-michael-olise-panini-adrenalyn-xl-club-world-cup-2025-san-kenourgio.html",
+        "provider": "serpapi",
+        "width": 675,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/olise-michael/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE36.jpg?v=1773345759",
+    "selected_local_path": "source_images/panini/france/raw/olise-michael/01.jpg"
   },
   {
     "player_slug": "barcola-bradley",
@@ -139,9 +627,82 @@
       "\"Panini 2026 World Cup card\" \"BARCOLA Bradley\"",
       "\"Panini France 2026\" \"BARCOLA Bradley\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "barcola-bradley",
+        "player_name": "布拉德利·巴尔科拉",
+        "player_name_en": "BARCOLA Bradley",
+        "shirt_number": 12,
+        "position": "FW",
+        "title": "Football Trading Card - Bradley Barcola - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 187 - BASE",
+        "alt": "Football Trading Card - Bradley Barcola - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 187 - BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_187.png?v=1773344347",
+        "source_page": "https://www.worldtradingcards.com/en/products/bradley-barcola-187-francia-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqf0UI36SqJKB0_f0AbN6Z3z-R9P8boJCxm1KdUf1CPxJv3EvVe",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/barcola-bradley/01.png"
+      },
+      {
+        "player_slug": "barcola-bradley",
+        "player_name": "布拉德利·巴尔科拉",
+        "player_name_en": "BARCOLA Bradley",
+        "shirt_number": 12,
+        "position": "FW",
+        "title": "Panini FIFA World Cup 2026 Adrenalyn XL Master .. | Köp på Tradera  (734905366)",
+        "alt": "Panini FIFA World Cup 2026 Adrenalyn XL Master .. | Köp på Tradera  (734905366)",
+        "image_url": "https://img.tradera.net/large-fit/253/648041253_b7c22c95-f818-4d18-babd-b2ae682e5b4a.jpg",
+        "source_page": "https://www.tradera.com/item/293311/734905366/panini-fifa-world-cup-2026-adrenalyn-xl-master-rookie-bradley-barcola",
+        "provider": "serpapi",
+        "width": 675,
+        "height": 900,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/barcola-bradley/02.jpg"
+      },
+      {
+        "player_slug": "barcola-bradley",
+        "player_name": "布拉德利·巴尔科拉",
+        "player_name_en": "BARCOLA Bradley",
+        "shirt_number": 12,
+        "position": "FW",
+        "title": "Panini FIFA World Cup 2026 Adrenalyn XL Master .. | Köp på Tradera  (734905366)",
+        "alt": "Panini FIFA World Cup 2026 Adrenalyn XL Master .. | Köp på Tradera  (734905366)",
+        "image_url": "https://img.tradera.net/large-fit/253/648041253_473746a7-e2ff-4f2f-99da-a4dd0278e4d2.jpg",
+        "source_page": "https://www.tradera.com/item/293311/734905366/panini-fifa-world-cup-2026-adrenalyn-xl-master-rookie-bradley-barcola",
+        "provider": "serpapi",
+        "width": 675,
+        "height": 900,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "download_error": "fetch failed"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_187.png?v=1773344347",
+    "selected_local_path": "source_images/panini/france/raw/barcola-bradley/01.png"
   },
   {
     "player_slug": "kante-ngolo",
@@ -155,9 +716,82 @@
       "\"Panini 2026 World Cup card\" \"KANTE Ngolo\"",
       "\"Panini France 2026\" \"KANTE Ngolo\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "kante-ngolo",
+        "player_name": "恩戈洛·坎特",
+        "player_name_en": "KANTE Ngolo",
+        "shirt_number": 13,
+        "position": "MF",
+        "title": "N'Golo Kante Limited Edition Card Panini Adrenalyn XL World Cup Russia 2018  | eBay",
+        "alt": "N'Golo Kante Limited Edition Card Panini Adrenalyn XL World Cup Russia 2018  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/SvkAAOSw~JRavibo/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/itm/183778423772",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kante-ngolo/01.jpg"
+      },
+      {
+        "player_slug": "kante-ngolo",
+        "player_name": "恩戈洛·坎特",
+        "player_name_en": "KANTE Ngolo",
+        "shirt_number": 13,
+        "position": "MF",
+        "title": "307 N'Golo Kanté France Fans Favourites Panini World Cup 2022 Adrenaly –  Solve Collectibles",
+        "alt": "307 N'Golo Kanté France Fans Favourites Panini World Cup 2022 Adrenaly –  Solve Collectibles",
+        "image_url": "http://www.solvecollectibles.com/cdn/shop/files/NGolo-Kante-France-Fans-Favourite-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809929",
+        "source_page": "https://www.solvecollectibles.com/products/307-ngolo-kante-france-fans-favourites-panini-world-cup-2022-adrenalyn-xl",
+        "provider": "serpapi",
+        "width": 1440,
+        "height": 1920,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kante-ngolo/02.jpg"
+      },
+      {
+        "player_slug": "kante-ngolo",
+        "player_name": "恩戈洛·坎特",
+        "player_name_en": "KANTE Ngolo",
+        "shirt_number": 13,
+        "position": "MF",
+        "title": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - N'Golo Kante #307 for  sale | eBay",
+        "alt": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - N'Golo Kante #307 for  sale | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/kXAAAOSwM5tmpHBn/s-l1200.webp",
+        "source_page": "https://www.ebay.com/b/2022-Panini-Adrenalyn-XL-FIFA-World-Cup-Qatar-2022-NGolo-Kante-307/212/bn_70510510098",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/kante-ngolo/03.webp"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/images/g/SvkAAOSw~JRavibo/s-l1200.jpg",
+    "selected_local_path": "source_images/panini/france/raw/kante-ngolo/01.jpg"
   },
   {
     "player_slug": "rabiot-adrien",
@@ -171,9 +805,82 @@
       "\"Panini 2026 World Cup card\" \"RABIOT Adrien\"",
       "\"Panini France 2026\" \"RABIOT Adrien\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "rabiot-adrien",
+        "player_name": "阿德里安·拉比奥",
+        "player_name_en": "RABIOT Adrien",
+        "shirt_number": 14,
+        "position": "MF",
+        "title": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "alt": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=26908734942142172",
+        "source_page": "https://www.facebook.com/groups/panini.serbia/posts/25229481689997347/",
+        "provider": "serpapi",
+        "width": 1536,
+        "height": 2048,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "download_error": "image too small: 396 bytes"
+      },
+      {
+        "player_slug": "rabiot-adrien",
+        "player_name": "阿德里安·拉比奥",
+        "player_name_en": "RABIOT Adrien",
+        "shirt_number": 14,
+        "position": "MF",
+        "title": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "alt": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=26908734945475505",
+        "source_page": "https://www.facebook.com/groups/panini.serbia/posts/25229481689997347/",
+        "provider": "serpapi",
+        "width": 1536,
+        "height": 2048,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "download_error": "image too small: 396 bytes"
+      },
+      {
+        "player_slug": "rabiot-adrien",
+        "player_name": "阿德里安·拉比奥",
+        "player_name_en": "RABIOT Adrien",
+        "shirt_number": 14,
+        "position": "MF",
+        "title": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "alt": "Zabibuska 2018: 228 sličica ukupno, 138 različitih - 400 din Football Fan  2016: 266 sličica, 178 različitih - 400 din Euroleague Donruss 2023/24: 19  različitih kartica - 200 din World Cup Adrenalyn 2018: 47 kartica, 41  različitih - 400 din Moguća je i ...",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=27042367175449852",
+        "source_page": "https://www.facebook.com/groups/panini.serbia/posts/25229481689997347/",
+        "provider": "serpapi",
+        "width": 1536,
+        "height": 2048,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/rabiot-adrien/03.jpg"
+      }
+    ],
+    "selected_source_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=27042367175449852",
+    "selected_local_path": "source_images/panini/france/raw/rabiot-adrien/03.jpg"
   },
   {
     "player_slug": "konate-ibrahima",
@@ -187,9 +894,81 @@
       "\"Panini 2026 World Cup card\" \"KONATE Ibrahima\"",
       "\"Panini France 2026\" \"KONATE Ibrahima\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "konate-ibrahima",
+        "player_name": "易卜拉希马·科纳特",
+        "player_name_en": "KONATE Ibrahima",
+        "shirt_number": 15,
+        "position": "DF",
+        "title": "Panini England 2024 Adrenalyn XL - Ibrahima Konate France Aerial Ace No.  236 | eBay UK",
+        "alt": "Panini England 2024 Adrenalyn XL - Ibrahima Konate France Aerial Ace No.  236 | eBay UK",
+        "image_url": "https://i.ebayimg.com/images/g/4rcAAOSwI6xm~cYB/s-l1200.jpg",
+        "source_page": "https://www.ebay.co.uk/itm/235769602930",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/konate-ibrahima/01.jpg"
+      },
+      {
+        "player_slug": "konate-ibrahima",
+        "player_name": "易卜拉希马·科纳特",
+        "player_name_en": "KONATE Ibrahima",
+        "shirt_number": 15,
+        "position": "DF",
+        "title": "Panini Adrenalyn XL FIFA 365 2025 No. 48 Ibrahima Konate",
+        "alt": "Panini Adrenalyn XL FIFA 365 2025 No. 48 Ibrahima Konate",
+        "image_url": "https://i.ebayimg.com/images/g/7UoAAOSw6yJm9Ao~/s-l1200.jpg",
+        "source_page": "https://www.ebay.co.uk/itm/236403176140",
+        "provider": "serpapi",
+        "width": 780,
+        "height": 1104,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/konate-ibrahima/02.jpg"
+      },
+      {
+        "player_slug": "konate-ibrahima",
+        "player_name": "易卜拉希马·科纳特",
+        "player_name_en": "KONATE Ibrahima",
+        "shirt_number": 15,
+        "position": "DF",
+        "title": "195 Ibrahima Konaté Liverpool Base Panini Adrenalyn XL Premier League –  Solve Collectibles",
+        "alt": "195 Ibrahima Konaté Liverpool Base Panini Adrenalyn XL Premier League –  Solve Collectibles",
+        "image_url": "http://www.solvecollectibles.com/cdn/shop/files/Ibrahima-Konate-Liverpool-Base-Panini-Adrenalyn-XL-PLUS-Premier-League-2021-2022.jpg?v=1730809692",
+        "source_page": "https://www.solvecollectibles.com/products/195-ibrahima-konate-liverpool-base-panini-adrenalyn-xl-premier-league-2021-22-card",
+        "provider": "serpapi",
+        "width": 1440,
+        "height": 1920,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/konate-ibrahima/03.jpg"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/images/g/4rcAAOSwI6xm~cYB/s-l1200.jpg",
+    "selected_local_path": "source_images/panini/france/raw/konate-ibrahima/01.jpg"
   },
   {
     "player_slug": "maignan-mike",
@@ -203,25 +982,82 @@
       "\"Panini 2026 World Cup card\" \"MAIGNAN Mike\"",
       "\"Panini France 2026\" \"MAIGNAN Mike\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "zaire-emery-warren",
-    "player_name": "沃伦·扎伊尔-埃梅里",
-    "player_name_en": "ZAIRE-EMERY Warren",
-    "shirt_number": 18,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"ZAIRE-EMERY Warren\" \"France\"",
-      "\"Panini Adrenalyn XL 2026\" \"ZAIRE-EMERY Warren\" \"France\"",
-      "\"Panini 2026 World Cup card\" \"ZAIRE-EMERY Warren\"",
-      "\"Panini France 2026\" \"ZAIRE-EMERY Warren\""
+    "candidates": [
+      {
+        "player_slug": "maignan-mike",
+        "player_name": "迈克·迈尼昂",
+        "player_name_en": "MAIGNAN Mike",
+        "shirt_number": 16,
+        "position": "GK",
+        "title": "Football Trading Card - Mike Maignan - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 181 - BASIC",
+        "alt": "Football Trading Card - Mike Maignan - France - Panini Adrenalyn XL FIFA  World Cup 2026 - 181 - BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_181.png?v=1773344333",
+        "source_page": "https://www.worldtradingcards.com/en/products/mike-maignan-181-francia-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqOOzhtERTp1zDuzhjBtqlMMxqvLioZ0tw4QXqOFAITju-0racN",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/maignan-mike/01.png"
+      },
+      {
+        "player_slug": "maignan-mike",
+        "player_name": "迈克·迈尼昂",
+        "player_name_en": "MAIGNAN Mike",
+        "shirt_number": 16,
+        "position": "GK",
+        "title": "Football Trading Card Chrome-Mike Maignan-France-Panini Adrenalyn XL FIFA  World Cup 2026-553-Top Keeper",
+        "alt": "Football Trading Card Chrome-Mike Maignan-France-Panini Adrenalyn XL FIFA  World Cup 2026-553-Top Keeper",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_553.png?v=1773345272",
+        "source_page": "https://www.worldtradingcards.com/en/products/mike-maignan-553-francia-panini-adrenalyn-xl-fifa-world-cup-top-keeper?srsltid=AfmBOood8LvWoH9sFofjAjnTUhokE5bvOpV5A8LzwGaD1ruM6slr-BwT",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/maignan-mike/02.png"
+      },
+      {
+        "player_slug": "maignan-mike",
+        "player_name": "迈克·迈尼昂",
+        "player_name_en": "MAIGNAN Mike",
+        "shirt_number": 16,
+        "position": "GK",
+        "title": "adrenalyn xl limited edition cards Soccer Trading Card-Mike Maignan-France- Panini Adrenalyn XL Fifa World Cup 2026-PGLE4-Premium Gold Limited Edition",
+        "alt": "adrenalyn xl limited edition cards Soccer Trading Card-Mike Maignan-France- Panini Adrenalyn XL Fifa World Cup 2026-PGLE4-Premium Gold Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.20.22_666b6e1c-92dd-4ab2-b0f6-0bb247a1902d.webp?v=1775500096",
+        "source_page": "https://haddadjewelers.com/items/H774290008/",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/maignan-mike/03.webp"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_181.png?v=1773344333",
+    "selected_local_path": "source_images/panini/france/raw/maignan-mike/01.png"
   },
   {
     "player_slug": "doue-desire",
@@ -235,9 +1071,82 @@
       "\"Panini 2026 World Cup card\" \"DOUE Desire\"",
       "\"Panini France 2026\" \"DOUE Desire\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "doue-desire",
+        "player_name": "德西雷·杜埃",
+        "player_name_en": "DOUE Desire",
+        "shirt_number": 20,
+        "position": "FW",
+        "title": "Chromium Trading Card Football-Desire Doue-France-Panini Adrenalyn XL Fifa World  Cup 2026-LE32-Limited Edition",
+        "alt": "Chromium Trading Card Football-Desire Doue-France-Panini Adrenalyn XL Fifa World  Cup 2026-LE32-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE32.png?v=1773345750",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/desire-doue-le32-francia-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOopPnCx6FTw6_g_SBaUO1QeKm6FxkDuTZBmXdkpl76aRsoGMCLAO",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/doue-desire/01.png"
+      },
+      {
+        "player_slug": "doue-desire",
+        "player_name": "德西雷·杜埃",
+        "player_name_en": "DOUE Desire",
+        "shirt_number": 20,
+        "position": "FW",
+        "title": "Trading Card Football-Desire Doue-France-Panini Adrenalyn XL FIFA World Cup  2026-616-Master Rookie",
+        "alt": "Trading Card Football-Desire Doue-France-Panini Adrenalyn XL FIFA World Cup  2026-616-Master Rookie",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-03-23ALAS17.55.05.webp?v=1775504700",
+        "source_page": "https://www.worldtradingcards.com/en/products/desire-doue-616-francia-panini-adrenalyn-xl-fifa-world-cup-master-rookie?srsltid=AfmBOopkuqhWTDfinGyWNRDXWv2n2LDVLns-z1WairEFHFipdRdLX-sI",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/doue-desire/02.webp"
+      },
+      {
+        "player_slug": "doue-desire",
+        "player_name": "德西雷·杜埃",
+        "player_name_en": "DOUE Desire",
+        "shirt_number": 20,
+        "position": "FW",
+        "title": "Panini Adrenalyn xl FIFA World Cup 2026 Master Rookie kort – Désiré Doué |  FINN-torget",
+        "alt": "Panini Adrenalyn xl FIFA World Cup 2026 Master Rookie kort – Désiré Doué |  FINN-torget",
+        "image_url": "https://images.finncdn.no/dynamic/960w/item/467056834/663d32c2-8a41-457a-8f4d-16b2223df6d6",
+        "source_page": "https://www.finn.no/recommerce/forsale/item/467056834",
+        "provider": "serpapi",
+        "width": 960,
+        "height": 1280,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/france/raw/doue-desire/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE32.png?v=1773345750",
+    "selected_local_path": "source_images/panini/france/raw/doue-desire/01.png"
   },
   {
     "player_slug": "hernandez-lucas",
@@ -251,9 +1160,76 @@
       "\"Panini 2026 World Cup card\" \"HERNANDEZ Lucas\"",
       "\"Panini France 2026\" \"HERNANDEZ Lucas\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "hernandez-lucas",
+        "player_name": "卢卡斯·埃尔南德斯",
+        "player_name_en": "HERNANDEZ Lucas",
+        "shirt_number": 21,
+        "position": "DF",
+        "title": "⚽ PANINI FIFA World Cup 2026. - ADRENALYN XL & PREMIUM Box. ⚽ Price :  2680.- per box. 🎯 Order & Information on line. ✓ ID : @jakarade",
+        "alt": "⚽ PANINI FIFA World Cup 2026. - ADRENALYN XL & PREMIUM Box. ⚽ Price :  2680.- per box. 🎯 Order & Information on line. ✓ ID : @jakarade",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1605485847903066",
+        "source_page": "https://www.facebook.com/jakaradediary/posts/-panini-fifa-world-cup-2026-adrenalyn-xl-premium-box-price-2680-per-box-order-in/1278721671035523/",
+        "provider": "serpapi",
+        "width": 1347,
+        "height": 1679,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "download_error": "image too small: 388 bytes"
+      },
+      {
+        "player_slug": "hernandez-lucas",
+        "player_name": "卢卡斯·埃尔南德斯",
+        "player_name_en": "HERNANDEZ Lucas",
+        "shirt_number": 21,
+        "position": "DF",
+        "title": "Swap trading cards, checklist and photos for Panini FIFA World Cup 2026.  Adrenalyn XL - laststicker.com",
+        "alt": "Swap trading cards, checklist and photos for Panini FIFA World Cup 2026.  Adrenalyn XL - laststicker.com",
+        "image_url": "https://www.laststicker.com/i/album/12029.jpg",
+        "source_page": "https://www.laststicker.com/cards/panini_world_cup_2026_adrenalyn_xl/",
+        "provider": "serpapi",
+        "width": 460,
+        "height": 600,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/france/raw/hernandez-lucas/02.jpg"
+      },
+      {
+        "player_slug": "hernandez-lucas",
+        "player_name": "卢卡斯·埃尔南德斯",
+        "player_name_en": "HERNANDEZ Lucas",
+        "shirt_number": 21,
+        "position": "DF",
+        "title": "World Cup 2026 Panini Stickers Guide: How to Collect & Swap | TikTok",
+        "alt": "World Cup 2026 Panini Stickers Guide: How to Collect & Swap | TikTok",
+        "image_url": "https://www.tiktok.com/api/img/?itemId=7637115809713622305&location=0&aid=1988",
+        "source_page": "https://www.tiktok.com/@.openstickers/video/7637115809713622305",
+        "provider": "serpapi",
+        "width": 1080,
+        "height": 1920,
+        "score_breakdown": {
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 110,
+        "download_error": "fetch failed"
+      }
+    ],
+    "selected_source_url": "https://www.laststicker.com/i/album/12029.jpg",
+    "selected_local_path": "source_images/panini/france/raw/hernandez-lucas/02.jpg"
   },
   {
     "player_slug": "mateta-jean-philippe",
@@ -267,9 +1243,79 @@
       "\"Panini 2026 World Cup card\" \"MATETA Jean-Philippe\"",
       "\"Panini France 2026\" \"MATETA Jean-Philippe\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "mateta-jean-philippe",
+        "player_name": "让-菲利普·马特塔",
+        "player_name_en": "MATETA Jean-Philippe",
+        "shirt_number": 22,
+        "position": "FW",
+        "title": "Jean-Philippe Mateta Panini 2024/2025 Adrenalyn XL 24/25 Crystal Palace #  133",
+        "alt": "Jean-Philippe Mateta Panini 2024/2025 Adrenalyn XL 24/25 Crystal Palace #  133",
+        "image_url": "https://i.ebayimg.com/images/g/rLwAAOSwJAZmvStO/s-l1200.jpg",
+        "source_page": "https://www.ebay.co.uk/itm/116431637872",
+        "provider": "serpapi",
+        "width": 862,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "download_error": "terminated"
+      },
+      {
+        "player_slug": "mateta-jean-philippe",
+        "player_name": "让-菲利普·马特塔",
+        "player_name_en": "MATETA Jean-Philippe",
+        "shirt_number": 22,
+        "position": "FW",
+        "title": "151 JEAN-PHILIPPE MATETA (CRYSTAL PALACE) BASE CARD PANINI ADRENALYN XL  2024 – Football Cards Direct",
+        "alt": "151 JEAN-PHILIPPE MATETA (CRYSTAL PALACE) BASE CARD PANINI ADRENALYN XL  2024 – Football Cards Direct",
+        "image_url": "https://www.footballcardsdirect.com/wp-content/uploads/2023/08/PLADR2324-151.jpg",
+        "source_page": "https://www.footballcardsdirect.com/product/151-jean-philippe-mateta-crystal-palace-base-card-panini-adrenalyn-xl-2024/",
+        "provider": "serpapi",
+        "width": 751,
+        "height": 1064,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/mateta-jean-philippe/02.jpg"
+      },
+      {
+        "player_slug": "mateta-jean-philippe",
+        "player_name": "让-菲利普·马特塔",
+        "player_name_en": "MATETA Jean-Philippe",
+        "shirt_number": 22,
+        "position": "FW",
+        "title": "428 Jean-Philippe Mateta Crystal Palace Adrenalyn Rush Panini Premier –  Solve Collectibles",
+        "alt": "428 Jean-Philippe Mateta Crystal Palace Adrenalyn Rush Panini Premier –  Solve Collectibles",
+        "image_url": "http://www.solvecollectibles.com/cdn/shop/files/Jean-Philippe-Mateta-Crystal-Palace-Adrenalyn-Rush-Panini-Premier-League-Adrenalyn-XL-2023-Card.jpg?v=1730809955",
+        "source_page": "https://www.solvecollectibles.com/products/428-jean-philippe-mateta-crystal-palace-adrenalyn-rush-panini-premier-league-adrenalyn-xl-2023-card",
+        "provider": "serpapi",
+        "width": 1440,
+        "height": 1920,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/mateta-jean-philippe/03.jpg"
+      }
+    ],
+    "selected_source_url": "https://www.footballcardsdirect.com/wp-content/uploads/2023/08/PLADR2324-151.jpg",
+    "selected_local_path": "source_images/panini/france/raw/mateta-jean-philippe/02.jpg"
   },
   {
     "player_slug": "risser-robin",
@@ -283,25 +1329,79 @@
       "\"Panini 2026 World Cup card\" \"RISSER Robin\"",
       "\"Panini France 2026\" \"RISSER Robin\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "cherki-rayan",
-    "player_name": "拉扬·谢尔基",
-    "player_name_en": "CHERKI Rayan",
-    "shirt_number": 24,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"CHERKI Rayan\" \"France\"",
-      "\"Panini Adrenalyn XL 2026\" \"CHERKI Rayan\" \"France\"",
-      "\"Panini 2026 World Cup card\" \"CHERKI Rayan\"",
-      "\"Panini France 2026\" \"CHERKI Rayan\""
+    "candidates": [
+      {
+        "player_slug": "risser-robin",
+        "player_name": "罗宾·里瑟",
+        "player_name_en": "RISSER Robin",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "Football Trading Card-Robin van Persie-Netherlands-Panini Adrenalyn XL FIFA  World Cup 2026-M20-Master",
+        "alt": "Football Trading Card-Robin van Persie-Netherlands-Panini Adrenalyn XL FIFA  World Cup 2026-M20-Master",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.37.53.webp?v=1775501817",
+        "source_page": "https://www.worldtradingcards.com/en/products/robin-van-persie-m20-paises-bajos-panini-adrenalyn-xl-fifa-world-cup-master?srsltid=AfmBOoqaQADy3TiG6vJ0SDKsqok_uVT6Xc8GY_HwzXiyUN4A2wnHRqww",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/risser-robin/01.webp"
+      },
+      {
+        "player_slug": "risser-robin",
+        "player_name": "罗宾·里瑟",
+        "player_name_en": "RISSER Robin",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "Football Trading Card - Fabián Ruiz - Spain - Panini Adrenalyn XL FIFA  World Cup 2026 - 451 - BASIC",
+        "alt": "Football Trading Card - Fabián Ruiz - Spain - Panini Adrenalyn XL FIFA  World Cup 2026 - 451 - BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_451.png?v=1773345012",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/fabian-ruiz-451-espana-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOorlwnrduqAzkjPF9pm5GnXBkzu1F-_j-qLsfQGFYHVX43UMM0qd",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/risser-robin/02.png"
+      },
+      {
+        "player_slug": "risser-robin",
+        "player_name": "罗宾·里瑟",
+        "player_name_en": "RISSER Robin",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-LE36-Limited Edition",
+        "alt": "Soccer Trading Card-Michael Olise-France-Panini Adrenalyn XL Fifa World Cup  2026-LE36-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE36.jpg?v=1773345759",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/michael-olise-le36-francia-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOoqVDxLxhqAQH-eJghY9lSwOpseW1a9Fh27wBA4hx_DP94iIUJH2",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/risser-robin/03.jpg"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.37.53.webp?v=1775501817",
+    "selected_local_path": "source_images/panini/france/raw/risser-robin/01.webp"
   },
   {
     "player_slug": "akliouche-maghnes",
@@ -315,9 +1415,77 @@
       "\"Panini 2026 World Cup card\" \"AKLIOUCHE Maghnes\"",
       "\"Panini France 2026\" \"AKLIOUCHE Maghnes\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "akliouche-maghnes",
+        "player_name": "马涅斯·阿克利乌什",
+        "player_name_en": "AKLIOUCHE Maghnes",
+        "shirt_number": 25,
+        "position": "MF",
+        "title": "CARD PANINI ADRENALYN LIGUE 1 2024/25 IMPACT MAGHNES AKLIOUCHE MONACO # 339  | eBay",
+        "alt": "CARD PANINI ADRENALYN LIGUE 1 2024/25 IMPACT MAGHNES AKLIOUCHE MONACO # 339  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/1gcAAOSwS0pm6p4o/s-l1200.jpg",
+        "source_page": "https://www.ebay.fr/itm/256644826205",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/akliouche-maghnes/01.jpg"
+      },
+      {
+        "player_slug": "akliouche-maghnes",
+        "player_name": "马涅斯·阿克利乌什",
+        "player_name_en": "AKLIOUCHE Maghnes",
+        "shirt_number": 25,
+        "position": "MF",
+        "title": "Buy Cards Maghnes Akliouche AS Monaco Panini Adrenalyn XL Ligue 1 2024 -  2025",
+        "alt": "Buy Cards Maghnes Akliouche AS Monaco Panini Adrenalyn XL Ligue 1 2024 -  2025",
+        "image_url": "https://www.euro-soccer-cards.com/151366/maghnes-akliouche-as-monaco-154.jpg",
+        "source_page": "https://www.euro-soccer-cards.com/gb/adrenalyn-xl-ligue-1-2024-25/maghnes-akliouche-as-monaco-154",
+        "provider": "serpapi",
+        "width": 463,
+        "height": 654,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/akliouche-maghnes/02.jpg"
+      },
+      {
+        "player_slug": "akliouche-maghnes",
+        "player_name": "马涅斯·阿克利乌什",
+        "player_name_en": "AKLIOUCHE Maghnes",
+        "shirt_number": 25,
+        "position": "MF",
+        "title": "Buy Cards Maghnes Akliouche AS Monaco Panini Adrenalyn XL Ligue 1 2024 -  2025",
+        "alt": "Buy Cards Maghnes Akliouche AS Monaco Panini Adrenalyn XL Ligue 1 2024 -  2025",
+        "image_url": "https://www.euro-soccer-cards.com/151366-thickbox_default/maghnes-akliouche-as-monaco-154.jpg",
+        "source_page": "https://www.euro-soccer-cards.com/gb/adrenalyn-xl-ligue-1-2024-25/maghnes-akliouche-as-monaco-154",
+        "provider": "serpapi",
+        "width": 800,
+        "height": 800,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/akliouche-maghnes/03.jpg"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/images/g/1gcAAOSwS0pm6p4o/s-l1200.jpg",
+    "selected_local_path": "source_images/panini/france/raw/akliouche-maghnes/01.jpg"
   },
   {
     "player_slug": "lacroix-maxence",
@@ -331,8 +1499,78 @@
       "\"Panini 2026 World Cup card\" \"LACROIX Maxence\"",
       "\"Panini France 2026\" \"LACROIX Maxence\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "lacroix-maxence",
+        "player_name": "马克桑斯·拉克鲁瓦",
+        "player_name_en": "LACROIX Maxence",
+        "shirt_number": 26,
+        "position": "DF",
+        "title": "Panini Adrenalyn XL Premier League 2025 - MAXENCE LACROIX (CRYSTAL PAL –  JaqJnr",
+        "alt": "Panini Adrenalyn XL Premier League 2025 - MAXENCE LACROIX (CRYSTAL PAL –  JaqJnr",
+        "image_url": "https://jaqjnr.com.au/cdn/shop/files/E87E5BB5-CCAF-4134-A2F8-6BDC410EE09F_1946x.jpg?v=1741425908",
+        "source_page": "https://jaqjnr.com.au/products/panini-adrenalyn-xl-premier-league-2025-maxence-lacroix-crystal-palace-star-signing-485?srsltid=AfmBOooGfyei8FO91jROsayRyDDjozSshnmScKTxdyCYlzcqtAChJQcJ",
+        "provider": "serpapi",
+        "width": 1946,
+        "height": 2721,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/france/raw/lacroix-maxence/01.jpg"
+      },
+      {
+        "player_slug": "lacroix-maxence",
+        "player_name": "马克桑斯·拉克鲁瓦",
+        "player_name_en": "LACROIX Maxence",
+        "shirt_number": 26,
+        "position": "DF",
+        "title": "Duke Lacroix-Haiti-Panini Fifa World Cup Stickers 2026-HAI007-Base Soccer  Trading Card",
+        "alt": "Duke Lacroix-Haiti-Panini Fifa World Cup Stickers 2026-HAI007-Base Soccer  Trading Card",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/11_FWC_HAI_007.webp?v=1777743913",
+        "source_page": "https://www.worldtradingcards.com/en/products/duke-lacroix-hai007-haiti-panini-fifa-world-cup-stickers-base-international-version?srsltid=AfmBOooDZwLu0zGpxsLcdhB6m8d6HhJ_xt6qmgkG2DGQpY7CWiGPg6QZ",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/lacroix-maxence/02.webp"
+      },
+      {
+        "player_slug": "lacroix-maxence",
+        "player_name": "马克桑斯·拉克鲁瓦",
+        "player_name_en": "LACROIX Maxence",
+        "shirt_number": 26,
+        "position": "DF",
+        "title": "Soccer Trading Card-Badge-France-Panini Adrenalyn XL Fifa World Cup 2026 -179-BASIC",
+        "alt": "Soccer Trading Card-Badge-France-Panini Adrenalyn XL Fifa World Cup 2026 -179-BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_179.png?v=1773344327",
+        "source_page": "https://www.worldtradingcards.com/en/products/escudo-179-francia-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopQZEZZ7hB3TTWGHEGur3Kw79PpviLAHLZ8JurDXeaiO_75QqEF",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/france/raw/lacroix-maxence/03.png"
+      }
+    ],
+    "selected_source_url": "https://jaqjnr.com.au/cdn/shop/files/E87E5BB5-CCAF-4134-A2F8-6BDC410EE09F_1946x.jpg?v=1741425908",
+    "selected_local_path": "source_images/panini/france/raw/lacroix-maxence/01.jpg"
   }
 ]

@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-06-21T10:25:10.981Z",
+  "execution": "priority",
+  "target_countries": [
+    "Germany",
+    "France",
+    "Japan"
+  ],
+  "skipped_countries": [
+    "Argentina",
+    "Portugal",
+    "Brazil",
+    "Netherlands",
+    "Spain",
+    "England"
+  ],
+  "stopped_due_to_quota": true,
+  "countries": [
+    {
+      "country": "Germany",
+      "total_players": 26,
+      "skipped_core": 5,
+      "skipped_existing": 0,
+      "panini_target": 21,
+      "processed": 20,
+      "missing": 1,
+      "pending_review": 20,
+      "not_started_due_to_quota": 0
+    },
+    {
+      "country": "France",
+      "total_players": 26,
+      "skipped_core": 5,
+      "skipped_existing": 0,
+      "panini_target": 21,
+      "processed": 16,
+      "missing": 4,
+      "pending_review": 18,
+      "not_started_due_to_quota": 0
+    },
+    {
+      "country": "Japan",
+      "total_players": 26,
+      "skipped_core": 5,
+      "skipped_existing": 0,
+      "panini_target": 21,
+      "processed": 0,
+      "missing": 3,
+      "pending_review": 0,
+      "not_started_due_to_quota": 3,
+      "error_type": "quota_exceeded"
+    }
+  ],
+  "totals": {
+    "processed": 36,
+    "missing": 8,
+    "pending_review": 38,
+    "skipped_existing": 0,
+    "not_started_due_to_quota": 3
+  }
+}
