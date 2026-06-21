@@ -1,195 +1,5 @@
 [
   {
-    "player_slug": "ederson-silva",
-    "player_name": "埃德森·席尔瓦",
-    "player_name_en": "EDERSON SILVA",
-    "shirt_number": 2,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"EDERSON SILVA\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"EDERSON SILVA\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"EDERSON SILVA\"",
-      "\"Panini Brazil 2026\" \"EDERSON SILVA\""
-    ],
-    "candidates": [
-      {
-        "player_slug": "ederson-silva",
-        "player_name": "埃德森·席尔瓦",
-        "player_name_en": "EDERSON SILVA",
-        "shirt_number": 2,
-        "position": "MF",
-        "title": "Panini Adrenalyn XL FIFA 365 2025 No. 366 Bernardo Silva Fifa World Cup  2023 | eBay",
-        "alt": "Panini Adrenalyn XL FIFA 365 2025 No. 366 Bernardo Silva Fifa World Cup  2023 | eBay",
-        "image_url": "https://i.ebayimg.com/images/g/CrEAAOSw9Plm9DXa/s-l1200.jpg",
-        "source_page": "https://www.ebay.com/itm/315786022057",
-        "provider": "serpapi",
-        "width": 772,
-        "height": 1108,
-        "score_breakdown": {
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "card_number": 20,
-          "portrait_card_ratio": 20,
-          "width_gt_600": 20
-        },
-        "total_score": 170,
-        "local_path": "source_images/panini/brazil/raw/ederson-silva/01.jpg"
-      },
-      {
-        "player_slug": "ederson-silva",
-        "player_name": "埃德森·席尔瓦",
-        "player_name_en": "EDERSON SILVA",
-        "shirt_number": 2,
-        "position": "MF",
-        "title": "Soccer Trading Card-Bernardo Silva-Portugal-Panini Adrenalyn XL FIFA World  Cup 2026-376-BASIC",
-        "alt": "Soccer Trading Card-Bernardo Silva-Portugal-Panini Adrenalyn XL FIFA World  Cup 2026-376-BASIC",
-        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_376.png?v=1773344822",
-        "source_page": "https://www.worldtradingcards.com/en-us/products/bernardo-silva-376-portugal-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqMvsYN4iDCC-uHO34qPlcHUMaaBy7bO91IXessH-2jB1IwPZrH",
-        "provider": "serpapi",
-        "width": 736,
-        "height": 1024,
-        "score_breakdown": {
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "portrait_card_ratio": 20,
-          "width_gt_600": 20
-        },
-        "total_score": 150,
-        "local_path": "source_images/panini/brazil/raw/ederson-silva/02.png"
-      },
-      {
-        "player_slug": "ederson-silva",
-        "player_name": "埃德森·席尔瓦",
-        "player_name_en": "EDERSON SILVA",
-        "shirt_number": 2,
-        "position": "MF",
-        "title": "Panini FIFA World Cup 2026 Adrenalyn XL Stickers, Cards, Trading Cards –  Page 18",
-        "alt": "Panini FIFA World Cup 2026 Adrenalyn XL Stickers, Cards, Trading Cards –  Page 18",
-        "image_url": "http://www.worldtradingcards.com/cdn/shop/collections/SLIDER-PANINI-WORLD-CUP-2026-ADRENALYN-XL-TRADING-CARDS_1.webp?v=1771957425",
-        "source_page": "https://www.worldtradingcards.com/en/collections/panini-fifa-world-cup-2026-adrenalyn-xl?page=18&srsltid=AfmBOooF9jVFJHlaV-EGbfqEzE0veHh9xzCnuzTI4cWv3M4-1KC5nzha",
-        "provider": "serpapi",
-        "width": 736,
-        "height": 1024,
-        "score_breakdown": {
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "portrait_card_ratio": 20,
-          "width_gt_600": 20
-        },
-        "total_score": 150,
-        "local_path": "source_images/panini/brazil/raw/ederson-silva/03.webp"
-      }
-    ],
-    "selected_source_url": "https://i.ebayimg.com/images/g/CrEAAOSw9Plm9DXa/s-l1200.jpg",
-    "selected_local_path": "source_images/panini/brazil/raw/ederson-silva/01.jpg"
-  },
-  {
-    "player_slug": "gabriel-magalhaes",
-    "player_name": "加布里埃尔·马加良斯",
-    "player_name_en": "GABRIEL MAGALHAES",
-    "shirt_number": 3,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"GABRIEL MAGALHAES\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"GABRIEL MAGALHAES\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"GABRIEL MAGALHAES\"",
-      "\"Panini Brazil 2026\" \"GABRIEL MAGALHAES\""
-    ],
-    "candidates": [
-      {
-        "player_slug": "gabriel-magalhaes",
-        "player_name": "加布里埃尔·马加良斯",
-        "player_name_en": "GABRIEL MAGALHAES",
-        "shirt_number": 3,
-        "position": "DF",
-        "title": "Football Trading Card - Gabriel Magalhaes - Brazil - Panini Adrenalyn XL  FIFA World Cup 2026 - 76 - BASIC",
-        "alt": "Football Trading Card - Gabriel Magalhaes - Brazil - Panini Adrenalyn XL  FIFA World Cup 2026 - 76 - BASIC",
-        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_76.png?v=1773344071",
-        "source_page": "https://www.worldtradingcards.com/en/products/gabriel-magalhaes-76-brasil-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoriiRrqwwJ3GuLvSwBqydtVPfevg4eB1ZB8WIxPJZmYNZMzwxG0",
-        "provider": "serpapi",
-        "width": 736,
-        "height": 1024,
-        "score_breakdown": {
-          "player_name": 40,
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "portrait_card_ratio": 20,
-          "width_gt_600": 20
-        },
-        "total_score": 190,
-        "local_path": "source_images/panini/brazil/raw/gabriel-magalhaes/01.png"
-      },
-      {
-        "player_slug": "gabriel-magalhaes",
-        "player_name": "加布里埃尔·马加良斯",
-        "player_name_en": "GABRIEL MAGALHAES",
-        "shirt_number": 3,
-        "position": "DF",
-        "title": "Gabriel Magalhaes (Brazil / Panini Adrenalyn XL World Cup 2026)  🇧🇷🇧🇷🇧🇷 .………………………...……………………….. Navigation links: ➡️  #GаbrielFootballCards ➡️ #GаbrielMagalhaesCards ➡️ #ВrazilFootballTeamCards  ➡️ #РaniniAdrenalynWC2026 ...",
-        "alt": "Gabriel Magalhaes (Brazil / Panini Adrenalyn XL World Cup 2026)  🇧🇷🇧🇷🇧🇷 .………………………...……………………….. Navigation links: ➡️  #GаbrielFootballCards ➡️ #GаbrielMagalhaesCards ➡️ #ВrazilFootballTeamCards  ➡️ #РaniniAdrenalynWC2026 ...",
-        "image_url": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3910773307288687627",
-        "source_page": "https://www.instagram.com/p/DZF26RalsL6/",
-        "provider": "serpapi",
-        "width": 1440,
-        "height": 1440,
-        "score_breakdown": {
-          "player_name": 40,
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "width_gt_600": 20
-        },
-        "total_score": 170,
-        "download_error": "fetch failed"
-      },
-      {
-        "player_slug": "gabriel-magalhaes",
-        "player_name": "加布里埃尔·马加良斯",
-        "player_name_en": "GABRIEL MAGALHAES",
-        "shirt_number": 3,
-        "position": "DF",
-        "title": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #076 Gabriel Magalhaes – Antci",
-        "alt": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #076 Gabriel Magalhaes – Antci",
-        "image_url": "https://antci.com/wp-content/uploads/2026/03/2026-Panini-Adrenalyn-XL-FIFA-World-Cup-%E2%80%93-Booster-Pack.webp",
-        "source_page": "https://antci.com/product/2026-panini-adrenalyn-xl-fifa-world-cup-2026-076-gabriel-magalhaes/",
-        "provider": "serpapi",
-        "width": 500,
-        "height": 700,
-        "score_breakdown": {
-          "player_name": 40,
-          "panini": 50,
-          "adrenalyn": 40,
-          "world_cup": 20,
-          "portrait_card_ratio": 20
-        },
-        "total_score": 170,
-        "local_path": "source_images/panini/brazil/raw/gabriel-magalhaes/03.webp"
-      }
-    ],
-    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_76.png?v=1773344071",
-    "selected_local_path": "source_images/panini/brazil/raw/gabriel-magalhaes/01.png"
-  },
-  {
-    "player_slug": "marquinhos",
-    "player_name": "马尔基尼奥斯",
-    "player_name_en": "MARQUINHOS",
-    "shirt_number": 4,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"MARQUINHOS\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"MARQUINHOS\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"MARQUINHOS\"",
-      "\"Panini Brazil 2026\" \"MARQUINHOS\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
     "player_slug": "alex-sandro",
     "player_name": "阿莱士·桑德罗",
     "player_name_en": "ALEX SANDRO",
@@ -201,103 +11,78 @@
       "\"Panini 2026 World Cup card\" \"ALEX SANDRO\"",
       "\"Panini Brazil 2026\" \"ALEX SANDRO\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "bruno-guimaraes",
-    "player_name": "布鲁诺·吉马良斯",
-    "player_name_en": "BRUNO GUIMARAES",
-    "shirt_number": 8,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"BRUNO GUIMARAES\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"BRUNO GUIMARAES\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"BRUNO GUIMARAES\"",
-      "\"Panini Brazil 2026\" \"BRUNO GUIMARAES\""
+    "candidates": [
+      {
+        "player_slug": "alex-sandro",
+        "player_name": "阿莱士·桑德罗",
+        "player_name_en": "ALEX SANDRO",
+        "shirt_number": 6,
+        "position": "DF",
+        "title": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "alt": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1370680678442530",
+        "source_page": "https://www.facebook.com/Brazilfootballfansnepalofficial/posts/panini-has-officially-adds-neymar-endrick-igor-thiago-weverton-and-alex-sandros-/1037010055503345/",
+        "provider": "serpapi",
+        "width": 1536,
+        "height": 2048,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "brazil_team_set": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "download_error": "image too small: 392 bytes"
+      },
+      {
+        "player_slug": "alex-sandro",
+        "player_name": "阿莱士·桑德罗",
+        "player_name_en": "ALEX SANDRO",
+        "shirt_number": 6,
+        "position": "DF",
+        "title": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "alt": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1534673071571096",
+        "source_page": "https://www.facebook.com/Brazilfootballfansnepalofficial/posts/panini-has-officially-adds-neymar-endrick-igor-thiago-weverton-and-alex-sandros-/1037010055503345/",
+        "provider": "serpapi",
+        "width": 800,
+        "height": 800,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "brazil_team_set": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "download_error": "image too small: 388 bytes"
+      },
+      {
+        "player_slug": "alex-sandro",
+        "player_name": "阿莱士·桑德罗",
+        "player_name_en": "ALEX SANDRO",
+        "shirt_number": 6,
+        "position": "DF",
+        "title": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "alt": "Panini has officially adds Neymar, Endrick, Igor Thiago, Weverton and Alex  Sandro's stickers to their 2026 World Cup collection. #bffno #WorldCup2026",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1553171126467872",
+        "source_page": "https://www.facebook.com/Brazilfootballfansnepalofficial/posts/panini-has-officially-adds-neymar-endrick-igor-thiago-weverton-and-alex-sandros-/1037010055503345/",
+        "provider": "serpapi",
+        "width": 1080,
+        "height": 1080,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "brazil_team_set": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "download_error": "image too small: 388 bytes"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "matheus-cunha",
-    "player_name": "马特乌斯·库尼亚",
-    "player_name_en": "MATHEUS CUNHA",
-    "shirt_number": 9,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"MATHEUS CUNHA\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"MATHEUS CUNHA\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"MATHEUS CUNHA\"",
-      "\"Panini Brazil 2026\" \"MATHEUS CUNHA\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "weverton",
-    "player_name": "韦弗顿",
-    "player_name_en": "WEVERTON",
-    "shirt_number": 12,
-    "position": "GK",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"WEVERTON\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"WEVERTON\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"WEVERTON\"",
-      "\"Panini Brazil 2026\" \"WEVERTON\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "danilo",
-    "player_name": "达尼洛",
-    "player_name_en": "DANILO",
-    "shirt_number": 13,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"DANILO\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"DANILO\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"DANILO\"",
-      "\"Panini Brazil 2026\" \"DANILO\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "bremer",
-    "player_name": "布雷默",
-    "player_name_en": "BREMER",
-    "shirt_number": 14,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"BREMER\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"BREMER\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"BREMER\"",
-      "\"Panini Brazil 2026\" \"BREMER\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "leo-pereira",
-    "player_name": "莱奥·佩雷拉",
-    "player_name_en": "LEO PEREIRA",
-    "shirt_number": 15,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"LEO PEREIRA\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"LEO PEREIRA\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"LEO PEREIRA\"",
-      "\"Panini Brazil 2026\" \"LEO PEREIRA\""
-    ],
-    "candidates": [],
     "selected_source_url": null,
     "selected_local_path": null
   },
@@ -313,7 +98,74 @@
       "\"Panini 2026 World Cup card\" \"DOUGLAS SANTOS\"",
       "\"Panini Brazil 2026\" \"DOUGLAS SANTOS\""
     ],
-    "candidates": [],
+    "candidates": [
+      {
+        "player_slug": "douglas-santos",
+        "player_name": "道格拉斯·桑托斯",
+        "player_name_en": "DOUGLAS SANTOS",
+        "shirt_number": 16,
+        "position": "DF",
+        "title": "🔥 Обзор DREAM BOX карточек Чемпионата мира 2026⚽️, В обзоре Dream Box из  коллекции Panini FIFA World Cup 2026 оценили подсерию Master с легендами  чемпионатов мира и испытали удачу в поисках ...",
+        "alt": "🔥 Обзор DREAM BOX карточек Чемпионата мира 2026⚽️, В обзоре Dream Box из  коллекции Panini FIFA World Cup 2026 оценили подсерию Master с легендами  чемпионатов мира и испытали удачу в поисках ...",
+        "image_url": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3895478030891653781",
+        "source_page": "https://www.instagram.com/reel/DYPhKFFopqV/",
+        "provider": "serpapi",
+        "width": 1080,
+        "height": 1920,
+        "score_breakdown": {
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 110,
+        "download_error": "fetch failed"
+      },
+      {
+        "player_slug": "douglas-santos",
+        "player_name": "道格拉斯·桑托斯",
+        "player_name_en": "DOUGLAS SANTOS",
+        "shirt_number": 16,
+        "position": "DF",
+        "title": "The first sticker is always unforgettable. Roberto Baggio reflects on  seeing himself in the Panini FIFA World Cup™ sticker album for the very  first time. In 2026, many players from 48 nations",
+        "alt": "The first sticker is always unforgettable. Roberto Baggio reflects on  seeing himself in the Panini FIFA World Cup™ sticker album for the very  first time. In 2026, many players from 48 nations",
+        "image_url": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3903276572677605735",
+        "source_page": "https://www.instagram.com/reel/DW1UGn9oLDa/",
+        "provider": "serpapi",
+        "width": 1080,
+        "height": 1920,
+        "score_breakdown": {
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 110,
+        "download_error": "fetch failed"
+      },
+      {
+        "player_slug": "douglas-santos",
+        "player_name": "道格拉斯·桑托斯",
+        "player_name_en": "DOUGLAS SANTOS",
+        "shirt_number": 16,
+        "position": "DF",
+        "title": "🇧🇷 Neymar will feature in Panini's official 2026 World Cup update set,  giving fans the chance to swap out Rodrygo or João Pedro and add Brazil's  iconic No.10 to their albums. 🥹",
+        "alt": "🇧🇷 Neymar will feature in Panini's official 2026 World Cup update set,  giving fans the chance to swap out Rodrygo or João Pedro and add Brazil's  iconic No.10 to their albums. 🥹",
+        "image_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=122114012954917346",
+        "source_page": "https://www.facebook.com/footballfootballtweet/posts/-neymar-will-feature-in-paninis-official-2026-world-cup-update-set-giving-fans-t/1406624158168181/",
+        "provider": "serpapi",
+        "width": 1199,
+        "height": 1312,
+        "score_breakdown": {
+          "panini": 50,
+          "world_cup": 20,
+          "card_number": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 110,
+        "download_error": "fetch failed"
+      }
+    ],
     "selected_source_url": null,
     "selected_local_path": null
   },
@@ -334,118 +186,6 @@
     "selected_local_path": null
   },
   {
-    "player_slug": "danilo-santos",
-    "player_name": "达尼洛·桑托斯",
-    "player_name_en": "DANILO SANTOS",
-    "shirt_number": 18,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"DANILO SANTOS\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"DANILO SANTOS\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"DANILO SANTOS\"",
-      "\"Panini Brazil 2026\" \"DANILO SANTOS\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "endrick",
-    "player_name": "恩德里克",
-    "player_name_en": "ENDRICK",
-    "shirt_number": 19,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"ENDRICK\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"ENDRICK\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"ENDRICK\"",
-      "\"Panini Brazil 2026\" \"ENDRICK\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "lucas-paqueta",
-    "player_name": "卢卡斯·帕奎塔",
-    "player_name_en": "LUCAS PAQUETA",
-    "shirt_number": 20,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"LUCAS PAQUETA\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"LUCAS PAQUETA\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"LUCAS PAQUETA\"",
-      "\"Panini Brazil 2026\" \"LUCAS PAQUETA\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "luiz-henrique",
-    "player_name": "路易斯·恩里克",
-    "player_name_en": "LUIZ HENRIQUE",
-    "shirt_number": 21,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"LUIZ HENRIQUE\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"LUIZ HENRIQUE\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"LUIZ HENRIQUE\"",
-      "\"Panini Brazil 2026\" \"LUIZ HENRIQUE\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "gabriel-martinelli",
-    "player_name": "加布里埃尔·马丁内利",
-    "player_name_en": "GABRIEL MARTINELLI",
-    "shirt_number": 22,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"GABRIEL MARTINELLI\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"GABRIEL MARTINELLI\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"GABRIEL MARTINELLI\"",
-      "\"Panini Brazil 2026\" \"GABRIEL MARTINELLI\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "ederson",
-    "player_name": "埃德森",
-    "player_name_en": "EDERSON",
-    "shirt_number": 23,
-    "position": "GK",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"EDERSON\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"EDERSON\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"EDERSON\"",
-      "\"Panini Brazil 2026\" \"EDERSON\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "roger-ibanez",
-    "player_name": "罗热·伊巴涅斯",
-    "player_name_en": "ROGER IBANEZ",
-    "shirt_number": 24,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"ROGER IBANEZ\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"ROGER IBANEZ\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"ROGER IBANEZ\"",
-      "\"Panini Brazil 2026\" \"ROGER IBANEZ\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
     "player_slug": "igor-thiago",
     "player_name": "伊戈尔·蒂亚戈",
     "player_name_en": "IGOR THIAGO",
@@ -456,22 +196,6 @@
       "\"Panini Adrenalyn XL 2026\" \"IGOR THIAGO\" \"Brazil\"",
       "\"Panini 2026 World Cup card\" \"IGOR THIAGO\"",
       "\"Panini Brazil 2026\" \"IGOR THIAGO\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "rayan",
-    "player_name": "拉扬",
-    "player_name_en": "RAYAN",
-    "shirt_number": 26,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"RAYAN\" \"Brazil\"",
-      "\"Panini Adrenalyn XL 2026\" \"RAYAN\" \"Brazil\"",
-      "\"Panini 2026 World Cup card\" \"RAYAN\"",
-      "\"Panini Brazil 2026\" \"RAYAN\""
     ],
     "candidates": [],
     "selected_source_url": null,

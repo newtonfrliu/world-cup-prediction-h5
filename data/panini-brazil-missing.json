@@ -1,57 +1,15 @@
 [
   {
-    "player_slug": "marquinhos",
-    "player_name": "马尔基尼奥斯",
-    "player_name_en": "MARQUINHOS",
-    "reason": "no candidates found"
-  },
-  {
     "player_slug": "alex-sandro",
     "player_name": "阿莱士·桑德罗",
     "player_name_en": "ALEX SANDRO",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "bruno-guimaraes",
-    "player_name": "布鲁诺·吉马良斯",
-    "player_name_en": "BRUNO GUIMARAES",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "matheus-cunha",
-    "player_name": "马特乌斯·库尼亚",
-    "player_name_en": "MATHEUS CUNHA",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "weverton",
-    "player_name": "韦弗顿",
-    "player_name_en": "WEVERTON",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "danilo",
-    "player_name": "达尼洛",
-    "player_name_en": "DANILO",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "bremer",
-    "player_name": "布雷默",
-    "player_name_en": "BREMER",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "leo-pereira",
-    "player_name": "莱奥·佩雷拉",
-    "player_name_en": "LEO PEREIRA",
-    "reason": "no candidates found"
+    "reason": "no candidate downloaded"
   },
   {
     "player_slug": "douglas-santos",
     "player_name": "道格拉斯·桑托斯",
     "player_name_en": "DOUGLAS SANTOS",
-    "reason": "no candidates found"
+    "reason": "no candidate downloaded"
   },
   {
     "player_slug": "fabinho",
@@ -60,57 +18,9 @@
     "reason": "no candidates found"
   },
   {
-    "player_slug": "danilo-santos",
-    "player_name": "达尼洛·桑托斯",
-    "player_name_en": "DANILO SANTOS",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "endrick",
-    "player_name": "恩德里克",
-    "player_name_en": "ENDRICK",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "lucas-paqueta",
-    "player_name": "卢卡斯·帕奎塔",
-    "player_name_en": "LUCAS PAQUETA",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "luiz-henrique",
-    "player_name": "路易斯·恩里克",
-    "player_name_en": "LUIZ HENRIQUE",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "gabriel-martinelli",
-    "player_name": "加布里埃尔·马丁内利",
-    "player_name_en": "GABRIEL MARTINELLI",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "ederson",
-    "player_name": "埃德森",
-    "player_name_en": "EDERSON",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "roger-ibanez",
-    "player_name": "罗热·伊巴涅斯",
-    "player_name_en": "ROGER IBANEZ",
-    "reason": "no candidates found"
-  },
-  {
     "player_slug": "igor-thiago",
     "player_name": "伊戈尔·蒂亚戈",
     "player_name_en": "IGOR THIAGO",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "rayan",
-    "player_name": "拉扬",
-    "player_name_en": "RAYAN",
     "reason": "no candidates found"
   }
 ]

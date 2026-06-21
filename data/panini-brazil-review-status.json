@@ -1,88 +1,7 @@
 [
   {
-    "player_slug": "ederson-silva",
-    "player_name": "埃德森·席尔瓦",
-    "output_path": "public/cards/panini/brazil/ederson-silva.png",
-    "source_url": "https://i.ebayimg.com/images/g/CrEAAOSw9Plm9DXa/s-l1200.jpg",
-    "review_flag": false,
-    "status": "approved",
-    "note": ""
-  },
-  {
-    "player_slug": "gabriel-magalhaes",
-    "player_name": "加布里埃尔·马加良斯",
-    "output_path": "public/cards/panini/brazil/gabriel-magalhaes.png",
-    "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_76.png?v=1773344071",
-    "review_flag": false,
-    "status": "approved",
-    "note": ""
-  },
-  {
-    "player_slug": "marquinhos",
-    "player_name": "马尔基尼奥斯",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
     "player_slug": "alex-sandro",
     "player_name": "阿莱士·桑德罗",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "bruno-guimaraes",
-    "player_name": "布鲁诺·吉马良斯",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "matheus-cunha",
-    "player_name": "马特乌斯·库尼亚",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "weverton",
-    "player_name": "韦弗顿",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "danilo",
-    "player_name": "达尼洛",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "bremer",
-    "player_name": "布雷默",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "leo-pereira",
-    "player_name": "莱奥·佩雷拉",
     "output_path": null,
     "source_url": null,
     "review_flag": true,
@@ -108,80 +27,8 @@
     "note": "missing source image"
   },
   {
-    "player_slug": "danilo-santos",
-    "player_name": "达尼洛·桑托斯",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "endrick",
-    "player_name": "恩德里克",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "lucas-paqueta",
-    "player_name": "卢卡斯·帕奎塔",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "luiz-henrique",
-    "player_name": "路易斯·恩里克",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "gabriel-martinelli",
-    "player_name": "加布里埃尔·马丁内利",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "ederson",
-    "player_name": "埃德森",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "roger-ibanez",
-    "player_name": "罗热·伊巴涅斯",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
     "player_slug": "igor-thiago",
     "player_name": "伊戈尔·蒂亚戈",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "rayan",
-    "player_name": "拉扬",
     "output_path": null,
     "source_url": null,
     "review_flag": true,

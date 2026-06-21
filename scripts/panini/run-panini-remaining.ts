@@ -34,7 +34,7 @@ type CountrySummary = {
   missing: number;
   pending_review: number;
   not_started_due_to_quota: number;
-  error_type?: "quota_exceeded" | "team_failed";
+  error_type?: "quota_exceeded" | "team_failed" | "team_timeout";
   error?: string;
 };
 
@@ -49,6 +49,7 @@ const targetCountries = [
   "Japan",
 ];
 const quotaExitCode = 75;
+const teamTimeoutMs = 20 * 60 * 1000;
 
 function slugify(value: string) {
   return value
@@ -133,10 +134,21 @@ function runTeam(country: string) {
       cwd: root,
       stdio: "inherit",
       shell: false,
+      timeout: teamTimeoutMs,
     },
   );
 
-  return result.status ?? 0;
+  if (result.error && "code" in result.error && result.error.code === "ETIMEDOUT") {
+    return {
+      status: 124,
+      error_type: "team_timeout" as const,
+      error: `${country} exceeded team timeout ${teamTimeoutMs}ms`,
+    };
+  }
+
+  return {
+    status: result.status ?? 0,
+  };
 }
 
 function countExistingOutputs(country: string, targetPlayers: SquadPlayer[]) {
@@ -201,6 +213,29 @@ function main() {
   const summaries: CountrySummary[] = [];
   const resume = process.argv.includes("--resume");
   let quotaExceeded = false;
+  const outputPath = path.join(root, "data", "panini-remaining-summary.json");
+
+  function writeSummary() {
+    const totals = summaries.reduce(
+      (sum, country) => ({
+        processed: sum.processed + country.processed,
+        missing: sum.missing + country.missing,
+        pending_review: sum.pending_review + country.pending_review,
+        skipped_existing: sum.skipped_existing + country.skipped_existing,
+        not_started_due_to_quota: sum.not_started_due_to_quota + country.not_started_due_to_quota,
+      }),
+      { processed: 0, missing: 0, pending_review: 0, skipped_existing: 0, not_started_due_to_quota: 0 },
+    );
+
+    writeFileSync(outputPath, `${JSON.stringify({
+      generated_at: new Date().toISOString(),
+      resume,
+      skipped_countries: ["Argentina", "Portugal"],
+      stopped_due_to_quota: quotaExceeded,
+      countries: summaries,
+      totals,
+    }, null, 2)}\n`, "utf8");
+  }
 
   for (const country of targetCountries) {
     console.log(`\n=== Panini remaining team flow: ${country} ===`);
@@ -210,25 +245,38 @@ function main() {
         forceQuotaNotStarted: true,
       }));
       console.log(`[skip due to quota] ${country}`);
+      writeSummary();
       continue;
     }
 
     try {
-      const status = runTeam(country);
+      const runResult = runTeam(country);
       const summary = readCountrySummary(country);
 
-      if (status === quotaExitCode || summary.error_type === "quota_exceeded") {
+      if (runResult.error_type === "team_timeout") {
+        summaries.push({
+          ...summary,
+          error_type: "team_timeout",
+          error: runResult.error,
+        });
+        writeSummary();
+        continue;
+      }
+
+      if (runResult.status === quotaExitCode || summary.error_type === "quota_exceeded") {
         quotaExceeded = true;
-      } else if (status !== 0) {
+      } else if (runResult.status !== 0) {
         summaries.push({
           ...summary,
           error_type: "team_failed",
-          error: `run-panini-team failed with exit code ${status}`,
+          error: `run-panini-team failed with exit code ${runResult.status}`,
         });
+        writeSummary();
         continue;
       }
 
       summaries.push(summary);
+      writeSummary();
     } catch (error) {
       const fallback = readCountrySummary(country);
 
@@ -237,29 +285,21 @@ function main() {
         error: error instanceof Error ? error.message : String(error),
       });
       console.error(`[${country}] ${error instanceof Error ? error.message : String(error)}`);
+      writeSummary();
     }
   }
 
-  const totals = summaries.reduce(
-    (sum, country) => ({
-      processed: sum.processed + country.processed,
-      missing: sum.missing + country.missing,
-      pending_review: sum.pending_review + country.pending_review,
-      skipped_existing: sum.skipped_existing + country.skipped_existing,
-      not_started_due_to_quota: sum.not_started_due_to_quota + country.not_started_due_to_quota,
-    }),
-    { processed: 0, missing: 0, pending_review: 0, skipped_existing: 0, not_started_due_to_quota: 0 },
-  );
-  const outputPath = path.join(root, "data", "panini-remaining-summary.json");
-
-  writeFileSync(outputPath, `${JSON.stringify({
-    generated_at: new Date().toISOString(),
-    resume,
-    skipped_countries: ["Argentina", "Portugal"],
-    stopped_due_to_quota: quotaExceeded,
-    countries: summaries,
-    totals,
-  }, null, 2)}\n`, "utf8");
+  writeSummary();
+  const finalSummary = JSON.parse(readFileSync(outputPath, "utf8")) as {
+    totals: {
+      processed: number;
+      missing: number;
+      pending_review: number;
+      skipped_existing: number;
+      not_started_due_to_quota: number;
+    };
+  };
+  const { totals } = finalSummary;
 
   console.log(`\nSummary written: ${path.relative(root, outputPath)}`);
   console.log(`Total processed: ${totals.processed}`);

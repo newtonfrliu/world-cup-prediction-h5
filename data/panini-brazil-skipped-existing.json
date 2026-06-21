@@ -1,0 +1,104 @@
+[
+  {
+    "player_slug": "ederson-silva",
+    "player_name": "埃德森·席尔瓦",
+    "player_name_en": "EDERSON SILVA",
+    "public_path": "public/cards/panini/brazil/ederson-silva.png"
+  },
+  {
+    "player_slug": "gabriel-magalhaes",
+    "player_name": "加布里埃尔·马加良斯",
+    "player_name_en": "GABRIEL MAGALHAES",
+    "public_path": "public/cards/panini/brazil/gabriel-magalhaes.png"
+  },
+  {
+    "player_slug": "marquinhos",
+    "player_name": "马尔基尼奥斯",
+    "player_name_en": "MARQUINHOS",
+    "public_path": "public/cards/panini/brazil/marquinhos.png"
+  },
+  {
+    "player_slug": "bruno-guimaraes",
+    "player_name": "布鲁诺·吉马良斯",
+    "player_name_en": "BRUNO GUIMARAES",
+    "public_path": "public/cards/panini/brazil/bruno-guimaraes.png"
+  },
+  {
+    "player_slug": "matheus-cunha",
+    "player_name": "马特乌斯·库尼亚",
+    "player_name_en": "MATHEUS CUNHA",
+    "public_path": "public/cards/panini/brazil/matheus-cunha.png"
+  },
+  {
+    "player_slug": "weverton",
+    "player_name": "韦弗顿",
+    "player_name_en": "WEVERTON",
+    "public_path": "public/cards/panini/brazil/weverton.png"
+  },
+  {
+    "player_slug": "danilo",
+    "player_name": "达尼洛",
+    "player_name_en": "DANILO",
+    "public_path": "public/cards/panini/brazil/danilo.png"
+  },
+  {
+    "player_slug": "bremer",
+    "player_name": "布雷默",
+    "player_name_en": "BREMER",
+    "public_path": "public/cards/panini/brazil/bremer.png"
+  },
+  {
+    "player_slug": "leo-pereira",
+    "player_name": "莱奥·佩雷拉",
+    "player_name_en": "LEO PEREIRA",
+    "public_path": "public/cards/panini/brazil/leo-pereira.png"
+  },
+  {
+    "player_slug": "danilo-santos",
+    "player_name": "达尼洛·桑托斯",
+    "player_name_en": "DANILO SANTOS",
+    "public_path": "public/cards/panini/brazil/danilo-santos.png"
+  },
+  {
+    "player_slug": "endrick",
+    "player_name": "恩德里克",
+    "player_name_en": "ENDRICK",
+    "public_path": "public/cards/panini/brazil/endrick.png"
+  },
+  {
+    "player_slug": "lucas-paqueta",
+    "player_name": "卢卡斯·帕奎塔",
+    "player_name_en": "LUCAS PAQUETA",
+    "public_path": "public/cards/panini/brazil/lucas-paqueta.png"
+  },
+  {
+    "player_slug": "luiz-henrique",
+    "player_name": "路易斯·恩里克",
+    "player_name_en": "LUIZ HENRIQUE",
+    "public_path": "public/cards/panini/brazil/luiz-henrique.png"
+  },
+  {
+    "player_slug": "gabriel-martinelli",
+    "player_name": "加布里埃尔·马丁内利",
+    "player_name_en": "GABRIEL MARTINELLI",
+    "public_path": "public/cards/panini/brazil/gabriel-martinelli.png"
+  },
+  {
+    "player_slug": "ederson",
+    "player_name": "埃德森",
+    "player_name_en": "EDERSON",
+    "public_path": "public/cards/panini/brazil/ederson.png"
+  },
+  {
+    "player_slug": "roger-ibanez",
+    "player_name": "罗热·伊巴涅斯",
+    "player_name_en": "ROGER IBANEZ",
+    "public_path": "public/cards/panini/brazil/roger-ibanez.png"
+  },
+  {
+    "player_slug": "rayan",
+    "player_name": "拉扬",
+    "player_name_en": "RAYAN",
+    "public_path": "public/cards/panini/brazil/rayan.png"
+  }
+]

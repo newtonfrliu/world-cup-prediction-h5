@@ -6,123 +6,21 @@
     "reason": "no candidates found"
   },
   {
-    "player_slug": "pubill-marc",
-    "player_name": "马克·普比尔",
-    "player_name_en": "PUBILL Marc",
-    "reason": "no candidates found"
-  },
-  {
     "player_slug": "grimaldo-alex",
     "player_name": "亚历克斯·格里马尔多",
     "player_name_en": "GRIMALDO Alex",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "garcia-eric",
-    "player_name": "埃里克·加西亚",
-    "player_name_en": "GARCIA Eric",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "llorente-marcos",
-    "player_name": "马科斯·略伦特",
-    "player_name_en": "LLORENTE Marcos",
-    "reason": "no candidates found"
+    "reason": "player_timeout"
   },
   {
     "player_slug": "merino-mikel",
     "player_name": "米克尔·梅里诺",
     "player_name_en": "MERINO Mikel",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "torres-ferran",
-    "player_name": "费兰·托雷斯",
-    "player_name_en": "TORRES Ferran",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "ruiz-fabian",
-    "player_name": "法比安·鲁伊斯",
-    "player_name_en": "RUIZ Fabian",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "gavi",
-    "player_name": "加维",
-    "player_name_en": "GAVI",
-    "reason": "no candidates found"
+    "reason": "player_timeout"
   },
   {
     "player_slug": "pino-yeremy",
     "player_name": "耶雷米·皮诺",
     "player_name_en": "PINO Yeremy",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "porro-pedro",
-    "player_name": "佩德罗·波罗",
-    "player_name_en": "PORRO Pedro",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "garcia-joan",
-    "player_name": "霍安·加西亚",
-    "player_name_en": "GARCIA Joan",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "laporte-aymeric",
-    "player_name": "艾梅里克·拉波尔特",
-    "player_name_en": "LAPORTE Aymeric",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "baena-alex",
-    "player_name": "亚历克斯·巴埃纳",
-    "player_name_en": "BAENA Alex",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "zubimendi-martin",
-    "player_name": "马丁·祖比门迪",
-    "player_name_en": "ZUBIMENDI Martin",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "oyarzabal-mikel",
-    "player_name": "米克尔·奥亚萨瓦尔",
-    "player_name_en": "OYARZABAL Mikel",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "cubarsi-pau",
-    "player_name": "保罗·库巴西",
-    "player_name_en": "CUBARSI Pau",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "simon-unai",
-    "player_name": "乌奈·西蒙",
-    "player_name_en": "SIMON Unai",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "cucurella-marc",
-    "player_name": "马克·库库雷利亚",
-    "player_name_en": "CUCURELLA Marc",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "munoz-victor",
-    "player_name": "维克托·穆尼奥斯",
-    "player_name_en": "MUNOZ Victor",
-    "reason": "no candidates found"
-  },
-  {
-    "player_slug": "iglesias-borja",
-    "player_name": "博尔哈·伊格莱西亚斯",
-    "player_name_en": "IGLESIAS Borja",
-    "reason": "no candidates found"
+    "reason": "player_timeout"
   }
 ]

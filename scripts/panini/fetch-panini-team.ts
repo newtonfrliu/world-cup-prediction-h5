@@ -64,10 +64,20 @@ class QuotaExceededError extends Error {
   }
 }
 
+class PlayerTimeoutError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PlayerTimeoutError";
+  }
+}
+
 const root = process.cwd();
 const provider = process.env.IMAGE_SEARCH_PROVIDER ?? "serpapi";
 const supportedImageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const quotaExitCode = 75;
+const searchTimeoutMs = 15_000;
+const downloadTimeoutMs = 20_000;
+const playerTimeoutMs = 60_000;
 
 function getCountryArg() {
   const index = process.argv.indexOf("--country");
@@ -286,7 +296,7 @@ function scoreCandidate(countrySlug: string, player: SquadPlayer, candidate: Omi
   };
 }
 
-async function searchSerpApi(query: string) {
+async function searchSerpApi(query: string, timeoutMs = searchTimeoutMs) {
   const apiKey = process.env.SERPAPI_API_KEY;
 
   if (!apiKey) {
@@ -299,7 +309,7 @@ async function searchSerpApi(query: string) {
   url.searchParams.set("api_key", apiKey);
   url.searchParams.set("ijn", "0");
 
-  const response = await fetch(url);
+  const response = await fetchWithTimeout(url, {}, timeoutMs, "search request");
 
   if (!response.ok) {
     const text = await response.text();
@@ -339,14 +349,14 @@ async function searchSerpApi(query: string) {
   })).filter((item) => item.image_url);
 }
 
-async function downloadCandidate(candidate: Candidate, outputPath: string) {
-  const response = await fetch(candidate.image_url, {
+async function downloadCandidate(candidate: Candidate, outputPath: string, timeoutMs = downloadTimeoutMs) {
+  const response = await fetchWithTimeout(candidate.image_url, {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36",
       Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
     },
-  });
+  }, timeoutMs, "image download");
 
   if (!response.ok) {
     throw new Error(`download failed: ${response.status}`);
@@ -367,6 +377,36 @@ function outputExtension(candidate: Candidate) {
     return supportedImageExtensions.has(ext) ? ext : ".jpg";
   } catch {
     return ".jpg";
+  }
+}
+
+function getRemainingTimeout(deadline: number, maxTimeout: number) {
+  const remaining = deadline - Date.now();
+
+  if (remaining <= 0) {
+    throw new PlayerTimeoutError("player_timeout");
+  }
+
+  return Math.min(maxTimeout, remaining);
+}
+
+async function fetchWithTimeout(url: URL | string, init: RequestInit, timeoutMs: number, label: string) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`${label} timeout after ${timeoutMs}ms`);
+    }
+
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -399,6 +439,7 @@ async function main() {
 
   try {
     for (const player of players) {
+      try {
       const playerSlug = player.player_slug;
       const publicPath = path.join(publicRoot, `${playerSlug}.png`);
 
@@ -416,13 +457,17 @@ async function main() {
       const playerRawDir = path.join(rawRoot, playerSlug);
       const queries = buildQueries(country, player);
       const candidateByUrl = new Map<string, Candidate>();
+      const playerDeadline = Date.now() + playerTimeoutMs;
 
       mkdirSync(playerRawDir, { recursive: true });
       console.log(`[search] ${player.player_name_en}`);
 
       for (const query of queries) {
         try {
-          const searchResults = await searchSerpApi(query);
+          const searchResults = await searchSerpApi(
+            query,
+            getRemainingTimeout(playerDeadline, searchTimeoutMs),
+          );
 
           for (const searchResult of searchResults) {
             const candidateBase = {
@@ -448,6 +493,10 @@ async function main() {
             throw error;
           }
 
+          if (error instanceof PlayerTimeoutError || Date.now() >= playerDeadline) {
+            throw new PlayerTimeoutError("player_timeout");
+          }
+
           console.error(`[search failed] ${player.player_name_en}: ${error instanceof Error ? error.message : String(error)}`);
         }
       }
@@ -466,7 +515,11 @@ async function main() {
 
         try {
           if (!existsSync(outputPath)) {
-            await downloadCandidate(candidate, outputPath);
+            await downloadCandidate(
+              candidate,
+              outputPath,
+              getRemainingTimeout(playerDeadline, downloadTimeoutMs),
+            );
           }
 
           downloadedCandidates.push({
@@ -474,6 +527,10 @@ async function main() {
             local_path: path.relative(root, outputPath).replace(/\\/g, "/"),
           });
         } catch (error) {
+          if (error instanceof PlayerTimeoutError || Date.now() >= playerDeadline) {
+            throw new PlayerTimeoutError("player_timeout");
+          }
+
           downloadedCandidates.push({
             ...candidate,
             download_error: error instanceof Error ? error.message : String(error),
@@ -502,6 +559,24 @@ async function main() {
           player_name_en: player.player_name_en,
           reason: candidates.length === 0 ? "no candidates found" : "no candidate downloaded",
         });
+      }
+      } catch (error) {
+        if (error instanceof QuotaExceededError) {
+          throw error;
+        }
+
+        if (error instanceof PlayerTimeoutError) {
+          missing.push({
+            player_slug: player.player_slug,
+            player_name: player.player_name,
+            player_name_en: player.player_name_en,
+            reason: "player_timeout",
+          });
+          console.error(`[player timeout] ${player.player_name_en}`);
+          continue;
+        }
+
+        throw error;
       }
     }
   } catch (error) {

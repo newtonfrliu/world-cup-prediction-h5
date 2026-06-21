@@ -14,6 +14,7 @@ import {
 } from "@/lib/countries";
 import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { resolvePlayerCardImageSource } from "@/lib/playerCardImages";
 import type { Database } from "@/types/database";
 
 type Player = Pick<
@@ -96,6 +97,16 @@ function normalizeCardKey(value: string | null | undefined) {
     .trim();
 }
 
+function getPlayerSlug(value: string | null | undefined) {
+  return (value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function getManualCoreRank(card: PlayerCard) {
   const team = getCanonicalTeamName(card.team);
   const rarity = (card.rarity ?? "common").toLowerCase();
@@ -124,11 +135,18 @@ function sortPlayerCards(cards: PlayerCard[]) {
       return coreRankA - coreRankB;
     }
 
-    const hasArtA = a.card_art_url?.trim() ? 0 : 1;
-    const hasArtB = b.card_art_url?.trim() ? 0 : 1;
+    const sourcePriority: Record<string, number> = {
+      core_card: 0,
+      panini: 1,
+      generic: 2,
+    };
+    const sourceA = resolvePlayerCardImageSource(a).sourceType;
+    const sourceB = resolvePlayerCardImageSource(b).sourceType;
+    const sourceRankA = sourcePriority[sourceA] ?? 99;
+    const sourceRankB = sourcePriority[sourceB] ?? 99;
 
-    if (hasArtA !== hasArtB) {
-      return hasArtA - hasArtB;
+    if (sourceRankA !== sourceRankB) {
+      return sourceRankA - sourceRankB;
     }
 
     const priceA = a.price ?? 0;
@@ -347,6 +365,30 @@ export default function CollectionPage() {
     progressCardIds.has(cardId),
   ).length;
   const totalCount = progressCards.length;
+
+  useEffect(() => {
+    if (progressCards.length === 0) {
+      return;
+    }
+
+    const stats = {
+      core_card: 0,
+      panini: 0,
+      generic: 0,
+    };
+
+    for (const card of progressCards) {
+      const source = resolvePlayerCardImageSource(card);
+      stats[source.sourceType] += 1;
+      console.log("COLLECTION_CARD_SOURCE", {
+        player_slug: getPlayerSlug(card.player_name_en),
+        source_type: source.sourceType,
+        src: source.src,
+      });
+    }
+
+    console.log("COLLECTION_CARD_SOURCE_STATS", stats);
+  }, [progressCards]);
 
   useEffect(() => {
     console.log("COLLECTION_OWNED_RENDER_STATE", {

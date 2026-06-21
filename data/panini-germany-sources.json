@@ -11,328 +11,81 @@
       "\"Panini 2026 World Cup card\" \"RUEDIGER Antonio\"",
       "\"Panini Germany 2026\" \"RUEDIGER Antonio\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "anton-waldemar",
-    "player_name": "瓦尔德马·安东",
-    "player_name_en": "ANTON Waldemar",
-    "shirt_number": 3,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"ANTON Waldemar\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"ANTON Waldemar\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"ANTON Waldemar\"",
-      "\"Panini Germany 2026\" \"ANTON Waldemar\""
+    "candidates": [
+      {
+        "player_slug": "ruediger-antonio",
+        "player_name": "安东尼奥·吕迪格",
+        "player_name_en": "RUEDIGER Antonio",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Soccer Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL FIFA World  Cup 2026-194-BASIC",
+        "alt": "Soccer Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL FIFA World  Cup 2026-194-BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_194.png?v=1773344364",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/antonio-rudiger-194-alemania-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOooDqQdJkyUd7LIfhMmwO88FAnL7-FJm1SwOJPOiaqOWMq-3SNkw",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/germany/raw/ruediger-antonio/01.png"
+      },
+      {
+        "player_slug": "ruediger-antonio",
+        "player_name": "安东尼奥·吕迪格",
+        "player_name_en": "RUEDIGER Antonio",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Football Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL Fifa  World Cup 2026-LE38-Limited Edition",
+        "alt": "Football Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL Fifa  World Cup 2026-LE38-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE38.webp?v=1775837156",
+        "source_page": "https://www.worldtradingcards.com/en/products/antonio-rudiger-le38-alemania-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOoqfmQiCKZmvpptQ4hfwb78P9H5mAkNFSA0YfhxSSj0IlszV3yK_",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/germany/raw/ruediger-antonio/02.webp"
+      },
+      {
+        "player_slug": "ruediger-antonio",
+        "player_name": "安东尼奥·吕迪格",
+        "player_name_en": "RUEDIGER Antonio",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Football Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL Fifa  World Cup 2026-562-Defensive Rock",
+        "alt": "Football Trading Card-Antonio Rudiger-Germany-Panini Adrenalyn XL Fifa  World Cup 2026-562-Defensive Rock",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_562.png?v=1773345294",
+        "source_page": "https://www.worldtradingcards.com/en/products/antonio-rudiger-562-alemania-panini-adrenalyn-xl-fifa-world-cup-defensive-rock?srsltid=AfmBOorTPPrh_EEK73yvDT_Rrmth8tXtOblXT_WUnkEL-T8ZOFlS-G88",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/germany/raw/ruediger-antonio/03.png"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "tah-jonathan",
-    "player_name": "约纳坦·塔",
-    "player_name_en": "TAH Jonathan",
-    "shirt_number": 4,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"TAH Jonathan\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"TAH Jonathan\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"TAH Jonathan\"",
-      "\"Panini Germany 2026\" \"TAH Jonathan\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "pavlovic-aleksandar",
-    "player_name": "亚历山大·帕夫洛维奇",
-    "player_name_en": "PAVLOVIC Aleksandar",
-    "shirt_number": 5,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"PAVLOVIC Aleksandar\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"PAVLOVIC Aleksandar\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"PAVLOVIC Aleksandar\"",
-      "\"Panini Germany 2026\" \"PAVLOVIC Aleksandar\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "goretzka-leon",
-    "player_name": "莱昂·格雷茨卡",
-    "player_name_en": "GORETZKA Leon",
-    "shirt_number": 8,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"GORETZKA Leon\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"GORETZKA Leon\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"GORETZKA Leon\"",
-      "\"Panini Germany 2026\" \"GORETZKA Leon\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "leweling-jamie",
-    "player_name": "杰米·勒韦林",
-    "player_name_en": "LEWELING Jamie",
-    "shirt_number": 9,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"LEWELING Jamie\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"LEWELING Jamie\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"LEWELING Jamie\"",
-      "\"Panini Germany 2026\" \"LEWELING Jamie\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "woltemade-nick",
-    "player_name": "尼克·沃尔特马德",
-    "player_name_en": "WOLTEMADE Nick",
-    "shirt_number": 11,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"WOLTEMADE Nick\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"WOLTEMADE Nick\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"WOLTEMADE Nick\"",
-      "\"Panini Germany 2026\" \"WOLTEMADE Nick\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "baumann-oliver",
-    "player_name": "奥利弗·鲍曼",
-    "player_name_en": "BAUMANN Oliver",
-    "shirt_number": 12,
-    "position": "GK",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"BAUMANN Oliver\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"BAUMANN Oliver\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"BAUMANN Oliver\"",
-      "\"Panini Germany 2026\" \"BAUMANN Oliver\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "gross-pascal",
-    "player_name": "帕斯卡尔·格罗斯",
-    "player_name_en": "GROSS Pascal",
-    "shirt_number": 13,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"GROSS Pascal\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"GROSS Pascal\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"GROSS Pascal\"",
-      "\"Panini Germany 2026\" \"GROSS Pascal\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "beier-maximilian",
-    "player_name": "马克西米利安·拜尔",
-    "player_name_en": "BEIER Maximilian",
-    "shirt_number": 14,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"BEIER Maximilian\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"BEIER Maximilian\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"BEIER Maximilian\"",
-      "\"Panini Germany 2026\" \"BEIER Maximilian\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "schlotterbeck-nico",
-    "player_name": "尼科·施洛特贝克",
-    "player_name_en": "SCHLOTTERBECK Nico",
-    "shirt_number": 15,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"SCHLOTTERBECK Nico\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"SCHLOTTERBECK Nico\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"SCHLOTTERBECK Nico\"",
-      "\"Panini Germany 2026\" \"SCHLOTTERBECK Nico\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "stiller-angelo",
-    "player_name": "安杰洛·施蒂勒",
-    "player_name_en": "STILLER Angelo",
-    "shirt_number": 16,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"STILLER Angelo\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"STILLER Angelo\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"STILLER Angelo\"",
-      "\"Panini Germany 2026\" \"STILLER Angelo\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "brown-nathaniel",
-    "player_name": "纳撒尼尔·布朗",
-    "player_name_en": "BROWN Nathaniel",
-    "shirt_number": 18,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"BROWN Nathaniel\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"BROWN Nathaniel\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"BROWN Nathaniel\"",
-      "\"Panini Germany 2026\" \"BROWN Nathaniel\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "sane-leroy",
-    "player_name": "勒鲁瓦·萨内",
-    "player_name_en": "SANE Leroy",
-    "shirt_number": 19,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"SANE Leroy\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"SANE Leroy\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"SANE Leroy\"",
-      "\"Panini Germany 2026\" \"SANE Leroy\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "amiri-nadiem",
-    "player_name": "纳迪姆·阿米里",
-    "player_name_en": "AMIRI Nadiem",
-    "shirt_number": 20,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"AMIRI Nadiem\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"AMIRI Nadiem\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"AMIRI Nadiem\"",
-      "\"Panini Germany 2026\" \"AMIRI Nadiem\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "nuebel-alexander",
-    "player_name": "亚历山大·努贝尔",
-    "player_name_en": "NUEBEL Alexander",
-    "shirt_number": 21,
-    "position": "GK",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"NUEBEL Alexander\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"NUEBEL Alexander\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"NUEBEL Alexander\"",
-      "\"Panini Germany 2026\" \"NUEBEL Alexander\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "raum-david",
-    "player_name": "大卫·劳姆",
-    "player_name_en": "RAUM David",
-    "shirt_number": 22,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"RAUM David\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"RAUM David\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"RAUM David\"",
-      "\"Panini Germany 2026\" \"RAUM David\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "nmecha-felix",
-    "player_name": "费利克斯·恩梅查",
-    "player_name_en": "NMECHA Felix",
-    "shirt_number": 23,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"NMECHA Felix\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"NMECHA Felix\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"NMECHA Felix\"",
-      "\"Panini Germany 2026\" \"NMECHA Felix\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "thiaw-malick",
-    "player_name": "马利克·佳夫",
-    "player_name_en": "THIAW Malick",
-    "shirt_number": 24,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"THIAW Malick\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"THIAW Malick\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"THIAW Malick\"",
-      "\"Panini Germany 2026\" \"THIAW Malick\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "ouedraogo-assan",
-    "player_name": "阿桑·韦德拉奥果",
-    "player_name_en": "OUEDRAOGO Assan",
-    "shirt_number": 25,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"OUEDRAOGO Assan\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"OUEDRAOGO Assan\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"OUEDRAOGO Assan\"",
-      "\"Panini Germany 2026\" \"OUEDRAOGO Assan\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "undav-deniz",
-    "player_name": "德尼兹·温达夫",
-    "player_name_en": "UNDAV Deniz",
-    "shirt_number": 26,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"UNDAV Deniz\" \"Germany\"",
-      "\"Panini Adrenalyn XL 2026\" \"UNDAV Deniz\" \"Germany\"",
-      "\"Panini 2026 World Cup card\" \"UNDAV Deniz\"",
-      "\"Panini Germany 2026\" \"UNDAV Deniz\""
-    ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_194.png?v=1773344364",
+    "selected_local_path": "source_images/panini/germany/raw/ruediger-antonio/01.png"
   }
 ]

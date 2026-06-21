@@ -1,0 +1,128 @@
+[
+  {
+    "player_slug": "verbruggen-bart",
+    "player_name": "巴特·费尔布鲁根",
+    "player_name_en": "VERBRUGGEN Bart",
+    "public_path": "public/cards/panini/netherlands/verbruggen-bart.png"
+  },
+  {
+    "player_slug": "geertruida-lutsharel",
+    "player_name": "卢特沙雷尔·海特勒伊达",
+    "player_name_en": "GEERTRUIDA Lutsharel",
+    "public_path": "public/cards/panini/netherlands/geertruida-lutsharel.png"
+  },
+  {
+    "player_slug": "de-roon-marten",
+    "player_name": "马滕·德容",
+    "player_name_en": "DE ROON Marten",
+    "public_path": "public/cards/panini/netherlands/de-roon-marten.png"
+  },
+  {
+    "player_slug": "van-hecke-jan-paul",
+    "player_name": "扬·保罗·范赫克",
+    "player_name_en": "VAN HECKE Jan Paul",
+    "public_path": "public/cards/panini/netherlands/van-hecke-jan-paul.png"
+  },
+  {
+    "player_slug": "kluivert-justin",
+    "player_name": "贾斯汀·克鲁伊维特",
+    "player_name_en": "KLUIVERT Justin",
+    "public_path": "public/cards/panini/netherlands/kluivert-justin.png"
+  },
+  {
+    "player_slug": "gravenberch-ryan",
+    "player_name": "瑞安·赫拉芬贝赫",
+    "player_name_en": "GRAVENBERCH Ryan",
+    "public_path": "public/cards/panini/netherlands/gravenberch-ryan.png"
+  },
+  {
+    "player_slug": "weghorst-wout",
+    "player_name": "沃特·韦霍斯特",
+    "player_name_en": "WEGHORST Wout",
+    "public_path": "public/cards/panini/netherlands/weghorst-wout.png"
+  },
+  {
+    "player_slug": "wieffer-mats",
+    "player_name": "马茨·维弗",
+    "player_name_en": "WIEFFER Mats",
+    "public_path": "public/cards/panini/netherlands/wieffer-mats.png"
+  },
+  {
+    "player_slug": "roefs-robin",
+    "player_name": "罗宾·罗夫斯",
+    "player_name_en": "ROEFS Robin",
+    "public_path": "public/cards/panini/netherlands/roefs-robin.png"
+  },
+  {
+    "player_slug": "reijnders-tijjani",
+    "player_name": "蒂贾尼·赖因德斯",
+    "player_name_en": "REIJNDERS Tijjani",
+    "public_path": "public/cards/panini/netherlands/reijnders-tijjani.png"
+  },
+  {
+    "player_slug": "van-de-ven-micky",
+    "player_name": "米基·范德文",
+    "player_name_en": "VAN DE VEN Micky",
+    "public_path": "public/cards/panini/netherlands/van-de-ven-micky.png"
+  },
+  {
+    "player_slug": "til-guus",
+    "player_name": "古斯·蒂尔",
+    "player_name_en": "TIL Guus",
+    "public_path": "public/cards/panini/netherlands/til-guus.png"
+  },
+  {
+    "player_slug": "lang-noa",
+    "player_name": "诺阿·朗",
+    "player_name_en": "LANG Noa",
+    "public_path": "public/cards/panini/netherlands/lang-noa.png"
+  },
+  {
+    "player_slug": "malen-donyell",
+    "player_name": "唐耶尔·马伦",
+    "player_name_en": "MALEN Donyell",
+    "public_path": "public/cards/panini/netherlands/malen-donyell.png"
+  },
+  {
+    "player_slug": "brobbey-brian",
+    "player_name": "布莱恩·布罗比",
+    "player_name_en": "BROBBEY Brian",
+    "public_path": "public/cards/panini/netherlands/brobbey-brian.png"
+  },
+  {
+    "player_slug": "koopmeiners-teun",
+    "player_name": "特恩·库普梅纳斯",
+    "player_name_en": "KOOPMEINERS Teun",
+    "public_path": "public/cards/panini/netherlands/koopmeiners-teun.png"
+  },
+  {
+    "player_slug": "dumfries-denzel",
+    "player_name": "登泽尔·邓弗里斯",
+    "player_name_en": "DUMFRIES Denzel",
+    "public_path": "public/cards/panini/netherlands/dumfries-denzel.png"
+  },
+  {
+    "player_slug": "flekken-mark",
+    "player_name": "马克·弗莱肯",
+    "player_name_en": "FLEKKEN Mark",
+    "public_path": "public/cards/panini/netherlands/flekken-mark.png"
+  },
+  {
+    "player_slug": "summerville-crysencio",
+    "player_name": "克里森西奥·萨默维尔",
+    "player_name_en": "SUMMERVILLE Crysencio",
+    "public_path": "public/cards/panini/netherlands/summerville-crysencio.png"
+  },
+  {
+    "player_slug": "hato-jorrel",
+    "player_name": "约雷尔·哈托",
+    "player_name_en": "HATO Jorrel",
+    "public_path": "public/cards/panini/netherlands/hato-jorrel.png"
+  },
+  {
+    "player_slug": "timber-quinten",
+    "player_name": "昆滕·廷贝尔",
+    "player_name_en": "TIMBER Quinten",
+    "public_path": "public/cards/panini/netherlands/timber-quinten.png"
+  }
+]

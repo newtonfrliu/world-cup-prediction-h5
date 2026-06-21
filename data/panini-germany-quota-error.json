@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-06-21T05:43:26.354Z",
+  "country": "Germany",
+  "error_type": "quota_exceeded",
+  "message": "SerpAPI quota exceeded: 429 {\n  \"error\": \"Your account has run out of searches.\"\n}",
+  "completed_source_records": 1,
+  "skipped_existing": 0,
+  "remaining_unstarted": 20
+}

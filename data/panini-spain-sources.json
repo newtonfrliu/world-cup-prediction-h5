@@ -27,25 +27,78 @@
       "\"Panini 2026 World Cup card\" \"PUBILL Marc\"",
       "\"Panini Spain 2026\" \"PUBILL Marc\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "grimaldo-alex",
-    "player_name": "亚历克斯·格里马尔多",
-    "player_name_en": "GRIMALDO Alex",
-    "shirt_number": 3,
-    "position": "DF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"GRIMALDO Alex\" \"Spain\"",
-      "\"Panini Adrenalyn XL 2026\" \"GRIMALDO Alex\" \"Spain\"",
-      "\"Panini 2026 World Cup card\" \"GRIMALDO Alex\"",
-      "\"Panini Spain 2026\" \"GRIMALDO Alex\""
+    "candidates": [
+      {
+        "player_slug": "pubill-marc",
+        "player_name": "马克·普比尔",
+        "player_name_en": "PUBILL Marc",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Soccer Trading Card-Marquinhos-Brazil-Panini Adrenalyn XL FIFA World Cup  2026-LE12-Limited Edition",
+        "alt": "Soccer Trading Card-Marquinhos-Brazil-Panini Adrenalyn XL FIFA World Cup  2026-LE12-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE12.png?v=1773345703",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/marquinhos-le12-brasil-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOoo3zzjLnem73-A-u1inpz35OVldj7_V654ynzPzkG1j2rDi_FrM",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/pubill-marc/01.png"
+      },
+      {
+        "player_slug": "pubill-marc",
+        "player_name": "马克·普比尔",
+        "player_name_en": "PUBILL Marc",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "PANINI ADRENALYN XL FIFA 365 2026 No. RS6 Marc Bernal Rising Star EUR 2,74  - PicClick ES",
+        "alt": "PANINI ADRENALYN XL FIFA 365 2026 No. RS6 Marc Bernal Rising Star EUR 2,74  - PicClick ES",
+        "image_url": "https://www.picclickimg.com/2wcAAeSwL95qJ0YC/Panini-Prizm-FIFA-Soccer-2025-26-Tarjeta-Marc-Pubill.webp",
+        "source_page": "https://picclick.es/Panini-Adrenalyn-XL-FIFA-365-2026-No-RS6-236406227320.html",
+        "provider": "serpapi",
+        "width": 465,
+        "height": 640,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 150,
+        "download_error": "fetch failed"
+      },
+      {
+        "player_slug": "pubill-marc",
+        "player_name": "马克·普比尔",
+        "player_name_en": "PUBILL Marc",
+        "shirt_number": 2,
+        "position": "DF",
+        "title": "Panini FIFA World Cup Adrenalyn 2026 No. 624 Official Emblem | eBay",
+        "alt": "Panini FIFA World Cup Adrenalyn 2026 No. 624 Official Emblem | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/AXoAAeSwezxqJOMJ/s-l1200.png",
+        "source_page": "https://www.ebay.com/itm/227321485942",
+        "provider": "serpapi",
+        "width": 945,
+        "height": 945,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "card_number": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/pubill-marc/03.png"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE12.png?v=1773345703",
+    "selected_local_path": "source_images/panini/spain/raw/pubill-marc/01.png"
   },
   {
     "player_slug": "garcia-eric",
@@ -59,9 +112,80 @@
       "\"Panini 2026 World Cup card\" \"GARCIA Eric\"",
       "\"Panini Spain 2026\" \"GARCIA Eric\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "garcia-eric",
+        "player_name": "埃里克·加西亚",
+        "player_name_en": "GARCIA Eric",
+        "shirt_number": 4,
+        "position": "DF",
+        "title": "Football Trading Card-Eric García-FC Barcelona-Panini Adrenalyn XL 2025-2026 -60-Basic",
+        "alt": "Football Trading Card-Eric García-FC Barcelona-Panini Adrenalyn XL 2025-2026 -60-Basic",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/060_ADRENALYN_2025_26_BARCELONA.webp?v=1768859336",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/eric-garcia-60-fc-barcelona-panini-adrenalyn-xl-basico?srsltid=AfmBOoqKJ3kmu7kjv5jxP--kTcx9ZeKfaSUBofeF1y6pO5npl1mFhU30",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-eric/01.webp"
+      },
+      {
+        "player_slug": "garcia-eric",
+        "player_name": "埃里克·加西亚",
+        "player_name_en": "GARCIA Eric",
+        "shirt_number": 4,
+        "position": "DF",
+        "title": "Chrome Trading Card Soccer-Eric García-FC Barcelona-Panini Adrenalyn XL  2025-2026-426-Protas",
+        "alt": "Chrome Trading Card Soccer-Eric García-FC Barcelona-Panini Adrenalyn XL  2025-2026-426-Protas",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/426_ADRENALYN_2025-26_PROTAS.webp?v=1768823297",
+        "source_page": "https://www.worldtradingcards.com/en/products/eric-garcia-426-fc-barcelona-panini-adrenalyn-xl-protas?srsltid=AfmBOootc6NDXxnjJU5-ISuvVHv2ooY2jfMYoh_chCJsrc42vsWTgL9R",
+        "provider": "serpapi",
+        "width": 724,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-eric/02.webp"
+      },
+      {
+        "player_slug": "garcia-eric",
+        "player_name": "埃里克·加西亚",
+        "player_name_en": "GARCIA Eric",
+        "shirt_number": 4,
+        "position": "DF",
+        "title": "ERIC GARCIA 2022 PANINI PRIZM FIFA WORLD CUP NO 221 14269",
+        "alt": "ERIC GARCIA 2022 PANINI PRIZM FIFA WORLD CUP NO 221 14269",
+        "image_url": "https://i.ebayimg.com/images/g/MIMAAOSw-zVkFKBY/s-l1200.png",
+        "source_page": "https://www.ebay.com/itm/325578819525",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "card_number": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-eric/03.png"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/060_ADRENALYN_2025_26_BARCELONA.webp?v=1768859336",
+    "selected_local_path": "source_images/panini/spain/raw/garcia-eric/01.webp"
   },
   {
     "player_slug": "llorente-marcos",
@@ -75,25 +199,77 @@
       "\"Panini 2026 World Cup card\" \"LLORENTE Marcos\"",
       "\"Panini Spain 2026\" \"LLORENTE Marcos\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "merino-mikel",
-    "player_name": "米克尔·梅里诺",
-    "player_name_en": "MERINO Mikel",
-    "shirt_number": 6,
-    "position": "MF",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"MERINO Mikel\" \"Spain\"",
-      "\"Panini Adrenalyn XL 2026\" \"MERINO Mikel\" \"Spain\"",
-      "\"Panini 2026 World Cup card\" \"MERINO Mikel\"",
-      "\"Panini Spain 2026\" \"MERINO Mikel\""
+    "candidates": [
+      {
+        "player_slug": "llorente-marcos",
+        "player_name": "马科斯·略伦特",
+        "player_name_en": "LLORENTE Marcos",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "249 Marcos Llorente Spain Hero Panini World Cup 2022 Adrenalyn XL – Solve  Collectibles",
+        "alt": "249 Marcos Llorente Spain Hero Panini World Cup 2022 Adrenalyn XL – Solve  Collectibles",
+        "image_url": "https://www.solvecollectibles.com/cdn/shop/files/Marcos-Llorente-Spain-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809926&width=1920",
+        "source_page": "https://www.solvecollectibles.com/products/249-marcos-llorente-spain-hero-panini-world-cup-2022-adrenalyn-xl",
+        "provider": "serpapi",
+        "width": 1440,
+        "height": 1920,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/llorente-marcos/01.jpg"
+      },
+      {
+        "player_slug": "llorente-marcos",
+        "player_name": "马科斯·略伦特",
+        "player_name_en": "LLORENTE Marcos",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "Football Trading Card - Marcos Llorente - Atlético de Madrid - Panini  Adrenalyn XL 2025-2026 - 40 - Base",
+        "alt": "Football Trading Card - Marcos Llorente - Atlético de Madrid - Panini  Adrenalyn XL 2025-2026 - 40 - Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/040_ADRENALYN_2025_26_ATLETICO_MADRID.webp?v=1768859530",
+        "source_page": "https://www.worldtradingcards.com/en/products/marcos-llorente-40-atletico-de-madrid-panini-adrenalyn-xl-basico?srsltid=AfmBOopjk7fCy3gTXFNj4UjLbTfTZOY4gh_JF702mhDPqvNAZocvW9-o",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/llorente-marcos/02.webp"
+      },
+      {
+        "player_slug": "llorente-marcos",
+        "player_name": "马科斯·略伦特",
+        "player_name_en": "LLORENTE Marcos",
+        "shirt_number": 5,
+        "position": "DF",
+        "title": "Soccer Trading Card-Marcos Llorente-Atlético de Madrid-Panini Club World Cup  Adrenalyn XL 2025-#252-FANS / Crowd Hero",
+        "alt": "Soccer Trading Card-Marcos Llorente-Atlético de Madrid-Panini Club World Cup  Adrenalyn XL 2025-#252-FANS / Crowd Hero",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/panini_club_word_cup_adrenalyn_xl_2025-252_lf4bz2.webp?v=1755280112",
+        "source_page": "https://www.worldtradingcards.com/en/products/marcos-llorente-252-atletico-de-madrid-panini-club-world-cup-adrenalyn-xl-2025-fans-crowd-hero?srsltid=AfmBOopy27OOCEcww9He8CBfO9y-1nve9G_r2AENQrNsjsDTTyr4V17u",
+        "provider": "serpapi",
+        "width": 415,
+        "height": 600,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/llorente-marcos/03.webp"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "https://www.solvecollectibles.com/cdn/shop/files/Marcos-Llorente-Spain-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809926&width=1920",
+    "selected_local_path": "source_images/panini/spain/raw/llorente-marcos/01.jpg"
   },
   {
     "player_slug": "torres-ferran",
@@ -107,9 +283,80 @@
       "\"Panini 2026 World Cup card\" \"TORRES Ferran\"",
       "\"Panini Spain 2026\" \"TORRES Ferran\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "torres-ferran",
+        "player_name": "费兰·托雷斯",
+        "player_name_en": "TORRES Ferran",
+        "shirt_number": 7,
+        "position": "FW",
+        "title": "Football Trading Card-Ferran Torres-Spain-Panini Adrenalyn XL Fifa World  Cup 2026-U39-Update",
+        "alt": "Football Trading Card-Ferran Torres-Spain-Panini Adrenalyn XL Fifa World  Cup 2026-U39-Update",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U039.webp?v=1775828518",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/ferran-torres-u39-espana-panini-adrenalyn-xl-fifa-world-cup-update?srsltid=AfmBOopuAbTf-as4-LOXVZUO3L-aVBcftW9TT2aDjLFMiWcOv5288Q2o",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/torres-ferran/01.webp"
+      },
+      {
+        "player_slug": "torres-ferran",
+        "player_name": "费兰·托雷斯",
+        "player_name_en": "TORRES Ferran",
+        "shirt_number": 7,
+        "position": "FW",
+        "title": "Soccer Trading Card-Ferran Torres-FC Barcelona-Panini Adrenalyn XL 2025-2026 -70-Basic",
+        "alt": "Soccer Trading Card-Ferran Torres-FC Barcelona-Panini Adrenalyn XL 2025-2026 -70-Basic",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/070_ADRENALYN_2025_26_BARCELONA.webp?v=1768859241",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/ferran-torres-70-fc-barcelona-panini-adrenalyn-xl-basico?srsltid=AfmBOoqXN7JSB8EgDPDAf35Z8ouvxRrIkPnyScUyJwHcMDwpQDi2ShlO",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/torres-ferran/02.webp"
+      },
+      {
+        "player_slug": "torres-ferran",
+        "player_name": "费兰·托雷斯",
+        "player_name_en": "TORRES Ferran",
+        "shirt_number": 7,
+        "position": "FW",
+        "title": "Football Trading Card - Ferran Torres - Barcelona - Panini Adrenalyn XL  2025-2026 - Limited Edition - Signed",
+        "alt": "Football Trading Card - Ferran Torres - Barcelona - Panini Adrenalyn XL  2025-2026 - Limited Edition - Signed",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/FT_ADRENALYN_2025_26_EDICION_LIMITADA_FIRMADA.webp?v=1770842204",
+        "source_page": "https://www.worldtradingcards.com/en/products/ferran-torres-barcelona-panini-adrenalyn-xl-2025-2026-sp-edicion-limitada-firmada?srsltid=AfmBOoojmY08KoXTTAwpzevPcLCs2K8vyAqrlP_h-zDHxZN1vWZsqJG8",
+        "provider": "serpapi",
+        "width": 724,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/torres-ferran/03.webp"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U039.webp?v=1775828518",
+    "selected_local_path": "source_images/panini/spain/raw/torres-ferran/01.webp"
   },
   {
     "player_slug": "ruiz-fabian",
@@ -123,9 +370,82 @@
       "\"Panini 2026 World Cup card\" \"RUIZ Fabian\"",
       "\"Panini Spain 2026\" \"RUIZ Fabian\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "ruiz-fabian",
+        "player_name": "法比安·鲁伊斯",
+        "player_name_en": "RUIZ Fabian",
+        "shirt_number": 8,
+        "position": "MF",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/-ykAAeSw2gNqITxi/s-l1600.jpg",
+        "source_page": "https://www.ebay.com/p/12092845261",
+        "provider": "serpapi",
+        "width": 732,
+        "height": 1026,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/ruiz-fabian/01.jpg"
+      },
+      {
+        "player_slug": "ruiz-fabian",
+        "player_name": "法比安·鲁伊斯",
+        "player_name_en": "RUIZ Fabian",
+        "shirt_number": 8,
+        "position": "MF",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/AoMAAeSwKOdqEZtc/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/p/12092845261",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/ruiz-fabian/02.jpg"
+      },
+      {
+        "player_slug": "ruiz-fabian",
+        "player_name": "法比安·鲁伊斯",
+        "player_name_en": "RUIZ Fabian",
+        "shirt_number": 8,
+        "position": "MF",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/WZ0AAeSwUg1qEZtc/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/p/12092845261",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/ruiz-fabian/03.jpg"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/images/g/-ykAAeSw2gNqITxi/s-l1600.jpg",
+    "selected_local_path": "source_images/panini/spain/raw/ruiz-fabian/01.jpg"
   },
   {
     "player_slug": "gavi",
@@ -139,25 +459,80 @@
       "\"Panini 2026 World Cup card\" \"GAVI\"",
       "\"Panini Spain 2026\" \"GAVI\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
-  },
-  {
-    "player_slug": "pino-yeremy",
-    "player_name": "耶雷米·皮诺",
-    "player_name_en": "PINO Yeremy",
-    "shirt_number": 11,
-    "position": "FW",
-    "search_queries": [
-      "\"Panini FIFA World Cup 2026\" \"PINO Yeremy\" \"Spain\"",
-      "\"Panini Adrenalyn XL 2026\" \"PINO Yeremy\" \"Spain\"",
-      "\"Panini 2026 World Cup card\" \"PINO Yeremy\"",
-      "\"Panini Spain 2026\" \"PINO Yeremy\""
+    "candidates": [
+      {
+        "player_slug": "gavi",
+        "player_name": "加维",
+        "player_name_en": "GAVI",
+        "shirt_number": 9,
+        "position": "MF",
+        "title": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - Gavi #16 for sale |  eBay",
+        "alt": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - Gavi #16 for sale |  eBay",
+        "image_url": "https://i.ebayimg.com/images/g/uGUAAeSwCehocG7Q/s-l1200.webp",
+        "source_page": "https://www.ebay.com/b/2022-Panini-Adrenalyn-XL-FIFA-World-Cup-Qatar-2022-Gavi-16/212/bn_20742537241",
+        "provider": "serpapi",
+        "width": 880,
+        "height": 1200,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "download_error": "image download timeout after 20000ms"
+      },
+      {
+        "player_slug": "gavi",
+        "player_name": "加维",
+        "player_name_en": "GAVI",
+        "shirt_number": 9,
+        "position": "MF",
+        "title": "Soccer Trading Card-Gavi-FC Barcelona-Panini Adrenalyn XL 2025-2026-64-Base",
+        "alt": "Soccer Trading Card-Gavi-FC Barcelona-Panini Adrenalyn XL 2025-2026-64-Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/064_ADRENALYN_2025_26_BARCELONA.webp?v=1768859300",
+        "source_page": "https://www.worldtradingcards.com/en/products/gavi-64-fc-barcelona-panini-adrenalyn-xl-basico?srsltid=AfmBOooZMKMZDZuX6FiwEqEmJ2AqCsk9g9u-Tc8WCYB5VNdXGb4wkLUF",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/gavi/02.webp"
+      },
+      {
+        "player_slug": "gavi",
+        "player_name": "加维",
+        "player_name_en": "GAVI",
+        "shirt_number": 9,
+        "position": "MF",
+        "title": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - Gavi #16 for sale |  eBay",
+        "alt": "2022 Panini Adrenalyn XL FIFA World Cup Qatar 2022 - Gavi #16 for sale |  eBay",
+        "image_url": "https://i.ebayimg.com/images/g/6HIAAOSw~~dn2g~B/s-l960.jpg",
+        "source_page": "https://www.ebay.com/b/2022-Panini-Adrenalyn-XL-FIFA-World-Cup-Qatar-2022-Gavi-16/212/bn_20742537241",
+        "provider": "serpapi",
+        "width": 495,
+        "height": 697,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/gavi/03.jpg"
+      }
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/064_ADRENALYN_2025_26_BARCELONA.webp?v=1768859300",
+    "selected_local_path": "source_images/panini/spain/raw/gavi/02.webp"
   },
   {
     "player_slug": "porro-pedro",
@@ -171,9 +546,79 @@
       "\"Panini 2026 World Cup card\" \"PORRO Pedro\"",
       "\"Panini Spain 2026\" \"PORRO Pedro\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "porro-pedro",
+        "player_name": "佩德罗·波罗",
+        "player_name_en": "PORRO Pedro",
+        "shirt_number": 12,
+        "position": "DF",
+        "title": "Trading Card Football-Pedro Porro-Spain-Panini Fifa World Cup Stickers 2026 -ESP006-Base",
+        "alt": "Trading Card Football-Pedro Porro-Spain-Panini Fifa World Cup Stickers 2026 -ESP006-Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/29_FWC_ESP_006.webp?v=1777743435",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/pedro-porro-esp006-spain-panini-fifa-world-cup-stickers-base?srsltid=AfmBOoq0FNnhCruUJFuP02PfPUxkalaEbpaETmVbetTr4wXuwzCaxy_r",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/porro-pedro/01.webp"
+      },
+      {
+        "player_slug": "porro-pedro",
+        "player_name": "佩德罗·波罗",
+        "player_name_en": "PORRO Pedro",
+        "shirt_number": 12,
+        "position": "DF",
+        "title": "Soccer Trading Card-Alberto Quintero-Panama-Panini Fifa World Cup Stickers  2026-PAN020-Base",
+        "alt": "Soccer Trading Card-Alberto Quintero-Panama-Panini Fifa World Cup Stickers  2026-PAN020-Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/ESP_2026_CARREFOUR_014.webp?v=1781095624",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/pcesp014-panini-carrefour-espana-2026-pedro-porro-espana-base?srsltid=AfmBOop1t5Jxa93PhuJgYDAMjW6JxYUxf0it4PXDaAbJAYj4hzvtuXbb",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/porro-pedro/02.webp"
+      },
+      {
+        "player_slug": "porro-pedro",
+        "player_name": "佩德罗·波罗",
+        "player_name_en": "PORRO Pedro",
+        "shirt_number": 12,
+        "position": "DF",
+        "title": "Pedro Porro [Gold Flood Crumple] #ESP6 Prices | 2026 Panini FIFA World Cup  Stickers | Soccer Cards",
+        "alt": "Pedro Porro [Gold Flood Crumple] #ESP6 Prices | 2026 Panini FIFA World Cup  Stickers | Soccer Cards",
+        "image_url": "https://storage.googleapis.com/images.pricecharting.com/corrbepfj34oukr5t3rw/1600.jpg",
+        "source_page": "https://www.sportscardspro.com/game/soccer-cards-2026-panini-fifa-world-cup-stickers/pedro-porro-gold-flood-crumple-esp6",
+        "provider": "serpapi",
+        "width": 646,
+        "height": 849,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/porro-pedro/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/29_FWC_ESP_006.webp?v=1777743435",
+    "selected_local_path": "source_images/panini/spain/raw/porro-pedro/01.webp"
   },
   {
     "player_slug": "garcia-joan",
@@ -187,9 +632,79 @@
       "\"Panini 2026 World Cup card\" \"GARCIA Joan\"",
       "\"Panini Spain 2026\" \"GARCIA Joan\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "garcia-joan",
+        "player_name": "霍安·加西亚",
+        "player_name_en": "GARCIA Joan",
+        "shirt_number": 13,
+        "position": "GK",
+        "title": "Chrome Trading Card Soccer-Joan Garcia-Barcelona-Panini Adrenalyn XL 2025- 2026-Gold Revelation",
+        "alt": "Chrome Trading Card Soccer-Joan Garcia-Barcelona-Panini Adrenalyn XL 2025- 2026-Gold Revelation",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/JG_ADRENALYN_2025_26_REVELACION_ORO.webp?v=1770145967",
+        "source_page": "https://www.worldtradingcards.com/en/products/joan-garcia-barcelona-panini-adrenalyn-xl-2025-2026-edicion-limitada-revelacion-oro?srsltid=AfmBOoqyJiPTFmWsJp_-Bb7Vzud70-1y6az1uqsHe5RRHGBRDX-ZpSd1",
+        "provider": "serpapi",
+        "width": 722,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-joan/01.webp"
+      },
+      {
+        "player_slug": "garcia-joan",
+        "player_name": "霍安·加西亚",
+        "player_name_en": "GARCIA Joan",
+        "shirt_number": 13,
+        "position": "GK",
+        "title": "Football Trading Card - Joan García - FC Barcelona - Panini Adrenalyn XL  2025-2026 - 56 - Basic",
+        "alt": "Football Trading Card - Joan García - FC Barcelona - Panini Adrenalyn XL  2025-2026 - 56 - Basic",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/056_ADRENALYN_2025_26_BARCELONA.webp?v=1768859373",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/joan-garcia-56-fc-barcelona-panini-adrenalyn-xl-basico?srsltid=AfmBOoq9zMilMsDW2BOEUy3sEfE8nkkCn8F_Ej36FiR2IQAlsede4Xg9",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-joan/02.webp"
+      },
+      {
+        "player_slug": "garcia-joan",
+        "player_name": "霍安·加西亚",
+        "player_name_en": "GARCIA Joan",
+        "shirt_number": 13,
+        "position": "GK",
+        "title": "Chrome Trading Card Football-Joan García-FC Barcelona-Panini Adrenalyn XL  2025-2026-382-Golden Glove",
+        "alt": "Chrome Trading Card Football-Joan García-FC Barcelona-Panini Adrenalyn XL  2025-2026-382-Golden Glove",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/382_ADRENALYN_2025-26_GUANTES_ORO.webp?v=1768824858",
+        "source_page": "https://www.worldtradingcards.com/en/products/joan-garcia-382-fc-barcelona-panini-adrenalyn-xl-guantes-de-oro?srsltid=AfmBOoqJbUZ5DX8xaTncKbEserSZc9afDwmNfWEFzYAEdOgwpX8tIc8d",
+        "provider": "serpapi",
+        "width": 723,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/garcia-joan/03.webp"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/JG_ADRENALYN_2025_26_REVELACION_ORO.webp?v=1770145967",
+    "selected_local_path": "source_images/panini/spain/raw/garcia-joan/01.webp"
   },
   {
     "player_slug": "laporte-aymeric",
@@ -203,9 +718,79 @@
       "\"Panini 2026 World Cup card\" \"LAPORTE Aymeric\"",
       "\"Panini Spain 2026\" \"LAPORTE Aymeric\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "laporte-aymeric",
+        "player_name": "艾梅里克·拉波尔特",
+        "player_name_en": "LAPORTE Aymeric",
+        "shirt_number": 14,
+        "position": "DF",
+        "title": "Football Trading Card - Laporte - Athletic Club - Panini Adrenalyn XL 2025- 2026 - 25 - Base",
+        "alt": "Football Trading Card - Laporte - Athletic Club - Panini Adrenalyn XL 2025- 2026 - 25 - Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/025_ADRENALYN_2025_26_ATHETIC_CLUB.webp?v=1768859692",
+        "source_page": "https://www.worldtradingcards.com/en/products/laporte-25-athletic-club-panini-adrenalyn-xl-basico?srsltid=AfmBOorcCVjcYrg7BJrZBLTvkvgBT4Dzhye1WHXYum6Imb6KBlJtNDDG",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/laporte-aymeric/01.webp"
+      },
+      {
+        "player_slug": "laporte-aymeric",
+        "player_name": "艾梅里克·拉波尔特",
+        "player_name_en": "LAPORTE Aymeric",
+        "shirt_number": 14,
+        "position": "DF",
+        "title": "PANINI ADRENALYN XL FIFA 365 2026 No. NAS7 Aymeric Laporte Titan EUR 1,36 -  PicClick ES",
+        "alt": "PANINI ADRENALYN XL FIFA 365 2026 No. NAS7 Aymeric Laporte Titan EUR 1,36 -  PicClick ES",
+        "image_url": "https://www.picclickimg.com/eegAAeSwO1dqIYYi/Panini-FIFA-Adrenalyn-XL-World-Cup-2026-Equipos.webp",
+        "source_page": "https://picclick.es/Panini-Adrenalyn-XL-FIFA-365-2026-No-NAS7-336242341493.html",
+        "provider": "serpapi",
+        "width": 627,
+        "height": 640,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/laporte-aymeric/02.webp"
+      },
+      {
+        "player_slug": "laporte-aymeric",
+        "player_name": "艾梅里克·拉波尔特",
+        "player_name_en": "LAPORTE Aymeric",
+        "shirt_number": 14,
+        "position": "DF",
+        "title": "PANINI ADRENALYN XL FIFA 365 2026 No. NAS7 Aymeric Laporte Titan EUR 1,36 -  PicClick ES",
+        "alt": "PANINI ADRENALYN XL FIFA 365 2026 No. NAS7 Aymeric Laporte Titan EUR 1,36 -  PicClick ES",
+        "image_url": "https://www.picclickimg.com/MGsAAeSwVlNo84E-/Panini-Adrenalyn-XL-FIFA-365-2026-No-PAS7.webp",
+        "source_page": "https://picclick.es/Panini-Adrenalyn-XL-FIFA-365-2026-No-NAS7-336242341493.html",
+        "provider": "serpapi",
+        "width": 458,
+        "height": 640,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "card_number": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/laporte-aymeric/03.webp"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/025_ADRENALYN_2025_26_ATHETIC_CLUB.webp?v=1768859692",
+    "selected_local_path": "source_images/panini/spain/raw/laporte-aymeric/01.webp"
   },
   {
     "player_slug": "baena-alex",
@@ -219,9 +804,79 @@
       "\"Panini 2026 World Cup card\" \"BAENA Alex\"",
       "\"Panini Spain 2026\" \"BAENA Alex\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "baena-alex",
+        "player_name": "亚历克斯·巴埃纳",
+        "player_name_en": "BAENA Alex",
+        "shirt_number": 15,
+        "position": "MF",
+        "title": "Soccer Trading Card-Álex Baena-Atlético de Madrid-Panini Adrenalyn XL 2025- 2026-446-Super Crack",
+        "alt": "Soccer Trading Card-Álex Baena-Atlético de Madrid-Panini Adrenalyn XL 2025- 2026-446-Super Crack",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/446_ADRENALYN_2025-26_SUPER_CRACK.webp?v=1768822474",
+        "source_page": "https://www.worldtradingcards.com/en/products/alex-baena-446-atletico-de-madrid-panini-adrenalyn-xl-super-crack?srsltid=AfmBOopuMzvMKQXIHOgy9cBvHJpwqUCiNbqNnVR5SevVSJSwMYfQHFyX",
+        "provider": "serpapi",
+        "width": 724,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/baena-alex/01.webp"
+      },
+      {
+        "player_slug": "baena-alex",
+        "player_name": "亚历克斯·巴埃纳",
+        "player_name_en": "BAENA Alex",
+        "shirt_number": 15,
+        "position": "MF",
+        "title": "Soccer Trading Card-Álex Baena-Atlético de Madrid-Panini Adrenalyn XL 2025- 2026-48-Base",
+        "alt": "Soccer Trading Card-Álex Baena-Atlético de Madrid-Panini Adrenalyn XL 2025- 2026-48-Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/048_ADRENALYN_2025_26_ATLETICO_MADRID.webp?v=1768859463",
+        "source_page": "https://www.worldtradingcards.com/en/products/alex-baena-48-atletico-de-madrid-panini-adrenalyn-xl-basico?srsltid=AfmBOorMqQbN-XjlKAanXC2zpB-cREsC094fGZsJayZRgO_atWFsbG-S",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/baena-alex/02.webp"
+      },
+      {
+        "player_slug": "baena-alex",
+        "player_name": "亚历克斯·巴埃纳",
+        "player_name_en": "BAENA Alex",
+        "shirt_number": 15,
+        "position": "MF",
+        "title": "Trading Card –",
+        "alt": "Trading Card –",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/VILLAREAL_354.jpg?v=1740085440",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/panini-adrenalyn-xl-la-liga-2024-2025-354-alex-baena-villarreal-1%C2%AA-edicion-cromo-raw?srsltid=AfmBOoozFPutpAFgcmxgR829cU0dVUwfncfACoa26-cLXEbjLH-NSF4f",
+        "provider": "serpapi",
+        "width": 726,
+        "height": 1020,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/baena-alex/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/446_ADRENALYN_2025-26_SUPER_CRACK.webp?v=1768822474",
+    "selected_local_path": "source_images/panini/spain/raw/baena-alex/01.webp"
   },
   {
     "player_slug": "zubimendi-martin",
@@ -235,9 +890,80 @@
       "\"Panini 2026 World Cup card\" \"ZUBIMENDI Martin\"",
       "\"Panini Spain 2026\" \"ZUBIMENDI Martin\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "zubimendi-martin",
+        "player_name": "马丁·祖比门迪",
+        "player_name_en": "ZUBIMENDI Martin",
+        "shirt_number": 18,
+        "position": "MF",
+        "title": "Soccer Trading Card - Martín Zubimendi - Spain - Panini Adrenalyn XL Fifa World  Cup 2026 - 449 - BASE",
+        "alt": "Soccer Trading Card - Martín Zubimendi - Spain - Panini Adrenalyn XL Fifa World  Cup 2026 - 449 - BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_449.png?v=1773345006",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/martin-zubimendi-449-espana-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopL4tZMZa-dldp6POc3iE8vADxMWpwpBZuxZHi3okHgafwhy1nj",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/zubimendi-martin/01.png"
+      },
+      {
+        "player_slug": "zubimendi-martin",
+        "player_name": "马丁·祖比门迪",
+        "player_name_en": "ZUBIMENDI Martin",
+        "shirt_number": 18,
+        "position": "MF",
+        "title": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #449 Martin Zubimendi – Antci",
+        "alt": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #449 Martin Zubimendi – Antci",
+        "image_url": "https://antci.com/wp-content/uploads/2026/03/2026-Panini-Adrenalyn-XL-FIFA-World-Cup-2026-017-Nabil-Bentaleb-.jpeg",
+        "source_page": "https://antci.com/product/2026-panini-adrenalyn-xl-fifa-world-cup-2026-449-martin-zubimendi/",
+        "provider": "serpapi",
+        "width": 499,
+        "height": 700,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/zubimendi-martin/02.jpeg"
+      },
+      {
+        "player_slug": "zubimendi-martin",
+        "player_name": "马丁·祖比门迪",
+        "player_name_en": "ZUBIMENDI Martin",
+        "shirt_number": 18,
+        "position": "MF",
+        "title": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #449 Martin Zubimendi – Antci",
+        "alt": "2026 Panini Adrenalyn XL FIFA World Cup 2026 #449 Martin Zubimendi – Antci",
+        "image_url": "https://antci.com/wp-content/uploads/2026/03/2026-Panini-Adrenalyn-XL-FIFA-World-Cup-2026-002-Vinicius-Junior-GB-.jpeg",
+        "source_page": "https://antci.com/product/2026-panini-adrenalyn-xl-fifa-world-cup-2026-449-martin-zubimendi/",
+        "provider": "serpapi",
+        "width": 498,
+        "height": 700,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/zubimendi-martin/03.jpeg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_449.png?v=1773345006",
+    "selected_local_path": "source_images/panini/spain/raw/zubimendi-martin/01.png"
   },
   {
     "player_slug": "oyarzabal-mikel",
@@ -251,9 +977,82 @@
       "\"Panini 2026 World Cup card\" \"OYARZABAL Mikel\"",
       "\"Panini Spain 2026\" \"OYARZABAL Mikel\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "oyarzabal-mikel",
+        "player_name": "米克尔·奥亚萨瓦尔",
+        "player_name_en": "OYARZABAL Mikel",
+        "shirt_number": 21,
+        "position": "FW",
+        "title": "Soccer Trading Card - Mikel Oyarzabal - Spain - Panini Adrenalyn XL FIFA  World Cup 2026 - 453 - BASIC",
+        "alt": "Soccer Trading Card - Mikel Oyarzabal - Spain - Panini Adrenalyn XL FIFA  World Cup 2026 - 453 - BASIC",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_453.png?v=1773345016",
+        "source_page": "https://www.worldtradingcards.com/en/products/mikel-oyarzabal-453-espana-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopjHTZmgNNOf7naaJ5PuuMNqE6TkoSkGGKT2XnEVrHfIs3fgDOo",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/oyarzabal-mikel/01.png"
+      },
+      {
+        "player_slug": "oyarzabal-mikel",
+        "player_name": "米克尔·奥亚萨瓦尔",
+        "player_name_en": "OYARZABAL Mikel",
+        "shirt_number": 21,
+        "position": "FW",
+        "title": "Football Trading Card - Mikel Oyarzabal - Spain - Panini Adrenalyn XL Fifa  World Cup 2026 - 604 - Goal Machine",
+        "alt": "Football Trading Card - Mikel Oyarzabal - Spain - Panini Adrenalyn XL Fifa  World Cup 2026 - 604 - Goal Machine",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_604.png?v=1773345400",
+        "source_page": "https://www.worldtradingcards.com/en/products/mikel-oyarzabal-604-espana-panini-adrenalyn-xl-fifa-world-cup-goal-machine?srsltid=AfmBOoohiFa0hqfXimDDIyxL_fD-pGWCuFxgPnc-1BUsepW5dbDaaWF9",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/oyarzabal-mikel/02.png"
+      },
+      {
+        "player_slug": "oyarzabal-mikel",
+        "player_name": "米克尔·奥亚萨瓦尔",
+        "player_name_en": "OYARZABAL Mikel",
+        "shirt_number": 21,
+        "position": "FW",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Mikel Oyarzabal #604 for sale |  eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Mikel Oyarzabal #604 for sale |  eBay",
+        "image_url": "https://i.ebayimg.com/images/g/QMwAAeSwYOtqCsyQ/s-l1600.jpg",
+        "source_page": "https://www.ebay.com/b/2026-Panini-Adrenalyn-XL-Fifa-World-Cup-Mikel-Oyarzabal-604/212/bn_211366838297",
+        "provider": "serpapi",
+        "width": 1190,
+        "height": 1600,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "download_error": "terminated"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_453.png?v=1773345016",
+    "selected_local_path": "source_images/panini/spain/raw/oyarzabal-mikel/01.png"
   },
   {
     "player_slug": "cubarsi-pau",
@@ -267,9 +1066,82 @@
       "\"Panini 2026 World Cup card\" \"CUBARSI Pau\"",
       "\"Panini Spain 2026\" \"CUBARSI Pau\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "cubarsi-pau",
+        "player_name": "保罗·库巴西",
+        "player_name_en": "CUBARSI Pau",
+        "shirt_number": 22,
+        "position": "DF",
+        "title": "Trading Card Football-Pau Cubarsí-Spain-Panini Adrenalyn XL Fifa World Cup  2026-LE72-Limited Edition",
+        "alt": "Trading Card Football-Pau Cubarsí-Spain-Panini Adrenalyn XL Fifa World Cup  2026-LE72-Limited Edition",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE72.png?v=1773345848",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/pau-cubarsi-le72-espana-panini-adrenalyn-xl-fifa-world-cup-limited-edition?srsltid=AfmBOoqojVrhFGU1VREQkK8lf5IU1A-0bcCT1GWQo1sJjqqx3VlqP-cB",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/cubarsi-pau/01.png"
+      },
+      {
+        "player_slug": "cubarsi-pau",
+        "player_name": "保罗·库巴西",
+        "player_name_en": "CUBARSI Pau",
+        "shirt_number": 22,
+        "position": "DF",
+        "title": "Soccer Trading Card-Pau Cubarsi-Spain-Panini Adrenalyn XL Fifa World Cup  2026-623-Master Rookie",
+        "alt": "Soccer Trading Card-Pau Cubarsi-Spain-Panini Adrenalyn XL Fifa World Cup  2026-623-Master Rookie",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-03-23ALAS17.55.35.webp?v=1775504466",
+        "source_page": "https://www.worldtradingcards.com/en/products/pau-cubarsi-623-espana-panini-adrenalyn-xl-fifa-world-cup-master-rookie?srsltid=AfmBOoqELvM3FUIEnpG9HXaPvFqEdr1oqAY56gk-PeHS9P7zCuTI7tYO",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/cubarsi-pau/02.webp"
+      },
+      {
+        "player_slug": "cubarsi-pau",
+        "player_name": "保罗·库巴西",
+        "player_name_en": "CUBARSI Pau",
+        "shirt_number": 22,
+        "position": "DF",
+        "title": "PANINI PAU CUBARSI FIFA World Cup 2026 Adrenalyn XL Master Rookie Spain  $4.70 - PicClick CA",
+        "alt": "PANINI PAU CUBARSI FIFA World Cup 2026 Adrenalyn XL Master Rookie Spain  $4.70 - PicClick CA",
+        "image_url": "https://www.picclickimg.com/sDMAAeSwAyNqFFe~/Panini-Pau-Cubarsi-FIFA-World-Cup-2026-Adrenalyn.webp",
+        "source_page": "https://picclick.ca/PAU-CUBARSI-2025-Panini-FIFA-365-Sticker-Collection-405314988227.html",
+        "provider": "serpapi",
+        "width": 480,
+        "height": 640,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "spain_team_set": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/cubarsi-pau/03.webp"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE72.png?v=1773345848",
+    "selected_local_path": "source_images/panini/spain/raw/cubarsi-pau/01.png"
   },
   {
     "player_slug": "simon-unai",
@@ -283,9 +1155,82 @@
       "\"Panini 2026 World Cup card\" \"SIMON Unai\"",
       "\"Panini Spain 2026\" \"SIMON Unai\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "simon-unai",
+        "player_name": "乌奈·西蒙",
+        "player_name_en": "SIMON Unai",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "Football Trading Card - Unai Simón - Spain - Panini Adrenalyn XL FIFA World  Cup 2026 - 445 - BASE",
+        "alt": "Football Trading Card - Unai Simón - Spain - Panini Adrenalyn XL FIFA World  Cup 2026 - 445 - BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_445.png?v=1773344996",
+        "source_page": "https://www.worldtradingcards.com/en/products/unai-simon-445-espana-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOoqmbyD1IOKSo2N4ykoqrWbEbZ85y2cjLs1Ue6O2OLT8hSAOpGHj",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/simon-unai/01.png"
+      },
+      {
+        "player_slug": "simon-unai",
+        "player_name": "乌奈·西蒙",
+        "player_name_en": "SIMON Unai",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "404 Unai Simón Spain Top Keeper Panini World Cup 2022 Adrenalyn XL – Solve  Collectibles",
+        "alt": "404 Unai Simón Spain Top Keeper Panini World Cup 2022 Adrenalyn XL – Solve  Collectibles",
+        "image_url": "http://www.solvecollectibles.com/cdn/shop/files/Unai-Simon-Spain-Top-Keeper-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809919",
+        "source_page": "https://www.solvecollectibles.com/products/404-unai-simon-spain-top-keeper-panini-world-cup-2022-adrenalyn-xl",
+        "provider": "serpapi",
+        "width": 1440,
+        "height": 1920,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/simon-unai/02.jpg"
+      },
+      {
+        "player_slug": "simon-unai",
+        "player_name": "乌奈·西蒙",
+        "player_name_en": "SIMON Unai",
+        "shirt_number": 23,
+        "position": "GK",
+        "title": "PANINI FIFA WORLD Cup Adrenalyn 2026 No. 445 Unai Simón Héroe EUR 1,00 -  PicClick ES",
+        "alt": "PANINI FIFA WORLD Cup Adrenalyn 2026 No. 445 Unai Simón Héroe EUR 1,00 -  PicClick ES",
+        "image_url": "https://www.picclickimg.com/rGYAAeSwNTtppJ7I/Panini-FIFA-World-Cup-Adrenalyn-2026-No-508.webp",
+        "source_page": "https://picclick.es/Panini-FIFA-World-Cup-Adrenalyn-2026-No-445-336458876427.html",
+        "provider": "serpapi",
+        "width": 457,
+        "height": 640,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "card_number": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/simon-unai/03.webp"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_445.png?v=1773344996",
+    "selected_local_path": "source_images/panini/spain/raw/simon-unai/01.png"
   },
   {
     "player_slug": "cucurella-marc",
@@ -299,9 +1244,81 @@
       "\"Panini 2026 World Cup card\" \"CUCURELLA Marc\"",
       "\"Panini Spain 2026\" \"CUCURELLA Marc\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "cucurella-marc",
+        "player_name": "马克·库库雷利亚",
+        "player_name_en": "CUCURELLA Marc",
+        "shirt_number": 24,
+        "position": "DF",
+        "title": "Soccer Trading Card-Marc Cucurella-Spain-Panini Adrenalyn XL FIFA World Cup  2026-LEUS2-Limited Edition - Update Set",
+        "alt": "Soccer Trading Card-Marc Cucurella-Spain-Panini Adrenalyn XL FIFA World Cup  2026-LEUS2-Limited Edition - Update Set",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.03.09.webp?v=1775498830",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/marc-cucurella-leus2-espana-panini-adrenalyn-xl-fifa-world-cup-limited-edition-update-set?srsltid=AfmBOorG2gm5MCGLBM4KXeOifIC7EEKZJNPOoFnW1nDqkn67AO1defi9",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/cucurella-marc/01.webp"
+      },
+      {
+        "player_slug": "cucurella-marc",
+        "player_name": "马克·库库雷利亚",
+        "player_name_en": "CUCURELLA Marc",
+        "shirt_number": 24,
+        "position": "DF",
+        "title": "Football Trading Card - Marc Cucurella - Spain - Panini Adrenalyn XL Fifa  World Cup 2026 - 448 - BASE",
+        "alt": "Football Trading Card - Marc Cucurella - Spain - Panini Adrenalyn XL Fifa  World Cup 2026 - 448 - BASE",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_448.png?v=1773345005",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/marc-cucurella-448-espana-panini-adrenalyn-xl-fifa-world-cup-basico?srsltid=AfmBOopPEORsxtXwgtrz784ArjA-k9D2v9wo3GOv-JxA9pd4PawtQdpt",
+        "provider": "serpapi",
+        "width": 736,
+        "height": 1024,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 190,
+        "local_path": "source_images/panini/spain/raw/cucurella-marc/02.png"
+      },
+      {
+        "player_slug": "cucurella-marc",
+        "player_name": "马克·库库雷利亚",
+        "player_name_en": "CUCURELLA Marc",
+        "shirt_number": 24,
+        "position": "DF",
+        "title": "Marc Cucurella Spain - Panini World Cup 2026 Adrenalyn XL Update Limited  Edition | eBay",
+        "alt": "Marc Cucurella Spain - Panini World Cup 2026 Adrenalyn XL Update Limited  Edition | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/aS8AAeSw9cNqFj2d/s-l500.jpg",
+        "source_page": "https://www.ebay.com/itm/306861475018",
+        "provider": "serpapi",
+        "width": 354,
+        "height": 500,
+        "score_breakdown": {
+          "player_name": 40,
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20
+        },
+        "total_score": 170,
+        "local_path": "source_images/panini/spain/raw/cucurella-marc/03.jpg"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.03.09.webp?v=1775498830",
+    "selected_local_path": "source_images/panini/spain/raw/cucurella-marc/01.webp"
   },
   {
     "player_slug": "munoz-victor",
@@ -315,9 +1332,76 @@
       "\"Panini 2026 World Cup card\" \"MUNOZ Victor\"",
       "\"Panini Spain 2026\" \"MUNOZ Victor\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "munoz-victor",
+        "player_name": "维克托·穆尼奥斯",
+        "player_name_en": "MUNOZ Victor",
+        "shirt_number": 25,
+        "position": "FW",
+        "title": "Football Trading Card - Víctor Muñoz - CA Osasuna - Panini Adrenalyn XL  2025-2026 - 249 - Base",
+        "alt": "Football Trading Card - Víctor Muñoz - CA Osasuna - Panini Adrenalyn XL  2025-2026 - 249 - Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/249_ADRENALYN_2025_26_OSASUNA.webp?v=1768857003",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/victor-munoz-249-ca-osasuna-panini-adrenalyn-xl-basico?srsltid=AfmBOorAW4ZwqvCwc7LBX-Y4b8XFk_e11fZVHAJiDn6NyXc2cb1cMhiF",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/munoz-victor/01.webp"
+      },
+      {
+        "player_slug": "munoz-victor",
+        "player_name": "维克托·穆尼奥斯",
+        "player_name_en": "MUNOZ Victor",
+        "shirt_number": 25,
+        "position": "FW",
+        "title": "Trading Card Football-Víctor Muñoz-CA Osasuna-Panini Adrenalyn XL 2025-2026 -413-Diamond",
+        "alt": "Trading Card Football-Víctor Muñoz-CA Osasuna-Panini Adrenalyn XL 2025-2026 -413-Diamond",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/413_ADRENALYN_2025-26_DIAMANTE.webp?v=1768824091",
+        "source_page": "https://www.worldtradingcards.com/en/products/victor-munoz-413-ca-osasuna-panini-adrenalyn-xl-diamante?srsltid=AfmBOooi2nEZVbz6ZdpGl2h0zAuYmqs8R_uawWMjgm_KWC-UejZdXhDg",
+        "provider": "serpapi",
+        "width": 723,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/munoz-victor/02.webp"
+      },
+      {
+        "player_slug": "munoz-victor",
+        "player_name": "维克托·穆尼奥斯",
+        "player_name_en": "MUNOZ Victor",
+        "shirt_number": 25,
+        "position": "FW",
+        "title": "Colombia - Panini Adrenalyn XL FIFA World Cup 2026 | eBay",
+        "alt": "Colombia - Panini Adrenalyn XL FIFA World Cup 2026 | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/cZsAAeSwnXZpx-vu/s-l1200.png",
+        "source_page": "https://www.ebay.com/itm/188218267855",
+        "provider": "serpapi",
+        "width": 1124,
+        "height": 1200,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/munoz-victor/03.png"
+      }
+    ],
+    "selected_source_url": "http://www.worldtradingcards.com/cdn/shop/files/249_ADRENALYN_2025_26_OSASUNA.webp?v=1768857003",
+    "selected_local_path": "source_images/panini/spain/raw/munoz-victor/01.webp"
   },
   {
     "player_slug": "iglesias-borja",
@@ -331,8 +1415,77 @@
       "\"Panini 2026 World Cup card\" \"IGLESIAS Borja\"",
       "\"Panini Spain 2026\" \"IGLESIAS Borja\""
     ],
-    "candidates": [],
-    "selected_source_url": null,
-    "selected_local_path": null
+    "candidates": [
+      {
+        "player_slug": "iglesias-borja",
+        "player_name": "博尔哈·伊格莱西亚斯",
+        "player_name_en": "IGLESIAS Borja",
+        "shirt_number": 26,
+        "position": "FW",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/EWgAAeSwcg9qEZtb/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/p/12092845261",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/iglesias-borja/01.jpg"
+      },
+      {
+        "player_slug": "iglesias-borja",
+        "player_name": "博尔哈·伊格莱西亚斯",
+        "player_name_en": "IGLESIAS Borja",
+        "shirt_number": 26,
+        "position": "FW",
+        "title": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "alt": "2026 Panini Adrenalyn XL Fifa World Cup - Fabian Ruiz #451 for sale online  | eBay",
+        "image_url": "https://i.ebayimg.com/images/g/9zcAAeSwKDVqEZtb/s-l1200.jpg",
+        "source_page": "https://www.ebay.com/p/12092845261",
+        "provider": "serpapi",
+        "width": 900,
+        "height": 1200,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "world_cup": 20,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 150,
+        "local_path": "source_images/panini/spain/raw/iglesias-borja/02.jpg"
+      },
+      {
+        "player_slug": "iglesias-borja",
+        "player_name": "博尔哈·伊格莱西亚斯",
+        "player_name_en": "IGLESIAS Borja",
+        "shirt_number": 26,
+        "position": "FW",
+        "title": "Football Trading Card - Borja Iglesias - RC Celta - Panini Adrenalyn XL  2025-2026 - 107 - Base",
+        "alt": "Football Trading Card - Borja Iglesias - RC Celta - Panini Adrenalyn XL  2025-2026 - 107 - Base",
+        "image_url": "http://www.worldtradingcards.com/cdn/shop/files/107_ADRENALYN_2025_26_CELTA.webp?v=1768858768",
+        "source_page": "https://www.worldtradingcards.com/en-us/products/borja-iglesias-107-rc-celta-panini-adrenalyn-xl-basico?srsltid=AfmBOoo-XIRxdad7uO4BKPX8_BS2DSUu-2-PiQCo_Vc8352EfGFhqlka",
+        "provider": "serpapi",
+        "width": 720,
+        "height": 1024,
+        "score_breakdown": {
+          "panini": 50,
+          "adrenalyn": 40,
+          "portrait_card_ratio": 20,
+          "width_gt_600": 20
+        },
+        "total_score": 130,
+        "local_path": "source_images/panini/spain/raw/iglesias-borja/03.webp"
+      }
+    ],
+    "selected_source_url": "https://i.ebayimg.com/images/g/EWgAAeSwcg9qEZtb/s-l1200.jpg",
+    "selected_local_path": "source_images/panini/spain/raw/iglesias-borja/01.jpg"
   }
 ]

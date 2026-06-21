@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-20T21:07:40.025Z",
+  "generated_at": "2026-06-21T05:42:57.415Z",
   "country": "Spain",
   "target_size": "1024x1536",
   "target_ratio": 0.6666666666666666,
-  "total_records": 21,
-  "processed_count": 0,
-  "missing_count": 21,
+  "total_records": 18,
+  "processed_count": 17,
+  "missing_count": 4,
   "records": [
     {
       "player_slug": "raya-david",
@@ -30,33 +30,14 @@
       "player_name_en": "PUBILL Marc",
       "shirt_number": 2,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "grimaldo-alex",
-      "player_name": "亚历克斯·格里马尔多",
-      "player_name_en": "GRIMALDO Alex",
-      "shirt_number": 3,
-      "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE12.png?v=1773345703",
+      "source_path": "source_images/panini/spain/raw/pubill-marc/01.png",
+      "processed_path": "processed/panini/spain/pubill-marc.png",
+      "public_path": "public/cards/panini/spain/pubill-marc.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "garcia-eric",
@@ -64,16 +45,14 @@
       "player_name_en": "GARCIA Eric",
       "shirt_number": 4,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/060_ADRENALYN_2025_26_BARCELONA.webp?v=1768859336",
+      "source_path": "source_images/panini/spain/raw/garcia-eric/01.webp",
+      "processed_path": "processed/panini/spain/garcia-eric.png",
+      "public_path": "public/cards/panini/spain/garcia-eric.png",
+      "score": 170,
+      "width": 720,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "llorente-marcos",
@@ -81,33 +60,14 @@
       "player_name_en": "LLORENTE Marcos",
       "shirt_number": 5,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "merino-mikel",
-      "player_name": "米克尔·梅里诺",
-      "player_name_en": "MERINO Mikel",
-      "shirt_number": 6,
-      "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://www.solvecollectibles.com/cdn/shop/files/Marcos-Llorente-Spain-Panini-World-Cup-2022-Adrenalyn-XL-Card.jpg?v=1730809926&width=1920",
+      "source_path": "source_images/panini/spain/raw/llorente-marcos/01.jpg",
+      "processed_path": "processed/panini/spain/llorente-marcos.png",
+      "public_path": "public/cards/panini/spain/llorente-marcos.png",
+      "score": 150,
+      "width": 1440,
+      "height": 1920,
+      "review_flags": []
     },
     {
       "player_slug": "torres-ferran",
@@ -115,16 +75,14 @@
       "player_name_en": "TORRES Ferran",
       "shirt_number": 7,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_U039.webp?v=1775828518",
+      "source_path": "source_images/panini/spain/raw/torres-ferran/01.webp",
+      "processed_path": "processed/panini/spain/torres-ferran.png",
+      "public_path": "public/cards/panini/spain/torres-ferran.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "ruiz-fabian",
@@ -132,16 +90,14 @@
       "player_name_en": "RUIZ Fabian",
       "shirt_number": 8,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/-ykAAeSw2gNqITxi/s-l1600.jpg",
+      "source_path": "source_images/panini/spain/raw/ruiz-fabian/01.jpg",
+      "processed_path": "processed/panini/spain/ruiz-fabian.png",
+      "public_path": "public/cards/panini/spain/ruiz-fabian.png",
+      "score": 190,
+      "width": 732,
+      "height": 1026,
+      "review_flags": []
     },
     {
       "player_slug": "gavi",
@@ -149,33 +105,14 @@
       "player_name_en": "GAVI",
       "shirt_number": 9,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
-    },
-    {
-      "player_slug": "pino-yeremy",
-      "player_name": "耶雷米·皮诺",
-      "player_name_en": "PINO Yeremy",
-      "shirt_number": 11,
-      "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/064_ADRENALYN_2025_26_BARCELONA.webp?v=1768859300",
+      "source_path": "source_images/panini/spain/raw/gavi/02.webp",
+      "processed_path": "processed/panini/spain/gavi.png",
+      "public_path": "public/cards/panini/spain/gavi.png",
+      "score": 170,
+      "width": 720,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "porro-pedro",
@@ -183,16 +120,14 @@
       "player_name_en": "PORRO Pedro",
       "shirt_number": 12,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/29_FWC_ESP_006.webp?v=1777743435",
+      "source_path": "source_images/panini/spain/raw/porro-pedro/01.webp",
+      "processed_path": "processed/panini/spain/porro-pedro.png",
+      "public_path": "public/cards/panini/spain/porro-pedro.png",
+      "score": 150,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "garcia-joan",
@@ -200,16 +135,14 @@
       "player_name_en": "GARCIA Joan",
       "shirt_number": 13,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/JG_ADRENALYN_2025_26_REVELACION_ORO.webp?v=1770145967",
+      "source_path": "source_images/panini/spain/raw/garcia-joan/01.webp",
+      "processed_path": "processed/panini/spain/garcia-joan.png",
+      "public_path": "public/cards/panini/spain/garcia-joan.png",
+      "score": 170,
+      "width": 722,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "laporte-aymeric",
@@ -217,16 +150,14 @@
       "player_name_en": "LAPORTE Aymeric",
       "shirt_number": 14,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/025_ADRENALYN_2025_26_ATHETIC_CLUB.webp?v=1768859692",
+      "source_path": "source_images/panini/spain/raw/laporte-aymeric/01.webp",
+      "processed_path": "processed/panini/spain/laporte-aymeric.png",
+      "public_path": "public/cards/panini/spain/laporte-aymeric.png",
+      "score": 170,
+      "width": 720,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "baena-alex",
@@ -234,16 +165,14 @@
       "player_name_en": "BAENA Alex",
       "shirt_number": 15,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/446_ADRENALYN_2025-26_SUPER_CRACK.webp?v=1768822474",
+      "source_path": "source_images/panini/spain/raw/baena-alex/01.webp",
+      "processed_path": "processed/panini/spain/baena-alex.png",
+      "public_path": "public/cards/panini/spain/baena-alex.png",
+      "score": 170,
+      "width": 724,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "zubimendi-martin",
@@ -251,16 +180,14 @@
       "player_name_en": "ZUBIMENDI Martin",
       "shirt_number": 18,
       "position": "MF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_449.png?v=1773345006",
+      "source_path": "source_images/panini/spain/raw/zubimendi-martin/01.png",
+      "processed_path": "processed/panini/spain/zubimendi-martin.png",
+      "public_path": "public/cards/panini/spain/zubimendi-martin.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "oyarzabal-mikel",
@@ -268,16 +195,14 @@
       "player_name_en": "OYARZABAL Mikel",
       "shirt_number": 21,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_453.png?v=1773345016",
+      "source_path": "source_images/panini/spain/raw/oyarzabal-mikel/01.png",
+      "processed_path": "processed/panini/spain/oyarzabal-mikel.png",
+      "public_path": "public/cards/panini/spain/oyarzabal-mikel.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "cubarsi-pau",
@@ -285,16 +210,14 @@
       "player_name_en": "CUBARSI Pau",
       "shirt_number": 22,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_LE72.png?v=1773345848",
+      "source_path": "source_images/panini/spain/raw/cubarsi-pau/01.png",
+      "processed_path": "processed/panini/spain/cubarsi-pau.png",
+      "public_path": "public/cards/panini/spain/cubarsi-pau.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "simon-unai",
@@ -302,16 +225,14 @@
       "player_name_en": "SIMON Unai",
       "shirt_number": 23,
       "position": "GK",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/WTC_PNN_ADN_FWC_26_445.png?v=1773344996",
+      "source_path": "source_images/panini/spain/raw/simon-unai/01.png",
+      "processed_path": "processed/panini/spain/simon-unai.png",
+      "public_path": "public/cards/panini/spain/simon-unai.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "cucurella-marc",
@@ -319,16 +240,14 @@
       "player_name_en": "CUCURELLA Marc",
       "shirt_number": 24,
       "position": "DF",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/CAPTURADEPANTALLA2026-04-06ALAS20.03.09.webp?v=1775498830",
+      "source_path": "source_images/panini/spain/raw/cucurella-marc/01.webp",
+      "processed_path": "processed/panini/spain/cucurella-marc.png",
+      "public_path": "public/cards/panini/spain/cucurella-marc.png",
+      "score": 190,
+      "width": 736,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "munoz-victor",
@@ -336,16 +255,14 @@
       "player_name_en": "MUNOZ Victor",
       "shirt_number": 25,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "http://www.worldtradingcards.com/cdn/shop/files/249_ADRENALYN_2025_26_OSASUNA.webp?v=1768857003",
+      "source_path": "source_images/panini/spain/raw/munoz-victor/01.webp",
+      "processed_path": "processed/panini/spain/munoz-victor.png",
+      "public_path": "public/cards/panini/spain/munoz-victor.png",
+      "score": 130,
+      "width": 720,
+      "height": 1024,
+      "review_flags": []
     },
     {
       "player_slug": "iglesias-borja",
@@ -353,16 +270,14 @@
       "player_name_en": "IGLESIAS Borja",
       "shirt_number": 26,
       "position": "FW",
-      "source_url": null,
-      "source_path": null,
-      "processed_path": null,
-      "public_path": null,
-      "score": 0,
-      "width": null,
-      "height": null,
-      "review_flags": [
-        "missing source image"
-      ]
+      "source_url": "https://i.ebayimg.com/images/g/EWgAAeSwcg9qEZtb/s-l1200.jpg",
+      "source_path": "source_images/panini/spain/raw/iglesias-borja/01.jpg",
+      "processed_path": "processed/panini/spain/iglesias-borja.png",
+      "public_path": "public/cards/panini/spain/iglesias-borja.png",
+      "score": 150,
+      "width": 900,
+      "height": 1200,
+      "review_flags": []
     }
   ]
 }

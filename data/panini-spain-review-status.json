@@ -18,15 +18,6 @@
     "note": "missing source image"
   },
   {
-    "player_slug": "grimaldo-alex",
-    "player_name": "亚历克斯·格里马尔多",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
     "player_slug": "garcia-eric",
     "player_name": "埃里克·加西亚",
     "output_path": null,
@@ -38,15 +29,6 @@
   {
     "player_slug": "llorente-marcos",
     "player_name": "马科斯·略伦特",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "merino-mikel",
-    "player_name": "米克尔·梅里诺",
     "output_path": null,
     "source_url": null,
     "review_flag": true,
@@ -74,15 +56,6 @@
   {
     "player_slug": "gavi",
     "player_name": "加维",
-    "output_path": null,
-    "source_url": null,
-    "review_flag": true,
-    "status": "pending",
-    "note": "missing source image"
-  },
-  {
-    "player_slug": "pino-yeremy",
-    "player_name": "耶雷米·皮诺",
     "output_path": null,
     "source_url": null,
     "review_flag": true,
