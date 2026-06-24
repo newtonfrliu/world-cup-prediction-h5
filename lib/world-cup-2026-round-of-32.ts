@@ -99,12 +99,37 @@ export const ROUND_OF_32_RULES: MatchRule[] = [
   { matchNumber: 88, home: direct("D", 2), away: direct("G", 2) },
 ];
 
-const NEXT_ROUND_MATCH_NUMBERS = {
-  roundOf16: [89, 90, 91, 92, 93, 94, 95, 96],
-  quarterFinals: [97, 98, 99, 100],
-  semiFinals: [101, 102],
-  final: [104],
+export const ROUND_OF_32_LAYOUT = {
+  left: [74, 77, 73, 75, 83, 84, 81, 82],
+  right: [76, 78, 79, 80, 86, 88, 85, 87],
 };
+
+const NEXT_ROUND_RULES = {
+  roundOf16: [
+    { matchNumber: 89, sources: [74, 77] },
+    { matchNumber: 90, sources: [73, 75] },
+    { matchNumber: 91, sources: [83, 84] },
+    { matchNumber: 92, sources: [81, 82] },
+    { matchNumber: 93, sources: [76, 78] },
+    { matchNumber: 94, sources: [79, 80] },
+    { matchNumber: 95, sources: [86, 88] },
+    { matchNumber: 96, sources: [85, 87] },
+  ],
+  quarterFinals: [
+    { matchNumber: 97, sources: [89, 90] },
+    { matchNumber: 98, sources: [91, 92] },
+    { matchNumber: 99, sources: [93, 94] },
+    { matchNumber: 100, sources: [95, 96] },
+  ],
+  semiFinals: [
+    { matchNumber: 101, sources: [97, 98] },
+    { matchNumber: 102, sources: [99, 100] },
+  ],
+  final: [{ matchNumber: 104, sources: [101, 102] }],
+} satisfies Record<
+  "roundOf16" | "quarterFinals" | "semiFinals" | "final",
+  Array<{ matchNumber: number; sources: [number, number] }>
+>;
 
 export function createEmptyRankings(): Record<GroupLetter, GroupRanking> {
   return Object.fromEntries(
@@ -239,15 +264,19 @@ function getWinnerFromMatch(
 
 function buildNextRound(
   previousRound: KnockoutMatch[],
-  matchNumbers: number[],
+  rules: Array<{ matchNumber: number; sources: [number, number] }>,
   selectedWinners: SelectedKnockoutWinners,
 ): KnockoutMatch[] {
-  return matchNumbers.map((matchNumber, index) => {
-    const firstSourceMatch = previousRound[index * 2];
-    const secondSourceMatch = previousRound[index * 2 + 1];
+  const previousRoundByNumber = new Map(
+    previousRound.map((match) => [match.matchNumber, match]),
+  );
+
+  return rules.map((rule) => {
+    const firstSourceMatch = previousRoundByNumber.get(rule.sources[0]);
+    const secondSourceMatch = previousRoundByNumber.get(rule.sources[1]);
 
     return {
-      matchNumber,
+      matchNumber: rule.matchNumber,
       home: firstSourceMatch
         ? getWinnerFromMatch(firstSourceMatch, selectedWinners)
         : null,
@@ -264,22 +293,22 @@ export function resolveKnockoutBracket(
 ): KnockoutBracket {
   const roundOf16 = buildNextRound(
     roundOf32,
-    NEXT_ROUND_MATCH_NUMBERS.roundOf16,
+    NEXT_ROUND_RULES.roundOf16,
     selectedWinners,
   );
   const quarterFinals = buildNextRound(
     roundOf16,
-    NEXT_ROUND_MATCH_NUMBERS.quarterFinals,
+    NEXT_ROUND_RULES.quarterFinals,
     selectedWinners,
   );
   const semiFinals = buildNextRound(
     quarterFinals,
-    NEXT_ROUND_MATCH_NUMBERS.semiFinals,
+    NEXT_ROUND_RULES.semiFinals,
     selectedWinners,
   );
   const [final] = buildNextRound(
     semiFinals,
-    NEXT_ROUND_MATCH_NUMBERS.final,
+    NEXT_ROUND_RULES.final,
     selectedWinners,
   );
 

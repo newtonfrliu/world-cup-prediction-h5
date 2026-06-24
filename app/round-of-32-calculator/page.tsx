@@ -14,6 +14,7 @@ import {
   RoundOf32Team,
   SelectedKnockoutWinners,
   resolveKnockoutBracket,
+  ROUND_OF_32_LAYOUT,
   WORLD_CUP_2026_GROUPS,
 } from "@/lib/world-cup-2026-round-of-32";
 import {
@@ -30,6 +31,17 @@ type StoredState = {
 };
 
 const mapValidation = validateThirdPlaceMap();
+
+function orderMatchesByNumber<T extends KnockoutMatch>(
+  matches: T[],
+  matchNumbers: number[],
+) {
+  const matchByNumber = new Map(matches.map((match) => [match.matchNumber, match]));
+
+  return matchNumbers
+    .map((matchNumber) => matchByNumber.get(matchNumber))
+    .filter((match): match is T => Boolean(match));
+}
 
 function normalizeStoredRankings(value: unknown): Record<GroupLetter, GroupRanking> {
   const empty = createEmptyRankings();
@@ -308,8 +320,14 @@ export default function RoundOf32CalculatorPage() {
     () => resolveKnockoutBracket(roundOf32.matches, selectedKnockoutWinners),
     [roundOf32.matches, selectedKnockoutWinners],
   );
-  const leftMatches = knockoutBracket.roundOf32.slice(0, 8);
-  const rightMatches = knockoutBracket.roundOf32.slice(8);
+  const leftMatches = orderMatchesByNumber(
+    knockoutBracket.roundOf32,
+    ROUND_OF_32_LAYOUT.left,
+  );
+  const rightMatches = orderMatchesByNumber(
+    knockoutBracket.roundOf32,
+    ROUND_OF_32_LAYOUT.right,
+  );
   const leftRoundOf16 = knockoutBracket.roundOf16.slice(0, 4);
   const rightRoundOf16 = knockoutBracket.roundOf16.slice(4);
   const leftQuarterFinals = knockoutBracket.quarterFinals.slice(0, 2);
