@@ -632,6 +632,9 @@ export default function Home() {
             <Link href="/bracket" className="wc-button-secondary w-full">
               世界杯晋级之路
             </Link>
+            <Link href="/round-of-32-calculator" className="wc-button-secondary w-full">
+              32强实时对阵
+            </Link>
             <button
               type="button"
               onClick={switchAccount}
@@ -779,6 +782,13 @@ export default function Home() {
             className="wc-button-secondary w-full"
           >
             世界杯晋级之路
+          </Link>
+
+          <Link
+            href="/round-of-32-calculator"
+            className="wc-button-secondary w-full"
+          >
+            32强实时对阵
           </Link>
         </form>
         )}
