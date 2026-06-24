@@ -4,13 +4,16 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { CountryDisplay } from "@/components/CountryDisplay";
+import { getCountryDisplayName } from "@/lib/countries";
 import {
   buildRoundOf32,
   createEmptyRankings,
   createExampleRankings,
   GroupRanking,
-  RoundOf32Match,
+  KnockoutMatch,
   RoundOf32Team,
+  SelectedKnockoutWinners,
+  resolveKnockoutBracket,
   WORLD_CUP_2026_GROUPS,
 } from "@/lib/world-cup-2026-round-of-32";
 import {
@@ -23,6 +26,7 @@ const STORAGE_KEY = "roundOf32CalculatorStateV1";
 
 type StoredState = {
   rankings: Record<GroupLetter, GroupRanking>;
+  selectedKnockoutWinners?: SelectedKnockoutWinners;
 };
 
 const mapValidation = validateThirdPlaceMap();
@@ -72,7 +76,52 @@ function isTeamUsedInOtherRank(
   );
 }
 
-function TeamSlot({ team }: { team: RoundOf32Team | null }) {
+function TeamDisplayChip({ team }: { team: string }) {
+  if (!team) {
+    return (
+      <div className="mt-2 rounded-xl border border-dashed border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-black text-white/35">
+        待定
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-2 rounded-xl border border-[#f6c84c]/20 bg-white/[0.06] px-3 py-2 text-sm font-black text-white">
+      <CountryDisplay team={team} flagClassName="h-4 w-6 rounded-[3px]" />
+    </div>
+  );
+}
+
+function normalizeStoredKnockoutWinners(value: unknown): SelectedKnockoutWinners {
+  if (!value || typeof value !== "object" || !("selectedKnockoutWinners" in value)) {
+    return {};
+  }
+
+  const selectedKnockoutWinners = (value as StoredState).selectedKnockoutWinners;
+
+  if (!selectedKnockoutWinners || typeof selectedKnockoutWinners !== "object") {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(selectedKnockoutWinners).filter(
+      ([matchKey, team]) =>
+        /^M\d+$/.test(matchKey) && typeof team === "string" && team.length > 0,
+    ),
+  );
+}
+
+function TeamSlot({
+  team,
+  selected,
+  disabled,
+  onSelect,
+}: {
+  team: RoundOf32Team | null;
+  selected?: boolean;
+  disabled?: boolean;
+  onSelect?: () => void;
+}) {
   if (!team?.team) {
     return (
       <div className="rounded-lg border border-dashed border-white/15 bg-white/5 px-3 py-2 text-xs font-black text-white/45">
@@ -81,8 +130,17 @@ function TeamSlot({ team }: { team: RoundOf32Team | null }) {
     );
   }
 
+  const className = selected
+    ? "border-[#f6c84c] bg-[#f6c84c] text-[#071b3a] shadow-[0_0_24px_rgba(246,200,76,0.35)]"
+    : "border-[#f6c84c]/30 bg-[#071b3a]/80 text-white shadow-inner hover:border-[#f6c84c]/70 hover:bg-[#102a43]";
+
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-[#f6c84c]/30 bg-[#071b3a]/80 px-3 py-2 text-sm font-black text-white shadow-inner">
+    <button
+      type="button"
+      onClick={onSelect}
+      disabled={disabled}
+      className={`flex w-full items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left text-sm font-black transition ${className} disabled:cursor-not-allowed disabled:opacity-55`}
+    >
       <CountryDisplay
         team={team.team}
         className="min-w-0"
@@ -91,36 +149,75 @@ function TeamSlot({ team }: { team: RoundOf32Team | null }) {
       <span className="shrink-0 rounded-full bg-[#f6c84c] px-2 py-0.5 text-[10px] text-[#071b3a]">
         {team.slot}
       </span>
-    </div>
+    </button>
   );
 }
 
-function MatchCard({ match }: { match: RoundOf32Match }) {
+function MatchCard({
+  match,
+  selectedWinner,
+  onSelectWinner,
+}: {
+  match: KnockoutMatch;
+  selectedWinner?: string;
+  onSelectWinner: (matchNumber: number, team: string) => void;
+}) {
+  const canPickHome = Boolean(match.home?.team && match.away?.team);
+  const canPickAway = canPickHome;
+
   return (
     <div className="rounded-xl border border-[#f6c84c]/25 bg-[#0b2a45]/90 p-3 shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
       <div className="mb-2 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.14em] text-[#f6c84c]">
         <span>M{match.matchNumber}</span>
-        <span>Round of 32</span>
+        <span>{selectedWinner ? "Winner Picked" : "Pick Winner"}</span>
       </div>
       <div className="space-y-2">
-        <TeamSlot team={match.home} />
-        <TeamSlot team={match.away} />
+        <TeamSlot
+          team={match.home}
+          selected={Boolean(match.home?.team && selectedWinner === match.home.team)}
+          disabled={!canPickHome}
+          onSelect={
+            match.home?.team
+              ? () => onSelectWinner(match.matchNumber, match.home?.team ?? "")
+              : undefined
+          }
+        />
+        <TeamSlot
+          team={match.away}
+          selected={Boolean(match.away?.team && selectedWinner === match.away.team)}
+          disabled={!canPickAway}
+          onSelect={
+            match.away?.team
+              ? () => onSelectWinner(match.matchNumber, match.away?.team ?? "")
+              : undefined
+          }
+        />
       </div>
     </div>
   );
 }
 
-function FutureRound({ title, count }: { title: string; count: number }) {
+function MatchRound({
+  title,
+  matches,
+  selectedKnockoutWinners,
+  onSelectWinner,
+}: {
+  title: string;
+  matches: KnockoutMatch[];
+  selectedKnockoutWinners: SelectedKnockoutWinners;
+  onSelectWinner: (matchNumber: number, team: string) => void;
+}) {
   return (
     <div className="space-y-3">
       <h3 className="text-center text-sm font-black text-[#f6c84c]">{title}</h3>
-      {Array.from({ length: count }).map((_, index) => (
-        <div
-          key={`${title}-${index}`}
-          className="flex min-h-20 items-center justify-center rounded-xl border border-dashed border-white/15 bg-white/[0.04] px-3 text-xs font-black text-white/45"
-        >
-          待定
-        </div>
+      {matches.map((match) => (
+        <MatchCard
+          key={match.matchNumber}
+          match={match}
+          selectedWinner={selectedKnockoutWinners[`M${match.matchNumber}`]}
+          onSelectWinner={onSelectWinner}
+        />
       ))}
     </div>
   );
@@ -129,23 +226,48 @@ function FutureRound({ title, count }: { title: string; count: number }) {
 function BracketHalf({
   title,
   matches,
+  roundOf16,
+  quarterFinals,
+  semiFinals,
+  selectedKnockoutWinners,
+  onSelectWinner,
 }: {
   title: string;
-  matches: RoundOf32Match[];
+  matches: KnockoutMatch[];
+  roundOf16: KnockoutMatch[];
+  quarterFinals: KnockoutMatch[];
+  semiFinals: KnockoutMatch[];
+  selectedKnockoutWinners: SelectedKnockoutWinners;
+  onSelectWinner: (matchNumber: number, team: string) => void;
 }) {
   return (
     <section className="rounded-2xl border border-[#f6c84c]/20 bg-[#071b3a]/80 p-4">
       <h2 className="mb-4 text-lg font-black text-white">{title}</h2>
       <div className="grid min-w-[760px] grid-cols-[1.35fr_1fr_0.9fr_0.8fr] gap-4">
-        <div className="space-y-3">
-          <h3 className="text-center text-sm font-black text-[#f6c84c]">32强</h3>
-          {matches.map((match) => (
-            <MatchCard key={match.matchNumber} match={match} />
-          ))}
-        </div>
-        <FutureRound title="16强" count={4} />
-        <FutureRound title="8强" count={2} />
-        <FutureRound title="半决赛" count={1} />
+        <MatchRound
+          title="32强"
+          matches={matches}
+          selectedKnockoutWinners={selectedKnockoutWinners}
+          onSelectWinner={onSelectWinner}
+        />
+        <MatchRound
+          title="16强"
+          matches={roundOf16}
+          selectedKnockoutWinners={selectedKnockoutWinners}
+          onSelectWinner={onSelectWinner}
+        />
+        <MatchRound
+          title="8强"
+          matches={quarterFinals}
+          selectedKnockoutWinners={selectedKnockoutWinners}
+          onSelectWinner={onSelectWinner}
+        />
+        <MatchRound
+          title="半决赛"
+          matches={semiFinals}
+          selectedKnockoutWinners={selectedKnockoutWinners}
+          onSelectWinner={onSelectWinner}
+        />
       </div>
     </section>
   );
@@ -154,6 +276,8 @@ function BracketHalf({
 export default function RoundOf32CalculatorPage() {
   const [rankings, setRankings] =
     useState<Record<GroupLetter, GroupRanking>>(createEmptyRankings);
+  const [selectedKnockoutWinners, setSelectedKnockoutWinners] =
+    useState<SelectedKnockoutWinners>({});
   const [copyNotice, setCopyNotice] = useState("");
 
   useEffect(() => {
@@ -164,19 +288,34 @@ export default function RoundOf32CalculatorPage() {
     }
 
     try {
-      setRankings(normalizeStoredRankings(JSON.parse(stored)));
+      const parsed = JSON.parse(stored);
+      setRankings(normalizeStoredRankings(parsed));
+      setSelectedKnockoutWinners(normalizeStoredKnockoutWinners(parsed));
     } catch (error) {
       console.error("failed to restore round of 32 calculator state", error);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ rankings }));
-  }, [rankings]);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ rankings, selectedKnockoutWinners }),
+    );
+  }, [rankings, selectedKnockoutWinners]);
 
   const roundOf32 = useMemo(() => buildRoundOf32(rankings), [rankings]);
-  const leftMatches = roundOf32.matches.slice(0, 8);
-  const rightMatches = roundOf32.matches.slice(8);
+  const knockoutBracket = useMemo(
+    () => resolveKnockoutBracket(roundOf32.matches, selectedKnockoutWinners),
+    [roundOf32.matches, selectedKnockoutWinners],
+  );
+  const leftMatches = knockoutBracket.roundOf32.slice(0, 8);
+  const rightMatches = knockoutBracket.roundOf32.slice(8);
+  const leftRoundOf16 = knockoutBracket.roundOf16.slice(0, 4);
+  const rightRoundOf16 = knockoutBracket.roundOf16.slice(4);
+  const leftQuarterFinals = knockoutBracket.quarterFinals.slice(0, 2);
+  const rightQuarterFinals = knockoutBracket.quarterFinals.slice(2);
+  const leftSemiFinals = knockoutBracket.semiFinals.slice(0, 1);
+  const rightSemiFinals = knockoutBracket.semiFinals.slice(1);
   const selectedThirdCount = roundOf32.selectedBestThirdGroups.length;
   const remainingThirdCount = Math.max(0, 8 - selectedThirdCount);
 
@@ -204,19 +343,44 @@ export default function RoundOf32CalculatorPage() {
 
   function resetAll() {
     setRankings(createEmptyRankings());
+    setSelectedKnockoutWinners({});
     setCopyNotice("");
   }
 
   function fillExample() {
     setRankings(createExampleRankings());
+    setSelectedKnockoutWinners({});
     setCopyNotice("");
   }
 
+  function resetKnockoutWinners() {
+    setSelectedKnockoutWinners({});
+    setCopyNotice("");
+  }
+
+  function selectWinner(matchNumber: number, team: string) {
+    setSelectedKnockoutWinners((current) => ({
+      ...current,
+      [`M${matchNumber}`]: team,
+    }));
+  }
+
   async function copyMatches() {
-    const text = roundOf32.matches
+    const rounds = [
+      ...knockoutBracket.roundOf32,
+      ...knockoutBracket.roundOf16,
+      ...knockoutBracket.quarterFinals,
+      ...knockoutBracket.semiFinals,
+      knockoutBracket.final,
+    ];
+    const text = rounds
       .map((match) => {
-        const home = match.home?.team ?? "待定";
-        const away = match.away?.team ?? "待定";
+        const home = match.home?.team
+          ? `${getCountryDisplayName(match.home.team)}（${match.home.slot}）`
+          : "待定";
+        const away = match.away?.team
+          ? `${getCountryDisplayName(match.away.team)}（${match.away.slot}）`
+          : "待定";
         return `M${match.matchNumber}: ${home} vs ${away}`;
       })
       .join("\n");
@@ -291,7 +455,14 @@ export default function RoundOf32CalculatorPage() {
                 onClick={copyMatches}
                 className="rounded-xl bg-[#e63535] px-4 py-2 text-sm font-black text-white"
               >
-                复制当前32强对阵文本
+                复制当前淘汰赛对阵文本
+              </button>
+              <button
+                type="button"
+                onClick={resetKnockoutWinners}
+                className="rounded-xl border border-[#f6c84c]/35 bg-[#071b3a] px-4 py-2 text-sm font-black text-[#f6c84c]"
+              >
+                重置淘汰赛选择
               </button>
             </div>
           </div>
@@ -367,10 +538,20 @@ export default function RoundOf32CalculatorPage() {
                                 team,
                               )}
                             >
-                              {team}
+                              {getCountryDisplayName(team)}
                             </option>
                           ))}
                         </select>
+                        <TeamDisplayChip
+                          team={
+                            ranking[
+                              field as keyof Pick<
+                                GroupRanking,
+                                "first" | "second" | "third"
+                              >
+                            ] as string
+                          }
+                        />
                       </label>
                     ))}
                     <label className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-3 text-sm font-black">
@@ -389,7 +570,8 @@ export default function RoundOf32CalculatorPage() {
                     </label>
                     {duplicates.length > 0 ? (
                       <p className="rounded-lg bg-[#e63535]/15 px-3 py-2 text-xs font-black text-[#ffb4b4]">
-                        同组排名不能重复选择：{duplicates.join("、")}
+                        同组排名不能重复选择：
+                        {duplicates.map((team) => getCountryDisplayName(team)).join("、")}
                       </p>
                     ) : null}
                     {!canCheckBestThird ? (
@@ -442,19 +624,81 @@ export default function RoundOf32CalculatorPage() {
 
           <div className="grid gap-5 xl:grid-cols-2">
             <div className="overflow-x-auto">
-              <BracketHalf title="左半区" matches={leftMatches} />
+              <BracketHalf
+                title="左半区"
+                matches={leftMatches}
+                roundOf16={leftRoundOf16}
+                quarterFinals={leftQuarterFinals}
+                semiFinals={leftSemiFinals}
+                selectedKnockoutWinners={selectedKnockoutWinners}
+                onSelectWinner={selectWinner}
+              />
             </div>
             <div className="overflow-x-auto">
-              <BracketHalf title="右半区" matches={rightMatches} />
+              <BracketHalf
+                title="右半区"
+                matches={rightMatches}
+                roundOf16={rightRoundOf16}
+                quarterFinals={rightQuarterFinals}
+                semiFinals={rightSemiFinals}
+                selectedKnockoutWinners={selectedKnockoutWinners}
+                onSelectWinner={selectWinner}
+              />
             </div>
           </div>
 
-          <div className="mt-5 flex justify-center">
-            <div className="rounded-2xl border border-[#f6c84c]/35 bg-[#071b3a] px-10 py-5 text-center shadow-[0_16px_48px_rgba(246,200,76,0.16)]">
+          <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_0.8fr]">
+            <div className="rounded-2xl border border-[#f6c84c]/35 bg-[#071b3a] p-4 shadow-[0_16px_48px_rgba(246,200,76,0.12)]">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#f6c84c]">
-                Final
+                Final · M104
               </p>
-              <p className="mt-2 text-2xl font-black text-white">决赛 · 待定</p>
+              <div className="mt-3 max-w-md space-y-2">
+                <TeamSlot
+                  team={knockoutBracket.final.home}
+                  selected={Boolean(
+                    knockoutBracket.final.home?.team &&
+                      selectedKnockoutWinners.M104 === knockoutBracket.final.home.team,
+                  )}
+                  disabled={!knockoutBracket.final.home?.team || !knockoutBracket.final.away?.team}
+                  onSelect={
+                    knockoutBracket.final.home?.team
+                      ? () => selectWinner(104, knockoutBracket.final.home?.team ?? "")
+                      : undefined
+                  }
+                />
+                <TeamSlot
+                  team={knockoutBracket.final.away}
+                  selected={Boolean(
+                    knockoutBracket.final.away?.team &&
+                      selectedKnockoutWinners.M104 === knockoutBracket.final.away.team,
+                  )}
+                  disabled={!knockoutBracket.final.home?.team || !knockoutBracket.final.away?.team}
+                  onSelect={
+                    knockoutBracket.final.away?.team
+                      ? () => selectWinner(104, knockoutBracket.final.away?.team ?? "")
+                      : undefined
+                  }
+                />
+              </div>
+            </div>
+            <div className="rounded-2xl border border-[#f6c84c]/45 bg-[#f6c84c] px-8 py-6 text-center text-[#071b3a] shadow-[0_20px_56px_rgba(246,200,76,0.24)]">
+              <p className="text-sm font-black uppercase tracking-[0.2em]">
+                World Champion
+              </p>
+              <p className="mt-3 text-4xl font-black">🏆 世界冠军</p>
+              <div className="mt-4 flex justify-center">
+                {knockoutBracket.champion?.team ? (
+                  <CountryDisplay
+                    team={knockoutBracket.champion.team}
+                    className="justify-center text-2xl font-black"
+                    flagClassName="h-7 w-10 rounded-md"
+                  />
+                ) : (
+                  <span className="text-2xl font-black text-[#071b3a]/50">
+                    待定
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -471,4 +715,3 @@ export default function RoundOf32CalculatorPage() {
     </main>
   );
 }
-

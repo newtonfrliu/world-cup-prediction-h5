@@ -17,14 +17,27 @@ export type GroupRanking = {
 export type RoundOf32Team = {
   slot: string;
   team: TeamName | null;
-  group: GroupLetter;
-  rank: 1 | 2 | 3;
+  group?: GroupLetter;
+  rank?: 1 | 2 | 3;
 };
 
-export type RoundOf32Match = {
+export type KnockoutMatch = {
   matchNumber: number;
   home: RoundOf32Team | null;
   away: RoundOf32Team | null;
+};
+
+export type RoundOf32Match = KnockoutMatch;
+
+export type SelectedKnockoutWinners = Record<string, TeamName>;
+
+export type KnockoutBracket = {
+  roundOf32: KnockoutMatch[];
+  roundOf16: KnockoutMatch[];
+  quarterFinals: KnockoutMatch[];
+  semiFinals: KnockoutMatch[];
+  final: KnockoutMatch;
+  champion: RoundOf32Team | null;
 };
 
 export const WORLD_CUP_2026_GROUPS: Record<GroupLetter, TeamName[]> = {
@@ -85,6 +98,13 @@ export const ROUND_OF_32_RULES: MatchRule[] = [
   { matchNumber: 87, home: direct("K", 1), away: third("T8") },
   { matchNumber: 88, home: direct("D", 2), away: direct("G", 2) },
 ];
+
+const NEXT_ROUND_MATCH_NUMBERS = {
+  roundOf16: [89, 90, 91, 92, 93, 94, 95, 96],
+  quarterFinals: [97, 98, 99, 100],
+  semiFinals: [101, 102],
+  final: [104],
+};
 
 export function createEmptyRankings(): Record<GroupLetter, GroupRanking> {
   return Object.fromEntries(
@@ -196,3 +216,79 @@ export function buildRoundOf32(rankings: Record<GroupLetter, GroupRanking>) {
   };
 }
 
+function getWinnerFromMatch(
+  match: KnockoutMatch,
+  selectedWinners: SelectedKnockoutWinners,
+): RoundOf32Team | null {
+  const selectedTeam = selectedWinners[`M${match.matchNumber}`];
+
+  if (!selectedTeam) {
+    return null;
+  }
+
+  if (match.home?.team === selectedTeam) {
+    return match.home;
+  }
+
+  if (match.away?.team === selectedTeam) {
+    return match.away;
+  }
+
+  return null;
+}
+
+function buildNextRound(
+  previousRound: KnockoutMatch[],
+  matchNumbers: number[],
+  selectedWinners: SelectedKnockoutWinners,
+): KnockoutMatch[] {
+  return matchNumbers.map((matchNumber, index) => {
+    const firstSourceMatch = previousRound[index * 2];
+    const secondSourceMatch = previousRound[index * 2 + 1];
+
+    return {
+      matchNumber,
+      home: firstSourceMatch
+        ? getWinnerFromMatch(firstSourceMatch, selectedWinners)
+        : null,
+      away: secondSourceMatch
+        ? getWinnerFromMatch(secondSourceMatch, selectedWinners)
+        : null,
+    };
+  });
+}
+
+export function resolveKnockoutBracket(
+  roundOf32: KnockoutMatch[],
+  selectedWinners: SelectedKnockoutWinners,
+): KnockoutBracket {
+  const roundOf16 = buildNextRound(
+    roundOf32,
+    NEXT_ROUND_MATCH_NUMBERS.roundOf16,
+    selectedWinners,
+  );
+  const quarterFinals = buildNextRound(
+    roundOf16,
+    NEXT_ROUND_MATCH_NUMBERS.quarterFinals,
+    selectedWinners,
+  );
+  const semiFinals = buildNextRound(
+    quarterFinals,
+    NEXT_ROUND_MATCH_NUMBERS.semiFinals,
+    selectedWinners,
+  );
+  const [final] = buildNextRound(
+    semiFinals,
+    NEXT_ROUND_MATCH_NUMBERS.final,
+    selectedWinners,
+  );
+
+  return {
+    roundOf32,
+    roundOf16,
+    quarterFinals,
+    semiFinals,
+    final,
+    champion: getWinnerFromMatch(final, selectedWinners),
+  };
+}
