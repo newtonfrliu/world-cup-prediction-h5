@@ -26,6 +26,7 @@ import {
   sanitizeInviteParam,
 } from "@/lib/inviteCode";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
+import { buttonStyles, cardStyles, statusStyles } from "@/lib/ui-styles";
 
 type HomePlayer = {
   id: string;
@@ -47,6 +48,12 @@ type PlayerCard = {
   card_art_url: string | null;
   card_thumb_url: string | null;
   roster_source: string | null;
+};
+type HomeOpsStatus = {
+  predictable: number | null;
+  inProgress: number | null;
+  finished: number | null;
+  globalRank: number | null;
 };
 
 const popularTeams = [
@@ -120,6 +127,12 @@ export default function Home() {
   const [error, setError] = useState("");
   const [coinBalance, setCoinBalance] = useState<number | null>(null);
   const [recoveryPlayer, setRecoveryPlayer] = useState<HomePlayer | null>(null);
+  const [homeOpsStatus, setHomeOpsStatus] = useState<HomeOpsStatus>({
+    predictable: null,
+    inProgress: null,
+    finished: null,
+    globalRank: null,
+  });
 
   const trimmedNickname = nickname.trim();
   const isNicknameEmpty = trimmedNickname.length === 0;
@@ -216,6 +229,58 @@ export default function Home() {
     setEquippedCard(cardData);
   }
 
+  function getHomeMatchState(match: { start_time: string; status: string | null }) {
+    if (match.status === "finished") {
+      return "finished";
+    }
+
+    const startTime = new Date(match.start_time).getTime();
+
+    if (!Number.isFinite(startTime)) {
+      return "not_started";
+    }
+
+    return Date.now() >= startTime ? "in_progress" : "not_started";
+  }
+
+  async function loadHomeOpsStatus(player: HomePlayer, coins: number) {
+    const nextStatus: HomeOpsStatus = {
+      predictable: null,
+      inProgress: null,
+      finished: null,
+      globalRank: null,
+    };
+
+    const { data: matches, error: matchesError } = await supabase
+      .from("matches")
+      .select("start_time, status");
+
+    if (!matchesError) {
+      const states = (matches ?? []).map(getHomeMatchState);
+      nextStatus.predictable = states.filter((state) => state === "not_started").length;
+      nextStatus.inProgress = states.filter((state) => state === "in_progress").length;
+      nextStatus.finished = states.filter((state) => state === "finished").length;
+    }
+
+    const { data: leaderboard, error: leaderboardError } = await supabase
+      .from("leaderboard")
+      .select("nickname, country, region, total_points")
+      .order("total_points", { ascending: false });
+
+    if (!leaderboardError) {
+      const playerIndex = (leaderboard ?? []).findIndex(
+        (row) =>
+          row.nickname === player.nickname &&
+          row.country === player.country &&
+          row.region === player.region,
+      );
+      nextStatus.globalRank = playerIndex >= 0 ? playerIndex + 1 : null;
+    }
+
+    setCoinBalance(coins);
+    setHomeOpsStatus(nextStatus);
+  }
+
   async function loadPlayer(
     playerId: string,
     options: { awardDaily?: boolean } = {},
@@ -285,7 +350,9 @@ export default function Home() {
             data.last_login_reward_date,
           )
         : data.coins ?? 1000;
-      setCurrentPlayer({ ...data, coins: nextCoins });
+      const nextPlayer = { ...data, coins: nextCoins };
+      setCurrentPlayer(nextPlayer);
+      await loadHomeOpsStatus(nextPlayer, nextCoins);
   }
 
   function getTodayKey() {
@@ -490,6 +557,12 @@ export default function Home() {
     setRewardStatus("");
     setNotice("");
     setError("");
+    setHomeOpsStatus({
+      predictable: null,
+      inProgress: null,
+      finished: null,
+      globalRank: null,
+    });
   }
 
   return (
@@ -515,7 +588,7 @@ export default function Home() {
               className="absolute -right-8 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-20"
             />
           ) : null}
-          <div className="relative z-10 pr-28">
+          <div className="relative z-10 max-w-[62%] pr-2 sm:max-w-[58%] md:max-w-[52%]">
             <p
               className="text-sm font-black"
               style={{ color: selectedTheme.mutedForeground }}
@@ -556,13 +629,14 @@ export default function Home() {
               加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
             </p>
           </div>
-            {equippedCard && equippedCardImageSrc ? (
-            <div className="absolute bottom-4 right-[8.25rem] z-20 flex h-[150px] w-[104px] items-end justify-center sm:right-36 sm:h-[170px] sm:w-[118px] md:bottom-5 md:right-44 md:h-[220px] md:w-[152px]">
+          {equippedCard && equippedCardImageSrc ? (
+            <div className="absolute bottom-5 right-[8.5rem] z-20 hidden h-[150px] w-[104px] items-end justify-center sm:flex sm:right-36 sm:h-[170px] sm:w-[118px] md:bottom-6 md:right-44 md:h-[220px] md:w-[152px]">
+              <div className="absolute inset-3 rounded-[28px] bg-[#f6c84c]/28 blur-2xl" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={equippedCardImageSrc}
                 alt={`${equippedCard.player_name} equipped card`}
-                className="max-h-full max-w-full object-contain drop-shadow-[0_20px_35px_rgba(7,27,58,0.38)]"
+                className="relative max-h-full max-w-full translate-y-1 object-contain drop-shadow-[0_24px_42px_rgba(7,27,58,0.42)]"
               />
             </div>
           ) : null}
@@ -609,11 +683,68 @@ export default function Home() {
             </p>
           </div>
             {notice ? (
-              <div className="rounded-xl border border-[#bae6bd] bg-[#e3f9e5] p-4 text-sm font-black text-[#0f7b3f]">
+              <div className={statusStyles.success}>
                 <p>{notice}</p>
                 <p className="mt-2 text-[#071b3a]">请选择下一步：</p>
               </div>
             ) : null}
+
+            <div className={cardStyles.stat}>
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
+                Today Status
+              </p>
+              <h3 className="mt-1 text-lg font-black text-[#071b3a]">
+                今日运营状态
+              </h3>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-black text-[#071b3a] sm:grid-cols-3">
+                {homeOpsStatus.predictable !== null ? (
+                  <div className="rounded-xl bg-white px-3 py-2">
+                    <p className="text-[#627d98]">可预测</p>
+                    <p className="text-xl">{homeOpsStatus.predictable}</p>
+                  </div>
+                ) : null}
+                {homeOpsStatus.inProgress !== null ? (
+                  <div className="rounded-xl bg-white px-3 py-2">
+                    <p className="text-[#627d98]">进行中</p>
+                    <p className="text-xl">{homeOpsStatus.inProgress}</p>
+                  </div>
+                ) : null}
+                {homeOpsStatus.finished !== null ? (
+                  <div className="rounded-xl bg-white px-3 py-2">
+                    <p className="text-[#627d98]">已结束</p>
+                    <p className="text-xl">{homeOpsStatus.finished}</p>
+                  </div>
+                ) : null}
+                <div className="rounded-xl bg-white px-3 py-2">
+                  <p className="text-[#627d98]">我的金币</p>
+                  <p className="text-xl">{currentPlayer.coins}</p>
+                </div>
+                {homeOpsStatus.globalRank !== null ? (
+                  <div className="rounded-xl bg-white px-3 py-2">
+                    <p className="text-[#627d98]">全球排名</p>
+                    <p className="text-xl">#{homeOpsStatus.globalRank}</p>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-[#071b3a]/10 bg-white p-4 text-sm font-black text-[#071b3a] shadow-sm">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#e63535]">
+                Equipped Card
+              </p>
+              <p className="mt-2">
+                当前装备：
+                {equippedCard ? (
+                  <span>
+                    {equippedCard.player_name}
+                    {equippedCard.rarity ? ` / ${equippedCard.rarity.toUpperCase()}` : ""}
+                  </span>
+                ) : (
+                  <span className="text-[#627d98]">尚未装备球星卡</span>
+                )}
+              </p>
+            </div>
+
             <Link href="/predict" className="wc-button w-full">
               预测比赛
             </Link>
@@ -626,19 +757,19 @@ export default function Home() {
                 用金币兑换你的主队球星卡
               </span>
             </Link>
-            <Link href="/leaderboard" className="wc-button-secondary w-full">
-              球王榜
+            <Link href="/round-of-32-calculator" className="wc-button-gold w-full">
+              32强实时对阵
             </Link>
-            <Link href="/bracket" className="wc-button-secondary w-full">
+            <Link href="/bracket" className="wc-button-green w-full">
               世界杯晋级之路
             </Link>
-            <Link href="/round-of-32-calculator" className="wc-button-secondary w-full">
-              32强实时对阵
+            <Link href="/leaderboard" className="wc-button-secondary w-full">
+              球王榜
             </Link>
             <button
               type="button"
               onClick={switchAccount}
-              className="h-11 w-full rounded-xl border border-[#071b3a]/15 bg-white px-4 text-sm font-black text-[#071b3a]"
+              className={buttonStyles.muted}
             >
               切换账号 / 重新登录
             </button>
@@ -726,7 +857,7 @@ export default function Home() {
           </label>
 
           {error ? (
-            <p className="rounded-md bg-[#fde8e8] px-3 py-2 text-sm text-[#9b1c1c]">
+            <p className={statusStyles.error}>
               {error}
             </p>
           ) : null}
@@ -743,7 +874,7 @@ export default function Home() {
           ) : null}
 
           {notice ? (
-            <p className="rounded-md bg-[#e3f9e5] px-3 py-2 text-sm font-semibold text-[#0f7b3f]">
+            <p className={statusStyles.success}>
               {notice}
             </p>
           ) : null}
@@ -755,13 +886,6 @@ export default function Home() {
           >
             {isSubmitting ? "提交中..." : "领取我的球迷卡"}
           </button>
-
-          <Link
-            href="/leaderboard"
-            className="wc-button-secondary w-full"
-          >
-            球王榜
-          </Link>
 
           <Link
             href="/profile"
@@ -778,17 +902,24 @@ export default function Home() {
           </Link>
 
           <Link
+            href="/round-of-32-calculator"
+            className="wc-button-gold w-full"
+          >
+            32强实时对阵
+          </Link>
+
+          <Link
             href="/bracket"
-            className="wc-button-secondary w-full"
+            className="wc-button-green w-full"
           >
             世界杯晋级之路
           </Link>
 
           <Link
-            href="/round-of-32-calculator"
+            href="/leaderboard"
             className="wc-button-secondary w-full"
           >
-            32强实时对阵
+            球王榜
           </Link>
         </form>
         )}

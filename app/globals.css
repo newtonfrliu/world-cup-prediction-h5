@@ -51,14 +51,14 @@ body {
 
   .wc-card {
     border: 1px solid rgba(7, 27, 58, 0.12);
-    border-radius: 0.875rem;
+    border-radius: 1rem;
     background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 12px 30px rgba(7, 27, 58, 0.08);
+    box-shadow: 0 10px 24px rgba(7, 27, 58, 0.08);
   }
 
   .wc-dark-card {
     border: 1px solid rgba(246, 200, 76, 0.28);
-    border-radius: 0.875rem;
+    border-radius: 1rem;
     background:
       linear-gradient(135deg, rgba(37, 199, 183, 0.16), transparent 40%),
       var(--wc-blue);
@@ -70,6 +70,7 @@ body {
     font-size: 0.75rem;
     font-weight: 900;
     text-transform: uppercase;
+    letter-spacing: 0.16em;
     color: var(--wc-red);
   }
 
@@ -89,7 +90,7 @@ body {
   .wc-input {
     height: 3rem;
     width: 100%;
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
     border: 1px solid rgba(7, 27, 58, 0.18);
     background: white;
     padding-inline: 1rem;
@@ -107,16 +108,18 @@ body {
     height: 3rem;
     align-items: center;
     justify-content: center;
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
     background: var(--wc-red);
     padding-inline: 1.25rem;
     color: white;
     font-weight: 900;
-    transition: transform 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 8px 18px rgba(230, 53, 53, 0.18);
+    transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
   }
 
   .wc-button:hover {
     transform: translateY(-1px);
+    background: #c92828;
   }
 
   .wc-button:disabled {
@@ -130,12 +133,47 @@ body {
     height: 3rem;
     align-items: center;
     justify-content: center;
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
     border: 1px solid rgba(7, 27, 58, 0.16);
     background: white;
     padding-inline: 1.25rem;
     color: var(--wc-blue);
     font-weight: 900;
+    box-shadow: 0 6px 14px rgba(7, 27, 58, 0.06);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .wc-button-secondary:hover {
+    border-color: rgba(7, 27, 58, 0.32);
+    background: #f8fafc;
+  }
+
+  .wc-button-gold {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.875rem;
+    border: 1px solid var(--wc-gold);
+    background: #fff4bf;
+    padding-inline: 1.25rem;
+    color: var(--wc-blue);
+    font-weight: 900;
+    box-shadow: 0 6px 14px rgba(246, 200, 76, 0.2);
+  }
+
+  .wc-button-green {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.875rem;
+    border: 1px solid rgba(37, 199, 183, 0.5);
+    background: #e6fffb;
+    padding-inline: 1.25rem;
+    color: #064e3b;
+    font-weight: 900;
+    box-shadow: 0 6px 14px rgba(37, 199, 183, 0.12);
   }
 
   .wc-pill {
