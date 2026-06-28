@@ -23,15 +23,19 @@ export function calculatePlayerWinRate(predictions: SettledPrediction[]) {
     return status === "won" || status === "lost";
   });
 
-  if (settled.length === 0) {
-    return null;
-  }
-
   const won = settled.filter(
     (prediction) => normalizePredictionStatus(prediction.status) === "won",
   ).length;
+  const lost = settled.filter(
+    (prediction) => normalizePredictionStatus(prediction.status) === "lost",
+  ).length;
+  const settledTotal = won + lost;
 
-  return Math.round((won / settled.length) * 100);
+  if (settledTotal === 0) {
+    return null;
+  }
+
+  return Math.round((won / settledTotal) * 100);
 }
 
 export function calculatePlayerWinStreak(predictions: SettledPrediction[]) {

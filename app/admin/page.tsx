@@ -3,6 +3,12 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
+import {
+  calculateSettlementPayout,
+  calculateSettlementPoints,
+  getPredictionSettlementStatus,
+  isPredictionHit,
+} from "@/lib/predictionSettlement";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
 import type { Database } from "@/types/database";
@@ -561,19 +567,26 @@ export default function AdminPage() {
         continue;
       }
 
-      const isHit = prediction.prediction === result;
-      const points = isHit
-        ? Math.round(prediction.odds_at_prediction * 100)
-        : 0;
-      const payout = isHit
-        ? Math.round(prediction.stake * prediction.odds_at_prediction)
-        : 0;
+      const isHit = isPredictionHit(prediction.prediction, result);
+      const points = calculateSettlementPoints(
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const payout = calculateSettlementPayout(
+        prediction.stake,
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const status = getPredictionSettlementStatus(
+        prediction.prediction,
+        result,
+      );
 
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
         .update(
           hasSettlementColumns
-            ? { points, payout, settled_at: new Date().toISOString() }
+            ? { points, payout, status, settled_at: new Date().toISOString() }
             : { points, payout },
         )
         .eq("id", prediction.id);
@@ -584,7 +597,7 @@ export default function AdminPage() {
         return;
       }
 
-      if (payout > 0 && prediction.payout === 0) {
+      if (payout > 0 && (prediction.payout ?? 0) === 0) {
         const { data: player, error: playerLoadError } = await supabase
           .from("players")
           .select("coins")

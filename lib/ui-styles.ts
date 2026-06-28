@@ -50,7 +50,7 @@ export const statusStyles = {
 export const gameStyles = {
   page:
     "min-h-screen bg-[#020711] text-white [background-image:radial-gradient(circle_at_50%_0%,rgba(246,200,76,0.16),transparent_28rem),radial-gradient(circle_at_12%_16%,rgba(230,53,53,0.18),transparent_18rem),radial-gradient(circle_at_88%_28%,rgba(124,58,237,0.18),transparent_20rem),linear-gradient(180deg,#020711,#07111f_54%,#020711)]",
-  shell: "mx-auto w-full max-w-[430px] px-4 pb-24 pt-5",
+  shell: "mx-auto w-full max-w-[820px] px-4 pb-24 pt-5 sm:px-6 lg:px-8",
   panel:
     "rounded-[24px] border border-white/10 bg-[#07111f]/82 shadow-[0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur",
   goldPanel:
@@ -62,7 +62,7 @@ export const gameStyles = {
   stat:
     "rounded-2xl border border-white/10 bg-black/38 px-4 py-3 shadow-inner",
   nav:
-    "fixed inset-x-0 bottom-0 z-30 mx-auto flex max-w-[430px] items-center justify-around border-t border-white/10 bg-[#020711]/92 px-3 py-2 text-xs font-black text-white/55 backdrop-blur",
+    "fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-[820px] items-center justify-around border-t border-white/10 bg-[#020711]/92 px-3 py-2 text-xs font-black text-white/55 backdrop-blur sm:px-6",
   rarityGlowLegend: "drop-shadow-[0_0_38px_rgba(246,200,76,0.72)]",
   rarityGlowEpic: "drop-shadow-[0_0_34px_rgba(168,85,247,0.58)]",
 };

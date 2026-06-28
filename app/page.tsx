@@ -83,11 +83,15 @@ type HomeLeaderboardRow = {
 };
 type HomePrediction = {
   id: string;
+  player_id: string;
+  match_id: string;
+  prediction: string | null;
   status: string | null;
-  settled_at: string | null;
-  created_at: string | null;
   points: number | null;
   payout: number | null;
+  stake: number | null;
+  settled_at: string | null;
+  created_at: string | null;
 };
 
 const popularTeams = [
@@ -462,7 +466,7 @@ export default function Home() {
 
     const { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
-      .select("id, status, settled_at, created_at, points, payout")
+      .select("id, player_id, match_id, prediction, status, points, payout, stake, settled_at, created_at")
       .eq("player_id", player.id)
       .limit(1000);
 
@@ -767,7 +771,7 @@ export default function Home() {
   return (
     <main className={gameStyles.page}>
       <section className={gameStyles.shell}>
-        <div className="relative overflow-hidden rounded-[28px] border border-[#f6c84c]/18 bg-[radial-gradient(circle_at_50%_32%,rgba(246,200,76,0.18),transparent_14rem),linear-gradient(180deg,rgba(6,13,24,0.92),rgba(3,8,16,0.96))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.45)]">
+        <div className="relative overflow-hidden rounded-[28px] border border-[#f6c84c]/18 bg-[radial-gradient(circle_at_50%_32%,rgba(246,200,76,0.18),transparent_14rem),linear-gradient(180deg,rgba(6,13,24,0.92),rgba(3,8,16,0.96))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.45)] sm:p-6 lg:p-7">
           <div className="absolute inset-x-[-20%] top-14 h-24 rounded-full border-t border-[#f6c84c]/18 opacity-70" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(11,68,44,0.45))]" />
           <div className="relative z-10 flex items-start justify-between gap-3">
@@ -805,21 +809,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative z-10 mt-7 grid grid-cols-[minmax(0,1fr)_minmax(150px,46%)] items-end gap-3 sm:grid-cols-[minmax(0,0.95fr)_minmax(180px,1.05fr)]">
+          <div className="relative z-10 mt-7 grid grid-cols-1 items-end gap-5 min-[520px]:grid-cols-[minmax(0,0.95fr)_minmax(180px,1.05fr)] lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.95fr)] lg:gap-8">
             <div className="min-w-0 space-y-3 pb-4">
               <p className="text-xs font-black tracking-[0.12em] text-[#f6c84c]">
                 当前装备球星卡
               </p>
               <div className="min-w-0">
                 <h2
-                  className={`max-w-[15rem] whitespace-normal break-keep font-black leading-[1.08] text-[#fff4bf] sm:max-w-[17rem] ${getPlayerNameTextClass(
+                  className={`max-w-[22rem] whitespace-normal break-keep font-black leading-[1.08] text-[#fff4bf] ${getPlayerNameTextClass(
                     equippedCard?.player_name ?? "尚未装备球星卡",
                   )}`}
                 >
                   {equippedCard?.player_name ?? "尚未装备球星卡"}
                 </h2>
                 {equippedCard ? (
-                  <p className="mt-1 max-w-[13rem] truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-white/42 sm:max-w-[15rem]">
+                  <p className="mt-1 max-w-[20rem] truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-white/42">
                     {equippedCard.player_name_en ?? equippedCard.team}
                   </p>
                 ) : (
@@ -846,14 +850,14 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="relative flex min-h-[300px] items-end justify-center sm:min-h-[340px]">
+            <div className="relative flex min-h-[260px] items-end justify-center min-[520px]:min-h-[320px] lg:min-h-[380px]">
               <div className="absolute bottom-3 h-28 w-56 rounded-full bg-[#f6c84c]/28 blur-3xl" />
               {equippedCard && equippedCardImageSrc ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={equippedCardImageSrc}
                   alt={`${equippedCard.player_name} equipped card`}
-                  className={`relative max-h-[335px] max-w-full object-contain sm:max-h-[375px] ${
+                  className={`relative max-h-[300px] max-w-full object-contain min-[520px]:max-h-[360px] lg:max-h-[420px] ${
                     equippedRarity === "legend"
                       ? gameStyles.rarityGlowLegend
                       : equippedRarity === "epic"
@@ -892,7 +896,7 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className={`${gameStyles.panel} grid grid-cols-3 overflow-hidden`}>
+            <div className={`${gameStyles.panel} grid grid-cols-1 overflow-hidden min-[520px]:grid-cols-3`}>
               <div className="border-r border-white/10 p-4">
                 <p className="text-xs font-bold text-white/55">我的金币</p>
                 <p className="mt-1 text-xl font-black text-[#f6c84c]">
@@ -913,8 +917,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[148px]`}>
+            <div className="grid grid-cols-1 gap-4 min-[560px]:grid-cols-2">
+              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[148px] lg:min-h-[168px]`}>
                 <div className="absolute bottom-1 right-[-0.2rem] h-24 w-24 drop-shadow-[0_0_24px_rgba(255,210,120,0.58)] sm:h-28 sm:w-28">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -929,7 +933,7 @@ export default function Home() {
                   ›
                 </div>
               </Link>
-              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[148px]`}>
+              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[148px] lg:min-h-[168px]`}>
                 <div className="game-card-stack" aria-hidden="true">
                   <span />
                   <span />
@@ -1001,7 +1005,7 @@ export default function Home() {
                   查看完整榜单 ›
                 </Link>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-3">
+              <div className="mt-4 grid grid-cols-1 gap-3 min-[520px]:grid-cols-3">
                 {leaderboardTop.length > 0 ? (
                   leaderboardTop.map((row, index) => (
                     <div key={`${row.nickname}-${row.region}`} className="rounded-2xl border border-[#f6c84c]/24 bg-[linear-gradient(180deg,rgba(246,200,76,0.12),rgba(0,0,0,0.24))] p-3 text-center shadow-inner">
@@ -1042,7 +1046,7 @@ export default function Home() {
               </div>
             </section>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 min-[560px]:grid-cols-3">
               <Link href="/profile" className="rounded-3xl border border-[#25c7b7]/35 bg-[#063f33]/72 p-4 shadow-[0_12px_28px_rgba(37,199,183,0.12)]">
                 <div className="flex items-start justify-between gap-2">
                   <p className="text-lg font-black text-white">我的战绩</p>

@@ -1,5 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
+import {
+  calculateSettlementPayout,
+  calculateSettlementPoints,
+  getPredictionSettlementStatus,
+  isPredictionHit,
+} from "./predictionSettlement.ts";
 import type { Database } from "@/types/database";
 
 type Match = Pick<
@@ -320,18 +326,26 @@ export async function syncWorldCupScores({
         continue;
       }
 
-      const isHit = prediction.prediction === result;
-      const points = isHit
-        ? Math.round(prediction.odds_at_prediction * 100)
-        : 0;
-      const payout = isHit
-        ? Math.round(prediction.stake * prediction.odds_at_prediction)
-        : 0;
+      const isHit = isPredictionHit(prediction.prediction, result);
+      const points = calculateSettlementPoints(
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const payout = calculateSettlementPayout(
+        prediction.stake,
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const status = getPredictionSettlementStatus(
+        prediction.prediction,
+        result,
+      );
 
       const updatePayload = hasSettlementColumns
         ? {
             points,
             payout,
+            status,
             settled_at: new Date().toISOString(),
           }
         : {
@@ -349,7 +363,7 @@ export async function syncWorldCupScores({
         );
       }
 
-      if (payout > 0 && prediction.payout === 0) {
+      if (payout > 0 && (prediction.payout ?? 0) === 0) {
         const { data: player, error: playerLoadError } = await supabase
           .from("players")
           .select("coins")
