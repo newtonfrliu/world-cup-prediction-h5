@@ -74,10 +74,20 @@ type HomeLeaderboardRow = {
   country: string;
   region: string;
   total_points: number;
+  equippedCard?: {
+    id: string;
+    player_name: string;
+    card_art_url: string | null;
+    card_thumb_url: string | null;
+  } | null;
 };
 type HomePrediction = {
+  id: string;
   status: string | null;
   settled_at: string | null;
+  created_at: string | null;
+  points: number | null;
+  payout: number | null;
 };
 
 const popularTeams = [
@@ -327,6 +337,73 @@ export default function Home() {
     return "★".repeat(starCount[(rarity ?? "").toLowerCase()] ?? 0);
   }
 
+  function getPlayerNameTextClass(name: string) {
+    const length = Array.from(name).length;
+
+    if (length <= 4) return "text-4xl sm:text-5xl";
+    if (length <= 8) return "text-3xl sm:text-4xl";
+    if (length <= 12) return "text-2xl sm:text-3xl";
+    return "text-xl sm:text-2xl";
+  }
+
+  async function enrichLeaderboardWithEquippedCards(
+    rows: HomeLeaderboardRow[],
+  ) {
+    if (rows.length === 0) {
+      return rows;
+    }
+
+    const nicknames = Array.from(new Set(rows.map((row) => row.nickname)));
+    const { data: players, error: playersError } = await supabase
+      .from("players")
+      .select("nickname, country, region, equipped_card_id")
+      .in("nickname", nicknames);
+
+    if (playersError || !players) {
+      return rows;
+    }
+
+    const playerByKey = new Map(
+      players.map((player) => [
+        `${player.nickname}|${player.country}|${player.region}`,
+        player,
+      ]),
+    );
+    const equippedIds = Array.from(
+      new Set(
+        players
+          .map((player) => player.equipped_card_id)
+          .filter((cardId): cardId is string => Boolean(cardId)),
+      ),
+    );
+
+    if (equippedIds.length === 0) {
+      return rows.map((row) => ({ ...row, equippedCard: null }));
+    }
+
+    const { data: cards, error: cardsError } = await supabase
+      .from("player_cards")
+      .select("id, player_name, card_art_url, card_thumb_url")
+      .in("id", equippedIds);
+
+    if (cardsError || !cards) {
+      return rows.map((row) => ({ ...row, equippedCard: null }));
+    }
+
+    const cardById = new Map(cards.map((card) => [card.id, card]));
+
+    return rows.map((row) => {
+      const player = playerByKey.get(
+        `${row.nickname}|${row.country}|${row.region}`,
+      );
+      const equippedCard = player?.equipped_card_id
+        ? cardById.get(player.equipped_card_id) ?? null
+        : null;
+
+      return { ...row, equippedCard };
+    });
+  }
+
   async function loadHomeOpsStatus(player: HomePlayer, coins: number) {
     const nextStatus: HomeOpsStatus = {
       predictable: null,
@@ -372,7 +449,8 @@ export default function Home() {
       .order("total_points", { ascending: false });
 
     if (!leaderboardError) {
-      setLeaderboardTop((leaderboard ?? []).slice(0, 3));
+      const topRows = (leaderboard ?? []).slice(0, 3) as HomeLeaderboardRow[];
+      setLeaderboardTop(await enrichLeaderboardWithEquippedCards(topRows));
       const playerIndex = (leaderboard ?? []).findIndex(
         (row) =>
           row.nickname === player.nickname &&
@@ -384,9 +462,8 @@ export default function Home() {
 
     const { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
-      .select("status, settled_at")
+      .select("id, status, settled_at, created_at, points, payout")
       .eq("player_id", player.id)
-      .in("status", ["won", "lost"])
       .limit(1000);
 
     if (!predictionsError) {
@@ -696,9 +773,7 @@ export default function Home() {
           <div className="relative z-10 flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="truncate text-xl font-black text-white">
-                {currentPlayer
-                  ? `${getTeamDisplayName(currentPlayer.country)} · ${currentPlayer.nickname}`
-                  : "美加墨大乱斗"}
+                {currentPlayer ? currentPlayer.nickname : "美加墨大乱斗"}
               </p>
               <div className="mt-3 flex items-center gap-3">
                 {selectedCountry ? (
@@ -736,7 +811,11 @@ export default function Home() {
                 当前装备球星卡
               </p>
               <div className="min-w-0">
-                <h2 className="game-name-clamp max-w-[12rem] text-[1.65rem] font-black leading-[1.08] text-[#fff4bf] sm:max-w-[15rem] sm:text-[2rem]">
+                <h2
+                  className={`max-w-[15rem] whitespace-normal break-keep font-black leading-[1.08] text-[#fff4bf] sm:max-w-[17rem] ${getPlayerNameTextClass(
+                    equippedCard?.player_name ?? "尚未装备球星卡",
+                  )}`}
+                >
                   {equippedCard?.player_name ?? "尚未装备球星卡"}
                 </h2>
                 {equippedCard ? (
@@ -836,11 +915,16 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-4">
               <Link href="/predict" className={`${gameStyles.actionRed} min-h-[148px]`}>
-                <div className="game-soccer-ball" />
+                <div className="absolute bottom-1 right-[-0.2rem] h-24 w-24 drop-shadow-[0_0_24px_rgba(255,210,120,0.58)] sm:h-28 sm:w-28">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/ui/football-ball.svg"
+                    alt=""
+                    aria-hidden="true"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
                 <p className="relative z-10 whitespace-nowrap text-2xl font-black text-white">预测比赛</p>
-                <p className="relative z-10 mt-2 max-w-[8rem] text-sm font-bold leading-5 text-white/82">
-                  参与比赛 赢取积分
-                </p>
                 <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
                   ›
                 </div>
@@ -852,9 +936,6 @@ export default function Home() {
                   <span />
                 </div>
                 <p className="relative z-10 whitespace-nowrap text-2xl font-black text-white">球星卡商城</p>
-                <p className="relative z-10 mt-2 max-w-[8rem] text-sm font-bold leading-5 text-white/82">
-                  购买球星卡 收集传奇球员
-                </p>
                 <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
                   ›
                 </div>
@@ -933,6 +1014,18 @@ export default function Home() {
                       }`}>
                         {index + 1}
                       </div>
+                      <div className="mx-auto mt-2 flex h-[74px] w-[52px] items-center justify-center overflow-hidden rounded-xl border border-[#f6c84c]/24 bg-black/28">
+                        {row.equippedCard?.card_thumb_url || row.equippedCard?.card_art_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={row.equippedCard.card_thumb_url ?? row.equippedCard.card_art_url ?? ""}
+                            alt={`${row.nickname} equipped card`}
+                            className="h-full w-full object-contain"
+                          />
+                        ) : (
+                          <span className="text-lg text-[#f6c84c]/48">◇</span>
+                        )}
+                      </div>
                       <p className="mt-2 truncate text-sm font-black text-white">
                         {row.nickname}
                       </p>
@@ -951,19 +1044,25 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-3">
               <Link href="/profile" className="rounded-3xl border border-[#25c7b7]/35 bg-[#063f33]/72 p-4 shadow-[0_12px_28px_rgba(37,199,183,0.12)]">
-                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#25c7b7]/42 bg-[#25c7b7]/12" />
-                <p className="text-lg font-black text-white">我的战绩</p>
-                <p className="mt-1 text-xs font-bold text-white/55">查看预测记录 ›</p>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-lg font-black text-white">我的战绩</p>
+                  <span className="text-lg font-black text-[#25c7b7]">›</span>
+                </div>
+                <p className="mt-2 text-xs font-bold text-white/55">查看预测记录</p>
               </Link>
               <Link href="/bracket" className="rounded-3xl border border-[#6176ff]/35 bg-[#172554]/78 p-4 shadow-[0_12px_28px_rgba(97,118,255,0.14)]">
-                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#6176ff]/42 bg-[#6176ff]/12" />
-                <p className="text-lg font-black text-white">晋级之路</p>
-                <p className="mt-1 text-xs font-bold text-white/55">查看晋级历程 ›</p>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-lg font-black text-white">晋级之路</p>
+                  <span className="text-lg font-black text-[#92a3ff]">›</span>
+                </div>
+                <p className="mt-2 text-xs font-bold text-white/55">查看晋级历程</p>
               </Link>
               <Link href="/round-of-32-calculator" className="rounded-3xl border border-[#f6c84c]/35 bg-[#4a2f05]/72 p-4 shadow-[0_12px_28px_rgba(246,200,76,0.14)]">
-                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#f6c84c]/42 bg-[#f6c84c]/12" />
-                <p className="text-lg font-black text-white">32强对阵</p>
-                <p className="mt-1 text-xs font-bold text-white/55">实时对阵图 ›</p>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-lg font-black text-white">32强对阵</p>
+                  <span className="text-lg font-black text-[#f6c84c]">›</span>
+                </div>
+                <p className="mt-2 text-xs font-bold text-white/55">实时对阵图</p>
               </Link>
             </div>
 
