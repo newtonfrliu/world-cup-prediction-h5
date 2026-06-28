@@ -288,7 +288,14 @@ export async function syncWorldCupOdds({
     .upsert(
       {
         key: "last_odds_sync",
-        value: syncedAt,
+        value: {
+          syncedAt,
+          updated,
+          skipped: skipped.length,
+          creditsUsed: credits.last,
+          creditsRemaining: credits.remaining,
+          creditsTotalUsed: credits.used,
+        },
         updated_at: syncedAt,
       },
       { onConflict: "key" },

@@ -1,3 +1,11 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
 export type Database = {
   public: {
     Tables: {
@@ -148,17 +156,17 @@ export type Database = {
       system_settings: {
         Row: {
           key: string;
-          value: string;
+          value: Json;
           updated_at: string | null;
         };
         Insert: {
           key: string;
-          value: string;
+          value?: Json;
           updated_at?: string | null;
         };
         Update: {
           key?: string;
-          value?: string;
+          value?: Json;
           updated_at?: string | null;
         };
         Relationships: [];
