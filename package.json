@@ -21,7 +21,8 @@
     "cards:panini:portugal": "node scripts/panini/fetch-panini-portugal.ts && node scripts/panini/process-panini-portugal.ts && node scripts/panini/generate-portugal-review-html.ts",
     "check:teams": "node scripts/checkTeams.ts",
     "sync:odds": "node scripts/syncOdds.ts",
-    "sync:scores": "node scripts/syncScores.ts"
+    "sync:scores": "node scripts/syncScores.ts",
+    "sync:knockout-teams": "node scripts/sync-knockout-teams.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",

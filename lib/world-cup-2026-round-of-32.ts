@@ -1,9 +1,11 @@
 import {
   getThirdPlaceCombinationKey,
-  GroupLetter,
   THIRD_PLACE_ADVANCEMENT_MAP,
+} from "./world-cup-2026-third-place-map.ts";
+import type {
+  GroupLetter,
   ThirdPlaceSlot,
-} from "@/lib/world-cup-2026-third-place-map";
+} from "./world-cup-2026-third-place-map.ts";
 
 export type TeamName = string;
 

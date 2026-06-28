@@ -49,6 +49,7 @@ export type Database = {
       matches: {
         Row: {
           id: string;
+          match_number: number | null;
           home_team: string;
           away_team: string;
           start_time: string;
@@ -58,6 +59,7 @@ export type Database = {
           home_score: number | null;
           away_score: number | null;
           stage: string | null;
+          group_name: string | null;
           venue: string | null;
           result: "home_win" | "draw" | "away_win" | null;
           status: string | null;
@@ -65,6 +67,7 @@ export type Database = {
         };
         Insert: {
           id?: string;
+          match_number?: number | null;
           home_team: string;
           away_team: string;
           start_time: string;
@@ -74,6 +77,7 @@ export type Database = {
           home_score?: number | null;
           away_score?: number | null;
           stage?: string | null;
+          group_name?: string | null;
           venue?: string | null;
           result?: "home_win" | "draw" | "away_win" | null;
           status?: string | null;
@@ -81,6 +85,7 @@ export type Database = {
         };
         Update: {
           id?: string;
+          match_number?: number | null;
           home_team?: string;
           away_team?: string;
           start_time?: string;
@@ -90,6 +95,7 @@ export type Database = {
           home_score?: number | null;
           away_score?: number | null;
           stage?: string | null;
+          group_name?: string | null;
           venue?: string | null;
           result?: "home_win" | "draw" | "away_win" | null;
           status?: string | null;
