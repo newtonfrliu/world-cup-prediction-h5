@@ -56,9 +56,9 @@ export const gameStyles = {
   goldPanel:
     "rounded-[24px] border border-[#f6c84c]/42 bg-[linear-gradient(135deg,rgba(246,200,76,0.18),rgba(7,17,31,0.88)_38%,rgba(0,0,0,0.72))] shadow-[0_22px_58px_rgba(246,200,76,0.16)] backdrop-blur",
   actionRed:
-    "rounded-[24px] border border-[#ff6b4a]/45 bg-[radial-gradient(circle_at_80%_20%,rgba(246,200,76,0.35),transparent_7rem),linear-gradient(135deg,#b91c1c,#e63535_52%,#5b1111)] p-5 shadow-[0_18px_44px_rgba(230,53,53,0.24)]",
+    "group relative overflow-hidden rounded-[24px] border border-[#ff8a4a]/55 bg-[radial-gradient(circle_at_84%_22%,rgba(255,224,146,0.48),transparent_6.8rem),radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.18),transparent_5rem),linear-gradient(135deg,#7f130f,#e63535_48%,#4b0808)] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_20px_48px_rgba(230,53,53,0.34)] transition hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.12)_inset,0_24px_58px_rgba(255,93,55,0.44)]",
   actionPurple:
-    "rounded-[24px] border border-[#a855f7]/55 bg-[radial-gradient(circle_at_78%_18%,rgba(246,200,76,0.24),transparent_7rem),linear-gradient(135deg,#2e1065,#6d28d9_55%,#16072f)] p-5 shadow-[0_18px_44px_rgba(124,58,237,0.24)]",
+    "group relative overflow-hidden rounded-[24px] border border-[#c084fc]/60 bg-[radial-gradient(circle_at_78%_18%,rgba(246,200,76,0.28),transparent_7rem),radial-gradient(circle_at_12%_0%,rgba(255,255,255,0.14),transparent_5rem),linear-gradient(135deg,#1e0b4f,#6d28d9_55%,#12051f)] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_20px_48px_rgba(124,58,237,0.34)] transition hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(246,200,76,0.14)_inset,0_24px_58px_rgba(168,85,247,0.44)]",
   stat:
     "rounded-2xl border border-white/10 bg-black/38 px-4 py-3 shadow-inner",
   nav:

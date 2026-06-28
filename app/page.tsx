@@ -385,7 +385,9 @@ export default function Home() {
     const { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
       .select("status, settled_at")
-      .eq("player_id", player.id);
+      .eq("player_id", player.id)
+      .in("status", ["won", "lost"])
+      .limit(1000);
 
     if (!predictionsError) {
       const rows = (predictions ?? []) as unknown as HomePrediction[];
@@ -708,10 +710,10 @@ export default function Home() {
                   />
                 ) : null}
                 <div>
-                  <h1 className="text-3xl font-black leading-none text-[#fff4bf]">
+                  <h1 className="text-2xl font-black leading-none text-[#fff4bf]">
                     {selectedCountry?.nameZh ?? "世界杯"}
                   </h1>
-                  <p className="mt-1 text-sm font-bold uppercase tracking-[0.08em] text-white/55">
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-white/45">
                     {selectedCountry?.nameEn ?? "WORLD CUP 2026"}
                   </p>
                 </div>
@@ -728,17 +730,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 grid gap-5 md:grid-cols-[1fr_1.1fr]">
-            <div className="space-y-4">
-              <p className="text-sm font-black text-[#f6c84c]">
+          <div className="relative z-10 mt-7 grid grid-cols-[minmax(0,1fr)_minmax(150px,46%)] items-end gap-3 sm:grid-cols-[minmax(0,0.95fr)_minmax(180px,1.05fr)]">
+            <div className="min-w-0 space-y-3 pb-4">
+              <p className="text-xs font-black tracking-[0.12em] text-[#f6c84c]">
                 当前装备球星卡
               </p>
-              <div>
-                <h2 className="text-4xl font-black leading-tight text-[#fff4bf]">
+              <div className="min-w-0">
+                <h2 className="game-name-clamp max-w-[12rem] text-[1.65rem] font-black leading-[1.08] text-[#fff4bf] sm:max-w-[15rem] sm:text-[2rem]">
                   {equippedCard?.player_name ?? "尚未装备球星卡"}
                 </h2>
                 {equippedCard ? (
-                  <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-white/62">
+                  <p className="mt-1 max-w-[13rem] truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-white/42 sm:max-w-[15rem]">
                     {equippedCard.player_name_en ?? equippedCard.team}
                   </p>
                 ) : (
@@ -759,20 +761,20 @@ export default function Home() {
               ) : null}
               <Link
                 href="/collection"
-                className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#f6c84c] px-6 text-base font-black text-[#071b3a] shadow-[0_0_24px_rgba(246,200,76,0.38)]"
+                className="inline-flex h-11 max-w-full items-center justify-center whitespace-nowrap rounded-2xl bg-[#f6c84c] px-5 text-sm font-black text-[#071b3a] shadow-[0_0_22px_rgba(246,200,76,0.42)] transition hover:bg-[#ffe08a]"
               >
                 {equippedCard ? "更换球星卡" : "去装备球星卡"}
               </Link>
             </div>
 
-            <div className="relative flex min-h-[270px] items-end justify-center">
-              <div className="absolute bottom-3 h-24 w-52 rounded-full bg-[#f6c84c]/24 blur-3xl" />
+            <div className="relative flex min-h-[300px] items-end justify-center sm:min-h-[340px]">
+              <div className="absolute bottom-3 h-28 w-56 rounded-full bg-[#f6c84c]/28 blur-3xl" />
               {equippedCard && equippedCardImageSrc ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={equippedCardImageSrc}
                   alt={`${equippedCard.player_name} equipped card`}
-                  className={`relative max-h-[310px] max-w-full object-contain ${
+                  className={`relative max-h-[335px] max-w-full object-contain sm:max-h-[375px] ${
                     equippedRarity === "legend"
                       ? gameStyles.rarityGlowLegend
                       : equippedRarity === "epic"
@@ -833,39 +835,45 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[132px]`}>
-                <p className="text-2xl font-black text-white">预测比赛</p>
-                <p className="mt-2 text-sm font-bold text-white/82">
+              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[148px]`}>
+                <div className="game-soccer-ball" />
+                <p className="relative z-10 whitespace-nowrap text-2xl font-black text-white">预测比赛</p>
+                <p className="relative z-10 mt-2 max-w-[8rem] text-sm font-bold leading-5 text-white/82">
                   参与比赛 赢取积分
                 </p>
-                <div className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
                   ›
                 </div>
               </Link>
-              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[132px]`}>
-                <p className="text-2xl font-black text-white">球星卡商城</p>
-                <p className="mt-2 text-sm font-bold text-white/82">
+              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[148px]`}>
+                <div className="game-card-stack" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <p className="relative z-10 whitespace-nowrap text-2xl font-black text-white">球星卡商城</p>
+                <p className="relative z-10 mt-2 max-w-[8rem] text-sm font-bold leading-5 text-white/82">
                   购买球星卡 收集传奇球员
                 </p>
-                <div className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
                   ›
                 </div>
               </Link>
             </div>
 
-            <section className={`${gameStyles.panel} p-4`}>
+            <section className={`${gameStyles.panel} p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset,0_18px_48px_rgba(0,0,0,0.28)]`}>
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-black text-white">今日赛程</h2>
                 <Link href="/predict" className="text-sm font-black text-white/55">
                   全部赛程 ›
                 </Link>
               </div>
-              <div className="mt-3 divide-y divide-white/8">
+              <div className="mt-3 space-y-2">
                 {todayMatches.length > 0 ? (
                   todayMatches.map((match) => {
                     const status = getHomeMatchStatusLabel(match);
                     return (
-                      <div key={match.id} className="grid grid-cols-[72px_1fr_auto] items-center gap-3 py-3">
+                      <div key={match.id} className="grid grid-cols-[72px_1fr_auto] items-center gap-3 rounded-2xl border border-white/5 bg-black/18 px-3 py-3">
                         <div className="text-xs font-bold text-white/72">
                           <p>{formatHomeMatchTime(match.start_time)}</p>
                           <p className="mt-1 text-white/42">
@@ -902,7 +910,7 @@ export default function Home() {
               </div>
             </section>
 
-            <section className={`${gameStyles.goldPanel} p-4`}>
+            <section className={`${gameStyles.goldPanel} overflow-hidden p-4`}>
               <div className="flex items-center justify-between gap-4">
                 <h2 className="text-xl font-black text-[#fff4bf]">全球球王榜</h2>
                 <Link
@@ -915,8 +923,14 @@ export default function Home() {
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {leaderboardTop.length > 0 ? (
                   leaderboardTop.map((row, index) => (
-                    <div key={`${row.nickname}-${row.region}`} className="rounded-2xl border border-[#f6c84c]/22 bg-black/26 p-3 text-center">
-                      <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#f6c84c] text-sm font-black text-[#071b3a]">
+                    <div key={`${row.nickname}-${row.region}`} className="rounded-2xl border border-[#f6c84c]/24 bg-[linear-gradient(180deg,rgba(246,200,76,0.12),rgba(0,0,0,0.24))] p-3 text-center shadow-inner">
+                      <div className={`mx-auto flex h-9 w-9 items-center justify-center rounded-full text-sm font-black text-[#071b3a] ${
+                        index === 0
+                          ? "bg-[#f6c84c]"
+                          : index === 1
+                            ? "bg-[#d9e2ec]"
+                            : "bg-[#f4a261]"
+                      }`}>
                         {index + 1}
                       </div>
                       <p className="mt-2 truncate text-sm font-black text-white">
