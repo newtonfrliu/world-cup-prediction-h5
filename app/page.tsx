@@ -26,7 +26,11 @@ import {
   sanitizeInviteParam,
 } from "@/lib/inviteCode";
 import { getTeamDisplayName, worldCupTeams } from "@/lib/teamMeta";
-import { buttonStyles, cardStyles, statusStyles } from "@/lib/ui-styles";
+import {
+  calculatePlayerWinRate,
+  calculatePlayerWinStreak,
+} from "@/lib/player-stats";
+import { gameStyles, statusStyles } from "@/lib/ui-styles";
 
 type HomePlayer = {
   id: string;
@@ -54,6 +58,26 @@ type HomeOpsStatus = {
   inProgress: number | null;
   finished: number | null;
   globalRank: number | null;
+  winRate: number | null;
+  winStreak: number;
+};
+type HomeScheduleMatch = {
+  id: string;
+  home_team: string;
+  away_team: string;
+  start_time: string;
+  stage: string | null;
+  status: string | null;
+};
+type HomeLeaderboardRow = {
+  nickname: string;
+  country: string;
+  region: string;
+  total_points: number;
+};
+type HomePrediction = {
+  status: string | null;
+  settled_at: string | null;
 };
 
 const popularTeams = [
@@ -132,16 +156,19 @@ export default function Home() {
     inProgress: null,
     finished: null,
     globalRank: null,
+    winRate: null,
+    winStreak: 0,
   });
+  const [todayMatches, setTodayMatches] = useState<HomeScheduleMatch[]>([]);
+  const [leaderboardTop, setLeaderboardTop] = useState<HomeLeaderboardRow[]>([]);
 
   const trimmedNickname = nickname.trim();
   const isNicknameEmpty = trimmedNickname.length === 0;
   const selectedCountry = getCountryByNameEn(country);
   const selectedTheme = getCountryTheme(country);
-  const selectedAccentText =
-    selectedTheme.textOnTheme === "dark" ? "#AA151B" : selectedTheme.accent;
   const equippedCardImageSrc =
     resolvePlayerCardImage(equippedCard);
+  const equippedRarity = (equippedCard?.rarity ?? "").toLowerCase();
 
   useEffect(() => {
     async function hydrateRef() {
@@ -243,23 +270,100 @@ export default function Home() {
     return Date.now() >= startTime ? "in_progress" : "not_started";
   }
 
+  function formatHomeMatchTime(value: string) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "时间待定";
+    }
+
+    return new Intl.DateTimeFormat("zh-CN", {
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(date);
+  }
+
+  function getHomeStageLabel(stage: string | null) {
+    const normalized = (stage ?? "group").toLowerCase();
+
+    if (normalized === "round_of_32") return "32强";
+    if (normalized === "round_of_16") return "16强";
+    if (normalized === "quarter_final") return "8强";
+    if (normalized === "semi_final") return "半决赛";
+    if (normalized === "third_place") return "季军赛";
+    if (normalized === "final") return "决赛";
+    return "小组赛";
+  }
+
+  function getHomeMatchStatusLabel(match: HomeScheduleMatch) {
+    const state = getHomeMatchState(match);
+
+    if (state === "in_progress") return "进行中";
+    if (state === "finished") return "已结束";
+    return "去预测";
+  }
+
+  function getRarityLabel(rarity: string | null | undefined) {
+    const labels: Record<string, string> = {
+      legend: "传奇",
+      epic: "史诗",
+      rare: "稀有",
+      common: "普通",
+    };
+
+    return labels[(rarity ?? "").toLowerCase()] ?? "球星卡";
+  }
+
+  function getRarityStars(rarity: string | null | undefined) {
+    const starCount: Record<string, number> = {
+      legend: 5,
+      epic: 4,
+      rare: 3,
+      common: 1,
+    };
+
+    return "★".repeat(starCount[(rarity ?? "").toLowerCase()] ?? 0);
+  }
+
   async function loadHomeOpsStatus(player: HomePlayer, coins: number) {
     const nextStatus: HomeOpsStatus = {
       predictable: null,
       inProgress: null,
       finished: null,
       globalRank: null,
+      winRate: null,
+      winStreak: 0,
     };
 
     const { data: matches, error: matchesError } = await supabase
       .from("matches")
-      .select("start_time, status");
+      .select("id, home_team, away_team, start_time, stage, status")
+      .order("start_time", { ascending: true });
 
     if (!matchesError) {
       const states = (matches ?? []).map(getHomeMatchState);
       nextStatus.predictable = states.filter((state) => state === "not_started").length;
       nextStatus.inProgress = states.filter((state) => state === "in_progress").length;
       nextStatus.finished = states.filter((state) => state === "finished").length;
+      const prioritizedMatches = [...(matches ?? [])].sort((left, right) => {
+        const statePriority: Record<string, number> = {
+          in_progress: 0,
+          not_started: 1,
+          finished: 2,
+        };
+        const leftState = getHomeMatchState(left);
+        const rightState = getHomeMatchState(right);
+        const priorityDiff = statePriority[leftState] - statePriority[rightState];
+
+        if (priorityDiff !== 0) {
+          return priorityDiff;
+        }
+
+        return new Date(left.start_time).getTime() - new Date(right.start_time).getTime();
+      });
+      setTodayMatches(prioritizedMatches.slice(0, 3));
     }
 
     const { data: leaderboard, error: leaderboardError } = await supabase
@@ -268,6 +372,7 @@ export default function Home() {
       .order("total_points", { ascending: false });
 
     if (!leaderboardError) {
+      setLeaderboardTop((leaderboard ?? []).slice(0, 3));
       const playerIndex = (leaderboard ?? []).findIndex(
         (row) =>
           row.nickname === player.nickname &&
@@ -275,6 +380,17 @@ export default function Home() {
           row.region === player.region,
       );
       nextStatus.globalRank = playerIndex >= 0 ? playerIndex + 1 : null;
+    }
+
+    const { data: predictions, error: predictionsError } = await supabase
+      .from("predictions")
+      .select("status, settled_at")
+      .eq("player_id", player.id);
+
+    if (!predictionsError) {
+      const rows = (predictions ?? []) as unknown as HomePrediction[];
+      nextStatus.winRate = calculatePlayerWinRate(rows);
+      nextStatus.winStreak = calculatePlayerWinStreak(rows);
     }
 
     setCoinBalance(coins);
@@ -562,101 +678,122 @@ export default function Home() {
       inProgress: null,
       finished: null,
       globalRank: null,
+      winRate: null,
+      winStreak: 0,
     });
+    setTodayMatches([]);
+    setLeaderboardTop([]);
   }
 
   return (
-    <main className="wc-page px-5 py-8">
-      <section className="wc-shell flex min-h-[calc(100vh-4rem)] flex-col justify-center">
-        <div
-          className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/20 p-5"
-          style={{
-            background: selectedTheme.cardGradient,
-            boxShadow: selectedTheme.glow,
-            color: selectedTheme.foreground,
-          }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{ background: selectedTheme.overlay }}
-          />
-          {selectedCountry ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={selectedCountry.flag}
-              alt={`${selectedCountry.nameZh} flag`}
-              className="absolute -right-8 -top-4 h-32 w-44 rotate-[-8deg] rounded-2xl object-cover opacity-20"
-            />
-          ) : null}
-          <div className="relative z-10 max-w-[62%] pr-2 sm:max-w-[58%] md:max-w-[52%]">
-            <p
-              className="text-sm font-black"
-              style={{ color: selectedTheme.mutedForeground }}
-            >
-              2026足球世界杯
-            </p>
-            <h1
-              className="mt-3 text-5xl font-black leading-none"
-              style={{ color: selectedTheme.foreground }}
-            >
-              美加墨
-              <br />
-              大乱斗
-            </h1>
-            <p
-              className="mt-3 inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em]"
-              style={{
-                borderColor: selectedAccentText,
-                color: selectedAccentText,
-                background:
-                  selectedTheme.textOnTheme === "dark"
-                    ? "rgba(255,255,255,0.62)"
-                    : "rgba(7,27,58,0.22)",
-              }}
-            >
-              世界杯收藏竞猜游戏
-            </p>
-            <p
-              className="mt-4 text-base font-bold leading-7"
-              style={{ color: selectedAccentText }}
-            >
-              预测世界杯 / 挑战好友 / 争夺全球第一
-            </p>
-            <p
-              className="mt-4 text-sm font-black"
-              style={{ color: selectedTheme.foreground }}
-            >
-              加入 {selectedCountry?.nameZh ?? "世界杯"} 阵营
-            </p>
-          </div>
-          {equippedCard && equippedCardImageSrc ? (
-            <div className="absolute bottom-5 right-[8.5rem] z-20 hidden h-[150px] w-[104px] items-end justify-center sm:flex sm:right-36 sm:h-[170px] sm:w-[118px] md:bottom-6 md:right-44 md:h-[220px] md:w-[152px]">
-              <div className="absolute inset-3 rounded-[28px] bg-[#f6c84c]/28 blur-2xl" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={equippedCardImageSrc}
-                alt={`${equippedCard.player_name} equipped card`}
-                className="relative max-h-full max-w-full translate-y-1 object-contain drop-shadow-[0_24px_42px_rgba(7,27,58,0.42)]"
-              />
+    <main className={gameStyles.page}>
+      <section className={gameStyles.shell}>
+        <div className="relative overflow-hidden rounded-[28px] border border-[#f6c84c]/18 bg-[radial-gradient(circle_at_50%_32%,rgba(246,200,76,0.18),transparent_14rem),linear-gradient(180deg,rgba(6,13,24,0.92),rgba(3,8,16,0.96))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.45)]">
+          <div className="absolute inset-x-[-20%] top-14 h-24 rounded-full border-t border-[#f6c84c]/18 opacity-70" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(11,68,44,0.45))]" />
+          <div className="relative z-10 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="truncate text-xl font-black text-white">
+                {currentPlayer
+                  ? `${getTeamDisplayName(currentPlayer.country)} · ${currentPlayer.nickname}`
+                  : "美加墨大乱斗"}
+              </p>
+              <div className="mt-3 flex items-center gap-3">
+                {selectedCountry ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={selectedCountry.flag}
+                    alt={`${selectedCountry.nameZh} flag`}
+                    className="h-8 w-12 rounded-md object-cover shadow-[0_0_0_1px_rgba(255,255,255,0.18)]"
+                  />
+                ) : null}
+                <div>
+                  <h1 className="text-3xl font-black leading-none text-[#fff4bf]">
+                    {selectedCountry?.nameZh ?? "世界杯"}
+                  </h1>
+                  <p className="mt-1 text-sm font-bold uppercase tracking-[0.08em] text-white/55">
+                    {selectedCountry?.nameEn ?? "WORLD CUP 2026"}
+                  </p>
+                </div>
+              </div>
             </div>
-          ) : null}
-          <div className="absolute bottom-4 right-4 z-10 flex w-28 flex-col items-center rounded-2xl border border-white/20 bg-[#071b3a]/35 p-2 backdrop-blur">
-            {selectedCountry ? (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+
+            <div className="shrink-0 rounded-2xl border border-[#f6c84c]/34 bg-black/38 px-4 py-3 text-right shadow-inner">
+              <p className="text-xs font-black text-white/70">预测胜率</p>
+              <p className="mt-1 text-2xl font-black text-[#f6c84c]">
+                {homeOpsStatus.winRate === null
+                  ? "暂无"
+                  : `${homeOpsStatus.winRate}%`}
+              </p>
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-8 grid gap-5 md:grid-cols-[1fr_1.1fr]">
+            <div className="space-y-4">
+              <p className="text-sm font-black text-[#f6c84c]">
+                当前装备球星卡
+              </p>
+              <div>
+                <h2 className="text-4xl font-black leading-tight text-[#fff4bf]">
+                  {equippedCard?.player_name ?? "尚未装备球星卡"}
+                </h2>
+                {equippedCard ? (
+                  <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-white/62">
+                    {equippedCard.player_name_en ?? equippedCard.team}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-sm font-bold text-white/62">
+                    去卡册选择你的国家队身份卡
+                  </p>
+                )}
+              </div>
+              {equippedCard ? (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-lg bg-[#f6c84c] px-3 py-1 text-sm font-black text-[#071b3a]">
+                    {getRarityLabel(equippedCard.rarity)}
+                  </span>
+                  <span className="text-xl tracking-[0.12em] text-[#f6c84c]">
+                    {getRarityStars(equippedCard.rarity)}
+                  </span>
+                </div>
+              ) : null}
+              <Link
+                href="/collection"
+                className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#f6c84c] px-6 text-base font-black text-[#071b3a] shadow-[0_0_24px_rgba(246,200,76,0.38)]"
+              >
+                {equippedCard ? "更换球星卡" : "去装备球星卡"}
+              </Link>
+            </div>
+
+            <div className="relative flex min-h-[270px] items-end justify-center">
+              <div className="absolute bottom-3 h-24 w-52 rounded-full bg-[#f6c84c]/24 blur-3xl" />
+              {equippedCard && equippedCardImageSrc ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={selectedCountry.flag}
-                  alt={`${selectedCountry.nameZh} flag`}
-                  className="h-16 w-24 rounded-xl object-cover shadow-lg"
+                  src={equippedCardImageSrc}
+                  alt={`${equippedCard.player_name} equipped card`}
+                  className={`relative max-h-[310px] max-w-full object-contain ${
+                    equippedRarity === "legend"
+                      ? gameStyles.rarityGlowLegend
+                      : equippedRarity === "epic"
+                        ? gameStyles.rarityGlowEpic
+                        : "drop-shadow-[0_22px_42px_rgba(0,0,0,0.5)]"
+                  }`}
                 />
-                <p
-                  className="mt-2 text-center text-xs font-black"
-                  style={{ color: selectedAccentText }}
-                >
-                  {selectedCountry.nameZh}
-                </p>
-              </>
-            ) : null}
+              ) : selectedCountry ? (
+                <div className="flex h-56 w-40 flex-col items-center justify-center rounded-[26px] border border-[#f6c84c]/28 bg-black/34 p-4 text-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={selectedCountry.flag}
+                    alt={`${selectedCountry.nameZh} flag`}
+                    className="h-20 w-28 rounded-xl object-cover"
+                  />
+                  <p className="mt-4 text-lg font-black text-[#f6c84c]">
+                    {selectedCountry.nameZh}
+                  </p>
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
 
@@ -667,112 +804,172 @@ export default function Home() {
         ) : null}
 
         {currentPlayer ? (
-          <section className="wc-card mt-5 space-y-4 p-5">
-            <p className="wc-kicker">Your Fan Card</p>
-            <h2 className="text-2xl font-black text-[#071b3a]">
-              {currentPlayer.nickname}
-            </h2>
-            <div className="rounded-2xl bg-[#f6f1e7] p-4 text-sm font-black text-[#071b3a]">
-              <p className="flex items-center gap-2">
-                主队：<CountryDisplay team={currentPlayer.country} />
-              </p>
-              <p className="mt-2">地区：{currentPlayer.region}</p>
-            <p className="mt-2">金币余额：{currentPlayer.coins}</p>
-            <p className="mt-2">
-              {rewardStatus || "🪙 今日登录奖励：可领取 200 金币"}
-            </p>
-          </div>
+          <section className="mt-5 space-y-5">
             {notice ? (
-              <div className={statusStyles.success}>
+              <div className="rounded-2xl border border-[#f6c84c]/36 bg-[#f6c84c]/12 p-4 text-sm font-black text-[#fff4bf]">
                 <p>{notice}</p>
-                <p className="mt-2 text-[#071b3a]">请选择下一步：</p>
               </div>
             ) : null}
 
-            <div className={cardStyles.stat}>
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#e63535]">
-                Today Status
-              </p>
-              <h3 className="mt-1 text-lg font-black text-[#071b3a]">
-                今日运营状态
-              </h3>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-black text-[#071b3a] sm:grid-cols-3">
-                {homeOpsStatus.predictable !== null ? (
-                  <div className="rounded-xl bg-white px-3 py-2">
-                    <p className="text-[#627d98]">可预测</p>
-                    <p className="text-xl">{homeOpsStatus.predictable}</p>
-                  </div>
-                ) : null}
-                {homeOpsStatus.inProgress !== null ? (
-                  <div className="rounded-xl bg-white px-3 py-2">
-                    <p className="text-[#627d98]">进行中</p>
-                    <p className="text-xl">{homeOpsStatus.inProgress}</p>
-                  </div>
-                ) : null}
-                {homeOpsStatus.finished !== null ? (
-                  <div className="rounded-xl bg-white px-3 py-2">
-                    <p className="text-[#627d98]">已结束</p>
-                    <p className="text-xl">{homeOpsStatus.finished}</p>
-                  </div>
-                ) : null}
-                <div className="rounded-xl bg-white px-3 py-2">
-                  <p className="text-[#627d98]">我的金币</p>
-                  <p className="text-xl">{currentPlayer.coins}</p>
-                </div>
-                {homeOpsStatus.globalRank !== null ? (
-                  <div className="rounded-xl bg-white px-3 py-2">
-                    <p className="text-[#627d98]">全球排名</p>
-                    <p className="text-xl">#{homeOpsStatus.globalRank}</p>
-                  </div>
-                ) : null}
+            <div className={`${gameStyles.panel} grid grid-cols-3 overflow-hidden`}>
+              <div className="border-r border-white/10 p-4">
+                <p className="text-xs font-bold text-white/55">我的金币</p>
+                <p className="mt-1 text-xl font-black text-[#f6c84c]">
+                  {currentPlayer.coins.toLocaleString("zh-CN")}
+                </p>
+              </div>
+              <div className="border-r border-white/10 p-4">
+                <p className="text-xs font-bold text-white/55">全球排名</p>
+                <p className="mt-1 text-xl font-black text-[#f6c84c]">
+                  {homeOpsStatus.globalRank ? `No. ${homeOpsStatus.globalRank}` : "暂无"}
+                </p>
+              </div>
+              <div className="p-4">
+                <p className="text-xs font-bold text-white/55">连胜场次</p>
+                <p className="mt-1 text-xl font-black text-[#8ef078]">
+                  {homeOpsStatus.winStreak} 场
+                </p>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-[#071b3a]/10 bg-white p-4 text-sm font-black text-[#071b3a] shadow-sm">
-              <p className="text-xs uppercase tracking-[0.16em] text-[#e63535]">
-                Equipped Card
-              </p>
-              <p className="mt-2">
-                当前装备：
-                {equippedCard ? (
-                  <span>
-                    {equippedCard.player_name}
-                    {equippedCard.rarity ? ` / ${equippedCard.rarity.toUpperCase()}` : ""}
-                  </span>
-                ) : (
-                  <span className="text-[#627d98]">尚未装备球星卡</span>
-                )}
-              </p>
+            <div className="grid grid-cols-2 gap-4">
+              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[132px]`}>
+                <p className="text-2xl font-black text-white">预测比赛</p>
+                <p className="mt-2 text-sm font-bold text-white/82">
+                  参与比赛 赢取积分
+                </p>
+                <div className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                  ›
+                </div>
+              </Link>
+              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[132px]`}>
+                <p className="text-2xl font-black text-white">球星卡商城</p>
+                <p className="mt-2 text-sm font-bold text-white/82">
+                  购买球星卡 收集传奇球员
+                </p>
+                <div className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                  ›
+                </div>
+              </Link>
             </div>
 
-            <Link href="/predict" className="wc-button w-full">
-              预测比赛
-            </Link>
-            <Link href="/profile" className="wc-button-secondary w-full">
-              我的战绩
-            </Link>
-            <Link href="/collection" className="wc-button-secondary w-full">
-              球星收藏馆
-              <span className="ml-2 text-xs font-bold text-[#e63535]">
-                用金币兑换你的主队球星卡
-              </span>
-            </Link>
-            <Link href="/round-of-32-calculator" className="wc-button-gold w-full">
-              32强实时对阵
-            </Link>
-            <Link href="/bracket" className="wc-button-green w-full">
-              世界杯晋级之路
-            </Link>
-            <Link href="/leaderboard" className="wc-button-secondary w-full">
-              球王榜
-            </Link>
-            <button
-              type="button"
-              onClick={switchAccount}
-              className={buttonStyles.muted}
-            >
-              切换账号 / 重新登录
-            </button>
+            <section className={`${gameStyles.panel} p-4`}>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-black text-white">今日赛程</h2>
+                <Link href="/predict" className="text-sm font-black text-white/55">
+                  全部赛程 ›
+                </Link>
+              </div>
+              <div className="mt-3 divide-y divide-white/8">
+                {todayMatches.length > 0 ? (
+                  todayMatches.map((match) => {
+                    const status = getHomeMatchStatusLabel(match);
+                    return (
+                      <div key={match.id} className="grid grid-cols-[72px_1fr_auto] items-center gap-3 py-3">
+                        <div className="text-xs font-bold text-white/72">
+                          <p>{formatHomeMatchTime(match.start_time)}</p>
+                          <p className="mt-1 text-white/42">
+                            {getHomeStageLabel(match.stage)}
+                          </p>
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex min-w-0 items-center justify-between gap-2">
+                            <CountryDisplay team={match.home_team} className="min-w-0 text-sm font-black text-white" />
+                            <span className="shrink-0 text-xs font-black text-white/45">VS</span>
+                            <CountryDisplay team={match.away_team} className="min-w-0 justify-end text-sm font-black text-white" />
+                          </div>
+                        </div>
+                        <Link
+                          href="/predict"
+                          className={`rounded-xl px-3 py-2 text-xs font-black ${
+                            status === "去预测"
+                              ? "bg-[#e63535] text-white"
+                              : status === "进行中"
+                                ? "bg-[#fff4bf] text-[#071b3a]"
+                                : "bg-white/12 text-white/70"
+                          }`}
+                        >
+                          {status}
+                        </Link>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="py-6 text-center text-sm font-bold text-white/48">
+                    暂无赛程数据
+                  </p>
+                )}
+              </div>
+            </section>
+
+            <section className={`${gameStyles.goldPanel} p-4`}>
+              <div className="flex items-center justify-between gap-4">
+                <h2 className="text-xl font-black text-[#fff4bf]">全球球王榜</h2>
+                <Link
+                  href="/leaderboard"
+                  className="rounded-xl bg-[#f6c84c] px-4 py-2 text-sm font-black text-[#071b3a]"
+                >
+                  查看完整榜单 ›
+                </Link>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {leaderboardTop.length > 0 ? (
+                  leaderboardTop.map((row, index) => (
+                    <div key={`${row.nickname}-${row.region}`} className="rounded-2xl border border-[#f6c84c]/22 bg-black/26 p-3 text-center">
+                      <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#f6c84c] text-sm font-black text-[#071b3a]">
+                        {index + 1}
+                      </div>
+                      <p className="mt-2 truncate text-sm font-black text-white">
+                        {row.nickname}
+                      </p>
+                      <p className="mt-1 text-sm font-black text-[#f6c84c]">
+                        {row.total_points.toLocaleString("zh-CN")}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="col-span-3 py-6 text-center text-sm font-bold text-white/48">
+                    暂无排行榜数据
+                  </p>
+                )}
+              </div>
+            </section>
+
+            <div className="grid grid-cols-3 gap-3">
+              <Link href="/profile" className="rounded-3xl border border-[#25c7b7]/35 bg-[#063f33]/72 p-4 shadow-[0_12px_28px_rgba(37,199,183,0.12)]">
+                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#25c7b7]/42 bg-[#25c7b7]/12" />
+                <p className="text-lg font-black text-white">我的战绩</p>
+                <p className="mt-1 text-xs font-bold text-white/55">查看预测记录 ›</p>
+              </Link>
+              <Link href="/bracket" className="rounded-3xl border border-[#6176ff]/35 bg-[#172554]/78 p-4 shadow-[0_12px_28px_rgba(97,118,255,0.14)]">
+                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#6176ff]/42 bg-[#6176ff]/12" />
+                <p className="text-lg font-black text-white">晋级之路</p>
+                <p className="mt-1 text-xs font-bold text-white/55">查看晋级历程 ›</p>
+              </Link>
+              <Link href="/round-of-32-calculator" className="rounded-3xl border border-[#f6c84c]/35 bg-[#4a2f05]/72 p-4 shadow-[0_12px_28px_rgba(246,200,76,0.14)]">
+                <div className="mb-4 h-12 w-12 rounded-2xl border border-[#f6c84c]/42 bg-[#f6c84c]/12" />
+                <p className="text-lg font-black text-white">32强对阵</p>
+                <p className="mt-1 text-xs font-bold text-white/55">实时对阵图 ›</p>
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+              <p className="min-w-0 truncate text-sm font-bold text-white/60">
+                当前账号：<span className="text-white">{currentPlayer.nickname}</span>
+                {rewardStatus ? (
+                  <span className="ml-2 hidden text-[#f6c84c] sm:inline">
+                    {rewardStatus}
+                  </span>
+                ) : null}
+              </p>
+              <button
+                type="button"
+                onClick={switchAccount}
+                className="shrink-0 text-sm font-black text-white/70"
+              >
+                切换账号 / 退出登录 ›
+              </button>
+            </div>
           </section>
         ) : (
         <form
@@ -924,11 +1121,36 @@ export default function Home() {
         </form>
         )}
 
-        <div className="mt-8 text-center text-sm font-bold text-[#627d98]">
+        {currentPlayer ? (
+          <nav className={gameStyles.nav}>
+            <Link href="/" className="text-[#f6c84c]">
+              <span className="block text-lg">◆</span>
+              首页
+            </Link>
+            <Link href="/predict">
+              <span className="block text-lg">▣</span>
+              赛程
+            </Link>
+            <Link href="/profile">
+              <span className="block text-lg">⬟</span>
+              战绩
+            </Link>
+            <Link href="/collection">
+              <span className="block text-lg">▰</span>
+              卡册
+            </Link>
+            <Link href="/profile">
+              <span className="block text-lg">●</span>
+              我的
+            </Link>
+          </nav>
+        ) : null}
+
+        <div className="mt-8 text-center text-xs font-bold text-white/38">
           <p>官网：</p>
           <a
             href="https://2026wc.fun"
-            className="text-[#d64545] underline underline-offset-4"
+            className="text-[#f6c84c] underline underline-offset-4"
           >
             https://2026wc.fun
           </a>
