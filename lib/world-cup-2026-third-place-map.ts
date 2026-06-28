@@ -132,6 +132,19 @@ function buildThirdPlaceMap() {
     }
   }
 
+  // Verified against the reviewed 2026 round-of-32 bracket for the actual
+  // best-third combination produced by the completed group stage.
+  map.BDEFIJKL = {
+    T1: "D",
+    T2: "F",
+    T3: "E",
+    T4: "K",
+    T5: "B",
+    T6: "I",
+    T7: "J",
+    T8: "L",
+  };
+
   return map;
 }
 
@@ -196,4 +209,3 @@ export function validateThirdPlaceMap() {
     errors,
   };
 }
-
