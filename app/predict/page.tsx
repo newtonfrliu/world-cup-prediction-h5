@@ -74,6 +74,126 @@ const matchResultLabels: Record<string, string> = {
   away_win: "客胜",
 };
 
+function normalizeMatchStage(stage: string | null | undefined) {
+  return (stage ?? "group").trim().toLowerCase();
+}
+
+function getMatchStageLabel(stage: string | null | undefined) {
+  const normalized = normalizeMatchStage(stage);
+
+  if (normalized === "round_of_32") {
+    return "🏆 FIFA WORLD CUP 2026 / 32强";
+  }
+
+  if (normalized === "round_of_16") {
+    return "🏆 FIFA WORLD CUP 2026 / 16强";
+  }
+
+  if (normalized === "quarter_final" || normalized === "quarterfinal") {
+    return "🏆 FIFA WORLD CUP 2026 / 8强";
+  }
+
+  if (normalized === "semi_final" || normalized === "semifinal") {
+    return "🏆 FIFA WORLD CUP 2026 / 半决赛";
+  }
+
+  if (normalized === "third_place") {
+    return "🏆 FIFA WORLD CUP 2026 / 季军赛";
+  }
+
+  if (normalized === "final") {
+    return "🏆 FIFA WORLD CUP 2026 / 决赛";
+  }
+
+  return "MATCH CARD / GROUP STAGE";
+}
+
+function getMatchStageCardClass(stage: string | null | undefined) {
+  const normalized = normalizeMatchStage(stage);
+
+  if (normalized === "round_of_32") {
+    return "border-[#f6c84c]/70 shadow-[0_18px_38px_rgba(246,200,76,0.18)]";
+  }
+
+  if (normalized === "round_of_16") {
+    return "border-[#25c7b7]/70 shadow-[0_18px_38px_rgba(37,199,183,0.16)]";
+  }
+
+  if (normalized === "quarter_final" || normalized === "quarterfinal") {
+    return "border-[#7c3aed]/70 shadow-[0_18px_38px_rgba(124,58,237,0.18)]";
+  }
+
+  if (normalized === "semi_final" || normalized === "semifinal") {
+    return "border-[#e63535]/70 shadow-[0_18px_38px_rgba(230,53,53,0.18)]";
+  }
+
+  if (normalized === "third_place") {
+    return "border-[#c9782f]/70 shadow-[0_18px_38px_rgba(201,120,47,0.18)]";
+  }
+
+  if (normalized === "final") {
+    return "border-[#f6c84c] shadow-[0_22px_46px_rgba(7,27,58,0.28)]";
+  }
+
+  return "border-[#071b3a]/15 shadow-[0_14px_30px_rgba(7,27,58,0.1)]";
+}
+
+function getMatchStageHeaderClass(stage: string | null | undefined) {
+  const normalized = normalizeMatchStage(stage);
+
+  if (normalized === "round_of_16") {
+    return "bg-gradient-to-br from-[#063f33] to-[#071b3a]";
+  }
+
+  if (normalized === "quarter_final" || normalized === "quarterfinal") {
+    return "bg-gradient-to-br from-[#2f1b63] to-[#071b3a]";
+  }
+
+  if (normalized === "semi_final" || normalized === "semifinal") {
+    return "bg-gradient-to-br from-[#7f1d1d] to-[#071b3a]";
+  }
+
+  if (normalized === "third_place") {
+    return "bg-gradient-to-br from-[#8a4b18] to-[#071b3a]";
+  }
+
+  if (normalized === "final") {
+    return "bg-gradient-to-br from-[#050505] via-[#071b3a] to-[#3b2a06]";
+  }
+
+  return "bg-[#071b3a]";
+}
+
+function getMatchStageBadgeClass(stage: string | null | undefined) {
+  const normalized = normalizeMatchStage(stage);
+
+  if (normalized === "round_of_16") {
+    return "text-[#25c7b7]";
+  }
+
+  if (normalized === "quarter_final" || normalized === "quarterfinal") {
+    return "text-[#c4b5fd]";
+  }
+
+  if (normalized === "semi_final" || normalized === "semifinal") {
+    return "text-[#fecaca]";
+  }
+
+  if (normalized === "third_place") {
+    return "text-[#fed7aa]";
+  }
+
+  if (normalized === "final") {
+    return "text-[#f6c84c]";
+  }
+
+  if (normalized === "round_of_32") {
+    return "text-[#f6c84c]";
+  }
+
+  return "text-[#d9e2ec]";
+}
+
 function getScoreValue(match: MatchWithOptionalScore, side: "home" | "away") {
   const candidates =
     side === "home"
@@ -1027,19 +1147,23 @@ export default function PredictPage() {
             const homeIsWinner = normalizedResult === "home_win";
             const awayIsWinner = normalizedResult === "away_win";
             const isDraw = normalizedResult === "draw";
+            const stageLabel = getMatchStageLabel(match.stage);
+            const stageCardClass = getMatchStageCardClass(match.stage);
+            const stageHeaderClass = getMatchStageHeaderClass(match.stage);
+            const stageBadgeClass = getMatchStageBadgeClass(match.stage);
 
             return (
               <article
                 key={match.id}
-                className={`overflow-hidden rounded-2xl border border-[#071b3a]/15 bg-white shadow-[0_14px_30px_rgba(7,27,58,0.1)] ${
+                className={`overflow-hidden rounded-2xl border bg-white ${stageCardClass} ${
                   isBettingClosed ? "opacity-85" : ""
                 }`}
               >
-                <div className="bg-[#071b3a] p-4 text-white">
+                <div className={`${stageHeaderClass} p-4 text-white`}>
                   <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#d9e2ec]">
-                      Match Card / {match.stage ?? "小组赛"}
+                    <p className={`mb-2 text-[11px] font-black uppercase tracking-[0.18em] ${stageBadgeClass}`}>
+                      {stageLabel}
                     </p>
                     <h2 className="text-xl font-black">
                       <span className="flex flex-wrap items-center gap-2">

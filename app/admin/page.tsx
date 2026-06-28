@@ -59,6 +59,22 @@ type SyncScoresResponse = {
   error?: string;
 };
 
+type WorldCupSyncLog = {
+  step: "scores" | "knockout" | "odds";
+  status: "pending" | "success" | "skipped" | "failed";
+  message: string;
+};
+
+type WorldCupSyncResponse = {
+  success: boolean;
+  message: string;
+  logs: WorldCupSyncLog[];
+  scores?: unknown;
+  knockout?: unknown;
+  odds?: unknown;
+  error?: unknown;
+};
+
 const emptyForm: MatchForm = {
   home_team: "",
   away_team: "",
@@ -182,8 +198,11 @@ export default function AdminPage() {
   const [matchForm, setMatchForm] = useState<MatchForm>(emptyForm);
   const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [syncingWorldCup, setSyncingWorldCup] = useState(false);
   const [syncingOdds, setSyncingOdds] = useState(false);
   const [syncingScores, setSyncingScores] = useState(false);
+  const [worldCupSyncMessage, setWorldCupSyncMessage] = useState("");
+  const [worldCupSyncLogs, setWorldCupSyncLogs] = useState<WorldCupSyncLog[]>([]);
   const [syncMessage, setSyncMessage] = useState("");
   const [scoreSyncMessage, setScoreSyncMessage] = useState("");
   const [lastSyncResult, setLastSyncResult] =
@@ -363,6 +382,42 @@ export default function AdminPage() {
     );
     setSyncingScores(false);
     await loadMatches();
+  }
+
+  async function syncWorldCup() {
+    setSyncingWorldCup(true);
+    setWorldCupSyncMessage("一键更新世界杯执行中...");
+    setWorldCupSyncLogs([
+      { step: "scores", status: "pending", message: "等待同步赛果并结算" },
+      { step: "knockout", status: "pending", message: "等待同步淘汰赛落位" },
+      { step: "odds", status: "pending", message: "等待同步赔率" },
+    ]);
+    setError("");
+    setMessage("");
+    setSyncMessage("");
+    setScoreSyncMessage("");
+
+    try {
+      const response = await fetch("/api/admin/sync-world-cup", {
+        method: "POST",
+      });
+      const result = (await response.json()) as WorldCupSyncResponse;
+
+      setWorldCupSyncLogs(result.logs ?? []);
+      setWorldCupSyncMessage(result.message);
+
+      if (!response.ok || !result.success) {
+        setError(result.message || formatErrorMessage(result.error));
+      } else {
+        setMessage(result.message);
+      }
+    } catch (syncError) {
+      setError(formatErrorMessage(syncError));
+      setWorldCupSyncMessage("一键更新世界杯失败。");
+    } finally {
+      setSyncingWorldCup(false);
+      await loadMatches();
+    }
   }
 
   function startEdit(match: Match) {
@@ -725,6 +780,53 @@ export default function AdminPage() {
                 </p>
               </div>
             ) : null}
+
+            <div className="mb-6 rounded-lg border border-[#f6c84c] bg-[#fff8dc] p-4 shadow-sm">
+              <button
+                type="button"
+                disabled={syncingWorldCup || syncingScores || syncingOdds}
+                onClick={syncWorldCup}
+                className="h-12 w-full rounded-md bg-[#071b3a] px-4 text-sm font-black text-[#f6c84c] transition hover:bg-[#102a43] disabled:bg-[#9fb3c8] disabled:text-white"
+              >
+                {syncingWorldCup ? "一键更新中..." : "一键更新世界杯"}
+              </button>
+
+              {worldCupSyncMessage ? (
+                <p className="mt-3 text-sm font-semibold text-[#102a43]">
+                  {worldCupSyncMessage}
+                </p>
+              ) : null}
+
+              {worldCupSyncLogs.length > 0 ? (
+                <div className="mt-3 space-y-2">
+                  {worldCupSyncLogs.map((log) => {
+                    const statusClass =
+                      log.status === "success"
+                        ? "border-[#bae6bd] bg-[#e3f9e5] text-[#0f7b3f]"
+                        : log.status === "failed"
+                          ? "border-[#f7c6c7] bg-[#fde8e8] text-[#9b1c1c]"
+                          : log.status === "skipped"
+                            ? "border-[#f6c84c] bg-[#fffbea] text-[#8d5f00]"
+                            : "border-[#d9e2ec] bg-white text-[#52606d]";
+                    const stepLabel =
+                      log.step === "scores"
+                        ? "赛果结算"
+                        : log.step === "knockout"
+                          ? "淘汰赛落位"
+                          : "赔率同步";
+
+                    return (
+                      <div
+                        key={log.step}
+                        className={`rounded-md border px-3 py-2 text-xs font-semibold ${statusClass}`}
+                      >
+                        {stepLabel}：{log.message}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
 
             <button
               type="button"
