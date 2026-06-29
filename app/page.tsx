@@ -848,7 +848,7 @@ export default function Home() {
                 <img
                   src={equippedCardImageSrc}
                   alt={`${equippedCard.player_name} equipped card`}
-                  className={`relative max-h-[300px] max-w-full object-contain min-[520px]:max-h-[360px] lg:max-h-[420px] ${
+                  className={`relative max-h-[300px] max-w-full object-contain min-[520px]:max-h-[360px] min-[520px]:-translate-y-6 lg:max-h-[420px] lg:-translate-y-10 ${
                     equippedRarity === "legend"
                       ? gameStyles.rarityGlowLegend
                       : equippedRarity === "epic"
@@ -921,7 +921,7 @@ export default function Home() {
                 <div className="absolute bottom-3 right-5 h-24 w-24 drop-shadow-[0_0_24px_rgba(255,210,120,0.58)] sm:right-7 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/ui/trionda-official-ball.png"
+                    src="/ui/trionda-official-ball-cropped.png"
                     alt=""
                     aria-hidden="true"
                     className="h-full w-full object-contain"
