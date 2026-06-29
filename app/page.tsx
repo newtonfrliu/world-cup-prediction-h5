@@ -918,7 +918,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 gap-4 min-[560px]:grid-cols-2">
               <Link href="/predict" className={`${gameStyles.actionRed} h-[170px] sm:h-[182px] lg:h-[192px]`}>
-                <div className="absolute bottom-4 right-7 z-[5] h-[120px] w-[120px] drop-shadow-[0_0_30px_rgba(255,210,120,0.66)] sm:bottom-5 sm:right-8 sm:h-[136px] sm:w-[136px] md:right-9 md:h-[148px] md:w-[148px] lg:bottom-6">
+                <div className="absolute bottom-5 right-8 z-[5] h-[120px] w-[120px] drop-shadow-[0_0_30px_rgba(255,210,120,0.66)] sm:bottom-6 sm:right-10 sm:h-[136px] sm:w-[136px] md:bottom-7 md:right-12 md:h-[148px] md:w-[148px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/ui/trionda-official-ball-cropped.png"
