@@ -774,7 +774,7 @@ export default function Home() {
         <div className="relative overflow-hidden rounded-[28px] border border-[#f6c84c]/18 bg-[radial-gradient(circle_at_50%_32%,rgba(246,200,76,0.18),transparent_14rem),linear-gradient(180deg,rgba(6,13,24,0.92),rgba(3,8,16,0.96))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.45)] sm:p-6 lg:p-7">
           <div className="absolute inset-x-[-20%] top-14 h-24 rounded-full border-t border-[#f6c84c]/18 opacity-70" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(11,68,44,0.45))]" />
-          <div className="relative z-10 flex items-start justify-between gap-3">
+          <div className="relative z-10 flex items-start gap-3">
             <div className="min-w-0">
               <p className="truncate text-xl font-black text-white">
                 {currentPlayer ? currentPlayer.nickname : "美加墨大乱斗"}
@@ -797,15 +797,6 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="shrink-0 rounded-2xl border border-[#f6c84c]/34 bg-black/38 px-4 py-3 text-right shadow-inner">
-              <p className="text-xs font-black text-white/70">预测胜率</p>
-              <p className="mt-1 text-2xl font-black text-[#f6c84c]">
-                {homeOpsStatus.winRate === null
-                  ? "暂无"
-                  : `${homeOpsStatus.winRate}%`}
-              </p>
             </div>
           </div>
 
@@ -896,33 +887,41 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className={`${gameStyles.panel} grid grid-cols-1 overflow-hidden min-[520px]:grid-cols-3`}>
-              <div className="border-r border-white/10 p-4">
+            <div className={`${gameStyles.panel} grid grid-cols-2 overflow-hidden min-[640px]:grid-cols-4`}>
+              <div className="border-r border-b border-white/10 p-4 min-[640px]:border-b-0">
                 <p className="text-xs font-bold text-white/55">我的金币</p>
                 <p className="mt-1 text-xl font-black text-[#f6c84c]">
                   {currentPlayer.coins.toLocaleString("zh-CN")}
                 </p>
               </div>
-              <div className="border-r border-white/10 p-4">
+              <div className="border-b border-white/10 p-4 min-[640px]:border-r min-[640px]:border-b-0">
                 <p className="text-xs font-bold text-white/55">全球排名</p>
                 <p className="mt-1 text-xl font-black text-[#f6c84c]">
                   {homeOpsStatus.globalRank ? `No. ${homeOpsStatus.globalRank}` : "暂无"}
                 </p>
               </div>
-              <div className="p-4">
+              <div className="border-r border-white/10 p-4">
                 <p className="text-xs font-bold text-white/55">连胜场次</p>
                 <p className="mt-1 text-xl font-black text-[#8ef078]">
                   {homeOpsStatus.winStreak} 场
+                </p>
+              </div>
+              <div className="p-4">
+                <p className="text-xs font-bold text-white/55">预测胜率</p>
+                <p className="mt-1 text-xl font-black text-[#f6c84c]">
+                  {homeOpsStatus.winRate === null
+                    ? "暂无"
+                    : `${homeOpsStatus.winRate}%`}
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-4 min-[560px]:grid-cols-2">
               <Link href="/predict" className={`${gameStyles.actionRed} min-h-[148px] lg:min-h-[168px]`}>
-                <div className="absolute bottom-1 right-[-0.2rem] h-24 w-24 drop-shadow-[0_0_24px_rgba(255,210,120,0.58)] sm:h-28 sm:w-28">
+                <div className="absolute bottom-3 right-5 h-24 w-24 drop-shadow-[0_0_24px_rgba(255,210,120,0.58)] sm:right-7 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/ui/football-ball.svg"
+                    src="/ui/trionda-official-ball.png"
                     alt=""
                     aria-hidden="true"
                     className="h-full w-full object-contain"
