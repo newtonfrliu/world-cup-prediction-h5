@@ -917,8 +917,8 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 min-[560px]:grid-cols-2">
-              <Link href="/predict" className={`${gameStyles.actionRed} min-h-[168px] lg:min-h-[186px]`}>
-                <div className="absolute bottom-4 right-6 h-32 w-32 drop-shadow-[0_0_28px_rgba(255,210,120,0.62)] sm:right-8 sm:h-36 sm:w-36 lg:bottom-5 lg:h-40 lg:w-40">
+              <Link href="/predict" className={`${gameStyles.actionRed} h-[170px] sm:h-[182px] lg:h-[192px]`}>
+                <div className="absolute bottom-4 right-7 z-[5] h-[120px] w-[120px] drop-shadow-[0_0_30px_rgba(255,210,120,0.66)] sm:bottom-5 sm:right-8 sm:h-[136px] sm:w-[136px] md:right-9 md:h-[148px] md:w-[148px] lg:bottom-6">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/ui/trionda-official-ball-cropped.png"
@@ -927,19 +927,19 @@ export default function Home() {
                     className="h-full w-full object-contain"
                   />
                 </div>
-                <p className="relative z-10 max-w-[58%] whitespace-nowrap text-[26px] font-black leading-none text-white sm:text-[30px] md:text-[34px]">预测比赛</p>
-                <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                <p className="absolute left-6 top-5 z-10 max-w-[62%] whitespace-nowrap text-[34px] font-black leading-[0.98] text-white sm:left-7 sm:top-6 sm:text-[40px] md:text-[46px]">预测比赛</p>
+                <div className="absolute bottom-5 left-6 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/16 text-2xl sm:left-7">
                   ›
                 </div>
               </Link>
-              <Link href="/collection" className={`${gameStyles.actionPurple} min-h-[168px] lg:min-h-[186px]`}>
+              <Link href="/collection" className={`${gameStyles.actionPurple} h-[170px] sm:h-[182px] lg:h-[192px]`}>
                 <div className="game-card-stack" aria-hidden="true">
                   <span />
                   <span />
                   <span />
                 </div>
-                <p className="relative z-10 max-w-[58%] whitespace-nowrap text-[26px] font-black leading-none text-white sm:text-[30px] md:text-[34px]">球星卡商城</p>
-                <div className="absolute bottom-4 left-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/16 text-xl">
+                <p className="absolute left-6 top-5 z-10 max-w-[62%] whitespace-nowrap text-[34px] font-black leading-[0.98] text-white sm:left-7 sm:top-6 sm:text-[40px] md:text-[46px]">球星卡商城</p>
+                <div className="absolute bottom-5 left-6 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/16 text-2xl sm:left-7">
                   ›
                 </div>
               </Link>

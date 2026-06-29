@@ -206,9 +206,10 @@ body {
   .game-card-stack {
     position: absolute;
     right: 2rem;
-    bottom: 1.25rem;
-    height: 6.3rem;
-    width: 4.55rem;
+    bottom: 1.35rem;
+    z-index: 5;
+    height: 7.2rem;
+    width: 5.15rem;
   }
 
   .game-card-stack span {
