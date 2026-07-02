@@ -25,7 +25,9 @@
     "sync:knockout-teams": "node scripts/sync-knockout-teams.ts",
     "backfill:prediction-settlement": "node scripts/backfill-prediction-settlement.ts",
     "audit:points": "node scripts/audit-points-and-leaderboard.ts",
-    "audit:knockout-settlement": "node scripts/audit-knockout-settlement-result.ts"
+    "audit:knockout-settlement": "node scripts/audit-knockout-settlement-result.ts",
+    "audit:odds-markets": "node scripts/audit-odds-markets.ts",
+    "audit:belgium-senegal-compensation": "node scripts/audit-belgium-senegal-compensation.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
