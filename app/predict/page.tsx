@@ -1342,12 +1342,12 @@ export default function PredictPage() {
             );
             const marketGroups = [
               { key: "h2h_90", label: "90分钟胜平负", options: h2hOptions },
+              { key: "totals_90", label: "90分钟大小球", options: totalsOptions },
               {
                 key: "advance",
                 label: "晋级球队",
                 options: isKnockoutStage(match.stage) ? advanceOptions : [],
               },
-              { key: "totals_90", label: "90分钟大小球", options: totalsOptions },
             ].filter((group) => group.options.length > 0);
 
             return (
