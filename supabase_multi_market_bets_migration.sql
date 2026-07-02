@@ -61,7 +61,8 @@ begin
     and tc.table_name = 'predictions'
     and tc.constraint_type = 'UNIQUE'
   group by tc.constraint_name
-  having array_agg(kcu.column_name order by kcu.ordinal_position) = array['player_id', 'match_id'];
+  having array_agg(kcu.column_name::text order by kcu.ordinal_position)
+       = array['player_id', 'match_id']::text[];
 
   if constraint_name is not null then
     execute format('alter table public.predictions drop constraint %I', constraint_name);
