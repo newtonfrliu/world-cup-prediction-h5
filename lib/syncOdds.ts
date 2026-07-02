@@ -10,6 +10,7 @@ type Match = Pick<
 type Outcome = {
   name: string;
   price: number;
+  point?: number;
 };
 
 type Bookmaker = {
@@ -110,6 +111,7 @@ function isPlaceholderTeam(value: string) {
 
 function getH2hOutcomes(event: OddsEvent): {
   outcomes: Outcome[] | null;
+  bookmaker?: Bookmaker;
   reason?: string;
 } {
   const bookmakers = event.bookmakers ?? [];
@@ -135,7 +137,52 @@ function getH2hOutcomes(event: OddsEvent): {
     return { outcomes: null, reason: "No outcomes found" };
   }
 
-  return { outcomes: market.outcomes };
+  return { outcomes: market.outcomes, bookmaker };
+}
+
+function getFirstCompleteTotals(event: OddsEvent): {
+  over: Outcome;
+  under: Outcome;
+  line: number;
+  bookmaker: Bookmaker;
+} | null {
+  const bookmakers = event.bookmakers ?? [];
+  const bookmakersWithTotals = bookmakers.filter((bookmaker) =>
+    (bookmaker.markets ?? []).some((market) => market.key === "totals"),
+  );
+  const orderedBookmakers = [
+    ...bookmakersWithTotals.filter((bookmaker) => bookmaker.key === "bet365"),
+    ...bookmakersWithTotals.filter((bookmaker) => bookmaker.key !== "bet365"),
+  ];
+
+  for (const bookmaker of orderedBookmakers) {
+    const market = (bookmaker.markets ?? []).find(
+      (item) => item.key === "totals",
+    );
+    const outcomes = market?.outcomes ?? [];
+
+    for (const outcome of outcomes) {
+      const line = outcome.point;
+
+      if (typeof line !== "number") {
+        continue;
+      }
+
+      const sameLine = outcomes.filter((item) => item.point === line);
+      const over = sameLine.find(
+        (item) => item.name.trim().toLowerCase() === "over",
+      );
+      const under = sameLine.find(
+        (item) => item.name.trim().toLowerCase() === "under",
+      );
+
+      if (over && under) {
+        return { over, under, line, bookmaker };
+      }
+    }
+  }
+
+  return null;
 }
 
 function getMatchedOdds(
@@ -185,12 +232,140 @@ function getMatchedOdds(
   };
 }
 
+async function syncBettingMarkets(
+  supabase: ReturnType<typeof createClient<Database>>,
+  match: Match,
+  event: OddsEvent,
+) {
+  const h2hResult = getH2hOutcomes(event);
+  const marketRows: Database["public"]["Tables"]["match_betting_markets"]["Insert"][] =
+    [];
+
+  if (h2hResult.outcomes) {
+    const pricesByTeam = new Map(
+      h2hResult.outcomes.map((outcome) => [
+        normalizeTeamName(outcome.name),
+        outcome.price,
+      ]),
+    );
+    const homeOdds = pricesByTeam.get(normalizeTeamName(match.home_team));
+    const drawOdds = pricesByTeam.get("draw");
+    const awayOdds = pricesByTeam.get(normalizeTeamName(match.away_team));
+
+    if (typeof homeOdds === "number") {
+      marketRows.push({
+        match_id: match.id,
+        market_key: "h2h_90",
+        selection_key: "home_win",
+        selection_label: "主胜",
+        odds: homeOdds,
+        line: 0,
+        source: "the_odds_api",
+        bookmaker: h2hResult.bookmaker?.key ?? null,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      });
+    }
+
+    if (typeof drawOdds === "number") {
+      marketRows.push({
+        match_id: match.id,
+        market_key: "h2h_90",
+        selection_key: "draw",
+        selection_label: "平",
+        odds: drawOdds,
+        line: 0,
+        source: "the_odds_api",
+        bookmaker: h2hResult.bookmaker?.key ?? null,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      });
+    }
+
+    if (typeof awayOdds === "number") {
+      marketRows.push({
+        match_id: match.id,
+        market_key: "h2h_90",
+        selection_key: "away_win",
+        selection_label: "客胜",
+        odds: awayOdds,
+        line: 0,
+        source: "the_odds_api",
+        bookmaker: h2hResult.bookmaker?.key ?? null,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      });
+    }
+  }
+
+  const totals = getFirstCompleteTotals(event);
+
+  if (totals) {
+    const { error: deactivateError } = await supabase
+      .from("match_betting_markets")
+      .update({ is_active: false, updated_at: new Date().toISOString() })
+      .eq("match_id", match.id)
+      .eq("market_key", "totals_90")
+      .neq("line", totals.line);
+
+    if (deactivateError) {
+      throw new Error(`Supabase update failed: ${deactivateError.message}`);
+    }
+
+    marketRows.push(
+      {
+        match_id: match.id,
+        market_key: "totals_90",
+        selection_key: "over",
+        selection_label: `大 ${totals.line}`,
+        odds: totals.over.price,
+        line: totals.line,
+        source: "the_odds_api",
+        bookmaker: totals.bookmaker.key,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      },
+      {
+        match_id: match.id,
+        market_key: "totals_90",
+        selection_key: "under",
+        selection_label: `小 ${totals.line}`,
+        odds: totals.under.price,
+        line: totals.line,
+        source: "the_odds_api",
+        bookmaker: totals.bookmaker.key,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      },
+    );
+  } else {
+    console.warn("totals market incomplete or unavailable", {
+      home_team: match.home_team,
+      away_team: match.away_team,
+    });
+  }
+
+  if (marketRows.length === 0) {
+    return;
+  }
+
+  const { error } = await supabase
+    .from("match_betting_markets")
+    .upsert(marketRows, {
+      onConflict: "match_id,market_key,selection_key,line",
+    });
+
+  if (error) {
+    throw new Error(`Supabase update failed: ${error.message}`);
+  }
+}
+
 async function fetchOdds(apiKey: string) {
   const url = new URL(oddsApiUrl);
 
   url.searchParams.set("apiKey", apiKey);
   url.searchParams.set("regions", "uk");
-  url.searchParams.set("markets", "h2h");
+  url.searchParams.set("markets", "h2h,totals");
   url.searchParams.set("oddsFormat", "decimal");
   url.searchParams.set("dateFormat", "iso");
 
@@ -277,6 +452,14 @@ export async function syncWorldCupOdds({
 
     if (updateError) {
       throw new Error(`Supabase update failed: ${updateError.message}`);
+    }
+
+    const event = events.find(
+      (item) => getMatchedOdds(match, item).odds !== null,
+    );
+
+    if (event) {
+      await syncBettingMarkets(supabase, match, event);
     }
 
     updated += 1;

@@ -26,6 +26,15 @@ type MatchState = "not_started" | "in_progress" | "finished";
 type MatchTabKey = "upcoming" | "in_progress" | "finished";
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
+type BettingMarket = Database["public"]["Tables"]["match_betting_markets"]["Row"];
+type BetOption = {
+  marketKey: string;
+  marketLabel: string;
+  selectionKey: PredictionChoice | "home_advance" | "away_advance" | "over" | "under";
+  selectionLabel: string;
+  odds: number;
+  line: number;
+};
 type MyPrediction = Pick<
   Prediction,
   | "id"
@@ -37,6 +46,11 @@ type MyPrediction = Pick<
   | "status"
   | "settled_at"
   | "points"
+  | "market_key"
+  | "market_label"
+  | "selection_key"
+  | "selection_label"
+  | "line"
 > & {
   matches: Pick<
     Match,
@@ -65,6 +79,18 @@ const predictionLabels: Record<PredictionChoice, string> = {
   home_win: "主胜",
   draw: "平局",
   away_win: "客胜",
+};
+
+const settlementStatusLabels: Record<string, string> = {
+  won: "成功",
+  lost: "失败",
+  active: "未结算",
+  cancelled: "已撤回",
+  refunded: "已退还",
+  settled: "已结算",
+  void: "走水",
+  half_win: "半赢",
+  half_lost: "半输",
 };
 
 const matchResultLabels: Record<string, string> = {
@@ -107,6 +133,22 @@ function getMatchStageLabel(stage: string | null | undefined) {
   }
 
   return "MATCH CARD / GROUP STAGE";
+}
+
+function isKnockoutStage(stage: string | null | undefined) {
+  const normalized = normalizeMatchStage(stage);
+
+  return [
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+    "quarterfinal",
+    "semi_final",
+    "semifinal",
+    "third_place",
+    "final",
+    "knockout",
+  ].includes(normalized);
 }
 
 function getMatchStageCardClass(stage: string | null | undefined) {
@@ -266,6 +308,30 @@ function getPredictionResultInfo(
     };
   }
 
+  if (status === "void") {
+    return {
+      label: "走水",
+      badgeClass: "bg-[#edf1f5] text-[#334e68] border-[#cbd2d9]",
+      cardClass: "border-[#cbd2d9] bg-[#f5f7fa]",
+    };
+  }
+
+  if (status === "half_win") {
+    return {
+      label: "半赢",
+      badgeClass: "bg-[#fff8db] text-[#7c5e10] border-[#f6c84c]",
+      cardClass: "border-[#f6c84c] bg-[#fffbea]",
+    };
+  }
+
+  if (status === "half_lost") {
+    return {
+      label: "半输",
+      badgeClass: "bg-[#ffedd5] text-[#9a3412] border-[#fdba74]",
+      cardClass: "border-[#fdba74] bg-[#fff7ed]",
+    };
+  }
+
   if (status === "cancelled") {
     return {
       label: "已撤回",
@@ -303,7 +369,14 @@ function getPredictionSortGroup(prediction: MyPrediction) {
     return 0;
   }
 
-  if (status === "won" || status === "lost" || status === "settled") {
+  if (
+    status === "won" ||
+    status === "lost" ||
+    status === "settled" ||
+    status === "void" ||
+    status === "half_win" ||
+    status === "half_lost"
+  ) {
     return 1;
   }
 
@@ -390,6 +463,7 @@ function isMissingPredictionStatusError(error: unknown) {
 export default function PredictPage() {
   const router = useRouter();
   const [matches, setMatches] = useState<Match[]>([]);
+  const [bettingMarkets, setBettingMarkets] = useState<BettingMarket[]>([]);
   const [predictedMatchIds, setPredictedMatchIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -404,7 +478,7 @@ export default function PredictPage() {
     useState<MatchTabKey>("upcoming");
   const [bettingMatch, setBettingMatch] = useState<Match | null>(null);
   const [bettingOption, setBettingOption] = useState<
-    (typeof predictionOptions)[number] | null
+    BetOption | null
   >(null);
   const [stakeInput, setStakeInput] = useState("50");
   const [loading, setLoading] = useState(true);
@@ -427,13 +501,35 @@ export default function PredictPage() {
         .map((prediction) => [prediction.match_id, prediction]),
     );
   }, [myPredictions]);
+  const predictionsByMatchMarket = useMemo(() => {
+    return new Map(
+      myPredictions
+        .filter(isDisplayablePrediction)
+        .map((prediction) => [
+          `${prediction.match_id}:${prediction.market_key ?? "h2h_90"}`,
+          prediction,
+        ]),
+    );
+  }, [myPredictions]);
+  const marketsByMatchId = useMemo(() => {
+    const map = new Map<string, BettingMarket[]>();
+
+    for (const market of bettingMarkets) {
+      if (market.is_active === false) continue;
+      const list = map.get(market.match_id) ?? [];
+      list.push(market);
+      map.set(market.match_id, list);
+    }
+
+    return map;
+  }, [bettingMarkets]);
   const bettingAvailableCoins = player?.coins ?? 0;
 
   async function loadMyPredictions(currentPlayerId: string) {
     const queryWithStatus = supabase
       .from("predictions")
       .select(
-        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
+        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
       )
       .eq("player_id", currentPlayerId);
     const { data, error: predictionError } = await queryWithStatus;
@@ -455,7 +551,7 @@ export default function PredictPage() {
       const { data: fallbackData, error: fallbackError } = await supabase
         .from("predictions")
         .select(
-          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
+          "id, match_id, prediction, odds_at_prediction, stake, payout, points, market_key, market_label, selection_key, selection_label, line, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
         )
         .eq("player_id", currentPlayerId);
 
@@ -474,6 +570,13 @@ export default function PredictPage() {
         ...prediction,
         status: "active",
         settled_at: null,
+        market_key: prediction.market_key ?? "h2h_90",
+        market_label: prediction.market_label ?? "90分钟胜平负",
+        selection_key: prediction.selection_key ?? prediction.prediction,
+        selection_label:
+          prediction.selection_label ??
+          predictionLabels[prediction.prediction],
+        line: prediction.line ?? 0,
       }))
         .filter(isDisplayablePrediction) as MyPrediction[]);
 
@@ -488,6 +591,13 @@ export default function PredictPage() {
       .map((prediction) => ({
         ...prediction,
         status: prediction.status ?? "active",
+        market_key: prediction.market_key ?? "h2h_90",
+        market_label: prediction.market_label ?? "90分钟胜平负",
+        selection_key: prediction.selection_key ?? prediction.prediction,
+        selection_label:
+          prediction.selection_label ??
+          predictionLabels[prediction.prediction],
+        line: prediction.line ?? 0,
       }))
       .filter(isDisplayablePrediction));
 
@@ -530,11 +640,28 @@ export default function PredictPage() {
     setMatches(data ?? []);
   }
 
+  async function refreshBettingMarkets() {
+    const { data, error: marketError } = await supabase
+      .from("match_betting_markets")
+      .select(
+        "id, match_id, market_key, selection_key, selection_label, odds, line, source, bookmaker, is_active, updated_at",
+      )
+      .eq("is_active", true);
+
+    if (marketError) {
+      console.error("refreshBettingMarkets failed", { error: marketError });
+      throw marketError;
+    }
+
+    setBettingMarkets((data ?? []) as BettingMarket[]);
+  }
+
   async function refreshPredictionState(currentPlayerId: string) {
     await Promise.all([
       refreshPlayer(currentPlayerId),
       loadMyPredictions(currentPlayerId),
       refreshMatches(),
+      refreshBettingMarkets(),
     ]);
   }
 
@@ -569,6 +696,7 @@ export default function PredictPage() {
       }
 
       setMatches(matchData ?? []);
+      await refreshBettingMarkets();
 
       if (storedPlayerId) {
         const { data: playerData, error: playerError } = await supabase
@@ -625,7 +753,7 @@ export default function PredictPage() {
     return getMatchState(match) === "finished";
   }
 
-  function openBetPanel(match: Match, option: (typeof predictionOptions)[number]) {
+  function openBetPanel(match: Match, option: BetOption) {
     if (isMatchFinished(match)) {
       setError("比赛已结束，不能下注。");
       return;
@@ -650,23 +778,39 @@ export default function PredictPage() {
     stake,
   }: {
     match: Match;
-    selectedOption: (typeof predictionOptions)[number];
+    selectedOption: BetOption;
     stake: number;
   }) {
+    const legacyPrediction = (
+      selectedOption.marketKey === "h2h_90"
+        ? selectedOption.selectionKey
+        : selectedOption.selectionKey === "home_advance"
+          ? "home_win"
+          : selectedOption.selectionKey === "away_advance"
+            ? "away_win"
+            : selectedOption.selectionKey === "over"
+              ? "home_win"
+              : "away_win"
+    ) as PredictionChoice;
     const payload = {
       player_id: playerId as string,
       match_id: match.id,
-      prediction: selectedOption.value,
-      odds_at_prediction: match[selectedOption.oddsKey],
+      prediction: legacyPrediction,
+      odds_at_prediction: selectedOption.odds,
       stake,
       payout: 0,
       status: "active",
       settled_at: null,
+      market_key: selectedOption.marketKey,
+      market_label: selectedOption.marketLabel,
+      selection_key: selectedOption.selectionKey,
+      selection_label: selectedOption.selectionLabel,
+      line: selectedOption.line,
       created_at: new Date().toISOString(),
     };
     const { error: upsertError } = await supabase
       .from("predictions")
-      .upsert(payload, { onConflict: "player_id,match_id" });
+      .upsert(payload, { onConflict: "player_id,match_id,market_key" });
 
     if (!upsertError) {
       return;
@@ -689,11 +833,16 @@ export default function PredictPage() {
       odds_at_prediction: payload.odds_at_prediction,
       stake: payload.stake,
       payout: payload.payout,
+      market_key: payload.market_key,
+      market_label: payload.market_label,
+      selection_key: payload.selection_key,
+      selection_label: payload.selection_label,
+      line: payload.line,
       created_at: payload.created_at,
     };
     const { error: fallbackError } = await supabase
       .from("predictions")
-      .upsert(fallbackPayload, { onConflict: "player_id,match_id" });
+      .upsert(fallbackPayload, { onConflict: "player_id,match_id,market_key" });
 
     if (fallbackError) {
       console.error("prediction upsert fallback failed", {
@@ -810,7 +959,9 @@ export default function PredictPage() {
       return;
     }
 
-    const existingPrediction = predictionsByMatchId.get(match.id);
+    const existingPrediction = predictionsByMatchMarket.get(
+      `${match.id}:${selectedOption.marketKey}`,
+    );
 
     if (existingPrediction && isActivePrediction(existingPrediction)) {
       setBetError("你已下注，请先撤回投注后再重新下注。");
@@ -853,7 +1004,7 @@ export default function PredictPage() {
       setBettingOption(null);
       setToast(
         `下注成功：已投注 ${stake} 金币，预计返还 ${Math.round(
-          stake * match[selectedOption.oddsKey],
+          stake * selectedOption.odds,
         )} 金币`,
       );
     } catch (submitError) {
@@ -1062,7 +1213,15 @@ export default function PredictPage() {
                   </p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {[
-                      ["我的选择", predictionLabels[prediction.prediction]],
+                      [
+                        "玩法",
+                        prediction.market_label ?? "90分钟胜平负",
+                      ],
+                      [
+                        "我的选择",
+                        prediction.selection_label ??
+                          predictionLabels[prediction.prediction],
+                      ],
                       ["预测时赔率", `${prediction.odds_at_prediction}`],
                       ["下注金币", `${prediction.stake}`],
                       ["实际获得", `${prediction.payout ?? 0}`],
@@ -1128,7 +1287,6 @@ export default function PredictPage() {
             const isPredicted = predictedMatchIds.has(match.id);
             const isSubmitting = submittingMatchId === match.id;
             const selectedPrediction = predictionsByMatchId.get(match.id);
-            const selectedPredictionValue = selectedPrediction?.prediction;
             const matchState = getMatchState(match);
             const isFinished = matchState === "finished";
             const isInProgress = matchState === "in_progress";
@@ -1152,6 +1310,49 @@ export default function PredictPage() {
             const stageCardClass = getMatchStageCardClass(match.stage);
             const stageHeaderClass = getMatchStageHeaderClass(match.stage);
             const stageBadgeClass = getMatchStageBadgeClass(match.stage);
+            const matchMarkets = marketsByMatchId.get(match.id) ?? [];
+            const h2hOptions: BetOption[] = predictionOptions.map((option) => ({
+              marketKey: "h2h_90",
+              marketLabel: "90分钟胜平负",
+              selectionKey: option.value,
+              selectionLabel: option.label,
+              odds: match[option.oddsKey],
+              line: 0,
+            }));
+            const advanceOptions: BetOption[] = matchMarkets
+              .filter((market) => market.market_key === "advance")
+              .map((market) => ({
+                marketKey: "advance",
+                marketLabel: "晋级球队",
+                selectionKey: market.selection_key as BetOption["selectionKey"],
+                selectionLabel: market.selection_label,
+                odds: market.odds,
+                line: market.line,
+              }));
+            const totalsOptions: BetOption[] = matchMarkets
+              .filter((market) => market.market_key === "totals_90")
+              .map((market) => ({
+                marketKey: "totals_90",
+                marketLabel: "90分钟大小球",
+                selectionKey: market.selection_key as BetOption["selectionKey"],
+                selectionLabel: market.selection_label,
+                odds: market.odds,
+                line: market.line,
+              }));
+            const displayPredictions = myPredictions.filter(
+              (prediction) =>
+                prediction.match_id === match.id &&
+                isDisplayablePrediction(prediction),
+            );
+            const marketGroups = [
+              { key: "h2h_90", label: "90分钟胜平负", options: h2hOptions },
+              {
+                key: "advance",
+                label: "晋级球队",
+                options: isKnockoutStage(match.stage) ? advanceOptions : [],
+              },
+              { key: "totals_90", label: "90分钟大小球", options: totalsOptions },
+            ].filter((group) => group.options.length > 0);
 
             return (
               <article
@@ -1278,98 +1479,140 @@ export default function PredictPage() {
                   </div>
                 ) : null}
 
-                {selectedPrediction ? (
-                  <div className="mx-4 mt-4 rounded-xl border border-[#f6c84c]/60 bg-[#fff8db] p-3 text-sm font-black text-[#071b3a]">
-                    <p>
-                      你已下注：
-                      {predictionLabels[selectedPrediction.prediction]}{" "}
-                      {selectedPrediction.stake} 金币
-                    </p>
-                    {isFinished ? (
-                      <>
-                        <p className="mt-1 text-[#0f7b3f]">
-                          赛果状态：
-                          {selectedPrediction.status === "refunded"
-                            ? "已退还"
-                            : "已结算"}
-                        </p>
-                        <p className="mt-1">
-                          实际获得：{selectedPrediction.payout ?? 0} 金币
-                        </p>
-                        <p className="mt-1">
-                          本场积分：{selectedPrediction.points ?? 0}
-                        </p>
-                      </>
-                    ) : (
-                      <p className="mt-1">
-                        预计返还：
-                        {Math.round(
-                          selectedPrediction.stake *
-                            selectedPrediction.odds_at_prediction,
-                        )}{" "}
-                        金币
-                      </p>
-                    )}
-                    {!isBettingClosed ? (
-                      <div className="mt-3 grid grid-cols-2 gap-2">
-                        <button
-                          type="button"
-                          onClick={() => cancelPrediction(match, selectedPrediction)}
-                          disabled={isSubmitting}
-                          className="h-10 rounded-xl border border-[#e63535] bg-white text-sm font-black text-[#e63535]"
+                {displayPredictions.length > 0 ? (
+                  <div className="mx-4 mt-4 space-y-2">
+                    {displayPredictions.map((prediction) => {
+                      const statusLabel =
+                        settlementStatusLabels[
+                          normalizePredictionStatus(prediction.status)
+                        ] ?? "已结算";
+
+                      return (
+                        <div
+                          key={prediction.id}
+                          className="rounded-xl border border-[#f6c84c]/60 bg-[#fff8db] p-3 text-sm font-black text-[#071b3a]"
                         >
-                          撤回投注
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => openBetPanel(match, predictionOptions[0])}
-                          disabled={isSubmitting}
-                          className="h-10 rounded-xl bg-[#071b3a] text-sm font-black text-white"
-                        >
-                          重新下注
-                        </button>
-                      </div>
-                    ) : null}
+                          <p>
+                            你已下注：
+                            {prediction.market_label ?? "90分钟胜平负"} ·{" "}
+                            {prediction.selection_label ??
+                              predictionLabels[prediction.prediction]}{" "}
+                            {prediction.stake} 金币
+                          </p>
+                          {isFinished ? (
+                            <>
+                              <p className="mt-1 text-[#0f7b3f]">
+                                赛果状态：{statusLabel}
+                              </p>
+                              <p className="mt-1">
+                                实际获得：{prediction.payout ?? 0} 金币
+                              </p>
+                              <p className="mt-1">
+                                本场积分：{prediction.points ?? 0}
+                              </p>
+                            </>
+                          ) : (
+                            <p className="mt-1">
+                              预计返还：
+                              {Math.round(
+                                prediction.stake *
+                                  prediction.odds_at_prediction,
+                              )}{" "}
+                              金币
+                            </p>
+                          )}
+                          {!isBettingClosed &&
+                          isActivePrediction(prediction) ? (
+                            <div className="mt-3">
+                              <button
+                                type="button"
+                                onClick={() => cancelPrediction(match, prediction)}
+                                disabled={isSubmitting}
+                                className="h-10 rounded-xl border border-[#e63535] bg-white px-4 text-sm font-black text-[#e63535]"
+                              >
+                                撤回投注
+                              </button>
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : null}
 
                 {!isBettingClosed ? (
-                  <div className="grid grid-cols-3 gap-3 px-4 pb-4 pt-4">
-                    {predictionOptions.map((option) => {
-                      const isSelected = selectedPredictionValue === option.value;
-                      const hasNoCoins = (player?.coins ?? 0) <= 0 && !selectedPrediction;
-                      const buttonClass = isPredicted
-                        ? isSelected
-                          ? "ring-2 ring-[#071b3a]"
-                          : "bg-[#e4e7eb] text-[#829ab1]"
-                        : hasNoCoins
-                          ? "bg-[#e4e7eb] text-[#829ab1]"
-                          : "bg-[#e63535] text-white hover:bg-[#ba2525]";
+                  <div className="space-y-3 px-4 pb-4 pt-4">
+                    {isKnockoutStage(match.stage) ? (
+                      <p className="rounded-xl bg-[#071b3a]/8 px-3 py-2 text-xs font-black text-[#334e68]">
+                        胜平负和大小球按90分钟结算，晋级投注按最终晋级结算
+                      </p>
+                    ) : null}
+                    {marketGroups.map((group) => {
+                      const existingMarketPrediction =
+                        predictionsByMatchMarket.get(`${match.id}:${group.key}`);
 
                       return (
-                        <button
-                          key={option.value}
-                          type="button"
-                          disabled={!playerId || isSubmitting || hasNoCoins}
-                          onClick={() => openBetPanel(match, option)}
-                          className={`min-h-11 rounded-xl px-2 py-2 text-sm font-black leading-tight transition disabled:cursor-not-allowed ${buttonClass}`}
-                          style={
-                            isPredicted && isSelected
-                              ? {
-                                  background: playerTheme.accent,
-                                  color: selectedBetTextColor,
-                                }
-                              : undefined
-                          }
-                        >
-                          {isSubmitting
-                            ? "提交中"
-                            : isPredicted
-                              ? isSelected
-                                ? option.label
-                                : `改押${option.label}`
-                              : `押${option.label}`}
-                        </button>
+                        <div key={group.key}>
+                          <p className="mb-2 text-xs font-black text-[#52606d]">
+                            {group.label}
+                          </p>
+                          <div
+                            className={`grid gap-3 ${
+                              group.options.length === 2
+                                ? "grid-cols-2"
+                                : "grid-cols-3"
+                            }`}
+                          >
+                            {group.options.map((option) => {
+                              const isSelected =
+                                existingMarketPrediction?.selection_key ===
+                                  option.selectionKey ||
+                                existingMarketPrediction?.prediction ===
+                                  option.selectionKey;
+                              const hasNoCoins =
+                                (player?.coins ?? 0) <= 0 &&
+                                !existingMarketPrediction;
+                              const buttonClass = existingMarketPrediction
+                                ? isSelected
+                                  ? "ring-2 ring-[#071b3a]"
+                                  : "bg-[#e4e7eb] text-[#829ab1]"
+                                : hasNoCoins
+                                  ? "bg-[#e4e7eb] text-[#829ab1]"
+                                  : "bg-[#e63535] text-white hover:bg-[#ba2525]";
+
+                              return (
+                                <button
+                                  key={`${option.marketKey}:${option.selectionKey}:${option.line}`}
+                                  type="button"
+                                  disabled={!playerId || isSubmitting || hasNoCoins}
+                                  onClick={() => openBetPanel(match, option)}
+                                  className={`min-h-11 rounded-xl px-2 py-2 text-sm font-black leading-tight transition disabled:cursor-not-allowed ${buttonClass}`}
+                                  style={
+                                    existingMarketPrediction && isSelected
+                                      ? {
+                                          background: playerTheme.accent,
+                                          color: selectedBetTextColor,
+                                        }
+                                      : undefined
+                                  }
+                                >
+                                  <span className="block">
+                                    {isSubmitting
+                                      ? "提交中"
+                                      : existingMarketPrediction
+                                        ? isSelected
+                                          ? option.selectionLabel
+                                          : `改押${option.selectionLabel}`
+                                        : option.selectionLabel}
+                                  </span>
+                                  <span className="mt-1 block text-xs opacity-85">
+                                    {option.odds}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
@@ -1391,8 +1634,11 @@ export default function PredictPage() {
             </h2>
             <div className="mt-4 rounded-xl bg-[#f6f1e7] p-4 text-sm font-bold text-[#071b3a]">
               <p>
-                选择：{predictionLabels[bettingOption.value]} · 赔率：
-                {bettingMatch[bettingOption.oddsKey]}
+                玩法：{bettingOption.marketLabel}
+              </p>
+              <p className="mt-1">
+                选择：{bettingOption.selectionLabel} · 赔率：
+                {bettingOption.odds}
               </p>
               <p className="mt-1">我的金币余额：{player?.coins ?? 0}</p>
               <p className="mt-1">本次可用金币：{bettingAvailableCoins}</p>
@@ -1410,9 +1656,7 @@ export default function PredictPage() {
             </label>
             <p className="mt-3 text-sm font-bold text-[#334e68]">
               预计收益：
-              {Math.round(
-                (Number(stakeInput) || 0) * bettingMatch[bettingOption.oddsKey],
-              )}{" "}
+              {Math.round((Number(stakeInput) || 0) * bettingOption.odds)}{" "}
               金币
             </p>
             {betError ? (

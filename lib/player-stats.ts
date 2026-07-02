@@ -20,22 +20,33 @@ function getSettledTime(prediction: SettledPrediction) {
 export function calculatePlayerWinRate(predictions: SettledPrediction[]) {
   const settled = predictions.filter((prediction) => {
     const status = normalizePredictionStatus(prediction.status);
-    return status === "won" || status === "lost";
+    return (
+      status === "won" ||
+      status === "lost" ||
+      status === "half_win" ||
+      status === "half_lost"
+    );
   });
 
   const won = settled.filter(
     (prediction) => normalizePredictionStatus(prediction.status) === "won",
   ).length;
+  const halfWon = settled.filter(
+    (prediction) => normalizePredictionStatus(prediction.status) === "half_win",
+  ).length;
   const lost = settled.filter(
     (prediction) => normalizePredictionStatus(prediction.status) === "lost",
   ).length;
-  const settledTotal = won + lost;
+  const halfLost = settled.filter(
+    (prediction) => normalizePredictionStatus(prediction.status) === "half_lost",
+  ).length;
+  const settledTotal = won + halfWon + halfLost + lost;
 
   if (settledTotal === 0) {
     return null;
   }
 
-  return Math.round((won / settledTotal) * 100);
+  return Math.round(((won + halfWon * 0.5) / settledTotal) * 100);
 }
 
 export function calculatePlayerWinStreak(predictions: SettledPrediction[]) {

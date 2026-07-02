@@ -37,6 +37,11 @@ type Prediction = Pick<
   | "payout"
   | "status"
   | "settled_at"
+  | "market_key"
+  | "market_label"
+  | "selection_key"
+  | "selection_label"
+  | "line"
 > & {
   matches: Pick<
     Match,
@@ -137,6 +142,33 @@ function getPredictionResultInfo(
       label: "失败",
       badgeClass: "bg-[#fde8e8] text-[#9b1c1c] border-[#f7c6c7]",
       cardClass: "border-[#f7c6c7] bg-[#fff5f5]",
+      order: 2,
+    };
+  }
+
+  if (status === "void") {
+    return {
+      label: "走水",
+      badgeClass: "bg-[#edf1f5] text-[#334e68] border-[#cbd2d9]",
+      cardClass: "border-[#d9e2ec] bg-[#f5f7fa]",
+      order: 2,
+    };
+  }
+
+  if (status === "half_win") {
+    return {
+      label: "半赢",
+      badgeClass: "bg-[#fff8db] text-[#7c5e10] border-[#f6c84c]",
+      cardClass: "border-[#f6c84c] bg-[#fffbea]",
+      order: 2,
+    };
+  }
+
+  if (status === "half_lost") {
+    return {
+      label: "半输",
+      badgeClass: "bg-[#ffedd5] text-[#9a3412] border-[#fdba74]",
+      cardClass: "border-[#fdba74] bg-[#fff7ed]",
       order: 2,
     };
   }
@@ -453,7 +485,7 @@ export default function ProfilePage() {
         await supabase
           .from("predictions")
           .select(
-            "id, match_id, prediction, odds_at_prediction, points, stake, payout, status, settled_at, matches(home_team, away_team, start_time, status, result, betting_result)",
+            "id, match_id, prediction, odds_at_prediction, points, stake, payout, status, settled_at, market_key, market_label, selection_key, selection_label, line, matches(home_team, away_team, start_time, status, result, betting_result)",
           )
           .eq("player_id", currentPlayerId);
 
@@ -466,7 +498,7 @@ export default function ProfilePage() {
           await supabase
             .from("predictions")
             .select(
-              "id, match_id, prediction, odds_at_prediction, points, stake, payout, matches(home_team, away_team, start_time, status, result, betting_result)",
+              "id, match_id, prediction, odds_at_prediction, points, stake, payout, market_key, market_label, selection_key, selection_label, line, matches(home_team, away_team, start_time, status, result, betting_result)",
             )
             .eq("player_id", currentPlayerId);
 
@@ -484,6 +516,13 @@ export default function ProfilePage() {
             ...prediction,
             status: "active",
             settled_at: null,
+            market_key: prediction.market_key ?? "h2h_90",
+            market_label: prediction.market_label ?? "90分钟胜平负",
+            selection_key: prediction.selection_key ?? prediction.prediction,
+            selection_label:
+              prediction.selection_label ??
+              predictionLabels[prediction.prediction],
+            line: prediction.line ?? 0,
           }),
         );
       } else {
@@ -508,6 +547,13 @@ export default function ProfilePage() {
           ...prediction,
           status: prediction.status ?? "active",
           settled_at: prediction.settled_at ?? null,
+          market_key: prediction.market_key ?? "h2h_90",
+          market_label: prediction.market_label ?? "90分钟胜平负",
+          selection_key: prediction.selection_key ?? prediction.prediction,
+          selection_label:
+            prediction.selection_label ??
+            predictionLabels[prediction.prediction],
+          line: prediction.line ?? 0,
         }),
       );
       const predictions = allPredictions.filter(
@@ -982,7 +1028,15 @@ export default function ProfilePage() {
                       </p>
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         {[
-                          ["我的选择", predictionLabels[prediction.prediction]],
+                          [
+                            "玩法",
+                            prediction.market_label ?? "90分钟胜平负",
+                          ],
+                          [
+                            "我的选择",
+                            prediction.selection_label ??
+                              predictionLabels[prediction.prediction],
+                          ],
                           ["下注赔率", `${prediction.odds_at_prediction}`],
                           ["下注金币", `${prediction.stake}`],
                           ["实际获得金币", `${prediction.payout ?? 0}`],

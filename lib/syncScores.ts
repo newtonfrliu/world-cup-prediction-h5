@@ -1,10 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 import {
-  calculateSettlementPayout,
-  calculateSettlementPoints,
-  getPredictionSettlementStatus,
-  isPredictionHit,
+  settlePredictionMarket,
 } from "./predictionSettlement.ts";
 import type { Database } from "@/types/database";
 
@@ -362,7 +359,7 @@ export async function syncWorldCupScores({
     let { data: predictions, error: predictionsError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, created_at",
       )
       .eq("match_id", match.id)
       .or("status.is.null,status.eq.active");
@@ -376,7 +373,7 @@ export async function syncWorldCupScores({
       const fallbackResult = await supabase
         .from("predictions")
         .select(
-          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, market_key, market_label, selection_key, selection_label, line, created_at",
         )
         .eq("match_id", match.id);
 
@@ -393,21 +390,20 @@ export async function syncWorldCupScores({
         continue;
       }
 
-      const settlementResult = { betting_result: result };
-      const isHit = isPredictionHit(prediction.prediction, settlementResult);
-      const points = calculateSettlementPoints(
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const payout = calculateSettlementPayout(
-        prediction.stake,
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const status = getPredictionSettlementStatus(
-        prediction.prediction,
-        settlementResult,
-      );
+      const settlement = settlePredictionMarket(prediction, {
+        betting_result: result,
+        result: getLegacyResultFromBettingResult(result),
+        regular_home_score: scores.homeScore,
+        regular_away_score: scores.awayScore,
+        home_score: scores.homeScore,
+        away_score: scores.awayScore,
+      });
+
+      if (!settlement) {
+        continue;
+      }
+
+      const { points, payout, status } = settlement;
 
       const updatePayload = hasSettlementColumns
         ? {

@@ -4,10 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import {
-  calculateSettlementPayout,
-  calculateSettlementPoints,
-  getPredictionSettlementStatus,
-  isPredictionHit,
+  settlePredictionMarket,
 } from "@/lib/predictionSettlement";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { getTeamDisplayName } from "@/lib/teamMeta";
@@ -35,6 +32,11 @@ type KnockoutSettlementInput = {
   finalHomeScore: string;
   finalAwayScore: string;
   advancementWinner: "home" | "away" | "";
+};
+
+type AdvanceOddsInput = {
+  homeAdvanceOdds: string;
+  awayAdvanceOdds: string;
 };
 
 type SyncOddsResponse = {
@@ -112,6 +114,11 @@ const emptyKnockoutSettlementInput: KnockoutSettlementInput = {
   finalHomeScore: "",
   finalAwayScore: "",
   advancementWinner: "",
+};
+
+const emptyAdvanceOddsInput: AdvanceOddsInput = {
+  homeAdvanceOdds: "",
+  awayAdvanceOdds: "",
 };
 
 const oddsSyncCooldownMs = 10 * 60 * 1000;
@@ -247,6 +254,9 @@ export default function AdminPage() {
   const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
   const [knockoutSettlementInputs, setKnockoutSettlementInputs] = useState<
     Record<string, KnockoutSettlementInput>
+  >({});
+  const [advanceOddsInputs, setAdvanceOddsInputs] = useState<
+    Record<string, AdvanceOddsInput>
   >({});
   const [saving, setSaving] = useState(false);
   const [syncingWorldCup, setSyncingWorldCup] = useState(false);
@@ -575,7 +585,7 @@ export default function AdminPage() {
     let { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, created_at",
       )
       .eq("match_id", match.id)
       .or("status.is.null,status.eq.active");
@@ -595,7 +605,7 @@ export default function AdminPage() {
       const fallbackResult = await supabase
         .from("predictions")
         .select(
-          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, created_at",
+          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, market_key, market_label, selection_key, selection_label, line, created_at",
         )
         .eq("match_id", match.id);
 
@@ -614,21 +624,21 @@ export default function AdminPage() {
         continue;
       }
 
-      const settlementResult = { betting_result: bettingResult };
-      const isHit = isPredictionHit(prediction.prediction, settlementResult);
-      const points = calculateSettlementPoints(
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const payout = calculateSettlementPayout(
-        prediction.stake,
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const status = getPredictionSettlementStatus(
-        prediction.prediction,
-        settlementResult,
-      );
+      const settlement = settlePredictionMarket(prediction, {
+        betting_result: bettingResult,
+        result,
+        home_score: match.home_score,
+        away_score: match.away_score,
+        regular_home_score: match.regular_home_score,
+        regular_away_score: match.regular_away_score,
+        advancement_winner: match.advancement_winner,
+      });
+
+      if (!settlement) {
+        continue;
+      }
+
+      const { points, payout, status } = settlement;
 
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
@@ -694,6 +704,74 @@ export default function AdminPage() {
         [field]: value,
       },
     }));
+  }
+
+  function updateAdvanceOddsInput(
+    matchId: string,
+    field: keyof AdvanceOddsInput,
+    value: string,
+  ) {
+    setAdvanceOddsInputs((current) => ({
+      ...current,
+      [matchId]: {
+        ...(current[matchId] ?? emptyAdvanceOddsInput),
+        [field]: value,
+      },
+    }));
+  }
+
+  async function saveAdvanceOdds(match: Match) {
+    const input = advanceOddsInputs[match.id] ?? emptyAdvanceOddsInput;
+    const homeOdds = Number(input.homeAdvanceOdds);
+    const awayOdds = Number(input.awayAdvanceOdds);
+
+    if (!Number.isFinite(homeOdds) || !Number.isFinite(awayOdds) || homeOdds <= 0 || awayOdds <= 0) {
+      setError("请填写有效的主队/客队晋级赔率。");
+      return;
+    }
+
+    setError("");
+    setMessage("");
+
+    const now = new Date().toISOString();
+    const { error: upsertError } = await supabase
+      .from("match_betting_markets")
+      .upsert(
+        [
+          {
+            match_id: match.id,
+            market_key: "advance",
+            selection_key: "home_advance",
+            selection_label: `${getTeamDisplayName(match.home_team)} 晋级`,
+            odds: homeOdds,
+            line: 0,
+            source: "manual",
+            bookmaker: null,
+            is_active: true,
+            updated_at: now,
+          },
+          {
+            match_id: match.id,
+            market_key: "advance",
+            selection_key: "away_advance",
+            selection_label: `${getTeamDisplayName(match.away_team)} 晋级`,
+            odds: awayOdds,
+            line: 0,
+            source: "manual",
+            bookmaker: null,
+            is_active: true,
+            updated_at: now,
+          },
+        ],
+        { onConflict: "match_id,market_key,selection_key,line" },
+      );
+
+    if (upsertError) {
+      setError(upsertError.message);
+      return;
+    }
+
+    setMessage("晋级投注赔率已保存。");
   }
 
   async function settleKnockoutMatch(match: Match) {
@@ -783,7 +861,7 @@ export default function AdminPage() {
     const { data: predictions, error: predictionLoadError } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, created_at",
       )
       .eq("match_id", match.id)
       .or("status.is.null,status.eq.active");
@@ -794,27 +872,26 @@ export default function AdminPage() {
       return;
     }
 
-    const settlementResult = { betting_result: bettingResult };
-
     for (const prediction of (predictions ?? []) as Prediction[]) {
       if (prediction.settled_at) {
         continue;
       }
 
-      const isHit = isPredictionHit(prediction.prediction, settlementResult);
-      const points = calculateSettlementPoints(
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const payout = calculateSettlementPayout(
-        prediction.stake,
-        prediction.odds_at_prediction,
-        isHit,
-      );
-      const status = getPredictionSettlementStatus(
-        prediction.prediction,
-        settlementResult,
-      );
+      const settlement = settlePredictionMarket(prediction, {
+        betting_result: bettingResult,
+        result: legacyResult,
+        regular_home_score: regularHomeScore,
+        regular_away_score: regularAwayScore,
+        home_score: displayHomeScore,
+        away_score: displayAwayScore,
+        advancement_winner: advancementWinner,
+      });
+
+      if (!settlement) {
+        continue;
+      }
+
+      const { points, payout, status } = settlement;
 
       const { error: predictionUpdateError } = await supabase
         .from("predictions")
@@ -1224,6 +1301,58 @@ export default function AdminPage() {
                             </button>
                           ))}
                         </div>
+
+                        {isKnockoutStage(match.stage) ? (
+                          <div className="mt-4 rounded-lg border border-[#d8b4fe] bg-[#faf5ff] p-3">
+                            <p className="text-sm font-black text-[#581c87]">
+                              晋级投注赔率
+                            </p>
+                            <p className="mt-1 text-xs text-[#6b21a8]">
+                              仅淘汰赛显示；结算只看最终晋级方。
+                            </p>
+                            <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
+                              <input
+                                value={
+                                  advanceOddsInputs[match.id]?.homeAdvanceOdds ??
+                                  ""
+                                }
+                                onChange={(event) =>
+                                  updateAdvanceOddsInput(
+                                    match.id,
+                                    "homeAdvanceOdds",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#d8b4fe] px-3 text-sm"
+                                inputMode="decimal"
+                                placeholder={`${getTeamDisplayName(match.home_team)} 晋级赔率`}
+                              />
+                              <input
+                                value={
+                                  advanceOddsInputs[match.id]?.awayAdvanceOdds ??
+                                  ""
+                                }
+                                onChange={(event) =>
+                                  updateAdvanceOddsInput(
+                                    match.id,
+                                    "awayAdvanceOdds",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#d8b4fe] px-3 text-sm"
+                                inputMode="decimal"
+                                placeholder={`${getTeamDisplayName(match.away_team)} 晋级赔率`}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => saveAdvanceOdds(match)}
+                                className="h-10 rounded-md bg-[#7e22ce] px-4 text-sm font-bold text-white transition hover:bg-[#6b21a8]"
+                              >
+                                保存
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
 
                         {isKnockoutStage(match.stage) ? (
                           <div className="mt-4 rounded-lg border border-[#f7d070] bg-[#fffbea] p-3">

@@ -141,6 +141,11 @@ export type Database = {
           status: string | null;
           settled_at: string | null;
           points: number | null;
+          market_key: string | null;
+          market_label: string | null;
+          selection_key: string | null;
+          selection_label: string | null;
+          line: number | null;
           created_at: string | null;
         };
         Insert: {
@@ -154,6 +159,11 @@ export type Database = {
           status?: string | null;
           settled_at?: string | null;
           points?: number | null;
+          market_key?: string | null;
+          market_label?: string | null;
+          selection_key?: string | null;
+          selection_label?: string | null;
+          line?: number | null;
           created_at?: string | null;
         };
         Update: {
@@ -167,7 +177,54 @@ export type Database = {
           status?: string | null;
           settled_at?: string | null;
           points?: number | null;
+          market_key?: string | null;
+          market_label?: string | null;
+          selection_key?: string | null;
+          selection_label?: string | null;
+          line?: number | null;
           created_at?: string | null;
+        };
+        Relationships: [];
+      };
+      match_betting_markets: {
+        Row: {
+          id: string;
+          match_id: string;
+          market_key: string;
+          selection_key: string;
+          selection_label: string;
+          odds: number;
+          line: number;
+          source: string | null;
+          bookmaker: string | null;
+          is_active: boolean | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          match_id: string;
+          market_key: string;
+          selection_key: string;
+          selection_label: string;
+          odds: number;
+          line?: number;
+          source?: string | null;
+          bookmaker?: string | null;
+          is_active?: boolean | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          match_id?: string;
+          market_key?: string;
+          selection_key?: string;
+          selection_label?: string;
+          odds?: number;
+          line?: number;
+          source?: string | null;
+          bookmaker?: string | null;
+          is_active?: boolean | null;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
