@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { CountryDisplay } from "@/components/CountryDisplay";
 import { getStoredPlayerId } from "@/lib/playerSession";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
-import { getCountryTheme } from "@/lib/countries";
 import type { Database } from "@/types/database";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
@@ -491,9 +490,6 @@ export default function PredictPage() {
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
-  const playerTheme = getCountryTheme(player?.country);
-  const selectedBetTextColor =
-    playerTheme.accent.toLowerCase() === "#071b3a" ? "#ffffff" : "#071b3a";
   const predictionsByMatchId = useMemo(() => {
     return new Map(
       myPredictions
@@ -1451,22 +1447,7 @@ export default function PredictPage() {
                       </p>
                     </div>
                   </div>
-                ) : (
-                  <div className="grid grid-cols-3 gap-3 p-4 text-center text-sm">
-                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                      <p className="font-semibold text-[#334e68]">主胜</p>
-                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_home}</p>
-                    </div>
-                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                      <p className="font-semibold text-[#334e68]">平局</p>
-                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_draw}</p>
-                    </div>
-                    <div className="min-w-0 rounded-xl bg-[#f6f1e7] px-2 py-3">
-                      <p className="font-semibold text-[#334e68]">客胜</p>
-                      <p className="mt-1 text-xl font-black text-[#071b3a] sm:text-2xl">{match.odds_away}</p>
-                    </div>
-                  </div>
-                )}
+                ) : null}
 
                 {isBettingClosed && !isFinished ? (
                   <div className="mx-4 mt-4 rounded-[14px] bg-[#edf1f5] px-4 py-[14px] text-sm font-black text-[#334e68]">
@@ -1574,11 +1555,11 @@ export default function PredictPage() {
                                 !existingMarketPrediction;
                               const buttonClass = existingMarketPrediction
                                 ? isSelected
-                                  ? "ring-2 ring-[#071b3a]"
-                                  : "bg-[#e4e7eb] text-[#829ab1]"
+                                  ? "border-[#f6c84c] bg-[#fff3bf] text-[#071b3a] ring-2 ring-[#f6c84c]/70"
+                                  : "border-[#d9c8a4] bg-[#f6f1e7] text-[#071b3a] opacity-70"
                                 : hasNoCoins
-                                  ? "bg-[#e4e7eb] text-[#829ab1]"
-                                  : "bg-[#e63535] text-white hover:bg-[#ba2525]";
+                                  ? "border-[#cbd2d9] bg-[#e4e7eb] text-[#829ab1] opacity-70"
+                                  : "border-[#d9c8a4] bg-[#f6f1e7] text-[#071b3a] hover:border-[#f6c84c] hover:bg-[#fff8db] hover:shadow-md";
 
                               return (
                                 <button
@@ -1586,26 +1567,19 @@ export default function PredictPage() {
                                   type="button"
                                   disabled={!playerId || isSubmitting || hasNoCoins}
                                   onClick={() => openBetPanel(match, option)}
-                                  className={`min-h-11 rounded-xl px-2 py-2 text-sm font-black leading-tight transition disabled:cursor-not-allowed ${buttonClass}`}
-                                  style={
-                                    existingMarketPrediction && isSelected
-                                      ? {
-                                          background: playerTheme.accent,
-                                          color: selectedBetTextColor,
-                                        }
-                                      : undefined
-                                  }
+                                  className={`relative min-h-[76px] rounded-2xl border px-2 py-3 text-center leading-tight shadow-sm transition disabled:cursor-not-allowed ${buttonClass}`}
                                 >
-                                  <span className="block">
+                                  {isSelected ? (
+                                    <span className="absolute right-2 top-2 rounded-full bg-[#0f7b3f] px-2 py-0.5 text-[10px] font-black text-white">
+                                      已选
+                                    </span>
+                                  ) : null}
+                                  <span className="block text-sm font-black sm:text-base">
                                     {isSubmitting
                                       ? "提交中"
-                                      : existingMarketPrediction
-                                        ? isSelected
-                                          ? option.selectionLabel
-                                          : `改押${option.selectionLabel}`
-                                        : option.selectionLabel}
+                                      : option.selectionLabel}
                                   </span>
-                                  <span className="mt-1 block text-xs opacity-85">
+                                  <span className="mt-2 block text-2xl font-black sm:text-3xl">
                                     {option.odds}
                                   </span>
                                 </button>
