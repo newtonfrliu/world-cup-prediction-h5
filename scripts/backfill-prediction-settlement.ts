@@ -14,6 +14,8 @@ type MatchRow = {
   id: string;
   status: string | null;
   result: string | null;
+  betting_result: string | null;
+  stage: string | null;
   home_team: string | null;
   away_team: string | null;
 };
@@ -91,7 +93,7 @@ async function fetchAllPredictions(
     const { data, error } = await supabase
       .from("predictions")
       .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, status, settled_at, matches!inner(id, status, result, home_team, away_team)",
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, status, settled_at, matches!inner(id, status, result, betting_result, stage, home_team, away_team)",
       )
       .range(from, from + pageSize - 1);
 
@@ -121,16 +123,23 @@ function buildSettlementPlans(rows: PredictionRow[]) {
     if (
       prediction.status !== "active" ||
       match?.status !== "finished" ||
-      !match.result
+      !(match.betting_result ?? match.result)
     ) {
       continue;
     }
 
-    const hit = isPredictionHit(prediction.prediction, match.result);
+    const settlementResult = {
+      betting_result: match.betting_result,
+      result: match.result,
+    };
+    const hit = isPredictionHit(prediction.prediction, settlementResult);
     plans.push({
       prediction,
       match,
-      status: getPredictionSettlementStatus(prediction.prediction, match.result),
+      status: getPredictionSettlementStatus(
+        prediction.prediction,
+        settlementResult,
+      ),
       points: calculateSettlementPoints(prediction.odds_at_prediction, hit),
       payout: calculateSettlementPayout(
         prediction.stake,
@@ -210,12 +219,12 @@ with candidates as (
     p.prediction,
     coalesce(p.stake, 0) as stake,
     coalesce(p.odds_at_prediction, 0) as odds_at_prediction,
-    m.result
+    coalesce(m.betting_result, m.result) as settlement_result
   from public.predictions p
   join public.matches m on m.id = p.match_id
   where p.status = 'active'
     and m.status = 'finished'
-    and m.result is not null
+    and coalesce(m.betting_result, m.result) is not null
 ),
 settled as (
   select
@@ -231,10 +240,10 @@ settled as (
         end
         =
         case
-          when result in ('home_win', 'home') then 'home'
-          when result in ('away_win', 'away') then 'away'
-          when result = 'draw' then 'draw'
-          else result
+          when settlement_result in ('home_win', 'home') then 'home'
+          when settlement_result in ('away_win', 'away') then 'away'
+          when settlement_result = 'draw' then 'draw'
+          else settlement_result
         end
       then 'won'
       else 'lost'
@@ -249,10 +258,10 @@ settled as (
         end
         =
         case
-          when result in ('home_win', 'home') then 'home'
-          when result in ('away_win', 'away') then 'away'
-          when result = 'draw' then 'draw'
-          else result
+          when settlement_result in ('home_win', 'home') then 'home'
+          when settlement_result in ('away_win', 'away') then 'away'
+          when settlement_result = 'draw' then 'draw'
+          else settlement_result
         end
       then round(odds_at_prediction * 100)::integer
       else 0
@@ -267,10 +276,10 @@ settled as (
         end
         =
         case
-          when result in ('home_win', 'home') then 'home'
-          when result in ('away_win', 'away') then 'away'
-          when result = 'draw' then 'draw'
-          else result
+          when settlement_result in ('home_win', 'home') then 'home'
+          when settlement_result in ('away_win', 'away') then 'away'
+          when settlement_result = 'draw' then 'draw'
+          else settlement_result
         end
       then round(stake * odds_at_prediction)::integer
       else 0

@@ -29,6 +29,14 @@ type MatchForm = {
   venue: string;
 };
 
+type KnockoutSettlementInput = {
+  regularHomeScore: string;
+  regularAwayScore: string;
+  finalHomeScore: string;
+  finalAwayScore: string;
+  advancementWinner: "home" | "away" | "";
+};
+
 type SyncOddsResponse = {
   success?: boolean;
   updated: number;
@@ -97,6 +105,14 @@ const resultOptions: Array<{ label: string; value: MatchResult }> = [
   { label: "平局", value: "draw" },
   { label: "客胜", value: "away_win" },
 ];
+
+const emptyKnockoutSettlementInput: KnockoutSettlementInput = {
+  regularHomeScore: "",
+  regularAwayScore: "",
+  finalHomeScore: "",
+  finalAwayScore: "",
+  advancementWinner: "",
+};
 
 const oddsSyncCooldownMs = 10 * 60 * 1000;
 
@@ -193,6 +209,32 @@ function formToPayload(form: MatchForm): MatchInsert {
   };
 }
 
+function legacyResultToBettingResult(result: MatchResult) {
+  if (result === "home_win") return "home";
+  if (result === "away_win") return "away";
+  return "draw";
+}
+
+function getBettingResultFromRegularScore(homeScore: number, awayScore: number) {
+  if (homeScore > awayScore) return "home";
+  if (homeScore < awayScore) return "away";
+  return "draw";
+}
+
+function isKnockoutStage(stage: string | null | undefined) {
+  const normalized = (stage ?? "").trim().toLowerCase();
+
+  return [
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+    "semi_final",
+    "third_place",
+    "final",
+    "knockout",
+  ].includes(normalized);
+}
+
 export default function AdminPage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
@@ -203,6 +245,9 @@ export default function AdminPage() {
   const [editingMatchId, setEditingMatchId] = useState<string | null>(null);
   const [matchForm, setMatchForm] = useState<MatchForm>(emptyForm);
   const [editForm, setEditForm] = useState<MatchForm>(emptyForm);
+  const [knockoutSettlementInputs, setKnockoutSettlementInputs] = useState<
+    Record<string, KnockoutSettlementInput>
+  >({});
   const [saving, setSaving] = useState(false);
   const [syncingWorldCup, setSyncingWorldCup] = useState(false);
   const [syncingOdds, setSyncingOdds] = useState(false);
@@ -228,7 +273,7 @@ export default function AdminPage() {
     const { data, error: matchError } = await supabase
       .from("matches")
       .select(
-        "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
+        "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner, stage, venue, result, status, created_at",
       )
       .order("start_time", { ascending: true });
 
@@ -510,10 +555,12 @@ export default function AdminPage() {
     setError("");
     setMessage("");
 
+    const bettingResult = legacyResultToBettingResult(result);
     const { error: matchUpdateError } = await supabase
       .from("matches")
       .update({
         result,
+        betting_result: bettingResult,
         status: "finished",
       })
       .eq("id", match.id);
@@ -567,7 +614,8 @@ export default function AdminPage() {
         continue;
       }
 
-      const isHit = isPredictionHit(prediction.prediction, result);
+      const settlementResult = { betting_result: bettingResult };
+      const isHit = isPredictionHit(prediction.prediction, settlementResult);
       const points = calculateSettlementPoints(
         prediction.odds_at_prediction,
         isHit,
@@ -579,7 +627,7 @@ export default function AdminPage() {
       );
       const status = getPredictionSettlementStatus(
         prediction.prediction,
-        result,
+        settlementResult,
       );
 
       const { error: predictionUpdateError } = await supabase
@@ -625,10 +673,206 @@ export default function AdminPage() {
 
     setMatches((current) =>
       current.map((item) =>
-        item.id === match.id ? { ...item, result, status: "finished" } : item,
+        item.id === match.id
+          ? { ...item, result, betting_result: bettingResult, status: "finished" }
+          : item,
       ),
     );
     setMessage("结算完成，排行榜积分和中奖金币会自动更新。");
+    setSettlingMatchId(null);
+  }
+
+  function updateKnockoutSettlementInput(
+    matchId: string,
+    field: keyof KnockoutSettlementInput,
+    value: string,
+  ) {
+    setKnockoutSettlementInputs((current) => ({
+      ...current,
+      [matchId]: {
+        ...(current[matchId] ?? emptyKnockoutSettlementInput),
+        [field]: value,
+      },
+    }));
+  }
+
+  async function settleKnockoutMatch(match: Match) {
+    if (settlingMatchId) {
+      return;
+    }
+
+    if (match.status === "finished") {
+      setError("比赛已结束，不能重复结算。");
+      return;
+    }
+
+    const input =
+      knockoutSettlementInputs[match.id] ?? emptyKnockoutSettlementInput;
+    const regularHomeScore = Number(input.regularHomeScore);
+    const regularAwayScore = Number(input.regularAwayScore);
+    const finalHomeScore =
+      input.finalHomeScore.trim() === "" ? null : Number(input.finalHomeScore);
+    const finalAwayScore =
+      input.finalAwayScore.trim() === "" ? null : Number(input.finalAwayScore);
+
+    if (
+      !Number.isInteger(regularHomeScore) ||
+      !Number.isInteger(regularAwayScore) ||
+      regularHomeScore < 0 ||
+      regularAwayScore < 0
+    ) {
+      setError("请填写有效的90分钟比分。");
+      return;
+    }
+
+    if (
+      (finalHomeScore !== null &&
+        (!Number.isInteger(finalHomeScore) || finalHomeScore < 0)) ||
+      (finalAwayScore !== null &&
+        (!Number.isInteger(finalAwayScore) || finalAwayScore < 0))
+    ) {
+      setError("请填写有效的最终比分，或留空。");
+      return;
+    }
+
+    if (input.advancementWinner !== "home" && input.advancementWinner !== "away") {
+      setError("请选择淘汰赛晋级方。");
+      return;
+    }
+    const advancementWinner: "home" | "away" = input.advancementWinner;
+
+    setSettlingMatchId(match.id);
+    setError("");
+    setMessage("");
+
+    const bettingResult = getBettingResultFromRegularScore(
+      regularHomeScore,
+      regularAwayScore,
+    );
+    const legacyResult =
+      bettingResult === "home"
+        ? "home_win"
+        : bettingResult === "away"
+          ? "away_win"
+          : "draw";
+    const displayHomeScore = finalHomeScore ?? regularHomeScore;
+    const displayAwayScore = finalAwayScore ?? regularAwayScore;
+
+    const { error: matchUpdateError } = await supabase
+      .from("matches")
+      .update({
+        regular_home_score: regularHomeScore,
+        regular_away_score: regularAwayScore,
+        betting_result: bettingResult,
+        final_home_score: displayHomeScore,
+        final_away_score: displayAwayScore,
+        advancement_winner: advancementWinner,
+        home_score: displayHomeScore,
+        away_score: displayAwayScore,
+        result: legacyResult,
+        status: "finished",
+      })
+      .eq("id", match.id);
+
+    if (matchUpdateError) {
+      setError(matchUpdateError.message);
+      setSettlingMatchId(null);
+      return;
+    }
+
+    const { data: predictions, error: predictionLoadError } = await supabase
+      .from("predictions")
+      .select(
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, created_at",
+      )
+      .eq("match_id", match.id)
+      .or("status.is.null,status.eq.active");
+
+    if (predictionLoadError) {
+      setError(predictionLoadError.message);
+      setSettlingMatchId(null);
+      return;
+    }
+
+    const settlementResult = { betting_result: bettingResult };
+
+    for (const prediction of (predictions ?? []) as Prediction[]) {
+      if (prediction.settled_at) {
+        continue;
+      }
+
+      const isHit = isPredictionHit(prediction.prediction, settlementResult);
+      const points = calculateSettlementPoints(
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const payout = calculateSettlementPayout(
+        prediction.stake,
+        prediction.odds_at_prediction,
+        isHit,
+      );
+      const status = getPredictionSettlementStatus(
+        prediction.prediction,
+        settlementResult,
+      );
+
+      const { error: predictionUpdateError } = await supabase
+        .from("predictions")
+        .update({ points, payout, status, settled_at: new Date().toISOString() })
+        .eq("id", prediction.id);
+
+      if (predictionUpdateError) {
+        setError(predictionUpdateError.message);
+        setSettlingMatchId(null);
+        return;
+      }
+
+      if (payout > 0 && (prediction.payout ?? 0) === 0) {
+        const { data: player, error: playerLoadError } = await supabase
+          .from("players")
+          .select("coins")
+          .eq("id", prediction.player_id)
+          .single();
+
+        if (playerLoadError) {
+          setError(playerLoadError.message);
+          setSettlingMatchId(null);
+          return;
+        }
+
+        const { error: playerUpdateError } = await supabase
+          .from("players")
+          .update({ coins: player.coins + payout })
+          .eq("id", prediction.player_id);
+
+        if (playerUpdateError) {
+          setError(playerUpdateError.message);
+          setSettlingMatchId(null);
+          return;
+        }
+      }
+    }
+
+    setMatches((current) =>
+      current.map((item) =>
+        item.id === match.id
+          ? {
+              ...item,
+              regular_home_score: regularHomeScore,
+              regular_away_score: regularAwayScore,
+              betting_result: bettingResult,
+              final_home_score: displayHomeScore,
+              final_away_score: displayAwayScore,
+              advancement_winner: advancementWinner,
+              home_score: displayHomeScore,
+              away_score: displayAwayScore,
+              result: legacyResult,
+              status: "finished",
+            }
+          : item,
+      ),
+    );
+    setMessage("淘汰赛90分钟竞猜结果已结算，晋级方已单独记录。");
     setSettlingMatchId(null);
   }
 
@@ -940,6 +1184,11 @@ export default function AdminPage() {
                               {match.result ?? "-"}
                             </p>
                             <p className="mt-1 text-sm text-[#627d98]">
+                              betting_result: {match.betting_result ?? "-"} ·
+                              advancement_winner:{" "}
+                              {match.advancement_winner ?? "-"}
+                            </p>
+                            <p className="mt-1 text-sm text-[#627d98]">
                               {match.stage ?? "-"} · {match.venue ?? "-"}
                             </p>
                           </div>
@@ -975,6 +1224,115 @@ export default function AdminPage() {
                             </button>
                           ))}
                         </div>
+
+                        {isKnockoutStage(match.stage) ? (
+                          <div className="mt-4 rounded-lg border border-[#f7d070] bg-[#fffbea] p-3">
+                            <p className="text-sm font-black text-[#7c5e10]">
+                              淘汰赛90分钟结算
+                            </p>
+                            <p className="mt-1 text-xs text-[#8d6f1b]">
+                              竞猜只按90分钟比分结算；最终比分和晋级方只用于晋级路径。
+                            </p>
+                            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                              <input
+                                value={
+                                  knockoutSettlementInputs[match.id]
+                                    ?.regularHomeScore ?? ""
+                                }
+                                onChange={(event) =>
+                                  updateKnockoutSettlementInput(
+                                    match.id,
+                                    "regularHomeScore",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#f7d070] px-3 text-sm"
+                                inputMode="numeric"
+                                placeholder="90分钟主队比分"
+                              />
+                              <input
+                                value={
+                                  knockoutSettlementInputs[match.id]
+                                    ?.regularAwayScore ?? ""
+                                }
+                                onChange={(event) =>
+                                  updateKnockoutSettlementInput(
+                                    match.id,
+                                    "regularAwayScore",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#f7d070] px-3 text-sm"
+                                inputMode="numeric"
+                                placeholder="90分钟客队比分"
+                              />
+                              <input
+                                value={
+                                  knockoutSettlementInputs[match.id]
+                                    ?.finalHomeScore ?? ""
+                                }
+                                onChange={(event) =>
+                                  updateKnockoutSettlementInput(
+                                    match.id,
+                                    "finalHomeScore",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#f7d070] px-3 text-sm"
+                                inputMode="numeric"
+                                placeholder="最终主队比分"
+                              />
+                              <input
+                                value={
+                                  knockoutSettlementInputs[match.id]
+                                    ?.finalAwayScore ?? ""
+                                }
+                                onChange={(event) =>
+                                  updateKnockoutSettlementInput(
+                                    match.id,
+                                    "finalAwayScore",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#f7d070] px-3 text-sm"
+                                inputMode="numeric"
+                                placeholder="最终客队比分"
+                              />
+                            </div>
+                            <div className="mt-2 grid gap-2 sm:grid-cols-[1fr_auto]">
+                              <select
+                                value={
+                                  knockoutSettlementInputs[match.id]
+                                    ?.advancementWinner ?? ""
+                                }
+                                onChange={(event) =>
+                                  updateKnockoutSettlementInput(
+                                    match.id,
+                                    "advancementWinner",
+                                    event.target.value,
+                                  )
+                                }
+                                className="h-10 rounded-md border border-[#f7d070] px-3 text-sm"
+                              >
+                                <option value="">选择晋级方</option>
+                                <option value="home">
+                                  {getTeamDisplayName(match.home_team)} 晋级
+                                </option>
+                                <option value="away">
+                                  {getTeamDisplayName(match.away_team)} 晋级
+                                </option>
+                              </select>
+                              <button
+                                type="button"
+                                disabled={Boolean(settlingMatchId)}
+                                onClick={() => settleKnockoutMatch(match)}
+                                className="h-10 rounded-md bg-[#7c5e10] px-4 text-sm font-bold text-white transition hover:bg-[#5f4608] disabled:cursor-not-allowed disabled:bg-[#9fb3c8]"
+                              >
+                                {isSettling ? "结算中" : "按90分钟结算"}
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
 
                         <div className="mt-3 grid grid-cols-2 gap-2">
                           <button

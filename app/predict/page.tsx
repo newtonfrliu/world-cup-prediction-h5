@@ -45,6 +45,7 @@ type MyPrediction = Pick<
     | "start_time"
     | "status"
     | "result"
+    | "betting_result"
     | "home_score"
     | "away_score"
   > | null;
@@ -208,7 +209,7 @@ function getScoreValue(match: MatchWithOptionalScore, side: "home" | "away") {
 }
 
 function getMatchResult(match: MatchWithOptionalScore) {
-  return match.result ?? match.final_result ?? null;
+  return match.betting_result ?? match.result ?? match.final_result ?? null;
 }
 
 function normalizeMatchResult(result: string | null) {
@@ -432,7 +433,7 @@ export default function PredictPage() {
     const queryWithStatus = supabase
       .from("predictions")
       .select(
-        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result, home_score, away_score)",
+        "id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
       )
       .eq("player_id", currentPlayerId);
     const { data, error: predictionError } = await queryWithStatus;
@@ -454,7 +455,7 @@ export default function PredictPage() {
       const { data: fallbackData, error: fallbackError } = await supabase
         .from("predictions")
         .select(
-          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result, home_score, away_score)",
+          "id, match_id, prediction, odds_at_prediction, stake, payout, points, matches(home_team, away_team, start_time, status, result, betting_result, home_score, away_score)",
         )
         .eq("player_id", currentPlayerId);
 
@@ -517,7 +518,7 @@ export default function PredictPage() {
     const { data, error: matchError } = await supabase
       .from("matches")
       .select(
-        "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
+        "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner, stage, venue, result, status, created_at",
       )
       .order("start_time", { ascending: true });
 
@@ -557,7 +558,7 @@ export default function PredictPage() {
       const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select(
-          "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, stage, venue, result, status, created_at",
+          "id, match_number, group_name, home_team, away_team, start_time, odds_home, odds_draw, odds_away, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner, stage, venue, result, status, created_at",
         )
         .order("start_time", { ascending: true });
 

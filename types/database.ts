@@ -66,6 +66,12 @@ export type Database = {
           odds_away: number;
           home_score: number | null;
           away_score: number | null;
+          regular_home_score: number | null;
+          regular_away_score: number | null;
+          betting_result: "home" | "draw" | "away" | null;
+          final_home_score: number | null;
+          final_away_score: number | null;
+          advancement_winner: "home" | "away" | null;
           stage: string | null;
           group_name: string | null;
           venue: string | null;
@@ -84,6 +90,12 @@ export type Database = {
           odds_away: number;
           home_score?: number | null;
           away_score?: number | null;
+          regular_home_score?: number | null;
+          regular_away_score?: number | null;
+          betting_result?: "home" | "draw" | "away" | null;
+          final_home_score?: number | null;
+          final_away_score?: number | null;
+          advancement_winner?: "home" | "away" | null;
           stage?: string | null;
           group_name?: string | null;
           venue?: string | null;
@@ -102,6 +114,12 @@ export type Database = {
           odds_away?: number;
           home_score?: number | null;
           away_score?: number | null;
+          regular_home_score?: number | null;
+          regular_away_score?: number | null;
+          betting_result?: "home" | "draw" | "away" | null;
+          final_home_score?: number | null;
+          final_away_score?: number | null;
+          advancement_winner?: "home" | "away" | null;
           stage?: string | null;
           group_name?: string | null;
           venue?: string | null;

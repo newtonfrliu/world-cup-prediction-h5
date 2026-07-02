@@ -1,5 +1,11 @@
 export type PredictionChoice = string | null | undefined;
 export type MatchResultValue = string | null | undefined;
+export type SettlementResultSource =
+  | MatchResultValue
+  | {
+      betting_result?: MatchResultValue;
+      result?: MatchResultValue;
+    };
 
 export function normalizePredictionChoice(prediction: PredictionChoice) {
   const normalized = (prediction ?? "").trim().toLowerCase();
@@ -19,19 +25,27 @@ export function normalizeMatchResult(result: MatchResultValue) {
   return normalized;
 }
 
+export function getBettingResultForSettlement(source: SettlementResultSource) {
+  if (source && typeof source === "object") {
+    return normalizeMatchResult(source.betting_result ?? source.result);
+  }
+
+  return normalizeMatchResult(source);
+}
+
 export function isPredictionHit(
   prediction: PredictionChoice,
-  result: MatchResultValue,
+  result: SettlementResultSource,
 ) {
   const normalizedPrediction = normalizePredictionChoice(prediction);
-  const normalizedResult = normalizeMatchResult(result);
+  const normalizedResult = getBettingResultForSettlement(result);
 
   return Boolean(normalizedPrediction) && normalizedPrediction === normalizedResult;
 }
 
 export function getPredictionSettlementStatus(
   prediction: PredictionChoice,
-  result: MatchResultValue,
+  result: SettlementResultSource,
 ) {
   return isPredictionHit(prediction, result) ? "won" : "lost";
 }

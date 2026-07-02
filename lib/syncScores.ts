@@ -17,11 +17,17 @@ type Match = Pick<
   | "status"
   | "home_score"
   | "away_score"
+  | "stage"
+  | "result"
+  | "betting_result"
+  | "regular_home_score"
+  | "regular_away_score"
+  | "final_home_score"
+  | "final_away_score"
+  | "advancement_winner"
 >;
 type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
-type MatchResult = NonNullable<
-  Database["public"]["Tables"]["matches"]["Row"]["result"]
->;
+type BettingResult = "home" | "draw" | "away";
 
 type ScoreItem = {
   name: string;
@@ -178,16 +184,44 @@ function getUnmatchedScoreDiagnostics(match: Match, events: ScoreEvent[]) {
   };
 }
 
-function getResultFromScores(homeScore: number, awayScore: number): MatchResult {
+function getResultFromScores(homeScore: number, awayScore: number): BettingResult {
   if (homeScore > awayScore) {
-    return "home_win";
+    return "home";
   }
 
   if (homeScore < awayScore) {
-    return "away_win";
+    return "away";
   }
 
   return "draw";
+}
+
+function getLegacyResultFromBettingResult(result: BettingResult) {
+  if (result === "home") return "home_win";
+  if (result === "away") return "away_win";
+  return "draw";
+}
+
+function isKnockoutStage(stage: string | null | undefined) {
+  const normalized = (stage ?? "").trim().toLowerCase();
+
+  return [
+    "round_of_32",
+    "round of 32",
+    "round_of_16",
+    "round of 16",
+    "last_16",
+    "quarter_final",
+    "quarter-finals",
+    "quarterfinal",
+    "semi_final",
+    "semi-finals",
+    "semifinal",
+    "third_place",
+    "third-place",
+    "final",
+    "knockout",
+  ].includes(normalized);
 }
 
 function isMissingPredictionStatusError(error: unknown) {
@@ -237,7 +271,9 @@ export async function syncWorldCupScores({
   onStep?.("update_supabase");
   const { data: matches, error: matchesError } = await supabase
     .from("matches")
-    .select("id, home_team, away_team, start_time, status, home_score, away_score")
+    .select(
+      "id, home_team, away_team, start_time, status, home_score, away_score, stage, result, betting_result, regular_home_score, regular_away_score, final_home_score, final_away_score, advancement_winner",
+    )
     .or("status.is.null,status.neq.finished,home_score.is.null,away_score.is.null");
 
   if (matchesError) {
@@ -277,12 +313,43 @@ export async function syncWorldCupScores({
 
     const result = getResultFromScores(scores.homeScore, scores.awayScore);
 
+    if (isKnockoutStage(match.stage)) {
+      const { error: matchUpdateError } = await supabase
+        .from("matches")
+        .update({
+          final_home_score: scores.homeScore,
+          final_away_score: scores.awayScore,
+          home_score: scores.homeScore,
+          away_score: scores.awayScore,
+          status: "finished",
+        })
+        .eq("id", match.id);
+
+      if (matchUpdateError) {
+        throw new Error(`Supabase update failed: ${matchUpdateError.message}`);
+      }
+
+      skipped.push({
+        home_team: match.home_team,
+        away_team: match.away_team,
+        reason: "淘汰赛需要录入90分钟比分后才能结算竞猜。",
+      });
+      finished += 1;
+      continue;
+    }
+
     const { error: matchUpdateError } = await supabase
       .from("matches")
       .update({
         home_score: scores.homeScore,
         away_score: scores.awayScore,
-        result,
+        regular_home_score: scores.homeScore,
+        regular_away_score: scores.awayScore,
+        betting_result: result,
+        final_home_score: scores.homeScore,
+        final_away_score: scores.awayScore,
+        advancement_winner: null,
+        result: getLegacyResultFromBettingResult(result),
         status: "finished",
       })
       .eq("id", match.id);
@@ -326,7 +393,8 @@ export async function syncWorldCupScores({
         continue;
       }
 
-      const isHit = isPredictionHit(prediction.prediction, result);
+      const settlementResult = { betting_result: result };
+      const isHit = isPredictionHit(prediction.prediction, settlementResult);
       const points = calculateSettlementPoints(
         prediction.odds_at_prediction,
         isHit,
@@ -338,7 +406,7 @@ export async function syncWorldCupScores({
       );
       const status = getPredictionSettlementStatus(
         prediction.prediction,
-        result,
+        settlementResult,
       );
 
       const updatePayload = hasSettlementColumns

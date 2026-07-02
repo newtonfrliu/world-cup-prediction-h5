@@ -40,7 +40,7 @@ type Prediction = Pick<
 > & {
   matches: Pick<
     Match,
-    "home_team" | "away_team" | "start_time" | "status" | "result"
+    "home_team" | "away_team" | "start_time" | "status" | "result" | "betting_result"
   > | null;
 };
 type LeaderboardRow = Database["public"]["Views"]["leaderboard"]["Row"];
@@ -453,7 +453,7 @@ export default function ProfilePage() {
         await supabase
           .from("predictions")
           .select(
-            "id, match_id, prediction, odds_at_prediction, points, stake, payout, status, settled_at, matches(home_team, away_team, start_time, status, result)",
+            "id, match_id, prediction, odds_at_prediction, points, stake, payout, status, settled_at, matches(home_team, away_team, start_time, status, result, betting_result)",
           )
           .eq("player_id", currentPlayerId);
 
@@ -466,7 +466,7 @@ export default function ProfilePage() {
           await supabase
             .from("predictions")
             .select(
-              "id, match_id, prediction, odds_at_prediction, points, stake, payout, matches(home_team, away_team, start_time, status, result)",
+              "id, match_id, prediction, odds_at_prediction, points, stake, payout, matches(home_team, away_team, start_time, status, result, betting_result)",
             )
             .eq("player_id", currentPlayerId);
 
