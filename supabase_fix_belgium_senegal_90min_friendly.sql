@@ -104,7 +104,7 @@ with compensation(player_id, prediction_id, amount) as (
     select 1
     from public.coin_transactions existing
     where existing.type = 'belgium_senegal_90min_compensation'
-      and existing.related_id = c.prediction_id
+      and existing.related_id = c.prediction_id::text
   )
   returning player_id, amount
 ), totals as (
