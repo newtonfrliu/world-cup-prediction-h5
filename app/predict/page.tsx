@@ -80,6 +80,56 @@ const predictionLabels: Record<PredictionChoice, string> = {
   away_win: "客胜",
 };
 
+const predictionSummaryOrder = ["h2h_90", "advance", "totals_90"];
+
+function getPredictionSummaryPrefix(marketKey: string | null) {
+  if (marketKey === "advance") return "晋级";
+  if (marketKey === "totals_90") return "大小";
+  return "胜平";
+}
+
+function getPredictionSummarySelection(prediction: MyPrediction) {
+  const marketKey = prediction.market_key ?? "h2h_90";
+  const fallbackLabel = prediction.prediction
+    ? predictionLabels[prediction.prediction]
+    : undefined;
+  const label =
+    prediction.selection_label ??
+    fallbackLabel ??
+    prediction.selection_key ??
+    "";
+
+  if (marketKey === "advance") {
+    return label.replace(/\s*晋级\s*$/, "");
+  }
+
+  return label === "平" ? "平局" : label;
+}
+
+function getPredictionSummaryBadges(predictions: MyPrediction[]) {
+  const byMarket = new Map<string, MyPrediction>();
+
+  for (const prediction of predictions) {
+    const marketKey = prediction.market_key ?? "h2h_90";
+    if (!byMarket.has(marketKey)) {
+      byMarket.set(marketKey, prediction);
+    }
+  }
+
+  return Array.from(byMarket.entries())
+    .sort(
+      ([a], [b]) =>
+        predictionSummaryOrder.indexOf(a) - predictionSummaryOrder.indexOf(b),
+    )
+    .map(([marketKey, prediction]) => ({
+      marketKey,
+      label: `${getPredictionSummaryPrefix(marketKey)}：${getPredictionSummarySelection(
+        prediction,
+      )}`,
+    }))
+    .filter((item) => item.label.trim() !== `${getPredictionSummaryPrefix(item.marketKey)}：`);
+}
+
 const settlementStatusLabels: Record<string, string> = {
   won: "成功",
   lost: "失败",
@@ -463,9 +513,6 @@ export default function PredictPage() {
   const router = useRouter();
   const [matches, setMatches] = useState<Match[]>([]);
   const [bettingMarkets, setBettingMarkets] = useState<BettingMarket[]>([]);
-  const [predictedMatchIds, setPredictedMatchIds] = useState<Set<string>>(
-    () => new Set(),
-  );
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [player, setPlayer] = useState<Pick<
     Player,
@@ -490,13 +537,6 @@ export default function PredictPage() {
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
-  const predictionsByMatchId = useMemo(() => {
-    return new Map(
-      myPredictions
-        .filter(isDisplayablePrediction)
-        .map((prediction) => [prediction.match_id, prediction]),
-    );
-  }, [myPredictions]);
   const predictionsByMatchMarket = useMemo(() => {
     return new Map(
       myPredictions
@@ -577,9 +617,6 @@ export default function PredictPage() {
         .filter(isDisplayablePrediction) as MyPrediction[]);
 
       setMyPredictions(fallbackPredictions);
-      setPredictedMatchIds(
-        new Set(fallbackPredictions.map((item) => item.match_id)),
-      );
       return;
     }
 
@@ -598,7 +635,6 @@ export default function PredictPage() {
       .filter(isDisplayablePrediction));
 
     setMyPredictions(predictions);
-    setPredictedMatchIds(new Set(predictions.map((item) => item.match_id)));
   }
 
   async function refreshPlayer(currentPlayerId: string) {
@@ -1280,9 +1316,7 @@ export default function PredictPage() {
 
         <div className="space-y-4">
           {activeMatches.map((match) => {
-            const isPredicted = predictedMatchIds.has(match.id);
             const isSubmitting = submittingMatchId === match.id;
-            const selectedPrediction = predictionsByMatchId.get(match.id);
             const matchState = getMatchState(match);
             const isFinished = matchState === "finished";
             const isInProgress = matchState === "in_progress";
@@ -1340,6 +1374,8 @@ export default function PredictPage() {
                 prediction.match_id === match.id &&
                 isDisplayablePrediction(prediction),
             );
+            const predictionSummaryBadges =
+              getPredictionSummaryBadges(displayPredictions);
             const marketGroups = [
               { key: "h2h_90", label: "90分钟胜平负", options: h2hOptions },
               { key: "totals_90", label: "90分钟大小球", options: totalsOptions },
@@ -1380,13 +1416,18 @@ export default function PredictPage() {
                       {matchStatusLabel}
                     </p>
                   </div>
-                  {isPredicted ? (
-                    <span className="shrink-0 rounded-full bg-[#f6c84c] px-3 py-1 text-xs font-black text-[#071b3a]">
-                      已预测：
-                      {selectedPrediction
-                        ? predictionLabels[selectedPrediction.prediction]
-                        : ""}
-                    </span>
+                  {predictionSummaryBadges.length > 0 ? (
+                    <div className="flex max-w-[44%] shrink-0 flex-col items-end gap-1 sm:max-w-[38%]">
+                      {predictionSummaryBadges.map((badge) => (
+                        <span
+                          key={badge.marketKey}
+                          className="max-w-full truncate rounded-full bg-[#f6c84c] px-2.5 py-1 text-[10px] font-black leading-none text-[#071b3a] shadow-sm sm:text-xs"
+                          title={badge.label}
+                        >
+                          {badge.label}
+                        </span>
+                      ))}
+                    </div>
                   ) : null}
                   </div>
                 </div>
