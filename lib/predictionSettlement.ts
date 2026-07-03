@@ -10,6 +10,8 @@ export type SettlementResultSource =
       advancement_winner?: MatchResultValue;
       regular_home_score?: number | null;
       regular_away_score?: number | null;
+      final_home_score?: number | null;
+      final_away_score?: number | null;
       home_score?: number | null;
       away_score?: number | null;
     };

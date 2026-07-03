@@ -199,6 +199,12 @@ function getLegacyResultFromBettingResult(result: BettingResult) {
   return "draw";
 }
 
+function getAdvancementWinnerFromScores(homeScore: number, awayScore: number) {
+  if (homeScore > awayScore) return "home";
+  if (homeScore < awayScore) return "away";
+  return null;
+}
+
 function isKnockoutStage(stage: string | null | undefined) {
   const normalized = (stage ?? "").trim().toLowerCase();
 
@@ -236,6 +242,108 @@ function isMissingPredictionStatusError(error: unknown) {
     message.includes("settled_at") ||
     message.includes("schema cache")
   );
+}
+
+async function settleActivePredictionsForMatch({
+  supabase,
+  matchId,
+  matchForSettlement,
+}: {
+  supabase: ReturnType<typeof createClient<Database>>;
+  matchId: string;
+  matchForSettlement: Parameters<typeof settlePredictionMarket>[1];
+}) {
+  let hasSettlementColumns = true;
+  let { data: predictions, error: predictionsError } = await supabase
+    .from("predictions")
+    .select(
+      "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, created_at",
+    )
+    .eq("match_id", matchId)
+    .or("status.is.null,status.eq.active");
+
+  if (predictionsError) {
+    if (!isMissingPredictionStatusError(predictionsError)) {
+      throw new Error(`Supabase update failed: ${predictionsError.message}`);
+    }
+
+    hasSettlementColumns = false;
+    const fallbackResult = await supabase
+      .from("predictions")
+      .select(
+        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, market_key, market_label, selection_key, selection_label, line, created_at",
+      )
+      .eq("match_id", matchId);
+
+    predictions = fallbackResult.data as typeof predictions;
+    predictionsError = fallbackResult.error;
+
+    if (predictionsError) {
+      throw new Error(`Supabase update failed: ${predictionsError.message}`);
+    }
+  }
+
+  let settled = 0;
+
+  for (const prediction of (predictions ?? []) as Prediction[]) {
+    if (hasSettlementColumns && prediction.settled_at) {
+      continue;
+    }
+
+    const settlement = settlePredictionMarket(prediction, matchForSettlement);
+
+    if (!settlement) {
+      continue;
+    }
+
+    const { points, payout, status } = settlement;
+    const updatePayload = hasSettlementColumns
+      ? {
+          points,
+          payout,
+          status,
+          settled_at: new Date().toISOString(),
+        }
+      : {
+          points,
+          payout,
+        };
+    const { error: predictionUpdateError } = await supabase
+      .from("predictions")
+      .update(updatePayload)
+      .eq("id", prediction.id);
+
+    if (predictionUpdateError) {
+      throw new Error(
+        `Supabase update failed: ${predictionUpdateError.message}`,
+      );
+    }
+
+    if (payout > 0 && (prediction.payout ?? 0) === 0) {
+      const { data: player, error: playerLoadError } = await supabase
+        .from("players")
+        .select("coins")
+        .eq("id", prediction.player_id)
+        .single();
+
+      if (playerLoadError) {
+        throw new Error(`Supabase update failed: ${playerLoadError.message}`);
+      }
+
+      const { error: playerUpdateError } = await supabase
+        .from("players")
+        .update({ coins: player.coins + payout })
+        .eq("id", prediction.player_id);
+
+      if (playerUpdateError) {
+        throw new Error(`Supabase update failed: ${playerUpdateError.message}`);
+      }
+    }
+
+    settled += 1;
+  }
+
+  return settled;
 }
 
 async function fetchScores(apiKey: string) {
@@ -311,13 +419,23 @@ export async function syncWorldCupScores({
     const result = getResultFromScores(scores.homeScore, scores.awayScore);
 
     if (isKnockoutStage(match.stage)) {
+      const advancementWinner = getAdvancementWinnerFromScores(
+        scores.homeScore,
+        scores.awayScore,
+      );
+
       const { error: matchUpdateError } = await supabase
         .from("matches")
         .update({
+          regular_home_score: scores.homeScore,
+          regular_away_score: scores.awayScore,
+          betting_result: result,
           final_home_score: scores.homeScore,
           final_away_score: scores.awayScore,
           home_score: scores.homeScore,
           away_score: scores.awayScore,
+          advancement_winner: advancementWinner,
+          result: getLegacyResultFromBettingResult(result),
           status: "finished",
         })
         .eq("id", match.id);
@@ -326,12 +444,33 @@ export async function syncWorldCupScores({
         throw new Error(`Supabase update failed: ${matchUpdateError.message}`);
       }
 
-      skipped.push({
-        home_team: match.home_team,
-        away_team: match.away_team,
-        reason: "淘汰赛需要录入90分钟比分后才能结算竞猜。",
+      const matchSettled = await settleActivePredictionsForMatch({
+        supabase,
+        matchId: match.id,
+        matchForSettlement: {
+          betting_result: result,
+          result: getLegacyResultFromBettingResult(result),
+          regular_home_score: scores.homeScore,
+          regular_away_score: scores.awayScore,
+          final_home_score: scores.homeScore,
+          final_away_score: scores.awayScore,
+          home_score: scores.homeScore,
+          away_score: scores.awayScore,
+          advancement_winner: advancementWinner,
+        },
       });
+
+      if (!advancementWinner) {
+        skipped.push({
+          home_team: match.home_team,
+          away_team: match.away_team,
+          reason:
+            "淘汰赛最终比分为平局，晋级方需要人工录入；胜平负和大小球已按90分钟比分结算。",
+        });
+      }
+
       finished += 1;
+      settled += matchSettled;
       continue;
     }
 
@@ -355,104 +494,21 @@ export async function syncWorldCupScores({
       throw new Error(`Supabase update failed: ${matchUpdateError.message}`);
     }
 
-    let hasSettlementColumns = true;
-    let { data: predictions, error: predictionsError } = await supabase
-      .from("predictions")
-      .select(
-        "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, status, settled_at, points, market_key, market_label, selection_key, selection_label, line, created_at",
-      )
-      .eq("match_id", match.id)
-      .or("status.is.null,status.eq.active");
-
-    if (predictionsError) {
-      if (!isMissingPredictionStatusError(predictionsError)) {
-        throw new Error(`Supabase update failed: ${predictionsError.message}`);
-      }
-
-      hasSettlementColumns = false;
-      const fallbackResult = await supabase
-        .from("predictions")
-        .select(
-          "id, player_id, match_id, prediction, odds_at_prediction, stake, payout, points, market_key, market_label, selection_key, selection_label, line, created_at",
-        )
-        .eq("match_id", match.id);
-
-      predictions = fallbackResult.data as typeof predictions;
-      predictionsError = fallbackResult.error;
-
-      if (predictionsError) {
-        throw new Error(`Supabase update failed: ${predictionsError.message}`);
-      }
-    }
-
-    for (const prediction of (predictions ?? []) as Prediction[]) {
-      if (hasSettlementColumns && prediction.settled_at) {
-        continue;
-      }
-
-      const settlement = settlePredictionMarket(prediction, {
+    const matchSettled = await settleActivePredictionsForMatch({
+      supabase,
+      matchId: match.id,
+      matchForSettlement: {
         betting_result: result,
         result: getLegacyResultFromBettingResult(result),
         regular_home_score: scores.homeScore,
         regular_away_score: scores.awayScore,
         home_score: scores.homeScore,
         away_score: scores.awayScore,
-      });
-
-      if (!settlement) {
-        continue;
-      }
-
-      const { points, payout, status } = settlement;
-
-      const updatePayload = hasSettlementColumns
-        ? {
-            points,
-            payout,
-            status,
-            settled_at: new Date().toISOString(),
-          }
-        : {
-            points,
-            payout,
-          };
-      const { error: predictionUpdateError } = await supabase
-        .from("predictions")
-        .update(updatePayload)
-        .eq("id", prediction.id);
-
-      if (predictionUpdateError) {
-        throw new Error(
-          `Supabase update failed: ${predictionUpdateError.message}`,
-        );
-      }
-
-      if (payout > 0 && (prediction.payout ?? 0) === 0) {
-        const { data: player, error: playerLoadError } = await supabase
-          .from("players")
-          .select("coins")
-          .eq("id", prediction.player_id)
-          .single();
-
-        if (playerLoadError) {
-          throw new Error(`Supabase update failed: ${playerLoadError.message}`);
-        }
-
-        const { error: playerUpdateError } = await supabase
-          .from("players")
-          .update({ coins: player.coins + payout })
-          .eq("id", prediction.player_id);
-
-        if (playerUpdateError) {
-          throw new Error(
-            `Supabase update failed: ${playerUpdateError.message}`,
-          );
-        }
-      }
-    }
+      },
+    });
 
     finished += 1;
-    settled += (predictions ?? []).length;
+    settled += matchSettled;
   }
 
   return {

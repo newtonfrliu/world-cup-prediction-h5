@@ -1332,6 +1332,12 @@ export default function PredictPage() {
             const awayScore = getScoreValue(matchWithScore, "away");
             const hasScore = homeScore !== null && awayScore !== null;
             const finalResult = getMatchResult(matchWithScore);
+            const hasFinishedSettlementFieldGap =
+              isFinished &&
+              hasScore &&
+              (matchWithScore.regular_home_score === null ||
+                matchWithScore.regular_away_score === null ||
+                matchWithScore.betting_result === null);
             const normalizedResult = normalizeMatchResult(finalResult);
             const homeIsWinner = normalizedResult === "home_win";
             const awayIsWinner = normalizedResult === "away_win";
@@ -1481,12 +1487,24 @@ export default function PredictPage() {
                         最终结果：
                         {finalResult
                           ? (matchResultLabels[finalResult] ?? "待公布")
-                          : "待公布"}
+                          : hasFinishedSettlementFieldGap
+                            ? "赛果字段待补齐"
+                            : "待公布"}
                       </p>
                       <p className="mt-1">
-                        赛果状态：{finalResult ? "已结算" : "待结算"}
+                        赛果状态：
+                        {finalResult
+                          ? "已结算"
+                          : hasFinishedSettlementFieldGap
+                            ? "待补齐90分钟结果"
+                            : "待结算"}
                       </p>
                     </div>
+                    {hasFinishedSettlementFieldGap ? (
+                      <div className="mt-3 rounded-xl border border-[#f6c84c]/70 bg-[#fff8db] px-4 py-3 text-sm font-black text-[#071b3a]">
+                        赛果字段待补齐，请管理员录入90分钟结果后结算竞猜。
+                      </div>
+                    ) : null}
                   </div>
                 ) : null}
 
