@@ -71,6 +71,47 @@ export const knockoutStageLabels: Record<KnockoutStageKey, string> = {
   final: "决赛",
 };
 
+const roundOf32ExpectedPairs: Record<number, [string, string]> = {
+  73: ["South Africa", "Canada"],
+  74: ["Germany", "Paraguay"],
+  75: ["Netherlands", "Morocco"],
+  76: ["Brazil", "Japan"],
+  77: ["France", "Sweden"],
+  78: ["Ivory Coast", "Norway"],
+  79: ["Mexico", "Ecuador"],
+  80: ["England", "DR Congo"],
+  81: ["Argentina", "Cape Verde"],
+  82: ["Australia", "Egypt"],
+  83: ["Switzerland", "Algeria"],
+  84: ["Colombia", "Ghana"],
+  85: ["Belgium", "Senegal"],
+  86: ["USA", "Bosnia & Herzegovina"],
+  87: ["Portugal", "Croatia"],
+  88: ["Spain", "Austria"],
+};
+
+const roundOf16KnownPairs: Record<number, Array<[string, string]>> = {
+  89: [["Paraguay", "France"]],
+  90: [["Canada", "Morocco"]],
+  91: [["Brazil", "Norway"]],
+  92: [["Mexico", "England"]],
+  93: [["Switzerland", "Colombia"]],
+  94: [["Argentina", "Egypt"]],
+  95: [["Portugal", "Spain"]],
+  96: [["USA", "Belgium"]],
+};
+
+const placeholderSourceMap: Record<number, [number, number, "winners" | "losers"]> = {
+  97: [89, 90, "winners"],
+  98: [91, 92, "winners"],
+  99: [93, 94, "winners"],
+  100: [95, 96, "winners"],
+  101: [97, 98, "winners"],
+  102: [99, 100, "winners"],
+  103: [101, 102, "losers"],
+  104: [101, 102, "winners"],
+};
+
 export function normalizeStage(stage?: string | null) {
   return (stage ?? "")
     .trim()
@@ -78,8 +119,77 @@ export function normalizeStage(stage?: string | null) {
     .replace(/[\s-]+/g, "_");
 }
 
+function normalizeTeamName(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function normalizePair(homeTeam?: string | null, awayTeam?: string | null) {
+  return `${normalizeTeamName(homeTeam ?? "")}__${normalizeTeamName(awayTeam ?? "")}`;
+}
+
+function matchPlaceholderPair(match: KnockoutMatch) {
+  const home = match.home_team ?? "";
+  const away = match.away_team ?? "";
+  const homeWinner = home.match(/match\s*(\d+)\s*winners?/i);
+  const awayWinner = away.match(/match\s*(\d+)\s*winners?/i);
+  const homeLoser = home.match(/match\s*(\d+)\s*losers?/i);
+  const awayLoser = away.match(/match\s*(\d+)\s*losers?/i);
+
+  if (homeWinner && awayWinner) {
+    return [Number(homeWinner[1]), Number(awayWinner[1]), "winners"] as const;
+  }
+
+  if (homeLoser && awayLoser) {
+    return [Number(homeLoser[1]), Number(awayLoser[1]), "losers"] as const;
+  }
+
+  return null;
+}
+
 export function getKnockoutStageKey(stage?: string | null) {
   return knockoutStageMap[normalizeStage(stage)] ?? null;
+}
+
+export function inferKnockoutMatchNumber(match: KnockoutMatch) {
+  if (match.match_number) return match.match_number;
+
+  const stageKey = getKnockoutStageKey(match.stage);
+  const pair = normalizePair(match.home_team, match.away_team);
+
+  if (stageKey === "roundOf32") {
+    const inferred = Object.entries(roundOf32ExpectedPairs).find(
+      ([, [homeTeam, awayTeam]]) => normalizePair(homeTeam, awayTeam) === pair,
+    );
+    return inferred ? Number(inferred[0]) : null;
+  }
+
+  if (stageKey === "roundOf16") {
+    const inferred = Object.entries(roundOf16KnownPairs).find(([, pairs]) =>
+      pairs.some(([homeTeam, awayTeam]) => normalizePair(homeTeam, awayTeam) === pair),
+    );
+    return inferred ? Number(inferred[0]) : null;
+  }
+
+  const placeholderPair = matchPlaceholderPair(match);
+
+  if (placeholderPair) {
+    const inferred = Object.entries(placeholderSourceMap).find(
+      ([, [homeSource, awaySource, sourceType]]) =>
+        homeSource === placeholderPair[0] &&
+        awaySource === placeholderPair[1] &&
+        sourceType === placeholderPair[2],
+    );
+
+    return inferred ? Number(inferred[0]) : null;
+  }
+
+  return null;
 }
 
 export function formatPlaceholderName(value?: string | null) {
@@ -151,6 +261,13 @@ export function getWinnerTeam(match: KnockoutMatch) {
 }
 
 function sortMatches(left: KnockoutMatch, right: KnockoutMatch) {
+  const leftNumber = inferKnockoutMatchNumber(left);
+  const rightNumber = inferKnockoutMatchNumber(right);
+
+  if (leftNumber && rightNumber && leftNumber !== rightNumber) {
+    return leftNumber - rightNumber;
+  }
+
   const leftTime = left.start_time ? new Date(left.start_time).getTime() : 0;
   const rightTime = right.start_time ? new Date(right.start_time).getTime() : 0;
   const timeDiff = leftTime - rightTime;
