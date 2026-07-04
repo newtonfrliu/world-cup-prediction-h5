@@ -1060,12 +1060,12 @@ export default function Home() {
                 </div>
                 <p className="mt-2 text-xs font-bold text-white/55">查看晋级历程</p>
               </Link>
-              <Link href="/round-of-32-calculator" className="rounded-3xl border border-[#f6c84c]/35 bg-[#4a2f05]/72 p-4 shadow-[0_12px_28px_rgba(246,200,76,0.14)]">
+              <Link href="/knockout-bracket" className="rounded-3xl border border-[#f6c84c]/35 bg-[#4a2f05]/72 p-4 shadow-[0_12px_28px_rgba(246,200,76,0.14)]">
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-lg font-black text-white">32强对阵</p>
+                  <p className="text-lg font-black text-white">淘汰赛对阵</p>
                   <span className="text-lg font-black text-[#f6c84c]">›</span>
                 </div>
-                <p className="mt-2 text-xs font-bold text-white/55">实时对阵图</p>
+                <p className="mt-2 text-xs font-bold text-white/55">实时晋级图</p>
               </Link>
             </div>
 
@@ -1215,10 +1215,10 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/round-of-32-calculator"
+            href="/knockout-bracket"
             className="wc-button-gold w-full"
           >
-            32强实时对阵
+            淘汰赛对阵
           </Link>
 
           <Link
