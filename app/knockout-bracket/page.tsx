@@ -127,8 +127,9 @@ function MatchCard({
   const regularScore = getRegularScore(match);
 
   return (
-    <article
-      className={`relative rounded-2xl border border-[#2f70d8]/36 bg-[linear-gradient(145deg,rgba(18,35,91,0.94),rgba(5,12,34,0.95))] p-3 shadow-[0_14px_34px_rgba(0,0,0,0.32)] ${
+    <Link
+      href={`/predict?matchId=${match.id}`}
+      className={`group relative block rounded-2xl border border-[#2f70d8]/36 bg-[linear-gradient(145deg,rgba(18,35,91,0.94),rgba(5,12,34,0.95))] p-3 shadow-[0_14px_34px_rgba(0,0,0,0.32)] transition duration-200 hover:-translate-y-1 hover:border-[#f6c84c]/75 hover:shadow-[0_0_24px_rgba(246,200,76,0.2),0_18px_42px_rgba(0,0,0,0.34)] ${
         compact ? "min-h-[132px]" : "min-h-[154px]"
       }`}
     >
@@ -156,7 +157,7 @@ function MatchCard({
           ) : null}
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -224,6 +225,28 @@ function ChampionPanel({ finalMatch }: { finalMatch?: KnockoutMatch }) {
       <p className="mt-4 text-xs font-bold text-white/48">
         晋级方来自决赛的 `advancement_winner`
       </p>
+    </section>
+  );
+}
+
+function ThirdPlacePanel({ match }: { match?: KnockoutMatch }) {
+  return (
+    <section className="w-full rounded-[24px] border border-[#cd7f32]/44 bg-[linear-gradient(135deg,rgba(205,127,50,0.18),rgba(5,12,34,0.94))] p-3 shadow-[0_18px_44px_rgba(205,127,50,0.12)]">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-xs font-black tracking-[0.18em] text-[#ffbd7a]">
+          季军赛
+        </h2>
+        <span className="text-[11px] font-bold text-white/46">
+          {match ? formatMatchTime(match.start_time) : "待定"}
+        </span>
+      </div>
+      {match ? (
+        <MatchCard match={match} compact />
+      ) : (
+        <div className="rounded-2xl border border-white/10 bg-black/22 p-5 text-center text-sm font-bold text-white/45">
+          季军赛对阵待定
+        </div>
+      )}
     </section>
   );
 }
@@ -316,30 +339,16 @@ export default async function KnockoutBracketPage() {
               <RoundColumn title="16强 · 上半区" matches={round16Left} />
               <RoundColumn title="8强 · 上半区" matches={quarterLeft} />
               <RoundColumn title="半决赛" matches={semiLeft} />
-              <ChampionPanel finalMatch={finalMatch} />
+              <div className="flex w-[260px] shrink-0 flex-col items-center gap-5 self-center">
+                <ChampionPanel finalMatch={finalMatch} />
+                <ThirdPlacePanel match={thirdPlaceMatch} />
+              </div>
               <RoundColumn title="半决赛" matches={semiRight} />
               <RoundColumn title="8强 · 下半区" matches={quarterRight} />
               <RoundColumn title="16强 · 下半区" matches={round16Right} />
               <RoundColumn title="32强 · 下半区" matches={round32Right} compact />
             </div>
 
-            <section className="mx-auto mt-8 w-[520px] rounded-[28px] border border-[#cd7f32]/44 bg-[linear-gradient(135deg,rgba(205,127,50,0.18),rgba(5,12,34,0.94))] p-4 shadow-[0_18px_44px_rgba(205,127,50,0.12)]">
-              <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-sm font-black tracking-[0.2em] text-[#ffbd7a]">
-                  季军赛
-                </h2>
-                <span className="text-xs font-bold text-white/46">
-                  {thirdPlaceMatch ? formatMatchTime(thirdPlaceMatch.start_time) : "待定"}
-                </span>
-              </div>
-              {thirdPlaceMatch ? (
-                <MatchCard match={thirdPlaceMatch} />
-              ) : (
-                <div className="rounded-2xl border border-white/10 bg-black/22 p-5 text-center text-sm font-bold text-white/45">
-                  季军赛对阵待定
-                </div>
-              )}
-            </section>
           </div>
         </div>
       </section>

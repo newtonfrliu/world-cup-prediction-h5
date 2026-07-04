@@ -556,6 +556,7 @@ export default function PredictPage() {
   const [error, setError] = useState("");
   const [betError, setBetError] = useState("");
   const [toast, setToast] = useState("");
+  const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
 
   const hasMatches = matches.length > 0;
   const canUseSupabase = useMemo(() => isSupabaseConfigured, []);
@@ -582,6 +583,10 @@ export default function PredictPage() {
     return map;
   }, [bettingMarkets]);
   const bettingAvailableCoins = player?.coins ?? 0;
+
+  useEffect(() => {
+    setTargetMatchId(new URLSearchParams(window.location.search).get("matchId"));
+  }, []);
 
   async function loadMyPredictions(currentPlayerId: string) {
     const queryWithStatus = supabase
@@ -1163,6 +1168,37 @@ export default function PredictPage() {
   const activeMatches =
     matchTabs.find((tab) => tab.key === activeMatchTab)?.matches ?? [];
 
+  useEffect(() => {
+    if (loading || !targetMatchId || matches.length === 0) {
+      return;
+    }
+
+    const targetMatch = matches.find((match) => match.id === targetMatchId);
+
+    if (!targetMatch) {
+      return;
+    }
+
+    const targetState = getMatchState(targetMatch);
+    const targetTab: MatchTabKey =
+      targetState === "finished"
+        ? "finished"
+        : targetState === "in_progress"
+          ? "in_progress"
+          : "upcoming";
+
+    if (activeMatchTab !== targetTab) {
+      setActiveMatchTab(targetTab);
+      return;
+    }
+
+    window.setTimeout(() => {
+      document
+        .getElementById(`match-${targetMatchId}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
+  }, [activeMatchTab, loading, matches, targetMatchId]);
+
   return (
     <main className="wc-page px-4 py-6">
       <section className="wc-shell">
@@ -1422,9 +1458,14 @@ export default function PredictPage() {
 
             return (
               <article
+                id={`match-${match.id}`}
                 key={match.id}
-                className={`overflow-hidden rounded-2xl border bg-white ${stageCardClass} ${
+                className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-white ${stageCardClass} ${
                   isBettingClosed ? "opacity-85" : ""
+                } ${
+                  targetMatchId === match.id
+                    ? "ring-4 ring-[#f6c84c] ring-offset-4 ring-offset-[#f6f1e7]"
+                    : ""
                 }`}
               >
                 <div className={`${stageHeaderClass} p-4 text-white`}>
