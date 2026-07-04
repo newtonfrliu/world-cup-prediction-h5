@@ -121,11 +121,28 @@ function isStartedOrLocked(match?: KnockoutMatch | null) {
 }
 
 function isSelectableTeam(team?: string | null) {
-  return Boolean(team && !isPlaceholderTeamName(team));
+  return Boolean(team && !isPendingTeamName(team));
+}
+
+function isPendingTeamName(team?: string | null) {
+  const raw = (team ?? "").trim();
+
+  return (
+    !raw ||
+    raw === "-" ||
+    raw === "待定" ||
+    /^tbd$/i.test(raw) ||
+    /^m\d+\s*(胜者|负者)$/i.test(raw) ||
+    isPlaceholderTeamName(raw)
+  );
 }
 
 function validStoredPick(slot: BracketSlot, pick?: StoredPick) {
   if (!pick || !slot.homeTeam || !slot.awayTeam) return null;
+  if (isPendingTeamName(pick.winner) || isPendingTeamName(pick.loser)) {
+    return null;
+  }
+
   const teams = [slot.homeTeam, slot.awayTeam];
 
   if (!teams.includes(pick.winner) || !teams.includes(pick.loser)) {
@@ -258,8 +275,8 @@ function TeamRow({
 }) {
   const team = side === "home" ? slot.homeTeam : slot.awayTeam;
   const display = formatTeamDisplayName(team);
-  const isWinner = slot.winner === team;
-  const isLoser = slot.loser === team;
+  const isWinner = Boolean(slot.winner) && !isPendingTeamName(slot.winner) && slot.winner === team;
+  const isLoser = Boolean(slot.loser) && !isPendingTeamName(slot.loser) && slot.loser === team;
   const isLocked = slot.stage === "roundOf32" || isStartedOrLocked(slot.match);
   const canSelect =
     slot.stage !== "roundOf32" &&
@@ -375,7 +392,7 @@ function RoundColumn({
   onSelect: (slot: BracketSlot, team: string) => void;
 }) {
   return (
-    <section className="w-[220px] shrink-0">
+    <section className="w-[250px] shrink-0">
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-black tracking-[0.2em] text-[#fff4bf]">
           {title}
@@ -445,6 +462,28 @@ function ThirdPlacePanel({
       <div className="mb-3 flex items-center justify-between gap-3">
         <h2 className="text-xs font-black tracking-[0.18em] text-[#ffbd7a]">
           季军赛
+        </h2>
+        <span className="text-[11px] font-bold text-white/46">
+          {formatMatchTime(slot.match?.start_time)}
+        </span>
+      </div>
+      <MatchCard slot={slot} compact onSelect={onSelect} />
+    </section>
+  );
+}
+
+function FinalMatchPanel({
+  slot,
+  onSelect,
+}: {
+  slot: BracketSlot;
+  onSelect: (slot: BracketSlot, team: string) => void;
+}) {
+  return (
+    <section className="w-full rounded-[24px] border border-[#f6c84c]/44 bg-[linear-gradient(135deg,rgba(246,200,76,0.16),rgba(5,12,34,0.96))] p-3 shadow-[0_18px_44px_rgba(246,200,76,0.12)]">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-xs font-black tracking-[0.18em] text-[#fff4bf]">
+          决赛
         </h2>
         <span className="text-[11px] font-bold text-white/46">
           {formatMatchTime(slot.match?.start_time)}
@@ -581,15 +620,16 @@ export function KnockoutBracketClient({ matches }: { matches: KnockoutMatch[] })
         </div>
 
         <div className="overflow-x-auto rounded-[30px] border border-[#2f70d8]/28 bg-[#061128]/74 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
-          <div className="relative min-w-[1440px]">
+          <div className="relative min-w-[2600px]">
             <div className="pointer-events-none absolute inset-x-14 top-1/2 h-px bg-[#2f70d8]/28" />
-            <div className="grid grid-cols-[220px_220px_220px_170px_260px_170px_220px_220px_220px] items-start gap-5">
+            <div className="grid grid-cols-[250px_250px_250px_250px_300px_250px_250px_250px_250px] items-start gap-8">
               <RoundColumn title="32强 · 上半区" slots={round32Left} compact onSelect={handleSelect} />
               <RoundColumn title="16强 · 上半区" slots={round16Left} onSelect={handleSelect} />
               <RoundColumn title="8强 · 上半区" slots={quarterLeft} onSelect={handleSelect} />
               <RoundColumn title="半决赛" slots={semiLeft} onSelect={handleSelect} />
-              <div className="flex w-[260px] shrink-0 flex-col items-center gap-5 self-center">
+              <div className="flex w-[300px] shrink-0 flex-col items-center gap-5 self-center">
                 <ChampionPanel finalSlot={finalSlot} />
+                <FinalMatchPanel slot={finalSlot} onSelect={handleSelect} />
                 <ThirdPlacePanel slot={thirdPlaceSlot} onSelect={handleSelect} />
               </div>
               <RoundColumn title="半决赛" slots={semiRight} onSelect={handleSelect} />
