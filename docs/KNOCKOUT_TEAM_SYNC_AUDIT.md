@@ -1,6 +1,6 @@
 # Knockout Team Sync Audit
 
-Generated at: 2026-07-04T07:56:18.701Z
+Generated at: 2026-07-04T20:56:46.927Z
 Mode: apply
 
 ## Summary
@@ -40,13 +40,13 @@ Mode: apply
 | match | old home | old away | new home | new away | updated | reason |
 | --- | --- | --- | --- | --- | --- | --- |
 | M89 | Paraguay | France | Paraguay | France | yes | updated |
-| M90 | Canada | Morocco | Canada | Morocco | yes | updated |
+| M90 | Canada | Morocco | Canada | Morocco | no | skipped because status=finished |
 | M91 | Brazil | Norway | Brazil | Norway | yes | updated |
 | M92 | Mexico | England | Mexico | England | yes | updated |
 | M93 | Switzerland | Colombia | Switzerland | Colombia | yes | updated |
 | M94 | Argentina | Egypt | Argentina | Egypt | yes | updated |
-| M95 | USA | Spain | Portugal | Spain | yes | updated |
-| M96 | Belgium | Portugal | USA | Belgium | yes | updated |
+| M95 | Portugal | Spain | Portugal | Spain | yes | updated |
+| M96 | USA | Belgium | USA | Belgium | yes | updated |
 
 ## Placeholder Check
 
