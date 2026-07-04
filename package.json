@@ -23,6 +23,7 @@
     "sync:odds": "node scripts/syncOdds.ts",
     "sync:scores": "node scripts/syncScores.ts",
     "sync:knockout-teams": "node scripts/sync-knockout-teams.ts",
+    "sync:knockout-winners": "node scripts/sync-knockout-winners.ts",
     "backfill:prediction-settlement": "node scripts/backfill-prediction-settlement.ts",
     "audit:points": "node scripts/audit-points-and-leaderboard.ts",
     "audit:knockout-settlement": "node scripts/audit-knockout-settlement-result.ts",

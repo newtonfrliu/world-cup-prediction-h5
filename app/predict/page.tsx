@@ -150,6 +150,28 @@ const matchResultLabels: Record<string, string> = {
   away_win: "客胜",
 };
 
+function isPlaceholderTeamName(value: string | null | undefined) {
+  const normalized = (value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+
+  return (
+    /^match\s+\d+\s+winners?$/.test(normalized) ||
+    /^winner of\s+match\s+\d+$/.test(normalized) ||
+    normalized === "tbd"
+  );
+}
+
+function hasUsableH2hOdds(match: Match) {
+  const odds = [match.odds_home, match.odds_draw, match.odds_away];
+
+  return (
+    odds.every((value) => typeof value === "number" && Number.isFinite(value)) &&
+    !odds.every((value) => value === 1)
+  );
+}
+
 function normalizeMatchStage(stage: string | null | undefined) {
   return (stage ?? "group").trim().toLowerCase();
 }
@@ -1347,14 +1369,20 @@ export default function PredictPage() {
             const stageHeaderClass = getMatchStageHeaderClass(match.stage);
             const stageBadgeClass = getMatchStageBadgeClass(match.stage);
             const matchMarkets = marketsByMatchId.get(match.id) ?? [];
-            const h2hOptions: BetOption[] = predictionOptions.map((option) => ({
-              marketKey: "h2h_90",
-              marketLabel: "90分钟胜平负",
-              selectionKey: option.value,
-              selectionLabel: option.label,
-              odds: match[option.oddsKey],
-              line: 0,
-            }));
+            const hasPlaceholderTeam =
+              isPlaceholderTeamName(match.home_team) ||
+              isPlaceholderTeamName(match.away_team);
+            const h2hOptions: BetOption[] =
+              hasPlaceholderTeam || !hasUsableH2hOdds(match)
+                ? []
+                : predictionOptions.map((option) => ({
+                    marketKey: "h2h_90",
+                    marketLabel: "90分钟胜平负",
+                    selectionKey: option.value,
+                    selectionLabel: option.label,
+                    odds: match[option.oddsKey],
+                    line: 0,
+                  }));
             const advanceOptions: BetOption[] = matchMarkets
               .filter((market) => market.market_key === "advance")
               .map((market) => ({
@@ -1580,7 +1608,14 @@ export default function PredictPage() {
                   </div>
                 ) : null}
 
-                {!isBettingClosed ? (
+                {!isBettingClosed && hasPlaceholderTeam ? (
+                  <div className="mx-4 mt-4 rounded-[14px] bg-[#edf1f5] px-4 py-[14px] text-sm font-black text-[#334e68]">
+                    <p className="text-base text-[#071b3a]">对阵待确认</p>
+                    <p className="mt-1 text-[#52606d]">暂不可下注</p>
+                  </div>
+                ) : null}
+
+                {!isBettingClosed && !hasPlaceholderTeam ? (
                   <div className="space-y-3 px-4 pb-4 pt-4">
                     {isKnockoutStage(match.stage) ? (
                       <p className="rounded-xl bg-[#071b3a]/8 px-3 py-2 text-xs font-black text-[#334e68]">
