@@ -29,6 +29,7 @@
     "audit:knockout-settlement": "node scripts/audit-knockout-settlement-result.ts",
     "audit:odds-markets": "node scripts/audit-odds-markets.ts",
     "audit:belgium-senegal-compensation": "node scripts/audit-belgium-senegal-compensation.ts",
+    "audit:egypt-argentina-compensation": "node scripts/audit-egypt-argentina-compensation.ts",
     "audit:multi-market-bets": "node scripts/audit-multi-market-bets.ts",
     "audit:recent-finished-fields": "node scripts/audit-recent-finished-matches-settlement-fields.ts",
     "settle:recent-finished": "node scripts/settle-recent-finished-matches.ts"

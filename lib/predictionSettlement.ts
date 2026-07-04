@@ -89,13 +89,6 @@ export function getTotalGoalsForSettlement(source: SettlementResultSource) {
     return regularHome + regularAway;
   }
 
-  const home = source.home_score;
-  const away = source.away_score;
-
-  if (typeof home === "number" && typeof away === "number") {
-    return home + away;
-  }
-
   return null;
 }
 
