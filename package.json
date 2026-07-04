@@ -22,6 +22,7 @@
     "check:teams": "node scripts/checkTeams.ts",
     "sync:odds": "node scripts/syncOdds.ts",
     "sync:scores": "node scripts/syncScores.ts",
+    "debug:score-sync": "node scripts/debug-score-sync-match.ts",
     "sync:knockout-teams": "node scripts/sync-knockout-teams.ts",
     "sync:knockout-winners": "node scripts/sync-knockout-winners.ts",
     "backfill:prediction-settlement": "node scripts/backfill-prediction-settlement.ts",

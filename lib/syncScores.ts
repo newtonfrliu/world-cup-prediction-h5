@@ -31,13 +31,16 @@ type ScoreItem = {
   score: string | number;
 };
 
-type ScoreEvent = {
+export type ScoreEvent = {
+  id?: string;
+  sport_key?: string;
   home_team: string;
   away_team: string;
   commence_time: string;
   completed?: boolean;
   status?: string;
   scores?: ScoreItem[] | null;
+  last_update?: string;
 };
 
 type SyncScoresOptions = {
@@ -50,14 +53,61 @@ type SyncScoresOptions = {
 export type SyncScoresResult = {
   finished: number;
   settled: number;
-  skipped: Array<{
+  request: {
+    sportKey: string;
+    endpoint: string;
+    daysFrom: number;
+    dateFormat: string;
+    serverTime: string;
+    apiEvents: number;
+    finishedApiEvents: number;
+    localCandidates: number;
+  };
+  updatedMatches: Array<{
+    id: string;
     home_team: string;
     away_team: string;
+    stage: string | null;
+    start_time: string;
+    matched_event: {
+      id?: string;
+      home_team: string;
+      away_team: string;
+      commence_time: string;
+      completed?: boolean;
+      status?: string;
+    };
+    home_score: number;
+    away_score: number;
+    betting_result: BettingResult;
+    advancement_winner: "home" | "away" | null;
+    settled: number;
+  }>;
+  skipped: Array<{
+    id?: string;
+    home_team: string;
+    away_team: string;
+    stage?: string | null;
+    start_time?: string;
+    reason: string;
+    candidates?: ScoreMatchDiagnostics[];
+  }>;
+  unmatchedEvents: Array<{
+    id?: string;
+    home_team: string;
+    away_team: string;
+    commence_time: string;
+    completed?: boolean;
+    status?: string;
+    scores?: ScoreItem[] | null;
     reason: string;
   }>;
 };
 
-const scoresApiUrl =
+export const scoreSyncSportKey = "soccer_fifa_world_cup";
+export const scoreSyncDaysFrom = 3;
+export const scoreSyncDateFormat = "iso";
+export const scoresApiUrl =
   "https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/scores";
 const maxStartTimeDiffMs = 6 * 60 * 60 * 1000;
 
@@ -67,7 +117,7 @@ const teamAliases: Record<string, string> = {
   库拉索: "curacao",
 };
 
-function normalizeTeamName(value: string) {
+export function normalizeTeamName(value: string) {
   const normalized = value
     .trim()
     .toLowerCase()
@@ -79,7 +129,7 @@ function normalizeTeamName(value: string) {
   return teamAliases[normalized] ?? normalized;
 }
 
-function isFinishedEvent(event: ScoreEvent) {
+export function isFinishedEvent(event: ScoreEvent) {
   return (
     event.completed === true ||
     event.status?.trim().toLowerCase() === "finished"
@@ -103,7 +153,7 @@ function getScoreByTeam(event: ScoreEvent, team: string) {
   return parseScore(scoreItem.score);
 }
 
-function getScoresForMatch(match: Match, event: ScoreEvent) {
+export function getScoresForMatch(match: Match, event: ScoreEvent) {
   const homeScore = getScoreByTeam(event, match.home_team);
   const awayScore = getScoreByTeam(event, match.away_team);
 
@@ -117,7 +167,118 @@ function getScoresForMatch(match: Match, event: ScoreEvent) {
   };
 }
 
-function getMatchedEvent(match: Match, events: ScoreEvent[]) {
+export type ScoreMatchDiagnostics = {
+  apiHome: string;
+  apiAway: string;
+  normalizedApiHome: string;
+  normalizedApiAway: string;
+  commenceTime: string;
+  completed?: boolean;
+  status?: string;
+  sameOrder: boolean;
+  reversedOrder: boolean;
+  includesHomeTeam: boolean;
+  includesAwayTeam: boolean;
+  timeDiffHours: number | null;
+  withinTimeWindow: boolean;
+  hasHomeScore: boolean;
+  hasAwayScore: boolean;
+  selectedByCurrentSync: boolean;
+  notSelectedReason: string;
+};
+
+function getScoreEventKey(event: ScoreEvent) {
+  return [
+    event.id ?? "",
+    event.home_team,
+    event.away_team,
+    event.commence_time,
+  ].join("|");
+}
+
+export function analyzeScoreEventMatch(match: Match, event: ScoreEvent) {
+  const matchHomeTeam = normalizeTeamName(match.home_team);
+  const matchAwayTeam = normalizeTeamName(match.away_team);
+  const eventHomeTeam = normalizeTeamName(event.home_team);
+  const eventAwayTeam = normalizeTeamName(event.away_team);
+  const isSameOrder =
+    matchHomeTeam === eventHomeTeam && matchAwayTeam === eventAwayTeam;
+  const isReversedOrder =
+    matchHomeTeam === eventAwayTeam && matchAwayTeam === eventHomeTeam;
+  const matchStartTime = new Date(match.start_time).getTime();
+  const eventStartTime = new Date(event.commence_time).getTime();
+  const timeDiffMs =
+    Number.isNaN(matchStartTime) || Number.isNaN(eventStartTime)
+      ? null
+      : Math.abs(matchStartTime - eventStartTime);
+  const withinTimeWindow =
+    timeDiffMs !== null && timeDiffMs <= maxStartTimeDiffMs;
+  const scores = getScoresForMatch(match, event);
+  const selectedByCurrentSync =
+    (isSameOrder || isReversedOrder) &&
+    withinTimeWindow &&
+    isFinishedEvent(event);
+  let notSelectedReason = "selected";
+
+  if (!isSameOrder && !isReversedOrder) {
+    notSelectedReason = "team names/order did not match";
+  } else if (!withinTimeWindow) {
+    notSelectedReason = "commence_time outside 6-hour matching window";
+  } else if (!isFinishedEvent(event)) {
+    notSelectedReason =
+      "API event matched by teams/time but completed=false/status is not finished";
+  } else if (!scores) {
+    notSelectedReason = "matched event but score rows do not map to local teams";
+  }
+
+  return {
+    apiHome: event.home_team,
+    apiAway: event.away_team,
+    normalizedApiHome: eventHomeTeam,
+    normalizedApiAway: eventAwayTeam,
+    commenceTime: event.commence_time,
+    completed: event.completed,
+    status: event.status,
+    sameOrder: isSameOrder,
+    reversedOrder: isReversedOrder,
+    includesHomeTeam:
+      eventHomeTeam.includes(matchHomeTeam) ||
+      eventAwayTeam.includes(matchHomeTeam) ||
+      matchHomeTeam.includes(eventHomeTeam) ||
+      matchHomeTeam.includes(eventAwayTeam),
+    includesAwayTeam:
+      eventHomeTeam.includes(matchAwayTeam) ||
+      eventAwayTeam.includes(matchAwayTeam) ||
+      matchAwayTeam.includes(eventHomeTeam) ||
+      matchAwayTeam.includes(eventAwayTeam),
+    timeDiffHours: timeDiffMs === null ? null : timeDiffMs / 60 / 60 / 1000,
+    withinTimeWindow,
+    hasHomeScore: scores?.homeScore !== undefined,
+    hasAwayScore: scores?.awayScore !== undefined,
+    selectedByCurrentSync,
+    notSelectedReason,
+  };
+}
+
+export function getScoreEventCandidates(match: Match, events: ScoreEvent[]) {
+  return events
+    .map((event) => analyzeScoreEventMatch(match, event))
+    .filter((event) => event.includesHomeTeam || event.includesAwayTeam)
+    .sort((a, b) => {
+      const aScore =
+        Number(a.sameOrder || a.reversedOrder) * 100 +
+        Number(a.withinTimeWindow) * 10 -
+        (a.timeDiffHours ?? 999);
+      const bScore =
+        Number(b.sameOrder || b.reversedOrder) * 100 +
+        Number(b.withinTimeWindow) * 10 -
+        (b.timeDiffHours ?? 999);
+
+      return bScore - aScore;
+    });
+}
+
+export function getMatchedEvent(match: Match, events: ScoreEvent[]) {
   const matchHomeTeam = normalizeTeamName(match.home_team);
   const matchAwayTeam = normalizeTeamName(match.away_team);
   const matchStartTime = new Date(match.start_time).getTime();
@@ -146,38 +307,14 @@ function getMatchedEvent(match: Match, events: ScoreEvent[]) {
   });
 }
 
-function getUnmatchedScoreDiagnostics(match: Match, events: ScoreEvent[]) {
-  const normalizedHome = normalizeTeamName(match.home_team);
-  const normalizedAway = normalizeTeamName(match.away_team);
-  const apiCandidates = events
-    .map((event) => ({
-      apiHome: event.home_team,
-      apiAway: event.away_team,
-      normalizedApiHome: normalizeTeamName(event.home_team),
-      normalizedApiAway: normalizeTeamName(event.away_team),
-      commenceTime: event.commence_time,
-    }))
-    .filter((event) => {
-      const apiTeams = [event.normalizedApiHome, event.normalizedApiAway];
-
-      return (
-        apiTeams.includes(normalizedHome) ||
-        apiTeams.includes(normalizedAway) ||
-        event.normalizedApiHome.includes(normalizedHome) ||
-        event.normalizedApiAway.includes(normalizedAway) ||
-        normalizedHome.includes(event.normalizedApiHome) ||
-        normalizedAway.includes(event.normalizedApiAway)
-      );
-    })
-    .slice(0, 5);
-
+export function getUnmatchedScoreDiagnostics(match: Match, events: ScoreEvent[]) {
   return {
     dbHome: match.home_team,
     dbAway: match.away_team,
-    normalizedHome,
-    normalizedAway,
+    normalizedHome: normalizeTeamName(match.home_team),
+    normalizedAway: normalizeTeamName(match.away_team),
     startTime: match.start_time,
-    apiCandidates,
+    apiCandidates: getScoreEventCandidates(match, events).slice(0, 5),
   };
 }
 
@@ -346,12 +483,18 @@ async function settleActivePredictionsForMatch({
   return settled;
 }
 
-async function fetchScores(apiKey: string) {
+export function buildScoresApiUrl(apiKey: string) {
   const url = new URL(scoresApiUrl);
 
   url.searchParams.set("apiKey", apiKey);
-  url.searchParams.set("daysFrom", "3");
-  url.searchParams.set("dateFormat", "iso");
+  url.searchParams.set("daysFrom", String(scoreSyncDaysFrom));
+  url.searchParams.set("dateFormat", scoreSyncDateFormat);
+
+  return url;
+}
+
+export async function fetchScores(apiKey: string) {
+  const url = buildScoresApiUrl(apiKey);
 
   const response = await fetch(url);
 
@@ -372,7 +515,8 @@ export async function syncWorldCupScores({
 }: SyncScoresOptions): Promise<SyncScoresResult> {
   const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
   onStep?.("call_sync_odds");
-  const events = (await fetchScores(oddsApiKey)).filter(isFinishedEvent);
+  const rawEvents = await fetchScores(oddsApiKey);
+  const events = rawEvents.filter(isFinishedEvent);
   onStep?.("update_supabase");
   const { data: matches, error: matchesError } = await supabase
     .from("matches")
@@ -386,6 +530,8 @@ export async function syncWorldCupScores({
   }
 
   const skipped: SyncScoresResult["skipped"] = [];
+  const updatedMatches: SyncScoresResult["updatedMatches"] = [];
+  const matchedEventKeys = new Set<string>();
   let finished = 0;
   let settled = 0;
 
@@ -393,14 +539,29 @@ export async function syncWorldCupScores({
     const event = getMatchedEvent(match, events);
 
     if (!event) {
+      const candidates = getScoreEventCandidates(match, rawEvents).slice(0, 5);
+      const sameFixtureUnfinishedCandidate = candidates.find(
+        (candidate) =>
+          (candidate.sameOrder || candidate.reversedOrder) &&
+          candidate.withinTimeWindow &&
+          candidate.notSelectedReason.includes("completed=false"),
+      );
+      const reason = sameFixtureUnfinishedCandidate
+        ? "API event matched by teams/time but completed=false/status is not finished; waiting for The Odds API to finalize the score before settling."
+        : "No matched finished score event";
+
       console.warn("unmatched score match:", {
         ...getUnmatchedScoreDiagnostics(match, events),
-        reason: "No matched finished score event",
+        reason,
       });
       skipped.push({
+        id: match.id,
         home_team: match.home_team,
         away_team: match.away_team,
-        reason: "No matched finished score event",
+        stage: match.stage,
+        start_time: match.start_time,
+        reason,
+        candidates,
       });
       continue;
     }
@@ -409,13 +570,18 @@ export async function syncWorldCupScores({
 
     if (!scores) {
       skipped.push({
+        id: match.id,
         home_team: match.home_team,
         away_team: match.away_team,
+        stage: match.stage,
+        start_time: match.start_time,
         reason: "Missing or invalid score",
+        candidates: [analyzeScoreEventMatch(match, event)],
       });
       continue;
     }
 
+    matchedEventKeys.add(getScoreEventKey(event));
     const result = getResultFromScores(scores.homeScore, scores.awayScore);
 
     if (isKnockoutStage(match.stage)) {
@@ -462,8 +628,11 @@ export async function syncWorldCupScores({
 
       if (!advancementWinner) {
         skipped.push({
+          id: match.id,
           home_team: match.home_team,
           away_team: match.away_team,
+          stage: match.stage,
+          start_time: match.start_time,
           reason:
             "淘汰赛最终比分为平局，晋级方需要人工录入；胜平负和大小球已按90分钟比分结算。",
         });
@@ -471,6 +640,26 @@ export async function syncWorldCupScores({
 
       finished += 1;
       settled += matchSettled;
+      updatedMatches.push({
+        id: match.id,
+        home_team: match.home_team,
+        away_team: match.away_team,
+        stage: match.stage,
+        start_time: match.start_time,
+        matched_event: {
+          id: event.id,
+          home_team: event.home_team,
+          away_team: event.away_team,
+          commence_time: event.commence_time,
+          completed: event.completed,
+          status: event.status,
+        },
+        home_score: scores.homeScore,
+        away_score: scores.awayScore,
+        betting_result: result,
+        advancement_winner: advancementWinner,
+        settled: matchSettled,
+      });
       continue;
     }
 
@@ -509,11 +698,55 @@ export async function syncWorldCupScores({
 
     finished += 1;
     settled += matchSettled;
+    updatedMatches.push({
+      id: match.id,
+      home_team: match.home_team,
+      away_team: match.away_team,
+      stage: match.stage,
+      start_time: match.start_time,
+      matched_event: {
+        id: event.id,
+        home_team: event.home_team,
+        away_team: event.away_team,
+        commence_time: event.commence_time,
+        completed: event.completed,
+        status: event.status,
+      },
+      home_score: scores.homeScore,
+      away_score: scores.awayScore,
+      betting_result: result,
+      advancement_winner: null,
+      settled: matchSettled,
+    });
   }
 
   return {
     finished,
     settled,
+    request: {
+      sportKey: scoreSyncSportKey,
+      endpoint: scoresApiUrl,
+      daysFrom: scoreSyncDaysFrom,
+      dateFormat: scoreSyncDateFormat,
+      serverTime: new Date().toISOString(),
+      apiEvents: rawEvents.length,
+      finishedApiEvents: events.length,
+      localCandidates: matches?.length ?? 0,
+    },
+    updatedMatches,
     skipped,
+    unmatchedEvents: events
+      .filter((event) => !matchedEventKeys.has(getScoreEventKey(event)))
+      .slice(0, 20)
+      .map((event) => ({
+        id: event.id,
+        home_team: event.home_team,
+        away_team: event.away_team,
+        commence_time: event.commence_time,
+        completed: event.completed,
+        status: event.status,
+        scores: event.scores,
+        reason: "Finished API event was not matched to a local update candidate.",
+      })),
   };
 }

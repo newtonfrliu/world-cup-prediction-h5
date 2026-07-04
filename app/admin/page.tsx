@@ -67,9 +67,28 @@ type StoredSyncResult = {
 type SyncScoresResponse = {
   finished: number;
   settled: number;
+  request?: {
+    apiEvents: number;
+    finishedApiEvents: number;
+    localCandidates: number;
+    daysFrom: number;
+  };
+  updatedMatches?: Array<{
+    home_team: string;
+    away_team: string;
+    home_score: number;
+    away_score: number;
+    settled: number;
+  }>;
   skipped: Array<{
     home_team: string;
     away_team: string;
+    reason: string;
+  }>;
+  unmatchedEvents?: Array<{
+    home_team: string;
+    away_team: string;
+    commence_time: string;
     reason: string;
   }>;
   error?: string;
@@ -438,8 +457,21 @@ export default function AdminPage() {
       return;
     }
 
+    const skippedDetails =
+      result.skipped.length > 0
+        ? `；跳过明细：${result.skipped
+            .map(
+              (match) =>
+                `${match.home_team} vs ${match.away_team}（${match.reason}）`,
+            )
+            .join("；")}`
+        : "";
+    const requestDetails = result.request
+      ? `；API events ${result.request.apiEvents} / finished ${result.request.finishedApiEvents} / local candidates ${result.request.localCandidates} / daysFrom ${result.request.daysFrom}`
+      : "";
+
     setScoreSyncMessage(
-      `同步完成：Finished ${result.finished} matches, Settled ${result.settled} predictions, Skipped ${result.skipped.length} matches`,
+      `同步完成：Finished ${result.finished} matches, Settled ${result.settled} predictions, Skipped ${result.skipped.length} matches${requestDetails}${skippedDetails}`,
     );
     setSyncingScores(false);
     await loadMatches();

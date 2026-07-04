@@ -68,7 +68,11 @@ async function handleSyncScores(request: NextRequest) {
       step,
       finished: result.finished,
       settled: result.settled,
-      skipped: result.skipped.length,
+      skippedCount: result.skipped.length,
+      skipped: result.skipped,
+      request: result.request,
+      updatedMatches: result.updatedMatches,
+      unmatchedEvents: result.unmatchedEvents,
     });
   } catch (error) {
     return NextResponse.json(buildErrorResponse(error, step), { status: 500 });
