@@ -23,6 +23,11 @@ type Prediction = Database["public"]["Tables"]["predictions"]["Row"];
 type Player = Database["public"]["Tables"]["players"]["Row"];
 type MatchState = "not_started" | "in_progress" | "finished";
 type MatchTabKey = "upcoming" | "in_progress" | "finished";
+type MatchSection = {
+  key: string;
+  label: string | null;
+  matches: Match[];
+};
 type PredictionChoice =
   Database["public"]["Tables"]["predictions"]["Insert"]["prediction"];
 type BettingMarket = Database["public"]["Tables"]["match_betting_markets"]["Row"];
@@ -149,6 +154,7 @@ const matchResultLabels: Record<string, string> = {
   away: "客胜",
   away_win: "客胜",
 };
+const matchDisplayTimeZone = "Asia/Shanghai";
 
 function isPlaceholderTeamName(value: string | null | undefined) {
   const normalized = (value ?? "")
@@ -484,6 +490,54 @@ function parseMatchTime(value: string) {
   return date;
 }
 
+function getZonedDateParts(value: string | Date, timeZone = matchDisplayTimeZone) {
+  const date = value instanceof Date ? value : parseMatchTime(value);
+
+  if (!date) {
+    return null;
+  }
+
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const partMap = new Map(parts.map((part) => [part.type, part.value]));
+  const year = partMap.get("year");
+  const month = partMap.get("month");
+  const day = partMap.get("day");
+
+  if (!year || !month || !day) {
+    return null;
+  }
+
+  return { year, month, day };
+}
+
+function getMatchLocalDateKey(value: string, timeZone = matchDisplayTimeZone) {
+  const parts = getZonedDateParts(value, timeZone);
+
+  if (!parts) {
+    return value.slice(0, 10);
+  }
+
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function getTodayDateKey(timeZone = matchDisplayTimeZone) {
+  const parts = getZonedDateParts(new Date(), timeZone);
+
+  return parts ? `${parts.year}-${parts.month}-${parts.day}` : "";
+}
+
+function getTomorrowDateKey(timeZone = matchDisplayTimeZone) {
+  const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  const parts = getZonedDateParts(tomorrow, timeZone);
+
+  return parts ? `${parts.year}-${parts.month}-${parts.day}` : "";
+}
+
 function formatMatchTime(value: string) {
   const date = parseMatchTime(value);
 
@@ -492,11 +546,36 @@ function formatMatchTime(value: string) {
   }
 
   return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: matchDisplayTimeZone,
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
   }).format(date);
+}
+
+function groupUpcomingMatchesByLocalDate(matches: Match[]): MatchSection[] {
+  const todayKey = getTodayDateKey();
+  const tomorrowKey = getTomorrowDateKey();
+  const sections: MatchSection[] = [
+    { key: "today", label: "今日比赛", matches: [] },
+    { key: "tomorrow", label: "明日比赛", matches: [] },
+    { key: "later", label: "后续比赛", matches: [] },
+  ];
+
+  for (const match of matches) {
+    const localDateKey = getMatchLocalDateKey(match.start_time);
+
+    if (localDateKey === todayKey) {
+      sections[0].matches.push(match);
+    } else if (localDateKey === tomorrowKey) {
+      sections[1].matches.push(match);
+    } else {
+      sections[2].matches.push(match);
+    }
+  }
+
+  return sections.filter((section) => section.matches.length > 0);
 }
 
 function getErrorMessage(error: unknown) {
@@ -1167,6 +1246,40 @@ export default function PredictPage() {
   ];
   const activeMatches =
     matchTabs.find((tab) => tab.key === activeMatchTab)?.matches ?? [];
+  const activeMatchSections: MatchSection[] =
+    activeMatchTab === "upcoming"
+      ? groupUpcomingMatchesByLocalDate(activeMatches)
+      : [{ key: activeMatchTab, label: null, matches: activeMatches }];
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") {
+      return;
+    }
+
+    const todayKey = getTodayDateKey();
+    const tomorrowKey = getTomorrowDateKey();
+    const rows = upcomingMatches.map((match) => {
+      const localDateKey = getMatchLocalDateKey(match.start_time);
+      const group =
+        localDateKey === todayKey
+          ? "today"
+          : localDateKey === tomorrowKey
+            ? "tomorrow"
+            : "later";
+
+      return {
+        home_team: match.home_team,
+        away_team: match.away_team,
+        raw_start_time: match.start_time,
+        local_date_key_asia_shanghai: localDateKey,
+        todayKey,
+        tomorrowKey,
+        group,
+      };
+    });
+
+    console.debug("PREDICT_MATCH_DATE_GROUP_DEBUG", rows);
+  }, [upcomingMatches]);
 
   useEffect(() => {
     if (loading || !targetMatchId || matches.length === 0) {
@@ -1372,8 +1485,19 @@ export default function PredictPage() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          {activeMatches.map((match) => {
+        <div className="space-y-6">
+          {activeMatchSections.map((section) => (
+            <section key={section.key} className="space-y-4">
+              {section.label ? (
+                <div className="flex items-center gap-3">
+                  <div className="h-px flex-1 bg-[#071b3a]/12" />
+                  <h2 className="rounded-full border border-[#f6c84c]/60 bg-[#fff8db] px-4 py-1.5 text-sm font-black text-[#071b3a]">
+                    {section.label}
+                  </h2>
+                  <div className="h-px flex-1 bg-[#071b3a]/12" />
+                </div>
+              ) : null}
+              {section.matches.map((match) => {
             const isSubmitting = submittingMatchId === match.id;
             const matchState = getMatchState(match);
             const isFinished = matchState === "finished";
@@ -1729,8 +1853,10 @@ export default function PredictPage() {
                   <div className="h-4" />
                 )}
               </article>
-            );
-          })}
+                );
+              })}
+            </section>
+          ))}
         </div>
       </section>
 
