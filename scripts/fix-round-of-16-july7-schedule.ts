@@ -12,17 +12,16 @@ type MatchRow = {
   status: string | null;
 };
 
-type FixtureKey =
-  | "switzerland-colombia"
-  | "argentina-egypt"
-  | "portugal-spain"
-  | "usa-belgium";
+type FixtureKey = "switzerland-colombia" | "argentina-egypt";
 
 const fixtureTargets: Record<FixtureKey, [string, string]> = {
   "switzerland-colombia": ["Switzerland", "Colombia"],
   "argentina-egypt": ["Argentina", "Egypt"],
-  "portugal-spain": ["Portugal", "Spain"],
-  "usa-belgium": ["USA", "Belgium"],
+};
+
+const correctStartTimes: Record<FixtureKey, string> = {
+  "argentina-egypt": "2026-07-07T16:00:00+00:00",
+  "switzerland-colombia": "2026-07-07T20:00:00+00:00",
 };
 
 function loadLocalEnv() {
@@ -108,30 +107,18 @@ async function main() {
     byFixture.set(key, match);
   }
 
-  const sourceSwitzerlandColombia = byFixture.get("switzerland-colombia")!;
   const sourceArgentinaEgypt = byFixture.get("argentina-egypt")!;
-  const sourcePortugalSpain = byFixture.get("portugal-spain")!;
-  const sourceUsaBelgium = byFixture.get("usa-belgium")!;
+  const sourceSwitzerlandColombia = byFixture.get("switzerland-colombia")!;
   const updates = [
     {
-      match: sourcePortugalSpain,
-      newStartTime: sourceSwitzerlandColombia.start_time,
-      reason: "Portugal vs Spain should occupy the first July 7 slot.",
-    },
-    {
-      match: sourceUsaBelgium,
-      newStartTime: sourceArgentinaEgypt.start_time,
-      reason: "USA vs Belgium should occupy the second July 7 slot.",
+      match: sourceArgentinaEgypt,
+      newStartTime: correctStartTimes["argentina-egypt"],
+      reason: "Argentina vs Egypt should occupy the first July 8 slot.",
     },
     {
       match: sourceSwitzerlandColombia,
-      newStartTime: sourcePortugalSpain.start_time,
-      reason: "Switzerland vs Colombia moves to the later slot previously held by Portugal vs Spain.",
-    },
-    {
-      match: sourceArgentinaEgypt,
-      newStartTime: sourceUsaBelgium.start_time,
-      reason: "Argentina vs Egypt moves to the later slot previously held by USA vs Belgium.",
+      newStartTime: correctStartTimes["switzerland-colombia"],
+      reason: "Switzerland vs Colombia should occupy the second July 8 slot.",
     },
   ];
 
