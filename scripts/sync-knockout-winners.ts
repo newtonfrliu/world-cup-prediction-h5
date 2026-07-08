@@ -10,6 +10,7 @@ type MatchRow = {
   home_team: string;
   away_team: string;
   status: string | null;
+  start_time: string | null;
   home_score: number | null;
   away_score: number | null;
   regular_home_score: number | null;
@@ -20,7 +21,13 @@ type MatchRow = {
   advancement_winner: string | null;
 };
 
-type RoundOf16Update = {
+type InferredMatch = MatchRow & {
+  inferredMatchNumber: number | null;
+};
+
+type RoundUpdate = {
+  roundLabel: string;
+  targetStage: string;
   matchNumber: number;
   sourceHomeMatch: number;
   sourceAwayMatch: number;
@@ -58,33 +65,72 @@ const roundOf32ExpectedPairs: Record<number, [string, string]> = {
   88: ["Spain", "Austria"],
 };
 
-const roundOf16Mapping: Record<number, [number, number]> = {
-  89: [74, 77],
-  90: [73, 75],
-  91: [76, 78],
-  92: [79, 80],
-  93: [83, 84],
-  94: [81, 82],
-  95: [87, 88],
-  96: [86, 85],
-};
-
 const roundOf16KnownPairs: Record<number, Array<[string, string]>> = {
   89: [["Paraguay", "France"]],
   90: [["Canada", "Morocco"]],
   91: [["Brazil", "Norway"]],
   92: [["Mexico", "England"]],
-  93: [["Switzerland", "Colombia"]],
-  94: [["Argentina", "Egypt"]],
-  95: [
-    ["Portugal", "Spain"],
-    ["USA", "Spain"],
-  ],
-  96: [
-    ["USA", "Belgium"],
-    ["Belgium", "Portugal"],
-  ],
+  93: [["Argentina", "Egypt"]],
+  94: [["Switzerland", "Colombia"]],
+  95: [["Portugal", "Spain"]],
+  96: [["USA", "Belgium"]],
 };
+
+const progressionMappings: Array<{
+  sourceLabel: string;
+  sourceStage: string;
+  targetLabel: string;
+  targetStage: string;
+  rules: Record<number, [number, number]>;
+}> = [
+  {
+    sourceLabel: "Round Of 32",
+    sourceStage: "round_of_32",
+    targetLabel: "Round Of 16",
+    targetStage: "round_of_16",
+    rules: {
+      89: [74, 77],
+      90: [73, 75],
+      91: [76, 78],
+      92: [79, 80],
+      93: [81, 82],
+      94: [83, 84],
+      95: [87, 88],
+      96: [86, 85],
+    },
+  },
+  {
+    sourceLabel: "Round Of 16",
+    sourceStage: "round_of_16",
+    targetLabel: "Quarter Finals",
+    targetStage: "quarter_final",
+    rules: {
+      97: [89, 90],
+      98: [93, 94],
+      99: [91, 92],
+      100: [95, 96],
+    },
+  },
+  {
+    sourceLabel: "Quarter Finals",
+    sourceStage: "quarter_final",
+    targetLabel: "Semi Finals",
+    targetStage: "semi_final",
+    rules: {
+      101: [97, 98],
+      102: [99, 100],
+    },
+  },
+  {
+    sourceLabel: "Semi Finals",
+    sourceStage: "semi_final",
+    targetLabel: "Final / Third Place",
+    targetStage: "final",
+    rules: {
+      104: [101, 102],
+    },
+  },
+];
 
 function loadLocalEnv() {
   const envPath = path.join(process.cwd(), ".env.local");
@@ -97,7 +143,10 @@ function loadLocalEnv() {
     const separator = trimmed.indexOf("=");
     if (separator === -1) continue;
     const key = trimmed.slice(0, separator).trim();
-    const value = trimmed.slice(separator + 1).trim();
+    const value = trimmed
+      .slice(separator + 1)
+      .trim()
+      .replace(/^["']|["']$/g, "");
     if (!process.env[key]) process.env[key] = value;
   }
 }
@@ -116,6 +165,24 @@ function normalizePair(homeTeam: string, awayTeam: string) {
   return `${normalizeTeamName(homeTeam)}__${normalizeTeamName(awayTeam)}`;
 }
 
+function normalizeStage(stage: string | null | undefined) {
+  return (stage ?? "").trim().toLowerCase().replace(/[\s-]+/g, "_");
+}
+
+function isStage(match: MatchRow, stage: string) {
+  const normalized = normalizeStage(match.stage);
+
+  if (stage === "quarter_final") {
+    return normalized === "quarter_final" || normalized === "quarter_finals";
+  }
+
+  if (stage === "semi_final") {
+    return normalized === "semi_final" || normalized === "semi_finals";
+  }
+
+  return normalized === stage;
+}
+
 function isPlaceholderTeam(value: string) {
   const normalized = normalizeTeamName(value);
   return (
@@ -125,74 +192,140 @@ function isPlaceholderTeam(value: string) {
   );
 }
 
-function inferRoundOf32MatchNumber(match: MatchRow) {
-  if (
-    match.match_number &&
-    match.match_number >= 73 &&
-    match.match_number <= 88
-  ) {
-    return match.match_number;
-  }
-
-  const currentPair = normalizePair(match.home_team, match.away_team);
-  const inferred = Object.entries(roundOf32ExpectedPairs).find(
-    ([, [homeTeam, awayTeam]]) =>
-      normalizePair(homeTeam, awayTeam) === currentPair,
-  );
-
-  return inferred ? Number(inferred[0]) : null;
-}
-
-function inferRoundOf16MatchNumber(match: MatchRow) {
-  if (
-    match.match_number &&
-    match.match_number >= 89 &&
-    match.match_number <= 96
-  ) {
-    return match.match_number;
-  }
-
-  const homeMatch = match.home_team.match(/match\s+(\d+)\s+winners?/i);
-  const awayMatch = match.away_team.match(/match\s+(\d+)\s+winners?/i);
-
-  if (!homeMatch || !awayMatch) {
-    const currentPair = normalizePair(match.home_team, match.away_team);
-    const inferred = Object.entries(roundOf16KnownPairs).find(([, pairs]) =>
-      pairs.some(([homeTeam, awayTeam]) => normalizePair(homeTeam, awayTeam) === currentPair),
-    );
-
-    return inferred ? Number(inferred[0]) : null;
-  }
-
-  const sourcePair = [Number(homeMatch[1]), Number(awayMatch[1])];
-  const inferred = Object.entries(roundOf16Mapping).find(
-    ([, [homeSource, awaySource]]) =>
-      homeSource === sourcePair[0] && awaySource === sourcePair[1],
-  );
-
-  return inferred ? Number(inferred[0]) : null;
-}
-
 function getWinnerTeam(match: MatchRow) {
   if (match.advancement_winner === "home") return match.home_team;
   if (match.advancement_winner === "away") return match.away_team;
   return null;
 }
 
+function inferMatchNumber(match: MatchRow) {
+  if (match.match_number) return match.match_number;
+
+  const currentPair = normalizePair(match.home_team, match.away_team);
+  const fromRoundOf32 = Object.entries(roundOf32ExpectedPairs).find(
+    ([, [homeTeam, awayTeam]]) =>
+      normalizePair(homeTeam, awayTeam) === currentPair,
+  );
+
+  if (fromRoundOf32) return Number(fromRoundOf32[0]);
+
+  const fromRoundOf16 = Object.entries(roundOf16KnownPairs).find(([, pairs]) =>
+    pairs.some(
+      ([homeTeam, awayTeam]) => normalizePair(homeTeam, awayTeam) === currentPair,
+    ),
+  );
+
+  if (fromRoundOf16) return Number(fromRoundOf16[0]);
+
+  const homeWinner = match.home_team.match(/match\s+(\d+)\s+winners?/i);
+  const awayWinner = match.away_team.match(/match\s+(\d+)\s+winners?/i);
+
+  if (homeWinner && awayWinner) {
+    const sources = [Number(homeWinner[1]), Number(awayWinner[1])];
+    for (const mapping of progressionMappings) {
+      const inferred = Object.entries(mapping.rules).find(
+        ([, [homeSource, awaySource]]) =>
+          homeSource === sources[0] && awaySource === sources[1],
+      );
+
+      if (inferred) return Number(inferred[0]);
+    }
+  }
+
+  return null;
+}
+
+function canUpdateMatch(match: MatchRow) {
+  const normalizedStatus = (match.status ?? "").trim().toLowerCase();
+  return (
+    !normalizedStatus ||
+    normalizedStatus === "scheduled" ||
+    normalizedStatus === "not_started" ||
+    normalizedStatus === "open"
+  );
+}
+
+function renderSourceRows(
+  title: string,
+  rows: InferredMatch[],
+  missing: InferredMatch[],
+) {
+  return [
+    `## ${title} Winners`,
+    "",
+    "| match | home | away | status | score | advancement_winner | winner_team |",
+    "| --- | --- | --- | --- | --- | --- | --- |",
+    ...rows
+      .map((match) =>
+        [
+          match.inferredMatchNumber ? `M${match.inferredMatchNumber}` : "-",
+          match.home_team,
+          match.away_team,
+          match.status ?? "-",
+          `${match.home_score ?? "-"}:${match.away_score ?? "-"}`,
+          match.advancement_winner ?? "-",
+          getWinnerTeam(match) ?? "-",
+        ].join(" | "),
+      )
+      .map((line) => `| ${line} |`),
+    "",
+    `### Missing ${title} Advancement Winner`,
+    "",
+    missing.length === 0
+      ? "- none"
+      : missing
+          .map(
+            (match) =>
+              `- M${match.inferredMatchNumber ?? "?"}: ${match.home_team} vs ${match.away_team} (${match.status ?? "-"})`,
+          )
+          .join("\n"),
+    "",
+  ];
+}
+
+function renderUpdates(title: string, updates: RoundUpdate[]) {
+  return [
+    `## ${title} Updates`,
+    "",
+    "| match | old home | old away | new home | new away | updated | reason |",
+    "| --- | --- | --- | --- | --- | --- | --- |",
+    ...updates
+      .map((update) =>
+        [
+          `M${update.matchNumber}`,
+          update.oldHomeTeam,
+          update.oldAwayTeam,
+          update.newHomeTeam,
+          update.newAwayTeam,
+          update.updated ? "yes" : "no",
+          update.reason,
+        ].join(" | "),
+      )
+      .map((line) => `| ${line} |`),
+    "",
+  ];
+}
+
 function writeReport({
-  roundOf32Rows,
-  updates,
-  missingAdvancement,
-  remainingPlaceholders,
   applied,
+  sourceSections,
+  updates,
+  remainingPlaceholders,
 }: {
-  roundOf32Rows: Array<MatchRow & { inferredMatchNumber: number | null }>;
-  updates: RoundOf16Update[];
-  missingAdvancement: Array<MatchRow & { inferredMatchNumber: number | null }>;
-  remainingPlaceholders: MatchRow[];
   applied: boolean;
+  sourceSections: Array<{
+    title: string;
+    rows: InferredMatch[];
+    missing: InferredMatch[];
+  }>;
+  updates: RoundUpdate[];
+  remainingPlaceholders: InferredMatch[];
 }) {
   mkdirSync(path.dirname(reportPath), { recursive: true });
+  const missingAdvancementCount = sourceSections.reduce(
+    (total, section) => total + section.missing.length,
+    0,
+  );
   const lines = [
     "# Knockout Team Sync Audit",
     "",
@@ -201,60 +334,24 @@ function writeReport({
     "",
     "## Summary",
     "",
-    `- round_of_32 matches: ${roundOf32Rows.length}`,
-    `- missing advancement_winner: ${missingAdvancement.length}`,
-    `- round_of_16 update plans: ${updates.length}`,
+    `- update plans: ${updates.length}`,
+    `- updated: ${updates.filter((update) => update.updated).length}`,
+    `- missing advancement_winner: ${missingAdvancementCount}`,
     `- remaining placeholders after plan: ${remainingPlaceholders.length}`,
     "",
-    "## Round Of 32 Winners",
+    ...sourceSections.flatMap((section) =>
+      renderSourceRows(section.title, section.rows, section.missing),
+    ),
+    ...renderUpdates("Knockout Round", updates),
+    "## Placeholder Check",
     "",
-    "| match | home | away | status | score | advancement_winner | winner_team |",
-    "| --- | --- | --- | --- | --- | --- | --- |",
-    ...roundOf32Rows.map((match) =>
-      [
-        match.inferredMatchNumber ? `M${match.inferredMatchNumber}` : "-",
-        match.home_team,
-        match.away_team,
-        match.status ?? "-",
-        `${match.home_score ?? "-"}:${match.away_score ?? "-"}`,
-        match.advancement_winner ?? "-",
-        getWinnerTeam(match) ?? "-",
-      ].join(" | "),
-    ).map((line) => `| ${line} |`),
-    "",
-    "## Missing Advancement Winner",
-    "",
-    missingAdvancement.length === 0
-      ? "- none"
-      : missingAdvancement
+    remainingPlaceholders.length === 0
+      ? "- no placeholders found in synced target rounds"
+      : remainingPlaceholders
           .map(
             (match) =>
               `- M${match.inferredMatchNumber ?? "?"}: ${match.home_team} vs ${match.away_team}`,
           )
-          .join("\n"),
-    "",
-    "## Round Of 16 Updates",
-    "",
-    "| match | old home | old away | new home | new away | updated | reason |",
-    "| --- | --- | --- | --- | --- | --- | --- |",
-    ...updates.map((update) =>
-      [
-        `M${update.matchNumber}`,
-        update.oldHomeTeam,
-        update.oldAwayTeam,
-        update.newHomeTeam,
-        update.newAwayTeam,
-        update.updated ? "yes" : "no",
-        update.reason,
-      ].join(" | "),
-    ).map((line) => `| ${line} |`),
-    "",
-    "## Placeholder Check",
-    "",
-    remainingPlaceholders.length === 0
-      ? "- no placeholders found in round_of_16"
-      : remainingPlaceholders
-          .map((match) => `- ${match.home_team} vs ${match.away_team}`)
           .join("\n"),
   ];
 
@@ -275,69 +372,107 @@ async function main() {
   }
 
   const supabase = createClient(supabaseUrl, supabaseKey);
-  const { data: roundOf32, error: r32Error } = await supabase
+  const { data, error } = await supabase
     .from("matches")
     .select(
-      "id, match_number, stage, home_team, away_team, status, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner",
+      "id, match_number, stage, home_team, away_team, status, start_time, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner",
     )
-    .eq("stage", "round_of_32");
+    .in("stage", [
+      "round_of_32",
+      "round_of_16",
+      "quarter_final",
+      "quarter_finals",
+      "semi_final",
+      "semi_finals",
+      "final",
+      "third_place",
+    ])
+    .order("start_time", { ascending: true });
 
-  if (r32Error) {
-    throw new Error(`Failed to load round_of_32: ${r32Error.message}`);
+  if (error) {
+    throw new Error(`Failed to load knockout matches: ${error.message}`);
   }
 
-  const roundOf32Rows = ((roundOf32 ?? []) as MatchRow[])
-    .map((match) => ({
-      ...match,
-      inferredMatchNumber: inferRoundOf32MatchNumber(match),
-    }))
-    .sort((left, right) => (left.inferredMatchNumber ?? 999) - (right.inferredMatchNumber ?? 999));
-  const missingAdvancement = roundOf32Rows.filter(
-    (match) =>
-      match.status !== "finished" ||
-      match.inferredMatchNumber === null ||
-      (match.advancement_winner !== "home" &&
-        match.advancement_winner !== "away"),
-  );
-
-  const { data: roundOf16, error: r16Error } = await supabase
-    .from("matches")
-    .select(
-      "id, match_number, stage, home_team, away_team, status, home_score, away_score, regular_home_score, regular_away_score, betting_result, final_home_score, final_away_score, advancement_winner",
-    )
-    .eq("stage", "round_of_16");
-
-  if (r16Error) {
-    throw new Error(`Failed to load round_of_16: ${r16Error.message}`);
-  }
-
-  const roundOf16Rows = ((roundOf16 ?? []) as MatchRow[]).map((match) => ({
+  const allRows = ((data ?? []) as MatchRow[]).map((match) => ({
     ...match,
-    inferredMatchNumber: inferRoundOf16MatchNumber(match),
+    inferredMatchNumber: inferMatchNumber(match),
   }));
-  const winnersByMatch = new Map<number, string>();
+  const byNumber = new Map<number, InferredMatch>();
 
-  for (const match of roundOf32Rows) {
-    if (!match.inferredMatchNumber) continue;
-    const winner = getWinnerTeam(match);
-    if (winner) winnersByMatch.set(match.inferredMatchNumber, winner);
+  for (const match of allRows) {
+    if (match.inferredMatchNumber) {
+      byNumber.set(match.inferredMatchNumber, match);
+    }
   }
 
-  const updates: RoundOf16Update[] = [];
+  const sourceSections: Array<{
+    title: string;
+    rows: InferredMatch[];
+    missing: InferredMatch[];
+  }> = [];
+  const updates: RoundUpdate[] = [];
+  const changedTargetStages = new Set<string>();
+  let blockedByMissingSource = false;
 
-  if (missingAdvancement.length === 0) {
-    for (const [matchNumberText, [sourceHomeMatch, sourceAwayMatch]] of Object.entries(
-      roundOf16Mapping,
-    )) {
-      const matchNumber = Number(matchNumberText);
-      const target = roundOf16Rows.find(
-        (match) => match.inferredMatchNumber === matchNumber,
+  for (const mapping of progressionMappings) {
+    if (blockedByMissingSource) {
+      break;
+    }
+
+    const sourceRows = allRows
+      .filter((match) => isStage(match, mapping.sourceStage))
+      .sort(
+        (left, right) =>
+          (left.inferredMatchNumber ?? 999) -
+          (right.inferredMatchNumber ?? 999),
       );
-      const newHomeTeam = winnersByMatch.get(sourceHomeMatch);
-      const newAwayTeam = winnersByMatch.get(sourceAwayMatch);
+
+    if (sourceRows.length === 0) {
+      continue;
+    }
+
+    const sourceNumbers = new Set(
+      Object.values(mapping.rules).flatMap(([home, away]) => [home, away]),
+    );
+    const relevantSourceRows = sourceRows.filter(
+      (match) =>
+        match.inferredMatchNumber !== null &&
+        sourceNumbers.has(match.inferredMatchNumber),
+    );
+    const missing = relevantSourceRows.filter(
+      (match) =>
+        match.status !== "finished" ||
+        match.inferredMatchNumber === null ||
+        (match.advancement_winner !== "home" &&
+          match.advancement_winner !== "away"),
+    );
+
+    sourceSections.push({
+      title: mapping.sourceLabel,
+      rows: relevantSourceRows,
+      missing,
+    });
+
+    if (missing.length > 0) {
+      blockedByMissingSource = true;
+      continue;
+    }
+
+    for (const [
+      matchNumberText,
+      [sourceHomeMatch, sourceAwayMatch],
+    ] of Object.entries(mapping.rules)) {
+      const matchNumber = Number(matchNumberText);
+      const target = byNumber.get(matchNumber);
+      const sourceHome = byNumber.get(sourceHomeMatch);
+      const sourceAway = byNumber.get(sourceAwayMatch);
+      const newHomeTeam = sourceHome ? getWinnerTeam(sourceHome) : null;
+      const newAwayTeam = sourceAway ? getWinnerTeam(sourceAway) : null;
 
       if (!target || !newHomeTeam || !newAwayTeam) {
         updates.push({
+          roundLabel: mapping.targetLabel,
+          targetStage: mapping.targetStage,
           matchNumber,
           sourceHomeMatch,
           sourceAwayMatch,
@@ -352,14 +487,15 @@ async function main() {
         continue;
       }
 
-      const canUpdate =
-        target.status === null ||
-        target.status === "scheduled" ||
-        target.status === "not_started" ||
-        target.status === "open";
+      const hasCorrectTeams =
+        normalizeTeamName(target.home_team) === normalizeTeamName(newHomeTeam) &&
+        normalizeTeamName(target.away_team) === normalizeTeamName(newAwayTeam);
+      const canUpdate = canUpdateMatch(target);
+      const oldHomeTeam = target.home_team;
+      const oldAwayTeam = target.away_team;
 
-      if (apply && canUpdate) {
-        const { error } = await supabase
+      if (apply && canUpdate && !hasCorrectTeams) {
+        const { error: updateError } = await supabase
           .from("matches")
           .update({
             home_team: newHomeTeam,
@@ -367,57 +503,69 @@ async function main() {
           })
           .eq("id", target.id);
 
-        if (error) {
-          throw new Error(`Failed to update M${matchNumber}: ${error.message}`);
+        if (updateError) {
+          throw new Error(`Failed to update M${matchNumber}: ${updateError.message}`);
         }
+
+        target.home_team = newHomeTeam;
+        target.away_team = newAwayTeam;
+        changedTargetStages.add(mapping.targetStage);
       }
 
       updates.push({
-        matchNumber,
-        sourceHomeMatch,
-        sourceAwayMatch,
-        oldHomeTeam: target.home_team,
-        oldAwayTeam: target.away_team,
+          roundLabel: mapping.targetLabel,
+          targetStage: mapping.targetStage,
+          matchNumber,
+          sourceHomeMatch,
+          sourceAwayMatch,
+          oldHomeTeam,
+          oldAwayTeam,
         newHomeTeam,
         newAwayTeam,
         status: target.status,
-        updated: apply && canUpdate,
-        reason: canUpdate
-          ? apply
-            ? "updated"
-            : "dry-run"
-          : `skipped because status=${target.status ?? "null"}`,
+        updated: apply && canUpdate && !hasCorrectTeams,
+        reason: !canUpdate
+          ? `skipped because status=${target.status ?? "null"}`
+          : hasCorrectTeams
+            ? "already correct"
+            : apply
+              ? "updated"
+              : "dry-run",
       });
     }
   }
 
-  const remainingPlaceholders = roundOf16Rows.filter(
-    (match) => isPlaceholderTeam(match.home_team) || isPlaceholderTeam(match.away_team),
+  const syncedTargetStages = new Set(
+    updates.map((update) => update.targetStage),
+  );
+  const remainingPlaceholders = allRows.filter(
+    (match) =>
+      match.stage &&
+      syncedTargetStages.has(normalizeStage(match.stage)) &&
+      (isPlaceholderTeam(match.home_team) || isPlaceholderTeam(match.away_team)),
   );
 
   writeReport({
-    roundOf32Rows,
-    updates,
-    missingAdvancement,
-    remainingPlaceholders,
     applied: apply,
+    sourceSections,
+    updates,
+    remainingPlaceholders,
   });
 
-  if (missingAdvancement.length > 0) {
-    console.log("Missing round_of_32 advancement_winner. Refusing to sync round_of_16.");
-    for (const match of missingAdvancement) {
-      console.log(
-        `- M${match.inferredMatchNumber ?? "?"}: ${match.home_team} vs ${match.away_team}`,
-      );
-    }
-    console.log(`Report: ${reportPath}`);
-    return;
-  }
-
   console.log(`Mode: ${apply ? "apply" : "dry-run"}`);
-  console.log(`Round of 16 update plans: ${updates.length}`);
+  console.log(`Update plans: ${updates.length}`);
   console.log(`Updated: ${updates.filter((update) => update.updated).length}`);
+  console.log(
+    `Blocked by missing advancement: ${sourceSections.reduce(
+      (total, section) => total + section.missing.length,
+      0,
+    )}`,
+  );
   console.log(`Report: ${reportPath}`);
+
+  if (changedTargetStages.size > 0) {
+    console.log(`Changed target stages: ${Array.from(changedTargetStages).join(", ")}`);
+  }
 }
 
 main().catch((error: unknown) => {
