@@ -119,13 +119,13 @@ const NEXT_ROUND_RULES = {
   ],
   quarterFinals: [
     { matchNumber: 97, sources: [89, 90] },
-    { matchNumber: 98, sources: [91, 92] },
-    { matchNumber: 99, sources: [93, 94] },
+    { matchNumber: 98, sources: [93, 94] },
+    { matchNumber: 99, sources: [91, 92] },
     { matchNumber: 100, sources: [95, 96] },
   ],
   semiFinals: [
-    { matchNumber: 101, sources: [97, 98] },
-    { matchNumber: 102, sources: [99, 100] },
+    { matchNumber: 101, sources: [97, 100] },
+    { matchNumber: 102, sources: [99, 98] },
   ],
   final: [{ matchNumber: 104, sources: [101, 102] }],
 } satisfies Record<

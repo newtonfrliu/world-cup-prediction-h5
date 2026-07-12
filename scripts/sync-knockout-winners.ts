@@ -76,6 +76,13 @@ const roundOf16KnownPairs: Record<number, Array<[string, string]>> = {
   96: [["USA", "Belgium"]],
 };
 
+const quarterFinalKnownPairs: Record<number, Array<[string, string]>> = {
+  97: [["France", "Morocco"]],
+  98: [["Argentina", "Switzerland"]],
+  99: [["Norway", "England"]],
+  100: [["Spain", "Belgium"]],
+};
+
 const progressionMappings: Array<{
   sourceLabel: string;
   sourceStage: string;
@@ -117,8 +124,8 @@ const progressionMappings: Array<{
     targetLabel: "Semi Finals",
     targetStage: "semi_final",
     rules: {
-      101: [97, 98],
-      102: [99, 100],
+      101: [97, 100],
+      102: [99, 98],
     },
   },
   {
@@ -217,6 +224,16 @@ function inferMatchNumber(match: MatchRow) {
 
   if (fromRoundOf16) return Number(fromRoundOf16[0]);
 
+  const fromQuarterFinals = Object.entries(quarterFinalKnownPairs).find(
+    ([, pairs]) =>
+      pairs.some(
+        ([homeTeam, awayTeam]) =>
+          normalizePair(homeTeam, awayTeam) === currentPair,
+      ),
+  );
+
+  if (fromQuarterFinals) return Number(fromQuarterFinals[0]);
+
   const homeWinner = match.home_team.match(/match\s+(\d+)\s+winners?/i);
   const awayWinner = match.away_team.match(/match\s+(\d+)\s+winners?/i);
 
@@ -233,6 +250,22 @@ function inferMatchNumber(match: MatchRow) {
   }
 
   return null;
+}
+
+function applyStageOrderFallbacks(matches: InferredMatch[]) {
+  const semifinals = matches
+    .filter((match) => isStage(match, "semi_final"))
+    .sort(
+      (left, right) =>
+        new Date(left.start_time ?? "").getTime() -
+        new Date(right.start_time ?? "").getTime(),
+    );
+
+  for (const [index, match] of semifinals.entries()) {
+    if (!match.inferredMatchNumber && index < 2) {
+      match.inferredMatchNumber = 101 + index;
+    }
+  }
 }
 
 function canUpdateMatch(match: MatchRow) {
@@ -339,6 +372,13 @@ function writeReport({
     `- missing advancement_winner: ${missingAdvancementCount}`,
     `- remaining placeholders after plan: ${remainingPlaceholders.length}`,
     "",
+    "## Semifinal Pairing Correction",
+    "",
+    "- Previous wrong semifinal pairing: M101 France vs Argentina, M102 England vs Spain.",
+    "- The Odds API / real fixture candidates: M101 France vs Spain, M102 England vs Argentina.",
+    "- Corrected 8-team bracket mapping: M101 = winner(M97) vs winner(M100), M102 = winner(M99) vs winner(M98).",
+    "- This sync updates only matches.home_team and matches.away_team for unlocked target matches.",
+    "",
     ...sourceSections.flatMap((section) =>
       renderSourceRows(section.title, section.rows, section.missing),
     ),
@@ -397,6 +437,9 @@ async function main() {
     ...match,
     inferredMatchNumber: inferMatchNumber(match),
   }));
+
+  applyStageOrderFallbacks(allRows);
+
   const byNumber = new Map<number, InferredMatch>();
 
   for (const match of allRows) {

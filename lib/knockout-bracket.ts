@@ -95,19 +95,19 @@ const roundOf16KnownPairs: Record<number, Array<[string, string]>> = {
   90: [["Canada", "Morocco"]],
   91: [["Brazil", "Norway"]],
   92: [["Mexico", "England"]],
-  93: [["Switzerland", "Colombia"]],
-  94: [["Argentina", "Egypt"]],
+  93: [["Argentina", "Egypt"]],
+  94: [["Switzerland", "Colombia"]],
   95: [["Portugal", "Spain"]],
   96: [["USA", "Belgium"]],
 };
 
 const placeholderSourceMap: Record<number, [number, number, "winners" | "losers"]> = {
   97: [89, 90, "winners"],
-  98: [91, 92, "winners"],
-  99: [93, 94, "winners"],
+  98: [93, 94, "winners"],
+  99: [91, 92, "winners"],
   100: [95, 96, "winners"],
-  101: [97, 98, "winners"],
-  102: [99, 100, "winners"],
+  101: [97, 100, "winners"],
+  102: [99, 98, "winners"],
   103: [101, 102, "losers"],
   104: [101, 102, "winners"],
 };

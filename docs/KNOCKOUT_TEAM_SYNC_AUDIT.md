@@ -1,14 +1,21 @@
 # Knockout Team Sync Audit
 
-Generated at: 2026-07-08T04:07:55.453Z
+Generated at: 2026-07-12T08:58:09.027Z
 Mode: apply
 
 ## Summary
 
-- update plans: 12
-- updated: 4
-- missing advancement_winner: 4
+- update plans: 14
+- updated: 2
+- missing advancement_winner: 2
 - remaining placeholders after plan: 0
+
+## Semifinal Pairing Correction
+
+- Previous wrong semifinal pairing: M101 France vs Argentina, M102 England vs Spain.
+- The Odds API / real fixture candidates: M101 France vs Spain, M102 England vs Argentina.
+- Corrected 8-team bracket mapping: M101 = winner(M97) vs winner(M100), M102 = winner(M99) vs winner(M98).
+- This sync updates only matches.home_team and matches.away_team for unlocked target matches.
 
 ## Round Of 32 Winners
 
@@ -56,17 +63,26 @@ Mode: apply
 
 | match | home | away | status | score | advancement_winner | winner_team |
 | --- | --- | --- | --- | --- | --- | --- |
-| M97 | France | Morocco | scheduled | -:- | - | - |
-| M98 | Argentina | Switzerland | scheduled | -:- | - | - |
-| M99 | Norway | England | scheduled | -:- | - | - |
-| M100 | Spain | Belgium | scheduled | -:- | - | - |
+| M97 | France | Morocco | finished | 2:0 | home | France |
+| M98 | Argentina | Switzerland | finished | 3:1 | home | Argentina |
+| M99 | Norway | England | finished | 1:2 | away | England |
+| M100 | Spain | Belgium | finished | 2:1 | home | Spain |
 
 ### Missing Quarter Finals Advancement Winner
 
-- M97: France vs Morocco (scheduled)
-- M98: Argentina vs Switzerland (scheduled)
-- M99: Norway vs England (scheduled)
-- M100: Spain vs Belgium (scheduled)
+- none
+
+## Semi Finals Winners
+
+| match | home | away | status | score | advancement_winner | winner_team |
+| --- | --- | --- | --- | --- | --- | --- |
+| M101 | France | Spain | scheduled | -:- | - | - |
+| M102 | England | Argentina | scheduled | -:- | - | - |
+
+### Missing Semi Finals Advancement Winner
+
+- M101: France vs Spain (scheduled)
+- M102: England vs Argentina (scheduled)
 
 ## Knockout Round Updates
 
@@ -80,10 +96,21 @@ Mode: apply
 | M94 | Switzerland | Colombia | Switzerland | Colombia | no | skipped because status=finished |
 | M95 | Portugal | Spain | Portugal | Spain | no | skipped because status=finished |
 | M96 | USA | Belgium | USA | Belgium | no | skipped because status=finished |
-| M97 | Match 89 winners | Match 90 winners | France | Morocco | yes | updated |
-| M98 | Match 93 winners | Match 94 winners | Argentina | Switzerland | yes | updated |
-| M99 | Match 91 winners | Match 92 winners | Norway | England | yes | updated |
-| M100 | Match 95 winners | Match 96 winners | Spain | Belgium | yes | updated |
+| M97 | France | Morocco | France | Morocco | no | skipped because status=finished |
+| M98 | Argentina | Switzerland | Argentina | Switzerland | no | skipped because status=finished |
+| M99 | Norway | England | Norway | England | no | skipped because status=finished |
+| M100 | Spain | Belgium | Spain | Belgium | no | skipped because status=finished |
+| M101 | France | Argentina | France | Spain | yes | updated |
+| M102 | England | Spain | England | Argentina | yes | updated |
+
+## Semifinal Safety And Odds Sync
+
+- Existing semifinal predictions before correction: 0.
+- Existing semifinal betting markets before correction: 0.
+- No cleanup SQL was needed for wrong semifinal markets.
+- `supabase_fix_semifinal_pairing.sql` was generated as a reviewable SQL fallback, but the correction was applied through `npm.cmd run sync:knockout-winners -- --apply`.
+- `npm.cmd run sync:odds` was rerun after the pairing correction.
+- Odds sync result: updated 2 matches; skipped only the current third-place placeholder `Match 101 losers vs Match 102 losers`.
 
 ## Placeholder Check
 
