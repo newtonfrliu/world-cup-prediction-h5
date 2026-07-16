@@ -89,6 +89,7 @@ const progressionMappings: Array<{
   targetLabel: string;
   targetStage: string;
   rules: Record<number, [number, number]>;
+  sourceResult?: "winner" | "loser";
 }> = [
   {
     sourceLabel: "Round Of 32",
@@ -133,8 +134,19 @@ const progressionMappings: Array<{
     sourceStage: "semi_final",
     targetLabel: "Final / Third Place",
     targetStage: "final",
+    sourceResult: "winner",
     rules: {
       104: [101, 102],
+    },
+  },
+  {
+    sourceLabel: "Semi Finals",
+    sourceStage: "semi_final",
+    targetLabel: "Third Place",
+    targetStage: "third_place",
+    sourceResult: "loser",
+    rules: {
+      103: [101, 102],
     },
   },
 ];
@@ -205,6 +217,19 @@ function getWinnerTeam(match: MatchRow) {
   return null;
 }
 
+function getLoserTeam(match: MatchRow) {
+  if (match.advancement_winner === "home") return match.away_team;
+  if (match.advancement_winner === "away") return match.home_team;
+  return null;
+}
+
+function getProgressionTeam(
+  match: MatchRow,
+  sourceResult: "winner" | "loser" = "winner",
+) {
+  return sourceResult === "loser" ? getLoserTeam(match) : getWinnerTeam(match);
+}
+
 function inferMatchNumber(match: MatchRow) {
   if (match.match_number) return match.match_number;
 
@@ -234,15 +259,26 @@ function inferMatchNumber(match: MatchRow) {
 
   if (fromQuarterFinals) return Number(fromQuarterFinals[0]);
 
-  const homeWinner = match.home_team.match(/match\s+(\d+)\s+winners?/i);
-  const awayWinner = match.away_team.match(/match\s+(\d+)\s+winners?/i);
+  const homeProgression = match.home_team.match(
+    /match\s+(\d+)\s+(winners?|losers?)/i,
+  );
+  const awayProgression = match.away_team.match(
+    /match\s+(\d+)\s+(winners?|losers?)/i,
+  );
 
-  if (homeWinner && awayWinner) {
-    const sources = [Number(homeWinner[1]), Number(awayWinner[1])];
+  if (homeProgression && awayProgression) {
+    const sources = [Number(homeProgression[1]), Number(awayProgression[1])];
+    const sourceResult =
+      homeProgression[2].toLowerCase().startsWith("loser") &&
+      awayProgression[2].toLowerCase().startsWith("loser")
+        ? "loser"
+        : "winner";
     for (const mapping of progressionMappings) {
       const inferred = Object.entries(mapping.rules).find(
         ([, [homeSource, awaySource]]) =>
-          homeSource === sources[0] && awaySource === sources[1],
+          (mapping.sourceResult ?? "winner") === sourceResult &&
+          homeSource === sources[0] &&
+          awaySource === sources[1],
       );
 
       if (inferred) return Number(inferred[0]);
@@ -509,8 +545,12 @@ async function main() {
       const target = byNumber.get(matchNumber);
       const sourceHome = byNumber.get(sourceHomeMatch);
       const sourceAway = byNumber.get(sourceAwayMatch);
-      const newHomeTeam = sourceHome ? getWinnerTeam(sourceHome) : null;
-      const newAwayTeam = sourceAway ? getWinnerTeam(sourceAway) : null;
+      const newHomeTeam = sourceHome
+        ? getProgressionTeam(sourceHome, mapping.sourceResult)
+        : null;
+      const newAwayTeam = sourceAway
+        ? getProgressionTeam(sourceAway, mapping.sourceResult)
+        : null;
 
       if (!target || !newHomeTeam || !newAwayTeam) {
         updates.push({

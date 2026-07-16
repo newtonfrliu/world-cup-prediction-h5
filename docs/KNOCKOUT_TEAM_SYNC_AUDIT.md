@@ -1,13 +1,13 @@
 # Knockout Team Sync Audit
 
-Generated at: 2026-07-12T08:58:09.027Z
+Generated at: 2026-07-16T14:08:21.867Z
 Mode: apply
 
 ## Summary
 
-- update plans: 14
+- update plans: 16
 - updated: 2
-- missing advancement_winner: 2
+- missing advancement_winner: 0
 - remaining placeholders after plan: 0
 
 ## Semifinal Pairing Correction
@@ -76,13 +76,23 @@ Mode: apply
 
 | match | home | away | status | score | advancement_winner | winner_team |
 | --- | --- | --- | --- | --- | --- | --- |
-| M101 | France | Spain | scheduled | -:- | - | - |
-| M102 | England | Argentina | scheduled | -:- | - | - |
+| M101 | France | Spain | finished | 0:2 | away | Spain |
+| M102 | England | Argentina | finished | 1:2 | away | Argentina |
 
 ### Missing Semi Finals Advancement Winner
 
-- M101: France vs Spain (scheduled)
-- M102: England vs Argentina (scheduled)
+- none
+
+## Semi Finals Winners
+
+| match | home | away | status | score | advancement_winner | winner_team |
+| --- | --- | --- | --- | --- | --- | --- |
+| M101 | France | Spain | finished | 0:2 | away | Spain |
+| M102 | England | Argentina | finished | 1:2 | away | Argentina |
+
+### Missing Semi Finals Advancement Winner
+
+- none
 
 ## Knockout Round Updates
 
@@ -100,17 +110,10 @@ Mode: apply
 | M98 | Argentina | Switzerland | Argentina | Switzerland | no | skipped because status=finished |
 | M99 | Norway | England | Norway | England | no | skipped because status=finished |
 | M100 | Spain | Belgium | Spain | Belgium | no | skipped because status=finished |
-| M101 | France | Argentina | France | Spain | yes | updated |
-| M102 | England | Spain | England | Argentina | yes | updated |
-
-## Semifinal Safety And Odds Sync
-
-- Existing semifinal predictions before correction: 0.
-- Existing semifinal betting markets before correction: 0.
-- No cleanup SQL was needed for wrong semifinal markets.
-- `supabase_fix_semifinal_pairing.sql` was generated as a reviewable SQL fallback, but the correction was applied through `npm.cmd run sync:knockout-winners -- --apply`.
-- `npm.cmd run sync:odds` was rerun after the pairing correction.
-- Odds sync result: updated 2 matches; skipped only the current third-place placeholder `Match 101 losers vs Match 102 losers`.
+| M101 | France | Spain | France | Spain | no | skipped because status=finished |
+| M102 | England | Argentina | England | Argentina | no | skipped because status=finished |
+| M104 | Match 101 winners | Match 102 winners | Spain | Argentina | yes | updated |
+| M103 | Match 101 losers | Match 102 losers | France | England | yes | updated |
 
 ## Placeholder Check
 
