@@ -101,6 +101,13 @@ const roundOf16KnownPairs: Record<number, Array<[string, string]>> = {
   96: [["USA", "Belgium"]],
 };
 
+const quarterFinalKnownPairs: Record<number, Array<[string, string]>> = {
+  97: [["France", "Morocco"]],
+  98: [["Argentina", "Switzerland"]],
+  99: [["Norway", "England"]],
+  100: [["Spain", "Belgium"]],
+};
+
 const placeholderSourceMap: Record<number, [number, number, "winners" | "losers"]> = {
   97: [89, 90, "winners"],
   98: [93, 94, "winners"],
@@ -171,6 +178,13 @@ export function inferKnockoutMatchNumber(match: KnockoutMatch) {
 
   if (stageKey === "roundOf16") {
     const inferred = Object.entries(roundOf16KnownPairs).find(([, pairs]) =>
+      pairs.some(([homeTeam, awayTeam]) => normalizePair(homeTeam, awayTeam) === pair),
+    );
+    return inferred ? Number(inferred[0]) : null;
+  }
+
+  if (stageKey === "quarterFinals") {
+    const inferred = Object.entries(quarterFinalKnownPairs).find(([, pairs]) =>
       pairs.some(([homeTeam, awayTeam]) => normalizePair(homeTeam, awayTeam) === pair),
     );
     return inferred ? Number(inferred[0]) : null;

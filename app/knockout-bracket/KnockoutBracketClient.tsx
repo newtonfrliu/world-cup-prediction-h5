@@ -250,7 +250,12 @@ function buildBracketSlots(matches: KnockoutMatch[], picks: PickMap) {
     let homeTeam = match?.home_team ?? null;
     let awayTeam = match?.away_team ?? null;
 
-    if (nextRoundSources[number]) {
+    const shouldDeriveTeamsFromSources =
+      !match ||
+      isPlaceholderTeamName(match.home_team) ||
+      isPlaceholderTeamName(match.away_team);
+
+    if (nextRoundSources[number] && shouldDeriveTeamsFromSources) {
       const [homeSource, awaySource] = nextRoundSources[number];
       homeTeam = resolveSlot(
         homeSource,
@@ -260,7 +265,7 @@ function buildBracketSlots(matches: KnockoutMatch[], picks: PickMap) {
         awaySource,
         awaySource >= 101 ? "semiFinals" : awaySource >= 97 ? "quarterFinals" : "roundOf16",
       ).winner;
-    } else if (number === thirdPlaceNumber) {
+    } else if (number === thirdPlaceNumber && shouldDeriveTeamsFromSources) {
       const [leftSemi, rightSemi] = thirdPlaceSources;
       homeTeam = resolveSlot(leftSemi, "semiFinals").loser;
       awayTeam = resolveSlot(rightSemi, "semiFinals").loser;
