@@ -44,11 +44,11 @@ const thirdPlaceNumber = 103;
 
 const nextRoundSources: Record<number, [number, number]> = {
   97: [89, 90],
-  98: [91, 92],
-  99: [93, 94],
+  98: [93, 94],
+  99: [91, 92],
   100: [95, 96],
-  101: [97, 98],
-  102: [99, 100],
+  101: [97, 100],
+  102: [99, 98],
   104: [101, 102],
 };
 
@@ -173,14 +173,53 @@ function splitHalf<T>(items: T[]) {
 
 function matchByNumber(matches: KnockoutMatch[]) {
   const map = new Map<number, KnockoutMatch>();
+  const unresolvedSemifinals: KnockoutMatch[] = [];
+  const unresolvedFinals: KnockoutMatch[] = [];
+  const unresolvedThirdPlace: KnockoutMatch[] = [];
 
   for (const match of matches) {
     const number = inferKnockoutMatchNumber(match);
 
     if (number) {
       map.set(number, match);
+      continue;
+    }
+
+    const normalizedStage = (match.stage ?? "")
+      .trim()
+      .toLowerCase()
+      .replace(/[\s-]+/g, "_");
+
+    if (normalizedStage === "semi_final" || normalizedStage === "semi_finals") {
+      unresolvedSemifinals.push(match);
+    } else if (normalizedStage === "final") {
+      unresolvedFinals.push(match);
+    } else if (normalizedStage === "third_place") {
+      unresolvedThirdPlace.push(match);
     }
   }
+
+  const byStartTime = (left: KnockoutMatch, right: KnockoutMatch) =>
+    new Date(left.start_time ?? "").getTime() -
+    new Date(right.start_time ?? "").getTime();
+
+  unresolvedSemifinals.sort(byStartTime).forEach((match, index) => {
+    if (index < 2 && !map.has(101 + index)) {
+      map.set(101 + index, match);
+    }
+  });
+
+  unresolvedThirdPlace.sort(byStartTime).forEach((match) => {
+    if (!map.has(thirdPlaceNumber)) {
+      map.set(thirdPlaceNumber, match);
+    }
+  });
+
+  unresolvedFinals.sort(byStartTime).forEach((match) => {
+    if (!map.has(finalNumber)) {
+      map.set(finalNumber, match);
+    }
+  });
 
   return map;
 }
