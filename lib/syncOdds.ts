@@ -1,5 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 
+import {
+  assertWorldCupApiUpdateAllowed,
+  getWorldCupApiUpdateStoppedMessage,
+  isWorldCupApiUpdateStopped,
+} from "./worldCupFinalUpdate.ts";
 import type { Database } from "@/types/database";
 
 type Match = Pick<
@@ -361,6 +366,8 @@ async function syncBettingMarkets(
 }
 
 async function fetchOdds(apiKey: string) {
+  assertWorldCupApiUpdateAllowed();
+
   const url = new URL(oddsApiUrl);
 
   url.searchParams.set("apiKey", apiKey);
@@ -395,6 +402,23 @@ export async function syncWorldCupOdds({
   supabaseAnonKey,
   onStep,
 }: SyncOddsOptions): Promise<SyncOddsResult> {
+  if (isWorldCupApiUpdateStopped()) {
+    return {
+      updated: 0,
+      skipped: [
+        {
+          home_team: "World Cup API updates",
+          away_team: "stopped",
+          reason: getWorldCupApiUpdateStoppedMessage(),
+        },
+      ],
+      creditsUsed: null,
+      creditsRemaining: null,
+      creditsTotalUsed: null,
+      settingsWarning: getWorldCupApiUpdateStoppedMessage(),
+    };
+  }
+
   if (!oddsApiKey) {
     throw new Error("Missing ODDS_API_KEY");
   }

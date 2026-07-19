@@ -3,6 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 import {
   settlePredictionMarket,
 } from "./predictionSettlement.ts";
+import {
+  assertWorldCupApiUpdateAllowed,
+  getWorldCupApiUpdateStoppedMessage,
+  isWorldCupApiUpdateStopped,
+} from "./worldCupFinalUpdate.ts";
 import type { Database } from "@/types/database";
 
 type Match = Pick<
@@ -494,6 +499,8 @@ export function buildScoresApiUrl(apiKey: string) {
 }
 
 export async function fetchScores(apiKey: string) {
+  assertWorldCupApiUpdateAllowed();
+
   const url = buildScoresApiUrl(apiKey);
 
   const response = await fetch(url);
@@ -513,6 +520,32 @@ export async function syncWorldCupScores({
   supabaseAnonKey,
   onStep,
 }: SyncScoresOptions): Promise<SyncScoresResult> {
+  if (isWorldCupApiUpdateStopped()) {
+    return {
+      finished: 0,
+      settled: 0,
+      request: {
+        sportKey: scoreSyncSportKey,
+        endpoint: scoresApiUrl,
+        daysFrom: scoreSyncDaysFrom,
+        dateFormat: scoreSyncDateFormat,
+        serverTime: new Date().toISOString(),
+        apiEvents: 0,
+        finishedApiEvents: 0,
+        localCandidates: 0,
+      },
+      updatedMatches: [],
+      skipped: [
+        {
+          home_team: "World Cup API updates",
+          away_team: "stopped",
+          reason: getWorldCupApiUpdateStoppedMessage(),
+        },
+      ],
+      unmatchedEvents: [],
+    };
+  }
+
   const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
   onStep?.("call_sync_odds");
   const rawEvents = await fetchScores(oddsApiKey);
