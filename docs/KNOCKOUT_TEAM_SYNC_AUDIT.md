@@ -1,12 +1,12 @@
 # Knockout Team Sync Audit
 
-Generated at: 2026-07-16T14:08:21.867Z
+Generated at: 2026-07-20T04:20:46.946Z
 Mode: apply
 
 ## Summary
 
 - update plans: 16
-- updated: 2
+- updated: 0
 - missing advancement_winner: 0
 - remaining placeholders after plan: 0
 
@@ -112,8 +112,8 @@ Mode: apply
 | M100 | Spain | Belgium | Spain | Belgium | no | skipped because status=finished |
 | M101 | France | Spain | France | Spain | no | skipped because status=finished |
 | M102 | England | Argentina | England | Argentina | no | skipped because status=finished |
-| M104 | Match 101 winners | Match 102 winners | Spain | Argentina | yes | updated |
-| M103 | Match 101 losers | Match 102 losers | France | England | yes | updated |
+| M104 | - | - | Spain | Argentina | no | missing target row or source winner |
+| M103 | - | - | France | England | no | missing target row or source winner |
 
 ## Placeholder Check
 

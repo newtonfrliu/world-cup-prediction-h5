@@ -1273,12 +1273,6 @@ export default function PredictPage() {
         getFinalChampionTeam(match),
     ) ?? null;
   const finalChampionTeam = getFinalChampionTeam(finalMatch);
-  const finalRunnerUpTeam =
-    finalMatch?.advancement_winner === "home"
-      ? finalMatch.away_team
-      : finalMatch?.advancement_winner === "away"
-        ? finalMatch.home_team
-        : null;
   const matchTabs: Array<{
     key: MatchTabKey;
     label: string;
@@ -1425,40 +1419,27 @@ export default function PredictPage() {
 
         {finalMatch && finalChampionTeam ? (
           <section className="mb-5 overflow-hidden rounded-[28px] border border-[#f6c84c]/60 bg-[radial-gradient(circle_at_top,rgba(246,200,76,0.34),rgba(7,27,58,0.96)_48%,rgba(2,8,20,0.98))] p-5 text-white shadow-[0_24px_70px_rgba(246,200,76,0.18)]">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.28em] text-[#f6c84c]">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <h2 className="text-2xl font-black text-[#fff4bf] sm:text-3xl">
+                  美加墨世界杯冠军
+                </h2>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.28em] text-[#f6c84c]">
                   FIFA WORLD CUP 2026 CHAMPION
                 </p>
-                <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <span className="text-5xl drop-shadow-[0_0_18px_rgba(246,200,76,0.7)]">
-                    🏆
-                  </span>
-                  <div>
-                    <p className="text-sm font-black text-white/60">
-                      最终冠军
-                    </p>
-                    <h2 className="mt-1 text-3xl font-black text-[#fff4bf] sm:text-4xl">
-                      <CountryDisplay team={finalChampionTeam} />
-                    </h2>
-                  </div>
-                </div>
               </div>
-              <div className="rounded-2xl border border-white/12 bg-black/24 px-4 py-3 text-sm font-black text-white/72">
-                <p>
-                  决赛：
-                  <CountryDisplay team={finalMatch.home_team} />
-                  <span className="mx-2 text-[#f6c84c]">
-                    {finalMatch.final_home_score ?? finalMatch.home_score ?? "-"} :{" "}
-                    {finalMatch.final_away_score ?? finalMatch.away_score ?? "-"}
-                  </span>
-                  <CountryDisplay team={finalMatch.away_team} />
-                </p>
-                {finalRunnerUpTeam ? (
-                  <p className="mt-2 text-white/52">
-                    亚军：<CountryDisplay team={finalRunnerUpTeam} />
+              <div className="flex w-full items-center gap-4 rounded-2xl border border-[#1fb6ff]/65 bg-black/20 px-4 py-4 shadow-[0_0_28px_rgba(31,182,255,0.16)] sm:w-auto sm:min-w-[360px] sm:justify-center">
+                <span className="text-5xl drop-shadow-[0_0_18px_rgba(246,200,76,0.7)]">
+                  🏆
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm font-black text-white/60">
+                    最终冠军
                   </p>
-                ) : null}
+                  <h3 className="mt-1 text-3xl font-black leading-none text-[#fff4bf] sm:text-4xl">
+                    <CountryDisplay team={finalChampionTeam} />
+                  </h3>
+                </div>
               </div>
             </div>
           </section>
